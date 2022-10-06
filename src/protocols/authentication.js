@@ -5,6 +5,10 @@ const Stream = require('../stream');
 const NEXTypes = require('../types');
 
 class AuthenticationInfo extends NEXTypes.Data {
+	/**
+	 *
+	 * @param {Stream} stream
+	 */
 	parse(stream) {
 		this.m_authToken = stream.readNEXString();
 		this.m_ngsVersion = stream.readUInt32LE();
