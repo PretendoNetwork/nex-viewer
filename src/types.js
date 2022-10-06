@@ -58,17 +58,30 @@ class AnyDataHolder {
 		this.typesHandlers[name] = cls;
 	}
 
+	constructor() {
+		this.typeName;
+		this.length1;
+		this.length2;
+		this.data;
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream
 	 */
 	extract(stream) {
 		this.typeName = stream.readNEXString();
-		stream.skip(4); // Skip first length
-		stream.skip(4); // Skip second length
+		this.length1 = stream.readUInt32LE();
+		this.length2 = stream.readUInt32LE();
 
-		// typesHandlers is static and cannot be accessed from the 'this' keyword in this case
-		this.data = stream.readNEXStructure(AnyDataHolder.typesHandlers[this.typeName]);
+		const structure = AnyDataHolder.typesHandlers[this.typeName];
+
+		if (structure) {
+			this.data = stream.readNEXStructure(structure);
+		} else {
+			console.log(`Unknown AnyDataHolder type ${this.typeName}`);
+			this.data = stream.readBytes(this.length2);
+		}
 	}
 }
 
