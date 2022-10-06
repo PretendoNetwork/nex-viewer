@@ -1,7 +1,0 @@
-module.exports = {
-	Syn: 0x0,
-	Connect: 0x1,
-	Data: 0x2,
-	Disconnect: 0x3,
-	Ping: 0x4
-};

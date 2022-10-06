@@ -1,5 +1,12 @@
+const Stream = require('./stream');
+
 class Structure {
+	/**
+	 *
+	 * @returns Array
+	 */
 	getHierarchy() {
+		// TODO - This is trash. Find a better way
 		const hierarchy = [];
 		let current = this.__proto__;
 
@@ -11,27 +18,20 @@ class Structure {
 		return hierarchy.reverse();
 	}
 
-	extract(buffer) {
+	/**
+	 *
+	 * @param {Stream} stream
+	 */
+	extract(stream) {
 		const hierarchy = this.getHierarchy();
 
 		for (const cls of hierarchy) {
-			if (buffer.connection.getMinorNEXVersion() >= 3) {
-				cls.structureVersion = buffer.readUInt8();
-				cls.contentLength = buffer.readUInt32LE();
-
-				/*
-				if (cls.contentLength === 0) {
-					console.log(buffer.internalBuffer.subarray(buffer.readOffset).toString());
-					console.log(buffer.internalBuffer.subarray(buffer.readOffset).length);
-					buffer.readOffset -= 5;
-					console.log(buffer.internalBuffer.subarray(buffer.readOffset));
-					console.log(cls);
-					throw new Error('Empty structure????');
-				}
-				*/
+			if (stream.connection.prudpProtocolMinorVersion >= 3) {
+				cls.structureVersion = stream.readUInt8();
+				cls.contentLength = stream.readUInt32LE();
 			}
 
-			cls.parse(buffer);
+			cls.parse(stream);
 			Object.assign(this, cls); // assign properties to this from the new classes
 		}
 	}
@@ -39,40 +39,60 @@ class Structure {
 
 // This is empty
 class Data extends Structure {
-	parse() {} // do nothing
+	/**
+	 *
+	 * @param {Stream} stream
+	 */
+	parse(stream) { } // do nothing
 }
 
 class AnyDataHolder {
-	// eslint-disable-next-line
 	static typesHandlers = {};
 
+	/**
+	 *
+	 * @param {String} name
+	 * @param {*} cls
+	 */
 	static addType(name, cls) {
 		this.typesHandlers[name] = cls;
 	}
 
-	extract(buffer) {
-		this.typeName = buffer.readNEXString();
-		buffer.readOffset += 4; // Skip first length
-		buffer.readOffset += 4; // Skip second length
+	/**
+	 *
+	 * @param {Stream} stream
+	 */
+	extract(stream) {
+		this.typeName = stream.readNEXString();
+		stream.skip(4); // Skip first length
+		stream.skip(4); // Skip second length
 
 		// typesHandlers is static and cannot be accessed from the 'this' keyword in this case
-		this.data = buffer.readNEXStructure(AnyDataHolder.typesHandlers[this.typeName]);
+		this.data = stream.readNEXStructure(AnyDataHolder.typesHandlers[this.typeName]);
 	}
 }
 
 class RVConnectionData extends Structure {
-	parse(buffer) {
-		this.stationUrl = buffer.readNEXStationURL();
-		this.specialProtocols = buffer.readNEXList(buffer.readUInt8);
-		this.stationUrlSpecial = buffer.readNEXStationURL();
+	/**
+	 *
+	 * @param {Stream} stream
+	 */
+	parse(stream) {
+		this.stationUrl = stream.readNEXStationURL();
+		this.specialProtocols = stream.readNEXList(stream.readUInt8);
+		this.stationUrlSpecial = stream.readNEXStationURL();
 
-		if (buffer.connection.prudpVersion === 1) {
-			this.currentUTCTime = buffer.readBigUInt64LE(); // If prudpv1
+		if (stream.connection.prudpVersion === 1) {
+			this.currentUTCTime = stream.readUInt64LE(); // If prudpv1
 		}
 	}
 }
 
 class StationURL {
+	/**
+	 *
+	 * @param {String} string
+	 */
 	constructor(string) {
 		this.address;
 		this.port;
@@ -108,16 +128,24 @@ class StationURL {
 	}
 }
 
-class DateTime {}
+class DateTime { }
 
 class ResultRange extends Structure {
-	parse(buffer) {
-		this.offset = buffer.readUInt32LE();
-		this.size = buffer.readUInt32LE();
+	/**
+	 *
+	 * @param {Stream} stream
+	 */
+	parse(stream) {
+		this.offset = stream.readUInt32LE();
+		this.size = stream.readUInt32LE();
 	}
 }
 
 class Result {
+	/**
+	 *
+	 * @param {Number} resultCode
+	 */
 	constructor(resultCode) {
 		this.resultCode = resultCode;
 	}

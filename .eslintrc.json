@@ -4,21 +4,15 @@
 		"commonjs": true,
 		"es6": true
 	},
-	"parser": "@babel/eslint-parser",
 	"parserOptions": {
-		"ecmaVersion": 2021,
-		"requireConfigFile": false,
-		"babelOptions": {
-			"plugins": [
-				"@babel/plugin-syntax-class-properties" // for static class properties
-			]
-		}
+		"ecmaVersion": 2020
 	},
 	"globals": {
 		"BigInt": true
 	},
 	"extends": "eslint:recommended",
 	"rules": {
+		"jsdoc/no-undefined-types": 1,
 		"require-atomic-updates": "warn",
 		"no-case-declarations": "off",
 		"no-empty": "off",
@@ -46,5 +40,8 @@
 			"error",
 			"always"
 		]
-	}
+	},
+	"plugins": [
+		"jsdoc"
+	]
 }

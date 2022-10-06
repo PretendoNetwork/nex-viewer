@@ -2,7 +2,7 @@
   "name": "nex-viewer",
   "version": "1.0.0",
   "description": "Utility for parsing and (eventually) viewing NEX connections from WireShark network dumps",
-  "main": "src/index.js",
+  "main": "src/parser.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint ."
   },
@@ -11,12 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "pcap-ng-parser": "^1.0.0",
-    "simple-rc4": "0.0.1-b",
-    "smart-buffer": "^4.1.0"
+    "private-ip": "^2.3.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/eslint-parser": "^7.12.1",
     "eslint": "^7.15.0"
   },
   "bin": {
