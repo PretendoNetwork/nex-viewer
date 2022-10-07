@@ -1,10 +1,11 @@
 const crypto = require('crypto');
 const Stream = require('./stream');
+const { md5 } = require('./util');
 
 class KerberosEncryption {
 	/**
 	 *
-	 * @param {String} key
+	 * @param {string} key Crypto key
 	 */
 	constructor(key) {
 		this.key = key;
@@ -13,8 +14,8 @@ class KerberosEncryption {
 
 	/**
 	 *
-	 * @param {Buffer} buffer
-	 * @returns Buffer
+	 * @param {Buffer} buffer Kerberos encrypted buffer
+	 * @returns {Buffer} Decrypted buffer
 	 */
 	decrypt(buffer) {
 		if (!this.validate(buffer)) {
@@ -27,8 +28,8 @@ class KerberosEncryption {
 
 	/**
 	 *
-	 * @param {Buffer} buffer
-	 * @returns Bolean
+	 * @param {Buffer} buffer Kerberos encrypted buffer
+	 * @returns {boolean} isValid
 	 */
 	validate(buffer) {
 		const data = buffer.subarray(0, -0x10);
@@ -43,7 +44,7 @@ class KerberosEncryption {
 class KerberosTicket {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
 		this.stream = stream;
@@ -73,6 +74,12 @@ class KerberosTicket {
 	}
 }
 
+/**
+ *
+ * @param {number} pid User NEX account PID
+ * @param {string} password User NEX account password
+ * @returns {Buffer} Kerberos key
+ */
 function deriveKerberosKey(pid, password) {
 	for (let i = 0; i < 65000 + (pid % 1024); i++) {
 		password = md5(password);

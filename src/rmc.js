@@ -6,7 +6,7 @@ class RMCMessage {
 
 	/**
 	 *
-	 * @param {Buffer} payload
+	 * @param {Buffer} payload Decrypted packet payload
 	 */
 	constructor(payload) {
 		this.payload = payload;
@@ -69,7 +69,7 @@ class RMCMessage {
 
 	/**
 	 *
-	 * @returns Boolean
+	 * @returns {boolean} true if is request message
 	 */
 	isRequest() {
 		return this.mode === RMCMessage.REQUEST;
@@ -77,7 +77,7 @@ class RMCMessage {
 
 	/**
 	 *
-	 * @returns Boolean
+	 * @returns {boolean} true if is response message
 	 */
 	isResponse() {
 		return this.mode === RMCMessage.RESPONSE;
@@ -85,7 +85,7 @@ class RMCMessage {
 
 	/**
 	 *
-	 * @returns Boolean
+	 * @returns {boolean} true if uses an extended protocol ID
 	 */
 	isExtended() {
 		return this.protocolId === 0x7F;
@@ -93,7 +93,7 @@ class RMCMessage {
 
 	/**
 	 *
-	 * @returns Boolean
+	 * @returns {boolean} true if response is a success
 	 */
 	isSuccess() {
 		return this.responseStatus === 1;
@@ -101,7 +101,7 @@ class RMCMessage {
 
 	/**
 	 *
-	 * @returns Boolean
+	 * @returns {boolean} true if response is an error
 	 */
 	isError() {
 		return this.responseStatus === 0;

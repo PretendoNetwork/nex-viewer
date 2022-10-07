@@ -24,7 +24,7 @@ class NEXParser extends EventEmitter {
 
 	/**
 	 *
-	 * @param {String} capturePath
+	 * @param {string} capturePath Path to the PCAP(NG) capture file
 	 */
 	parse(capturePath) {
 		const pcapNgParser = new PCAPNGParser();
@@ -37,9 +37,10 @@ class NEXParser extends EventEmitter {
 
 	/**
 	 *
-	 * @param {Object} data
+	 * @param {object} raw Raw WireShark packet as parsed by `pcap-ng-parser`
 	 */
-	handlePacket({ data: frame }) {
+	handlePacket(raw) {
+		const { frame } = raw;
 		const udpPacket = this.parseUDPPacket(frame);
 
 		if (!udpPacket) {
@@ -121,8 +122,8 @@ class NEXParser extends EventEmitter {
 
 	/**
 	 *
-	 * @param {Buffer} frame
-	 * @returns Object
+	 * @param {Buffer} frame Raw packet bytes
+	 * @returns {object} Carved out packet data or null if not valid UDP packet
 	 */
 	parseUDPPacket(frame) {
 		const stream = new Stream(frame);
@@ -166,8 +167,8 @@ class NEXParser extends EventEmitter {
 
 	/**
 	 *
-	 * @param {Number} int
-	 * @returns String
+	 * @param {number} int IP int
+	 * @returns {string} IP string
 	 */
 	int2ip(int) {
 		return `${int >>> 24}.${int >> 16 & 255}.${int >> 8 & 255}.${int & 255}`;

@@ -1,9 +1,9 @@
-const Stream = require('./stream');
+const Stream = require('./stream'); // eslint-disable-line no-unused-vars
 
 class Structure {
 	/**
 	 *
-	 * @returns Array
+	 * @returns {Array} Array of classes in the NEX Structure hierarchy
 	 */
 	getHierarchy() {
 		// TODO - This is trash. Find a better way
@@ -20,7 +20,7 @@ class Structure {
 
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream NEX data stream
 	 */
 	extract(stream) {
 		const hierarchy = this.getHierarchy();
@@ -39,11 +39,7 @@ class Structure {
 
 // This is empty
 class Data extends Structure {
-	/**
-	 *
-	 * @param {Stream} stream
-	 */
-	parse(stream) { } // do nothing
+	parse() { } // do nothing
 }
 
 class AnyDataHolder {
@@ -51,8 +47,8 @@ class AnyDataHolder {
 
 	/**
 	 *
-	 * @param {String} name
-	 * @param {*} cls
+	 * @param {string} name NEX type name
+	 * @param {*} cls NEX type definition
 	 */
 	static addType(name, cls) {
 		this.typesHandlers[name] = cls;
@@ -67,7 +63,7 @@ class AnyDataHolder {
 
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	extract(stream) {
 		this.typeName = stream.readNEXString();
@@ -88,7 +84,7 @@ class AnyDataHolder {
 class RVConnectionData extends Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.stationUrl = stream.readNEXStationURL();
@@ -104,7 +100,7 @@ class RVConnectionData extends Structure {
 class StationURL {
 	/**
 	 *
-	 * @param {String} string
+	 * @param {string} string StationURL string
 	 */
 	constructor(string) {
 		this.address;
@@ -146,7 +142,7 @@ class DateTime { }
 class ResultRange extends Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.m_uiOffset = stream.readUInt32LE();
@@ -157,7 +153,7 @@ class ResultRange extends Structure {
 class Result {
 	/**
 	 *
-	 * @param {Number} resultCode
+	 * @param {number} resultCode Result code
 	 */
 	constructor(resultCode) {
 		this.resultCode = resultCode;

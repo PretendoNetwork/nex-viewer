@@ -1,6 +1,12 @@
+const Connection = require('./connection'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('./types');
 
 class Stream {
+	/**
+	 * 
+	 * @param {Buffer} buffer Buffer object
+	 * @param {Connection} connection NEX connection
+	 */
 	constructor(buffer, connection) {
 		this.connection = connection; // Used for NEX type settings
 		this._buffer = buffer;
@@ -9,7 +15,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Boolean
+	 * @returns {boolean} True if has data left to read
 	 */
 	hasDataLeft() {
 		return this._offset < this._buffer.length;
@@ -17,7 +23,7 @@ class Stream {
 
 	/**
 	 *
-	 * @param {Number} value
+	 * @param {number} value Bytes to skip
 	 */
 	skip(value) {
 		this._offset += value;
@@ -25,8 +31,8 @@ class Stream {
 
 	/**
 	 *
-	 * @param {Number} len
-	 * @returns Buffer
+	 * @param {number} len Bytes to read
+	 * @returns {Buffer} Read bytes
 	 */
 	read(len) {
 		const read = this._buffer.subarray(this._offset, this._offset + len);
@@ -37,8 +43,8 @@ class Stream {
 
 	/**
 	 *
-	 * @param {Number} len
-	 * @returns Buffer
+	 * @param {number} len Bytes to read
+	 * @returns {Buffer} Read bytes
 	 */
 	readBytes(len) {
 		return this.read(len);
@@ -46,7 +52,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Buffer
+	 * @returns {Buffer} Rest of the stream from current offset
 	 */
 	readRest() {
 		return this.readBytes(this._buffer.length - this._offset);
@@ -54,7 +60,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readUInt8() {
 		return this.readBytes(1).readUInt8();
@@ -62,7 +68,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readInt8() {
 		return this.readBytes(1).readInt8();
@@ -70,7 +76,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readUInt16BE() {
 		return this.readBytes(2).readUInt16BE();
@@ -78,7 +84,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readUInt16LE() {
 		return this.readBytes(2).readUInt16LE();
@@ -86,7 +92,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readInt16BE() {
 		return this.readBytes(2).readInt16BE();
@@ -94,7 +100,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readInt16LE() {
 		return this.readBytes(2).readInt16LE();
@@ -102,7 +108,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readUInt32BE() {
 		return this.readBytes(4).readUInt32BE();
@@ -110,7 +116,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readUInt32LE() {
 		return this.readBytes(4).readUInt32LE();
@@ -118,7 +124,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readInt32BE() {
 		return this.readBytes(4).readInt32BE();
@@ -126,7 +132,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readInt32LE() {
 		return this.readBytes(4).readInt32LE();
@@ -134,7 +140,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readUInt64BE() {
 		return this.readBytes(8).readBigUInt64BE();
@@ -142,7 +148,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readUInt64LE() {
 		return this.readBytes(8).readBigUInt64LE();
@@ -150,7 +156,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readInt64BE() {
 		return this.readBytes(8).readBigInt64BE();
@@ -158,7 +164,7 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Number
+	 * @returns {number} Read number
 	 */
 	readInt64LE() {
 		return this.readBytes(8).readBigInt64LE();
@@ -166,14 +172,14 @@ class Stream {
 
 	/**
 	 *
-	 * @returns Boolean
+	 * @returns {boolean} Read boolean
 	 */
 	readBoolean() {
 		return Boolean(this.readUInt8());
 	}
 
 	/**
-	 * @returns String
+	 * @returns {string} NEX string
 	 */
 	readNEXString() {
 		const length = this.readUInt16LE();
@@ -183,7 +189,7 @@ class Stream {
 	}
 
 	/**
-	 * @returns Buffer
+	 * @returns {Buffer} NEX Buffer
 	 */
 	readNEXBuffer() {
 		const length = this.readUInt32LE();
@@ -192,7 +198,7 @@ class Stream {
 	}
 
 	/**
-	 * @returns Buffer
+	 * @returns {Buffer} NEX qBuffer
 	 */
 	readNEXQBuffer() {
 		const length = this.readUInt16LE();
@@ -202,38 +208,55 @@ class Stream {
 
 	/**
 	 *
-	 * @param {(Function|NEXTypes.Structure)} method
-	 * @returns Array
+	 * @param {(Function|NEXTypes.Structure)} input Function to be ran or Structure to be parsed x times. x=list length
+	 * @returns {Array} NEX List<input>
 	 */
-	readNEXList(method) {
+	readNEXList(input) {
 		const list = [];
 
 		const length = this.readUInt32LE();
 
 		for (let i = 0; i < length; i++) {
-			if (method.prototype instanceof NEXTypes.Structure) {
-				list.push(this.readNEXStructure.call(this, method));
+			if (input.prototype instanceof NEXTypes.Structure) {
+				list.push(this.readNEXStructure.call(this, input));
 			} else {
-				list.push(method.call(this));
+				list.push(input.call(this));
 			}
 		}
 
 		return list;
 	}
 
+	/**
+	 *
+	 * @returns {NEXTypes.StationURL} NEX StationURL
+	 */
 	readNEXStationURL() {
 		return new NEXTypes.StationURL(this.readNEXString());
 	}
 
+	/**
+	 *
+	 * @returns {number} NEX DateTime
+	 */
 	readNEXDateTime() {
 		// TODO - Return a NEXTypes.DateTime
 		return this.readUInt64LE();
 	}
 
+	/**
+	 *
+	 * @returns {NEXTypes.Result} NEX Result
+	 */
 	readNEXResult() {
 		return new NEXTypes.Result(this.readUInt32LE());
 	}
 
+	/**
+	 *
+	 * @param {NEXTypes.Structure} cls NEX Structure definition
+	 * @returns {NEXTypes.Structure} Extracted NEX Structure
+	 */
 	readNEXStructure(cls) {
 		const instance = new cls();
 		instance.extract(this);
@@ -241,6 +264,10 @@ class Stream {
 		return instance;
 	}
 
+	/**
+	 *
+	 * @returns {NEXTypes.Structure} Extracted NEX Structure
+	 */
 	readNEXAnyDataHolder() {
 		return this.readNEXStructure(NEXTypes.AnyDataHolder).data;
 	}

@@ -1,10 +1,10 @@
-const Stream = require('../../stream');
+const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
 class AuthenticationInfo extends NEXTypes.Data {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.m_authToken = stream.readNEXString();

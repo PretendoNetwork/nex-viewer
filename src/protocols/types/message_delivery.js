@@ -1,10 +1,10 @@
-const Stream = require('../../stream');
+const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
 class UserMessage extends NEXTypes.Data {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.m_uiID = stream.readUInt32LE();
@@ -22,7 +22,7 @@ class UserMessage extends NEXTypes.Data {
 class MessageRecipient extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.m_uiRecipientType = stream.readUInt32LE();
@@ -34,7 +34,7 @@ class MessageRecipient extends NEXTypes.Structure {
 class TextMessage extends UserMessage {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.m_strTextBody = stream.readNEXString();
@@ -44,7 +44,7 @@ class TextMessage extends UserMessage {
 class BinaryMessage extends UserMessage {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.m_binaryBody = stream.readNEXQBuffer();

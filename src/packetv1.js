@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const Connection = require('./connection'); // eslint-disable-line no-unused-vars
 const Packet = require('./packet');
 const Stream = require('./stream');
 const { md5 } = require('./util');
@@ -12,8 +13,8 @@ const OPTION_MAX_SUBSTREAM_ID = 4;
 class PacketV1 extends Packet {
 	/**
 	 *
-	 * @param {Connection} connection
-	 * @param {Buffer} data
+	 * @param {Connection} connection NEX connection
+	 * @param {Buffer} data Packet data
 	 */
 	constructor(connection, data) {
 		super(connection, data);
@@ -77,31 +78,32 @@ class PacketV1 extends Packet {
 			const optionSize = stream.readUInt8();
 
 			switch (optionId) {
-				case OPTION_SUPPORTED_FUNCTIONS:
-					const optionData = stream.readUInt32LE();
-					this.prudpProtocolMinorVersion = optionData & 0xFF;
-					this.supportedFunctions = optionData >> 8;
-					break;
-				case OPTION_CONNECTION_SIGNATURE:
-					this.connectionSignature = stream.readBytes(optionSize);
-					break;
-				case OPTION_FRAGMENT_ID:
-					this.fragmentId = stream.readUInt8();
-					break;
-				case OPTION_INITIAL_SEQUENCE_ID:
-					this.initialSequenceId = stream.readUInt16LE();
-					break;
-				case OPTION_MAX_SUBSTREAM_ID:
-					this.maximumSubstreamId = stream.readUInt8();
-					break;
+			case OPTION_SUPPORTED_FUNCTIONS: {
+				const optionData = stream.readUInt32LE();
+				this.prudpProtocolMinorVersion = optionData & 0xFF;
+				this.supportedFunctions = optionData >> 8;
+				break;
+			}
+			case OPTION_CONNECTION_SIGNATURE:
+				this.connectionSignature = stream.readBytes(optionSize);
+				break;
+			case OPTION_FRAGMENT_ID:
+				this.fragmentId = stream.readUInt8();
+				break;
+			case OPTION_INITIAL_SEQUENCE_ID:
+				this.initialSequenceId = stream.readUInt16LE();
+				break;
+			case OPTION_MAX_SUBSTREAM_ID:
+				this.maximumSubstreamId = stream.readUInt8();
+				break;
 			}
 		}
 	}
 
 	/**
 	 *
-	 * @param {String} [key]
-	 * @returns Buffer
+	 * @param {string} [key] Optional access key
+	 * @returns {Buffer} PRUDPv1 packet signature
 	 */
 	calculateSignature(key) {
 		let signatureKey = this.connection.signatureKey;

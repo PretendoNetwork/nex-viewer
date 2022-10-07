@@ -1,4 +1,4 @@
-const Stream = require('../../stream');
+const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
 // **************************
@@ -8,7 +8,7 @@ const NEXTypes = require('../../types');
 class DataStoreKeyValue extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.key = stream.readNEXString();
@@ -19,7 +19,7 @@ class DataStoreKeyValue extends NEXTypes.Structure {
 class DataStorePermission extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.permission = stream.readUInt8();
@@ -30,7 +30,7 @@ class DataStorePermission extends NEXTypes.Structure {
 class DataStorePrepareGetParamV1 extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt32LE();
@@ -41,7 +41,7 @@ class DataStorePrepareGetParamV1 extends NEXTypes.Structure {
 class DataStoreRatingInitParamWithSlot extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.slot = stream.readInt8();
@@ -52,7 +52,7 @@ class DataStoreRatingInitParamWithSlot extends NEXTypes.Structure {
 class DataStoreRatingInitParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.flag = stream.readUInt8();
@@ -69,7 +69,7 @@ class DataStoreRatingInitParam extends NEXTypes.Structure {
 class DataStorePersistenceTarget extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.ownerId = stream.readUInt32LE();
@@ -84,7 +84,7 @@ class DataStorePersistenceTarget extends NEXTypes.Structure {
 class DataStoreReqGetInfoV1 extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.url = stream.readNEXString();
@@ -97,7 +97,7 @@ class DataStoreReqGetInfoV1 extends NEXTypes.Structure {
 class DataStoreReqGetInfo extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.url = stream.readNEXString();
@@ -111,7 +111,7 @@ class DataStoreReqGetInfo extends NEXTypes.Structure {
 class DataStorePreparePostParamV1 extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.size = stream.readUInt32LE();
@@ -132,7 +132,7 @@ class DataStorePreparePostParamV1 extends NEXTypes.Structure {
 class DataStoreReqPostInfoV1 extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt32LE();
@@ -146,7 +146,7 @@ class DataStoreReqPostInfoV1 extends NEXTypes.Structure {
 class DataStoreCompletePostParamV1 extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt32LE();
@@ -157,7 +157,7 @@ class DataStoreCompletePostParamV1 extends NEXTypes.Structure {
 class DataStoreDeleteParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
@@ -168,7 +168,7 @@ class DataStoreDeleteParam extends NEXTypes.Structure {
 class DataStoreChangeMetaParamV1 extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
@@ -186,7 +186,7 @@ class DataStoreChangeMetaParamV1 extends NEXTypes.Structure {
 class DataStoreGetMetaParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
@@ -199,7 +199,7 @@ class DataStoreGetMetaParam extends NEXTypes.Structure {
 class DataStoreMetaInfo extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
@@ -227,7 +227,7 @@ class DataStoreMetaInfo extends NEXTypes.Structure {
 class DataStoreRatingInfoWithSlot extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.slot = stream.readInt8();
@@ -238,7 +238,7 @@ class DataStoreRatingInfoWithSlot extends NEXTypes.Structure {
 class DataStoreRatingInfo extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.totalValue = stream.readInt64LE();
@@ -250,7 +250,7 @@ class DataStoreRatingInfo extends NEXTypes.Structure {
 class DataStorePrepareUpdateParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readInt64LE();
@@ -263,7 +263,7 @@ class DataStorePrepareUpdateParam extends NEXTypes.Structure {
 class DataStoreReqUpdateInfo extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.version = stream.readUInt32LE();
@@ -277,7 +277,7 @@ class DataStoreReqUpdateInfo extends NEXTypes.Structure {
 class DataStoreCompleteUpdateParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
@@ -289,7 +289,7 @@ class DataStoreCompleteUpdateParam extends NEXTypes.Structure {
 class DataStoreSearchParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.searchTarget = stream.readUInt8();
@@ -315,7 +315,7 @@ class DataStoreSearchParam extends NEXTypes.Structure {
 class DataStoreSearchResult extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.totalCount = stream.readUInt32LE();
@@ -327,7 +327,7 @@ class DataStoreSearchResult extends NEXTypes.Structure {
 class DataStoreGetNotificationUrlParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.previousUrl = stream.readNEXString();
@@ -337,7 +337,7 @@ class DataStoreGetNotificationUrlParam extends NEXTypes.Structure {
 class DataStoreReqGetNotificationUrlInfo extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.url = stream.readNEXString();
@@ -350,7 +350,7 @@ class DataStoreReqGetNotificationUrlInfo extends NEXTypes.Structure {
 class DataStoreGetNewArrivedNotificationsParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.lastNotificationId = stream.readUInt64LE();
@@ -361,7 +361,7 @@ class DataStoreGetNewArrivedNotificationsParam extends NEXTypes.Structure {
 class DataStoreNotificationV1 extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.notificationId = stream.readUInt64LE();
@@ -372,7 +372,7 @@ class DataStoreNotificationV1 extends NEXTypes.Structure {
 class DataStoreRatingTarget extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
@@ -383,7 +383,7 @@ class DataStoreRatingTarget extends NEXTypes.Structure {
 class DataStoreRateObjectParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.ratingValue = stream.readInt32LE();
@@ -395,7 +395,7 @@ class DataStoreRateObjectParam extends NEXTypes.Structure {
 class DataStoreGetSpecificMetaParamV1 extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataIds = stream.readNEXList(stream.readUInt32LE);
@@ -405,7 +405,7 @@ class DataStoreGetSpecificMetaParamV1 extends NEXTypes.Structure {
 class DataStoreSpecificMetaInfoV1 extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt32LE();
@@ -419,7 +419,7 @@ class DataStoreSpecificMetaInfoV1 extends NEXTypes.Structure {
 class DataStoreTouchObjectParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
@@ -431,7 +431,7 @@ class DataStoreTouchObjectParam extends NEXTypes.Structure {
 class DataStoreRatingLog extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.isRated = stream.readBoolean();
@@ -444,7 +444,7 @@ class DataStoreRatingLog extends NEXTypes.Structure {
 class DataStorePersistenceInfo extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.ownerId = stream.readUInt32LE();
@@ -456,7 +456,7 @@ class DataStorePersistenceInfo extends NEXTypes.Structure {
 class DataStoreReqGetAdditionalMeta extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.ownerId = stream.readUInt32LE();
@@ -469,7 +469,7 @@ class DataStoreReqGetAdditionalMeta extends NEXTypes.Structure {
 class DataStorePasswordInfo extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
@@ -481,7 +481,7 @@ class DataStorePasswordInfo extends NEXTypes.Structure {
 class DataStorePrepareGetParam extends NEXTypes.Structure {
 	/**
 	 *
-	 * @param {Stream} stream
+	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();

@@ -1,7 +1,7 @@
-const Packet = require('../packet');
-const PacketV0 = require('../packetv0');
-const PacketV1 = require('../packetv1');
-const RMCMessage = require('../rmc');
+const Packet = require('../packet'); // eslint-disable-line no-unused-vars
+const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
+const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
+const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 const DataStoreTypes = require('./types/datastore');
 
@@ -55,7 +55,7 @@ class DataStore {
 		RateObjectsWithPosting: 0x2c,
 		GetObjectInfos: 0x2d,
 		SearchObjectLight: 0x2e
-	}
+	};
 
 	static Handlers = {
 		0x01: DataStore.PrepareGetObjectV1,
@@ -104,11 +104,11 @@ class DataStore {
 		0x2c: DataStore.RateObjectsWithPosting,
 		0x2d: DataStore.GetObjectInfos,
 		0x2e: DataStore.SearchObjectLight
-	}
+	};
 
 	/**
 	 *
-	 * @param {(Packet|PacketV0|PacketV1)} packet
+	 * @param {(Packet|PacketV0|PacketV1)} packet PRUDP packet
 	 */
 	static handlePacket(packet) {
 		const methodId = packet.rmcMessage.methodId;
@@ -127,112 +127,112 @@ class DataStore {
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static PrepareGetObjectV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStorePrepareGetParamV1)
-			}
+			};
 		} else {
 			return {
 				pReqGetInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqGetInfoV1)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static PreparePostObjectV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParamV1)
-			}
+			};
 		} else {
 			return {
 				pReqPostInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqPostInfoV1)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static CompletePostObjectV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreCompletePostParamV1)
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static DeleteObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreDeleteParam)
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static DeleteObjects(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				params: stream.readNEXList(DataStoreTypes.DataStoreDeleteParam),
 				transactional: stream.readBoolean()
-			}
+			};
 		} else {
 			return {
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static ChangeMetaV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreChangeMetaParamV1)
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static ChangeMetasV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
@@ -240,146 +240,146 @@ class DataStore {
 				dataIds: stream.readNEXList(stream.readUInt64LE),
 				params: stream.readNEXList(DataStoreTypes.DataStoreChangeMetaParamV1),
 				transactional: stream.readBoolean()
-			}
+			};
 		} else {
 			return {
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetMeta(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetMetaParam)
-			}
+			};
 		} else {
 			return {
 				pMetaInfo: stream.readNEXStructure(DataStoreTypes.DataStoreMetaInfo)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetMetas(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				dataIds: stream.readNEXList(stream.readUInt64LE),
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetMetaParam)
-			}
+			};
 		} else {
 			return {
 				pMetaInfo: stream.readNEXList(DataStoreTypes.DataStoreMetaInfo),
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static PrepareUpdateObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStorePrepareUpdateParam)
-			}
+			};
 		} else {
 			return {
 				pReqUpdateInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqUpdateInfo),
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static CompleteUpdateObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreCompleteUpdateParam)
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static SearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam)
-			}
+			};
 		} else {
 			return {
 				pSearchResult: stream.readNEXStructure(DataStoreTypes.DataStoreSearchResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetNotificationUrl(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetNotificationUrlParam)
-			}
+			};
 		} else {
 			return {
 				info: stream.readNEXStructure(DataStoreTypes.DataStoreReqGetNotificationUrlInfo)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetNewArrivedNotificationsV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetNewArrivedNotificationsParam)
-			}
+			};
 		} else {
 			return {
 				pResult: stream.readNEXStructure(DataStoreTypes.DataStoreNotificationV1),
 				pHasNext: stream.readBoolean()
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static RateObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
@@ -387,312 +387,294 @@ class DataStore {
 				target: stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget),
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreRateObjectParam),
 				fetchRatings: stream.readBoolean()
-			}
+			};
 		} else {
 			return {
 				pRating: stream.readNEXStructure(DataStoreTypes.DataStoreRatingInfo)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetRating(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				target: stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget),
 				accessPassword: stream.readUInt64LE()
-			}
+			};
 		} else {
 			return {
 				pRating: stream.readNEXStructure(DataStoreTypes.DataStoreRatingInfo)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetRatings(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				dataIds: stream.readNEXList(stream.readUInt64LE),
 				accessPassword: stream.readUInt64LE()
-			}
+			};
 		} else {
 			return {
 				pRatings: stream.readNEXList(() => stream.readNEXList(DataStoreTypes.DataStoreRatingInfoWithSlot)), // * 2D List
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static ResetRating(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				target: stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget),
 				accessPassword: stream.readUInt64LE()
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static ResetRatings(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				dataIds: stream.readNEXList(stream.readUInt64LE),
 				transactional: stream.readBoolean()
-			}
+			};
 		} else {
 			return {
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetSpecificMetaV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetSpecificMetaParamV1)
-			}
+			};
 		} else {
 			return {
 				pMetaInfos: stream.readNEXList(DataStoreTypes.DataStoreSpecificMetaInfoV1)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static PostMetaBinary(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParam)
-			}
+			};
 		} else {
 			return {
 				dataId: stream.readUInt64LE()
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static TouchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreTouchObjectParam)
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetRatingWithLog(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				target: stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget),
 				accessPassword: stream.readUInt64LE()
-			}
+			};
 		} else {
 			return {
 				pRating: stream.readNEXStructure(DataStoreTypes.DataStoreRatingInfo),
 				pRatingLog: stream.readNEXStructure(DataStoreTypes.DataStoreRatingLog)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static PreparePostObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParam)
-			}
+			};
 		} else {
 			return {
 				pReqPostInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqPostInfo)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static PrepareGetObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStorePrepareGetParam)
-			}
+			};
 		} else {
 			return {
 				pReqGetInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqGetInfo)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static CompletePostObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreCompletePostParam)
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetNewArrivedNotifications(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetNewArrivedNotificationsParam)
-			}
+			};
 		} else {
 			return {
 				pResult: stream.readNEXList(DataStoreTypes.DataStoreNotification),
 				pHasNext: stream.readBoolean()
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetSpecificMeta(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetSpecificMetaParam)
-			}
+			};
 		} else {
 			return {
 				pMetaInfos: stream.readNEXList(DataStoreTypes.DataStoreSpecificMetaInfo)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
-	 */
-	static GetSpecificMeta(rmcMessage, stream) {
-		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetSpecificMetaParam)
-			}
-		} else {
-			return {
-				pMetaInfos: stream.readNEXList(DataStoreTypes.DataStoreSpecificMetaInfo)
-			}
-		}
-	}
-
-	/**
-	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetPersistenceInfo(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				ownerId: stream.readUInt32LE(),
 				persistenceSlotId: stream.readUInt16LE()
-			}
+			};
 		} else {
 			return {
 				pPersistenceInfo: stream.readNEXList(DataStoreTypes.DataStorePersistenceInfo)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetPersistenceInfos(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				ownerId: stream.readUInt32LE(),
 				persistenceSlotIds: stream.readNEXList(stream.readUInt16LE)
-			}
+			};
 		} else {
 			return {
 				pPersistenceInfo: stream.readNEXList(DataStoreTypes.DataStorePersistenceInfo),
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static PerpetuateObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
@@ -700,141 +682,141 @@ class DataStore {
 				persistenceSlotId: stream.readUInt16LE(),
 				dataId: stream.readUInt64LE(),
 				deleteLastObject: stream.readBoolean()
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static UnperpetuateObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				persistenceSlotId: stream.readUInt16LE(),
 				deleteLastObject: stream.readBoolean()
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static PrepareGetObjectOrMetaBinary(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStorePrepareGetParam)
-			}
+			};
 		} else {
 			return {
 				pReqGetInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqGetInfo),
 				pReqGetAdditionalMeta: stream.readNEXStructure(DataStoreTypes.DataStoreReqGetAdditionalMeta)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetPasswordInfo(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				dataId: stream.readUInt64LE()
-			}
+			};
 		} else {
 			return {
 				pPasswordInfo: stream.readNEXStructure(DataStoreTypes.DataStorePasswordInfo)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetPasswordInfos(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				dataIds: stream.readNEXList(stream.readUInt64LE)
-			}
+			};
 		} else {
 			return {
 				pPasswordInfo: stream.readNEXList(DataStoreTypes.DataStorePasswordInfo),
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetMetasMultipleParam(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				params: stream.readNEXList(DataStoreTypes.DataStoreGetMetaParam)
-			}
+			};
 		} else {
 			return {
 				pMetaInfo: stream.readNEXList(DataStoreTypes.DataStoreMetaInfo),
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static CompletePostObjects(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				dataIds: stream.readNEXList(stream.readUInt64LE)
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static ChangeMeta(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreChangeMetaParam)
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static ChangeMetas(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
@@ -842,19 +824,19 @@ class DataStore {
 				dataIds: stream.readNEXList(stream.readUInt64LE),
 				params: stream.readNEXList(DataStoreTypes.DataStoreChangeMetaParam),
 				transactional: stream.readBoolean()
-			}
+			};
 		} else {
 			return {
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static RateObjects(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
@@ -863,37 +845,37 @@ class DataStore {
 				params: stream.readNEXList(DataStoreTypes.DataStoreRateObjectParam),
 				transactional: stream.readBoolean(),
 				fetchRatings: stream.readBoolean()
-			}
+			};
 		} else {
 			return {
 				pRatings: stream.readNEXList(DataStoreTypes.DataStoreRatingInfo),
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static PostMetaBinaryWithDataId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				dataId: stream.readUInt64LE(),
 				param: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParam)
-			}
+			};
 		} else {
-			return {} // * No response
+			return {}; // * No response
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static PostMetaBinariesWithDataId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
@@ -901,19 +883,19 @@ class DataStore {
 				dataIds: stream.readNEXList(stream.readUInt64LE),
 				params: stream.readNEXList(DataStoreTypes.DataStorePreparePostParam),
 				transactional: stream.readBoolean()
-			}
+			};
 		} else {
 			return {
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static RateObjectWithPosting(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
@@ -922,19 +904,19 @@ class DataStore {
 				rateParam: stream.readNEXStructure(DataStoreTypes.DataStoreRateObjectParam),
 				postParam: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParam),
 				transactional: stream.readBoolean()
-			}
+			};
 		} else {
 			return {
 				pRating: stream.readNEXStructure(DataStoreTypes.DataStoreRatingInfo)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static RateObjectsWithPosting(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
@@ -944,49 +926,49 @@ class DataStore {
 				postParam: stream.readNEXList(DataStoreTypes.DataStorePreparePostParam),
 				transactional: stream.readBoolean(),
 				fetchRatings: stream.readBoolean()
-			}
+			};
 		} else {
 			return {
 				pRatings: stream.readNEXList(DataStoreTypes.DataStoreRatingInfo),
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static GetObjectInfos(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				dataIds: stream.readNEXList(stream.readUInt64LE)
-			}
+			};
 		} else {
 			return {
 				pInfos: stream.readNEXList(DataStoreTypes.DataStoreReqGetInfo),
 				pResults: stream.readNEXList(stream.readNEXResult)
-			}
+			};
 		}
 	}
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static SearchObjectLight(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam)
-			}
+			};
 		} else {
 			return {
 				pSearchResult: stream.readNEXStructure(DataStoreTypes.DataStoreSearchResult)
-			}
+			};
 		}
 	}
 }

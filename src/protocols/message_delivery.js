@@ -1,7 +1,7 @@
-const Packet = require('../packet');
-const PacketV0 = require('../packetv0');
-const PacketV1 = require('../packetv1');
-const RMCMessage = require('../rmc');
+const Packet = require('../packet'); // eslint-disable-line no-unused-vars
+const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
+const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
+const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
 require('./types/message_delivery');
@@ -11,15 +11,15 @@ class MessageDelivery {
 
 	static Methods = {
 		DeliverMessage: 0x1
-	}
+	};
 
 	static Handlers = {
 		0x1: MessageDelivery.DeliverMessage
-	}
+	};
 
 	/**
 	 *
-	 * @param {(Packet|PacketV0|PacketV1)} packet
+	 * @param {(Packet|PacketV0|PacketV1)} packet PRUDP packet
 	 */
 	static handlePacket(packet) {
 		const methodId = packet.rmcMessage.methodId;
@@ -38,18 +38,18 @@ class MessageDelivery {
 
 	/**
 	 *
-	 * @param {RMCMessage} rmcMessage
-	 * @param {Stream} stream
-	 * @returns Object
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
 	 */
 	static DeliverMessage(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				oUserMessage: stream.readNEXAnyDataHolder()
-			}
+			};
 		} else {
 			// * No response
-			return {}
+			return {};
 		}
 	}
 }

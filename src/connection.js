@@ -2,9 +2,9 @@ const fs = require('fs');
 const os = require('os');
 const crypto = require('crypto');
 const accessKeys = require('./access_keys');
-const Packet = require('./packet');
-const PacketV0 = require('./packetv0');
-const PacketV1 = require('./packetv1');
+const Packet = require('./packet'); // eslint-disable-line no-unused-vars
+const PacketV0 = require('./packetv0'); // eslint-disable-line no-unused-vars
+const PacketV1 = require('./packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('./rmc');
 const Protocols = require('./protocols');
 const kerberos = require('./kerberos');
@@ -26,7 +26,7 @@ if (fs.existsSync(__dirname + '/../nex-keys.txt')) { // check if nex-keys is in 
 }
 
 if (!fs.existsSync(NEX_KEYS_FILE_PATH)) {
-	throw new Error('Could not locate nex-keys.txt file')
+	throw new Error('Could not locate nex-keys.txt file');
 }
 
 // * Parse out the NEX keys
@@ -46,14 +46,14 @@ for (let pid in NEX_KEYS) {
 // * Write file back to disk
 let NEW_NEX_KEYS = '';
 for (let pid in NEX_KEYS) {
-	NEW_NEX_KEYS += `${pid}:${NEX_KEYS[pid]}\n`
+	NEW_NEX_KEYS += `${pid}:${NEX_KEYS[pid]}\n`;
 }
-fs.writeFileSync(NEX_KEYS_FILE_PATH, NEW_NEX_KEYS)
+fs.writeFileSync(NEX_KEYS_FILE_PATH, NEW_NEX_KEYS);
 
 class Connection {
 	/**
 	 *
-	 * @param {String} discriminator
+	 * @param {string} discriminator Unique connection identifer
 	 */
 	constructor(discriminator) {
 		this.discriminator = discriminator;
@@ -79,18 +79,16 @@ class Connection {
 
 	/**
 	 *
-	 * @param {(String|Buffer)} key
+	 * @param {(string|Buffer)} key Crypto key
 	 */
 	setRC4Key(key) {
-		//this.rc4CipherToClient = new RC4(key);
-		//this.rc4CipherToServer = new RC4(key);
 		this.rc4CipherToClient = crypto.createDecipheriv('rc4', key, '');
 		this.rc4CipherToServer = crypto.createDecipheriv('rc4', key, '');
 	}
 
 	/**
 	 *
-	 * @returns Boolean
+	 * @returns {boolean} True if server is friends
 	 */
 	isFriendsServer() {
 		return this.accessKey === 'ridfebb9';
@@ -98,7 +96,7 @@ class Connection {
 
 	/**
 	 *
-	 * @param {(Packet|PacketV0|PacketV1)} packet
+	 * @param {(Packet|PacketV0|PacketV1)} packet PRUDP packet
 	 */
 	handlePacket(packet) {
 		if (this.prudpVersion === undefined) {

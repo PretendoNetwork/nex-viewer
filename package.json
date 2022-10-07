@@ -13,10 +13,11 @@
     "pcap-ng-parser": "^1.0.0",
     "private-ip": "^2.3.4"
   },
-  "devDependencies": {
-    "eslint": "^7.15.0"
-  },
   "bin": {
     "nex-viewer": "src/cli.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.24.0",
+    "eslint-plugin-jsdoc": "^39.3.6"
   }
 }
