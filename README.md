@@ -6,7 +6,7 @@
 - [x] PRUDP v0 packet parsing
 - [x] PRUDP v1 packet parsing
 - [ ] Fragmented payloads
-- [ ] SMM DataStore method 50 (0x32) is completely busted
+- [ ] SMM DataStore method 50 (0x32) (`DataStoreSMM::GetCustomRankingByDataId`) is completely busted
 - [ ] NEX Protocols (there is mixed support, some protocols are partially implemented)
 - [ ] CLI Display
 
