@@ -88,6 +88,22 @@ class Stream {
 	 *
 	 * @returns Number
 	 */
+	readInt16BE() {
+		return this.readBytes(2).readInt16BE();
+	}
+
+	/**
+	 *
+	 * @returns Number
+	 */
+	readInt16LE() {
+		return this.readBytes(2).readInt16LE();
+	}
+
+	/**
+	 *
+	 * @returns Number
+	 */
 	readUInt32BE() {
 		return this.readBytes(4).readUInt32BE();
 	}
@@ -104,6 +120,22 @@ class Stream {
 	 *
 	 * @returns Number
 	 */
+	readInt32BE() {
+		return this.readBytes(4).readInt32BE();
+	}
+
+	/**
+	 *
+	 * @returns Number
+	 */
+	readInt32LE() {
+		return this.readBytes(4).readInt32LE();
+	}
+
+	/**
+	 *
+	 * @returns Number
+	 */
 	readUInt64BE() {
 		return this.readBytes(8).readBigUInt64BE();
 	}
@@ -114,6 +146,14 @@ class Stream {
 	 */
 	readUInt64LE() {
 		return this.readBytes(8).readBigUInt64LE();
+	}
+
+	/**
+	 *
+	 * @returns Number
+	 */
+	readInt64BE() {
+		return this.readBytes(8).readBigInt64BE();
 	}
 
 	/**
