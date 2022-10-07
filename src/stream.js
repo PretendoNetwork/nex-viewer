@@ -165,6 +165,14 @@ class Stream {
 	}
 
 	/**
+	 *
+	 * @returns Boolean
+	 */
+	readBoolean() {
+		return Boolean(this.readUInt8());
+	}
+
+	/**
 	 * @returns String
 	 */
 	readNEXString() {
