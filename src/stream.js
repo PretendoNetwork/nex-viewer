@@ -23,6 +23,14 @@ class Stream {
 
 	/**
 	 *
+	 * @returns {number} Bytes left in the stream from current position
+	 */
+	remaining() {
+		return this._buffer.length - this._offset;
+	}
+
+	/**
+	 *
 	 * @param {number} value Bytes to skip
 	 */
 	skip(value) {
@@ -55,7 +63,7 @@ class Stream {
 	 * @returns {Buffer} Rest of the stream from current offset
 	 */
 	readRest() {
-		return this.readBytes(this._buffer.length - this._offset);
+		return this.readBytes(this.remaining());
 	}
 
 	/**
