@@ -3,8 +3,10 @@ const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
 const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
+
 const DataStoreTypes = require('./types/datastore');
 
+const DataStoreSMM = require('./patches/datastore_smm');
 class DataStore {
 	static ProtocolID = 0x73;
 
@@ -112,6 +114,12 @@ class DataStore {
 	 */
 	static handlePacket(packet) {
 		const methodId = packet.rmcMessage.methodId;
+
+		// Check if method is a SMM patched method
+		if (packet.connection.accessKey === '9f2b4678' && methodId >= 0x2D) {
+			DataStoreSMM.handlePacket(packet);
+			return;
+		}
 
 		const handler = DataStore.Handlers[methodId];
 
@@ -972,6 +980,5 @@ class DataStore {
 		}
 	}
 }
-
 
 module.exports = DataStore;
