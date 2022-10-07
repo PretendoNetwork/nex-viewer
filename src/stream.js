@@ -226,7 +226,7 @@ class Stream {
 
 		for (let i = 0; i < length; i++) {
 			if (input.prototype instanceof NEXTypes.Structure) {
-				list.push(this.readNEXStructure.call(this, input));
+				list.push(this.readNEXStructure(input));
 			} else {
 				list.push(input.call(this));
 			}
