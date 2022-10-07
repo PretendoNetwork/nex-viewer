@@ -492,6 +492,64 @@ class DataStorePrepareGetParam extends NEXTypes.Structure {
 	}
 }
 
+class DataStorePreparePostParam extends NEXTypes.Structure {
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.size = stream.readUInt32LE();
+		this.name = stream.readNEXString();
+		this.dataType = stream.readUInt16LE();
+		this.metaBinary = stream.readNEXQBuffer();
+		this.permission = stream.readNEXStructure(DataStorePermission);
+		this.delPermission = stream.readNEXStructure(DataStorePermission);
+		this.flag = stream.readUInt32LE();
+		this.period = stream.readUInt16LE();
+		this.referDataId = stream.readUInt32LE();
+		this.tags = stream.readNEXList(stream.readNEXString);
+		this.ratingInitParams = stream.readNEXList(DataStoreRatingInitParamWithSlot);
+		this.persistenceInitParam = stream.readNEXStructure(DataStorePersistenceInitParam);
+		this.extraData = stream.readNEXList(stream.readNEXString);
+	}
+}
+
+class DataStorePersistenceInitParam extends NEXTypes.Structure {
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.persistenceSlotId = stream.readUInt16LE();
+		this.deleteLastObject = stream.readBoolean();
+	}
+}
+
+class DataStoreReqPostInfo extends NEXTypes.Structure {
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.dataId = stream.readUInt64LE();
+		this.url = stream.readNEXString();
+		this.requestHeaders = stream.readNEXList(DataStoreKeyValue);
+		this.formFields = stream.readNEXList(DataStoreKeyValue);
+		this.rootCaCert = stream.readNEXBuffer();
+	}
+}
+
+class DataStoreCompletePostParam extends NEXTypes.Structure {
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.dataId = stream.readUInt64LE();
+		this.isSuccess = stream.readBoolean();
+	}
+}
+
 module.exports = {
 	DataStoreKeyValue,
 	DataStorePermission,
@@ -528,5 +586,9 @@ module.exports = {
 	DataStorePersistenceInfo,
 	DataStoreReqGetAdditionalMeta,
 	DataStorePasswordInfo,
-	DataStorePrepareGetParam
+	DataStorePrepareGetParam,
+	DataStorePreparePostParam,
+	DataStorePersistenceInitParam,
+	DataStoreReqPostInfo,
+	DataStoreCompletePostParam
 };
