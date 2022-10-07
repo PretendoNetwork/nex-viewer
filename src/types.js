@@ -149,8 +149,8 @@ class ResultRange extends Structure {
 	 * @param {Stream} stream
 	 */
 	parse(stream) {
-		this.offset = stream.readUInt32LE();
-		this.size = stream.readUInt32LE();
+		this.m_uiOffset = stream.readUInt32LE();
+		this.m_uiSize = stream.readUInt32LE();
 	}
 }
 
