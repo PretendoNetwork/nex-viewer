@@ -19,6 +19,12 @@ class Authentication {
 		LoginWithContext: 0x6
 	};
 
+	static MethodNames = Object.entries(Authentication.Methods).reduce((namesObject, entry) => {
+		const [key, value] = entry;
+		namesObject[value] = key;
+		return namesObject;
+	}, {});
+
 	static Handlers = {
 		0x1: Authentication.Login,
 		0x2: Authentication.LoginEx,
@@ -35,7 +41,7 @@ class Authentication {
 		const handler = Authentication.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown Authentication method ID ${methodId} (0x${methodId.toString(16)})`);
+			console.log(`Unknown Authentication method ID ${methodId} (0x${methodId.toString(16)}) (${Authentication.MethodNames[methodId]})`);
 			return;
 		}
 

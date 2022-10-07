@@ -18,6 +18,12 @@ class SecureConnection {
 		SendReport: 0x8
 	};
 
+	static MethodNames = Object.entries(SecureConnection.Methods).reduce((namesObject, entry) => {
+		const [key, value] = entry;
+		namesObject[value] = key;
+		return namesObject;
+	}, {});
+
 	static Handlers = {
 		0x1: SecureConnection.Register
 	};
@@ -32,7 +38,7 @@ class SecureConnection {
 		const handler = SecureConnection.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown SecureConnection method ID ${methodId} (0x${methodId.toString(16)})`);
+			console.log(`Unknown SecureConnection method ID ${methodId} (0x${methodId.toString(16)}) (${SecureConnection.MethodNames[methodId]})`);
 			return;
 		}
 

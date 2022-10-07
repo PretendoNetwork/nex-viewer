@@ -56,6 +56,12 @@ class DataStoreSMM {
 		ReportCourse: 0x57
 	};
 
+	static MethodNames = Object.entries(DataStoreSMM.Methods).reduce((namesObject, entry) => {
+		const [key, value] = entry;
+		namesObject[value] = key;
+		return namesObject;
+	}, {});
+
 	static Handlers = {
 		0x2d: DataStoreSMM.GetObjectInfos,
 		0x2e: DataStoreSMM.GetMetaByOwnerId,
@@ -112,7 +118,7 @@ class DataStoreSMM {
 		const handler = DataStoreSMM.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown DataStore (SMM) method ID 0x${methodId.toString(16)}`);
+			console.log(`Unknown DataStore (SMM) method ID ${methodId} (0x${methodId.toString(16)}) (${DataStoreSMM.MethodNames[methodId]})`);
 			return;
 		}
 

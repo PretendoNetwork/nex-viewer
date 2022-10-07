@@ -7,6 +7,7 @@ const Stream = require('../stream');
 const DataStoreTypes = require('./types/datastore');
 
 const DataStoreSMM = require('./patches/datastore_smm');
+
 class DataStore {
 	static ProtocolID = 0x73;
 
@@ -58,6 +59,12 @@ class DataStore {
 		GetObjectInfos: 0x2d,
 		SearchObjectLight: 0x2e
 	};
+
+	static MethodNames = Object.entries(DataStore.Methods).reduce((namesObject, entry) => {
+		const [key, value] = entry;
+		namesObject[value] = key;
+		return namesObject;
+	}, {});
 
 	static Handlers = {
 		0x01: DataStore.PrepareGetObjectV1,
@@ -124,7 +131,7 @@ class DataStore {
 		const handler = DataStore.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown DataStore method ID ${methodId} (0x${methodId.toString(16)})`);
+			console.log(`Unknown DataStore method ID ${methodId} (0x${methodId.toString(16)}) (${DataStore.MethodNames[methodId]})`);
 			return;
 		}
 

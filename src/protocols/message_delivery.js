@@ -13,6 +13,12 @@ class MessageDelivery {
 		DeliverMessage: 0x1
 	};
 
+	static MethodNames = Object.entries(MessageDelivery.Methods).reduce((namesObject, entry) => {
+		const [key, value] = entry;
+		namesObject[value] = key;
+		return namesObject;
+	}, {});
+
 	static Handlers = {
 		0x1: MessageDelivery.DeliverMessage
 	};
@@ -27,7 +33,7 @@ class MessageDelivery {
 		const handler = MessageDelivery.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown MessageDelivery method ID ${methodId} (0x${methodId.toString(16)})`);
+			console.log(`Unknown MessageDelivery method ID ${methodId} (0x${methodId.toString(16)}) (${MessageDelivery.MethodNames[methodId]})`);
 			return;
 		}
 
