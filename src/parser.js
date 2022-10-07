@@ -46,6 +46,17 @@ class NEXParser extends EventEmitter {
 			return;
 		}
 
+		// TODO - ON RARE OCCASIONS UDP PACKETS WHICH ARE NOT NEX BUT HAVE THE SAME HEADERS GET THROUGH
+		// ! FIND A WAY TO GET RID OF THESE
+		// ? For example, the following packet is an XID broadcast packet
+		// * 0000   ff ff ff ff ff ff fe e6 bf 25 b3 cd 00 06 00 01
+		// * 0010   af 81 01 00 40 00 15 11 1e cd 34 26 51 eb c0 a8
+		// * 0020   00 0d e9 fd f3 28 00 26 2e 52 ea d0 01 00 0f 16
+		// * 0030   53 c0 88 42 e9 00 c2 00 1a 5c 1a 52
+		// ? When decoded this packet has byte 24 set to 0x11 indicating a UDP packet
+		// ? Bytes 42-45 are also set to ea:d0:01, which just so happens to be the PRUDPv1 magic
+		// ? This packet gets treated as a PRUDPv1 packet as a result, even though it is not
+
 		let discriminator;
 		if (isPrivateIP(udpPacket.source)) {
 			// * client->server packet
