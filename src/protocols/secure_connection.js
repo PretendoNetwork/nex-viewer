@@ -1,6 +1,7 @@
 const Packet = require('../packet');
 const PacketV0 = require('../packetv0');
 const PacketV1 = require('../packetv1');
+const RMCMessage = require('../rmc');
 const Stream = require('../stream');
 
 class SecureConnection {
@@ -33,17 +34,18 @@ class SecureConnection {
 			return;
 		}
 
-		packet.rmcData = handler(packet);
+		const { rmcMessage } = packet;
+		const stream = new Stream(rmcMessage.body, packet.connection);
+		packet.rmcData = handler(rmcMessage, stream);
 	}
 
 	/**
 	 *
-	 * @param {(Packet|PacketV0|PacketV1)} packet
+	 * @param {RMCMessage} rmcMessage
+	 * @param {Stream} stream
+	 * @returns Object
 	 */
-	static Register(packet) {
-		const { rmcMessage } = packet;
-		const stream = new Stream(rmcMessage.body, packet.connection);
-
+	static Register(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				vecMyURLs: stream.readNEXList(stream.readNEXStationURL)

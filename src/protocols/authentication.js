@@ -1,6 +1,7 @@
 const Packet = require('../packet');
 const PacketV0 = require('../packetv0');
 const PacketV1 = require('../packetv1');
+const RMCMessage = require('../rmc');
 const Stream = require('../stream');
 const NEXTypes = require('../types');
 
@@ -51,17 +52,18 @@ class Authentication {
 			return;
 		}
 
-		packet.rmcData = handler(packet);
+		const { rmcMessage } = packet;
+		const stream = new Stream(rmcMessage.body, packet.connection);
+		packet.rmcData = handler(rmcMessage, stream);
 	}
 
 	/**
 	 *
-	 * @param {(Packet|PacketV0|PacketV1)} packet
+	 * @param {RMCMessage} rmcMessage
+	 * @param {Stream} stream
+	 * @returns Object
 	 */
-	static Login(packet) {
-		const { rmcMessage } = packet;
-		const stream = new Stream(rmcMessage.body, packet.connection);
-
+	static Login(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				strUserName: stream.readNEXString()
@@ -79,12 +81,11 @@ class Authentication {
 
 	/**
 	 *
-	 * @param {(Packet|PacketV0|PacketV1)} packet
+	 * @param {RMCMessage} rmcMessage
+	 * @param {Stream} stream
+	 * @returns Object
 	 */
-	static LoginEx(packet) {
-		const { rmcMessage } = packet;
-		const stream = new Stream(rmcMessage.body, packet.connection);
-
+	static LoginEx(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				strUserName: stream.readNEXString(),
@@ -103,12 +104,11 @@ class Authentication {
 
 	/**
 	 *
-	 * @param {(Packet|PacketV0|PacketV1)} packet
+	 * @param {RMCMessage} rmcMessage
+	 * @param {Stream} stream
+	 * @returns Object
 	 */
-	static RequestTicket(packet) {
-		const { rmcMessage } = packet;
-		const stream = new Stream(rmcMessage.body, packet.connection);
-
+	static RequestTicket(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				idSource: stream.readUInt32LE(),

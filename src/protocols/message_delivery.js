@@ -1,6 +1,7 @@
 const Packet = require('../packet');
 const PacketV0 = require('../packetv0');
 const PacketV1 = require('../packetv1');
+const RMCMessage = require('../rmc');
 const Stream = require('../stream');
 const NEXTypes = require('../types');
 
@@ -81,18 +82,18 @@ class MessageDelivery {
 			return;
 		}
 
-		packet.rmcData = handler(packet);
-		console.log(packet.rmcData)
+		const { rmcMessage } = packet;
+		const stream = new Stream(rmcMessage.body, packet.connection);
+		packet.rmcData = handler(rmcMessage, stream);
 	}
 
 	/**
 	 *
-	 * @param {(Packet|PacketV0|PacketV1)} packet
+	 * @param {RMCMessage} rmcMessage
+	 * @param {Stream} stream
+	 * @returns Object
 	 */
-	static DeliverMessage(packet) {
-		const { rmcMessage } = packet;
-		const stream = new Stream(rmcMessage.body, packet.connection);
-
+	static DeliverMessage(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				oUserMessage: stream.readNEXAnyDataHolder()
