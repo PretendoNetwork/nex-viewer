@@ -135,32 +135,35 @@ class Connection {
 			return;
 		}
 
-		if (packet.isSyn()) {
-			if (packet.isToServer() && !this.accessKey) {
-				// * Find access key
-				for (const key of accessKeys) {
-					let found = false;
+		if (packet.isToServer() && !this.accessKey) {
+			// * Find access key
+			for (const key of accessKeys) {
+				let found = false;
 
-					if (packet.version === 0) {
-						// TODO
-					} else {
-						const expectedSignature = packet.signature;
-						const calculatedSignature = packet.calculateSignature(key);
+				if (packet.version === 0) {
+					const expectedChecksum = packet.checksum;
+					const calculatedChecksum = packet.calculateChecksum(key);
 
-						if (expectedSignature.equals(calculatedSignature)) {
-							found = true;
-						}
+					if (expectedChecksum === calculatedChecksum) {
+						found = true;
 					}
+				} else {
+					const expectedSignature = packet.signature;
+					const calculatedSignature = packet.calculateSignature(key);
 
-					if (found) {
-						const keyBuffer = Buffer.from(key);
-						const signatureBase = keyBuffer.reduce((sum, byte) => sum + byte, 0);
-
-						this.accessKey = key;
-						this.signatureKey = md5(key);
-						this.accessKeySum.writeUInt32LE(signatureBase);
-						break;
+					if (expectedSignature.equals(calculatedSignature)) {
+						found = true;
 					}
+				}
+
+				if (found) {
+					const keyBuffer = Buffer.from(key);
+					const signatureBase = keyBuffer.reduce((sum, byte) => sum + byte, 0);
+
+					this.accessKey = key;
+					this.signatureKey = md5(key);
+					this.accessKeySum.writeUInt32LE(signatureBase);
+					break;
 				}
 			}
 		}
