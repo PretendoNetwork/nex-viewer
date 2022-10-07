@@ -40,7 +40,7 @@ class NEXParser extends EventEmitter {
 	 * @param {object} raw Raw WireShark packet as parsed by `pcap-ng-parser`
 	 */
 	handlePacket(raw) {
-		const { frame } = raw;
+		const { data: frame } = raw;
 		const udpPacket = this.parseUDPPacket(frame);
 
 		if (!udpPacket) {
