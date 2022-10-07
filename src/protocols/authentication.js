@@ -30,6 +30,8 @@ class Authentication {
 	 * @param {(Packet|PacketV0|PacketV1)} packet
 	 */
 	static handlePacket(packet) {
+		const methodId = packet.rmcMessage.methodId;
+		
 		const handler = Authentication.Handlers[packet.rmcMessage.methodId];
 
 		if (!handler) {

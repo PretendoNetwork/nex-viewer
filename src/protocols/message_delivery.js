@@ -22,10 +22,12 @@ class MessageDelivery {
 	 * @param {(Packet|PacketV0|PacketV1)} packet
 	 */
 	static handlePacket(packet) {
-		const handler = MessageDelivery.Handlers[packet.rmcMessage.methodId];
+		const methodId = packet.rmcMessage.methodId;
+
+		const handler = MessageDelivery.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown MessageDelivery method ID ${packet.rmcMessage.methodId} (0x${packet.rmcMessage.methodId.toString(16)})`);
+			console.log(`Unknown MessageDelivery method ID ${methodId} (0x${methodId.toString(16)})`);
 			return;
 		}
 

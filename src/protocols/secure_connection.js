@@ -27,10 +27,12 @@ class SecureConnection {
 	 * @param {(Packet|PacketV0|PacketV1)} packet
 	 */
 	static handlePacket(packet) {
-		const handler = SecureConnection.Handlers[packet.rmcMessage.methodId];
+		const methodId = packet.rmcMessage.methodId;
+
+		const handler = SecureConnection.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown SecureConnection method ID ${packet.rmcMessage.methodId} (0x${packet.rmcMessage.methodId.toString(16)})`);
+			console.log(`Unknown SecureConnection method ID ${methodId} (0x${methodId.toString(16)})`);
 			return;
 		}
 
