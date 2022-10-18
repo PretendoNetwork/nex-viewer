@@ -1,6 +1,8 @@
 const EventEmitter = require('node:events');
+const path = require('node:path');
 const fs = require('fs');
 const PCAPNGParser = require('pcap-ng-parser');
+const pcapp = require('pcap-parser');
 const isPrivateIP = require('private-ip');
 const PacketV0 = require('./packetv0');
 const PacketV1 = require('./packetv1');
@@ -27,12 +29,19 @@ class NEXParser extends EventEmitter {
 	 * @param {string} capturePath Path to the PCAP(NG) capture file
 	 */
 	parse(capturePath) {
-		const pcapNgParser = new PCAPNGParser();
+		const extension = path.extname(capturePath);
 
-		const captureStream = fs.createReadStream(capturePath);
+		if (extension !== '.pcapng' && extension !== '.pcap') {
+			throw new Error(`Invalid file type. Got ${extension}, expected .pcapng or .pcap`);
+		}
 
-		captureStream.pipe(pcapNgParser)
-			.on('data', this.handlePacket.bind(this));
+		if (extension === '.pcapng') {
+			const pcapNgParser = new PCAPNGParser();
+			fs.createReadStream(capturePath).pipe(pcapNgParser).on('data', this.handlePacket.bind(this));
+		} else {
+			const parser = pcapp.parse(capturePath);
+			parser.on('packet', this.handlePacket.bind(this));
+		}
 	}
 
 	/**
