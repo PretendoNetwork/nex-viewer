@@ -1,0 +1,53 @@
+Axiom Verge                  | 3.10.0
+Disney Infinity [2.0]        | 3.5.2
+Disney INFINITY              | 3.5.2
+DISNEY INFINITY 3.0          | 3.9.1
+SONIC LOST WORLD             | 3.3.0
+Trine 2                      | 3.0.1
+LOST REAVERS                 | 3.10.0
+Mario & Sonic Rio 2016       | 3.9.1
+Devil's Third                | 3.6.1
+Xenoblade Chronicles X       | 3.5.5
+XenobladeX                   | 3.5.5
+Mighty No. 9                 | 3.9.1
+MARIO & SONIC SOCHI 2014     | 3.4.0
+DKC: Tropical Freeze         | 3.4.0
+Minecraft: Wii U Edition     | 3.10.0
+DuckTales: Remastered        | 3.3.0
+POKKÉN TOURNAMENT            | 3.10.0
+FotNS: Ken's Rage 2          | 3.0.1
+Sonic Transformed            | 3.0.1
+RTK 12                       | 3.4.0
+Hyrule Warriors              | 3.8.0
+PUYOPUYOTETRIS               | 3.5.2
+Legend of Kay                | 3.8.3
+SI2                          | 3.6.1
+Runner2                      | 3.0.1
+Nova-111                     | 3.8.3
+OlliOlli                     | 3.6.1
+Mario Tennis: Ultra Smash    | 3.9.1
+Super Smash Bros.            | 3.6.27
+Wii Sports Club              | 3.4.7
+MARIO KART 8                 | 3.5.4
+Super Mario Maker            | 3.8.12
+Splatoon                     | 3.8.3
+MH3G HD Ver.                 | 3.0.5
+MH3U                         | 3.0.5
+Animal Crossing Plaza        | 3.5.1
+Star Fox Guard (Demo)        | 3.8.2
+Star Fox Guard               | 3.8.2
+BIOHAZARD REVELATIONS UE     | 3.2.1
+RESIDENT EVIL REVELATIONS    | 3.2.1
+役満 鳳凰                    | 3.6.14
+FAST Racing NEO              | 3.9.1
+TEKKEN TAG 2 Wii U EDITION   | 3.0.1
+WARRIORS OROCHI 3 Hyper      | 3.0.1
+PIKMIN 3                     | 3.3.0
+NINJA GAIDEN 3: Razor's Edge | 3.0.1
+Injustice: Gods Among Us     | 3.2.1
+Nano Assault Neo             | 3.0.1
+Terraria                     | 3.8.3
+Puddle                       | 3.0.1
+Game Party                   | 3.0.1
+Star Wars Pinball            | 3.0.1
+Zen Pinball 2                | 3.0.1

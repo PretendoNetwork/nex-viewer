@@ -26,7 +26,7 @@ class Structure {
 		const hierarchy = this.getHierarchy();
 
 		for (const cls of hierarchy) {
-			if (stream.connection.prudpProtocolMinorVersion >= 3) {
+			if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 5) {
 				cls.structureVersion = stream.readUInt8();
 				cls.contentLength = stream.readUInt32LE();
 			}

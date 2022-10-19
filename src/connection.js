@@ -1,7 +1,7 @@
 const fs = require('fs');
 const os = require('os');
 const crypto = require('crypto');
-const accessKeys = require('./access_keys');
+const titles = require('./titles.json');
 const Packet = require('./packet'); // eslint-disable-line no-unused-vars
 const PacketV0 = require('./packetv0'); // eslint-disable-line no-unused-vars
 const PacketV1 = require('./packetv1'); // eslint-disable-line no-unused-vars
@@ -64,7 +64,6 @@ class Connection {
 		this.signatureKey = null;
 		this.sessionKey = Buffer.alloc(0);
 		this.currentFragmentedPayload = Buffer.alloc(0);
-		this.prudpProtocolMinorVersion = 0;
 		this.clientConnectionSignature = Buffer.alloc(0);
 		this.serverConnectionSignature = Buffer.alloc(0);
 		this.rc4CipherToClient = crypto.createDecipheriv('rc4', 'CD&ML', '');
@@ -75,6 +74,15 @@ class Connection {
 		this.secureServerStationURL;
 		this.checkForSecureServer = false;
 		this.isSecureServer = false;
+
+		this.title = {
+			name: '',
+			nex_version: {
+				major: 0,
+				minor: 0,
+				patch: 0
+			}
+		};
 	}
 
 	/**
@@ -115,11 +123,7 @@ class Connection {
 		if (packet.hasFlagAck() || packet.hasFlagMultiAck()) {
 			if (packet.isSyn() && packet.isToClient()) {
 				// * SYN packet from server
-
 				this.serverConnectionSignature = packet.connectionSignature;
-				if (packet.version === 1) {
-					this.prudpProtocolMinorVersion = packet.prudpProtocolMinorVersion;
-				}
 			}
 
 			// TODO - Parse these for their sequence IDs
@@ -137,19 +141,24 @@ class Connection {
 
 		if (packet.isToServer() && !this.accessKey) {
 			// * Find access key
-			for (const key of accessKeys) {
+			for (const title of titles) {
+				const accessKey = title.access_key;
 				let found = false;
+
+				if (!accessKey || accessKey.trim() === '') {
+					continue;
+				}
 
 				if (packet.version === 0) {
 					const expectedChecksum = packet.checksum;
-					const calculatedChecksum = packet.calculateChecksum(key);
+					const calculatedChecksum = packet.calculateChecksum(accessKey);
 
 					if (expectedChecksum === calculatedChecksum) {
 						found = true;
 					}
 				} else {
 					const expectedSignature = packet.signature;
-					const calculatedSignature = packet.calculateSignature(key);
+					const calculatedSignature = packet.calculateSignature(accessKey);
 
 					if (expectedSignature.equals(calculatedSignature)) {
 						found = true;
@@ -157,12 +166,14 @@ class Connection {
 				}
 
 				if (found) {
-					const keyBuffer = Buffer.from(key);
+					const keyBuffer = Buffer.from(accessKey);
 					const signatureBase = keyBuffer.reduce((sum, byte) => sum + byte, 0);
 
-					this.accessKey = key;
-					this.signatureKey = md5(key);
+					this.accessKey = accessKey;
+					this.signatureKey = md5(accessKey);
 					this.accessKeySum.writeUInt32LE(signatureBase);
+
+					this.title = title;
 					break;
 				}
 			}
