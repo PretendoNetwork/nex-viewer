@@ -4,6 +4,8 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
+require('./types/secure_connection');
+
 class SecureConnection {
 	static ProtocolID = 0xB;
 
@@ -25,7 +27,8 @@ class SecureConnection {
 	}, {});
 
 	static Handlers = {
-		0x1: SecureConnection.Register
+		0x1: SecureConnection.Register,
+		0x4: SecureConnection.RegisterEx
 	};
 
 	/**
@@ -57,6 +60,27 @@ class SecureConnection {
 		if (rmcMessage.isRequest()) {
 			return {
 				vecMyURLs: stream.readNEXList(stream.readNEXStationURL)
+			};
+		} else {
+			return {
+				retval: stream.readUInt32LE(),
+				pidConnectionID: stream.readUInt32LE(),
+				urlPublic: stream.readNEXStationURL()
+			};
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
+	static RegisterEx(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return {
+				vecMyURLs: stream.readNEXList(stream.readNEXStationURL),
+				hCustomData: stream.readNEXAnyDataHolder()
 			};
 		} else {
 			return {
