@@ -328,6 +328,14 @@ class Stream {
 	readNEXAnyDataHolder() {
 		return this.readNEXStructure(NEXTypes.AnyDataHolder).data;
 	}
+
+	/**
+	 *
+	 * @returns {NEXTypes.Variant} Variant type
+	 */
+	readNEXVariant() {
+		return new NEXTypes.Variant(this);
+	}
 }
 
 module.exports = Stream;
