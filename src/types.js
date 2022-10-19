@@ -160,6 +160,38 @@ class Result {
 	}
 }
 
+class Variant {
+	/**
+	 *
+	 *@param {Stream} stream NEX data stream
+	 */
+	constructor(stream) {
+		this.type = stream.readUInt8();
+		this.value = null; // * if type = 0, then value = null. Let null be default
+
+		switch (this.type) {
+		case 1:
+			this.value = stream.readInt64LE();
+			break;
+		case 2:
+			this.value = stream.readDoubleLE();
+			break;
+		case 3:
+			this.value = stream.readBoolean();
+			break;
+		case 4:
+			this.value = stream.readNEXString();
+			break;
+		case 5:
+			this.value = stream.readNEXDateTime();
+			break;
+		case 6:
+			this.value = stream.readUInt64LE();
+			break;
+		}
+	}
+}
+
 module.exports = {
 	Structure,
 	Data,
@@ -169,4 +201,5 @@ module.exports = {
 	DateTime,
 	ResultRange,
 	Result,
+	Variant
 };
