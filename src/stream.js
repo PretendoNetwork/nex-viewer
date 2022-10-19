@@ -196,6 +196,22 @@ class Stream {
 
 	/**
 	 *
+	 * @returns {number} Read float
+	 */
+	readFloatBE() {
+		return this.readBytes(4).readFloatBE();
+	}
+
+	/**
+	 *
+	 * @returns {number} Read float
+	 */
+	readFloatLE() {
+		return this.readBytes(4).readFloatLE();
+	}
+
+	/**
+	 *
 	 * @returns {boolean} Read boolean
 	 */
 	readBoolean() {
