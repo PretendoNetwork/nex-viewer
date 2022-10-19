@@ -180,6 +180,22 @@ class Stream {
 
 	/**
 	 *
+	 * @returns {number} Read double
+	 */
+	readDoubleBE() {
+		return this.readBytes(8).readDoubleBE();
+	}
+
+	/**
+	 *
+	 * @returns {number} Read double
+	 */
+	readDoubleLE() {
+		return this.readBytes(8).readDoubleLE();
+	}
+
+	/**
+	 *
 	 * @returns {boolean} Read boolean
 	 */
 	readBoolean() {
