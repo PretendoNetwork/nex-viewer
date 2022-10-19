@@ -3,8 +3,8 @@ const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
 const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
-
-require('./types/secure_connection');
+const NEXTypes = require('../types');
+const SecureConnectionTypes = require('./types/secure_connection');
 
 class SecureConnection {
 	static ProtocolID = 0xB;
@@ -28,7 +28,13 @@ class SecureConnection {
 
 	static Handlers = {
 		0x1: SecureConnection.Register,
-		0x4: SecureConnection.RegisterEx
+		0x2: SecureConnection.RequestConnectionData,
+		0x3: SecureConnection.RequestUrls,
+		0x4: SecureConnection.RegisterEx,
+		0x5: SecureConnection.TestConnectivity,
+		0x6: SecureConnection.UpdateURLs,
+		0x7: SecureConnection.ReplaceURL,
+		0x8: SecureConnection.SendReport
 	};
 
 	/**
@@ -76,7 +82,98 @@ class SecureConnection {
 	 * @param {Stream} stream NEX data stream
 	 * @returns {object} Parsed RMC body
 	 */
+	static RequestConnectionData(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return {
+				cidTarget: stream.readUInt32LE(),
+				pidTarget: stream.readUInt32LE()
+			};
+		} else {
+			return {
+				retval: stream.readBoolean(),
+				pvecConnectionsData: stream.readNEXList(SecureConnectionTypes.ConnectionData)
+			};
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
+	static RequestUrls(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return {
+				cidTarget: stream.readUInt32LE(),
+				pidTarget: stream.readUInt32LE()
+			};
+		} else {
+			return {
+				retval: stream.readBoolean(),
+				plstURLs: stream.readNEXList(NEXTypes.StationURL)
+			};
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
 	static RegisterEx(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return {
+				vecMyURLs: stream.readNEXList(stream.readNEXStationURL),
+				hCustomData: stream.readNEXAnyDataHolder()
+			};
+		} else {
+			return {
+				retval: stream.readUInt32LE(),
+				pidConnectionID: stream.readUInt32LE(),
+				urlPublic: stream.readNEXStationURL()
+			};
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @returns {object} Parsed RMC body
+	 */
+	static TestConnectivity(rmcMessage) {
+		if (rmcMessage.isRequest()) {
+			return {}; // * No request
+		} else {
+			return {}; // * No response
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
+	static ReplaceURL(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return {
+				target: stream.readNEXStructure(NEXTypes.StationURL),
+				url: stream.readNEXStructure(NEXTypes.StationURL)
+			};
+		} else {
+			return {}; // * No response
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
+	static SendReport(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
 				vecMyURLs: stream.readNEXList(stream.readNEXStationURL),
