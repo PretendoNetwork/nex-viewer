@@ -159,8 +159,8 @@ class SecureConnection {
 	static ReplaceURL(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
-				target: stream.readNEXStructure(NEXTypes.StationURL),
-				url: stream.readNEXStructure(NEXTypes.StationURL)
+				target: stream.readNEXStationURL(),
+				url: stream.readNEXStationURL()
 			};
 		} else {
 			return {}; // * No response
