@@ -176,15 +176,11 @@ class SecureConnection {
 	static SendReport(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
 			return {
-				vecMyURLs: stream.readNEXList(stream.readNEXStationURL),
-				hCustomData: stream.readNEXAnyDataHolder()
+				reportId: stream.readUInt32LE(),
+				reportData: stream.readNEXQBuffer()
 			};
 		} else {
-			return {
-				retval: stream.readUInt32LE(),
-				pidConnectionID: stream.readUInt32LE(),
-				urlPublic: stream.readNEXStationURL()
-			};
+			return {}; // * No response
 		}
 	}
 }
