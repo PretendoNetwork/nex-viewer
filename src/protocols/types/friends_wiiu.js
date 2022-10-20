@@ -1,7 +1,13 @@
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
-class NNAInfo extends NEXTypes.Data {
+class NNAInfo extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -13,7 +19,13 @@ class NNAInfo extends NEXTypes.Data {
 	}
 }
 
-class PrincipalBasicInfo extends NEXTypes.Data {
+class PrincipalBasicInfo extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -26,7 +38,13 @@ class PrincipalBasicInfo extends NEXTypes.Data {
 	}
 }
 
-class MiiV2 extends NEXTypes.Data {
+class MiiV2 extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -40,7 +58,13 @@ class MiiV2 extends NEXTypes.Data {
 	}
 }
 
-class NintendoPresenceV2 extends NEXTypes.Data {
+class NintendoPresenceV2 extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -64,7 +88,13 @@ class NintendoPresenceV2 extends NEXTypes.Data {
 	}
 }
 
-class GameKey extends NEXTypes.Data {
+class GameKey extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -75,7 +105,13 @@ class GameKey extends NEXTypes.Data {
 	}
 }
 
-class PrincipalPreference extends NEXTypes.Data {
+class PrincipalPreference extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -87,7 +123,13 @@ class PrincipalPreference extends NEXTypes.Data {
 	}
 }
 
-class Comment extends NEXTypes.Data {
+class Comment extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -99,7 +141,13 @@ class Comment extends NEXTypes.Data {
 	}
 }
 
-class FriendInfo extends NEXTypes.Data {
+class FriendInfo extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -114,7 +162,13 @@ class FriendInfo extends NEXTypes.Data {
 	}
 }
 
-class FriendRequest extends NEXTypes.Data {
+class FriendRequest extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -126,7 +180,13 @@ class FriendRequest extends NEXTypes.Data {
 	}
 }
 
-class FriendRequestMessage extends NEXTypes.Data {
+class FriendRequestMessage extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -144,7 +204,13 @@ class FriendRequestMessage extends NEXTypes.Data {
 	}
 }
 
-class BlacklistedPrincipal extends NEXTypes.Data {
+class BlacklistedPrincipal extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -156,7 +222,13 @@ class BlacklistedPrincipal extends NEXTypes.Data {
 	}
 }
 
-class PersistentNotification extends NEXTypes.Data {
+class PersistentNotification extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream

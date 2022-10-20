@@ -1,21 +1,13 @@
 const Stream = require('./stream'); // eslint-disable-line no-unused-vars
 
 class Structure {
-	/**
-	 *
-	 * @returns {Array} Array of classes in the NEX Structure hierarchy
-	 */
-	getHierarchy() {
-		// TODO - This is trash. Find a better way
-		const hierarchy = [];
-		let current = this.__proto__;
-
-		while (current.constructor != Structure) {
-			hierarchy.push(new current.constructor());
-			current = current.__proto__;
-		}
-
-		return hierarchy.reverse();
+	constructor() {
+		this._parentTypesClasses = [];
+		this._parentTypes = [];
+		this._structureHeader = {
+			version: 0,
+			contentLength: 0
+		};
 	}
 
 	/**
@@ -23,17 +15,20 @@ class Structure {
 	 * @param {Stream} stream NEX data stream NEX data stream
 	 */
 	extract(stream) {
-		const hierarchy = this.getHierarchy();
+		const parentTypesClasses = this._parentTypesClasses;
 
-		for (const cls of hierarchy) {
-			if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 5) {
-				cls.structureVersion = stream.readUInt8();
-				cls.contentLength = stream.readUInt32LE();
-			}
-
-			cls.parse(stream);
-			Object.assign(this, cls); // assign properties to this from the new classes
+		for (const parentTypeClass of parentTypesClasses) {
+			this._parentTypes.push(stream.readNEXStructure(parentTypeClass));
 		}
+
+		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 5) {
+			this._structureHeader = {
+				version: stream.readUInt8(),
+				contentLength: stream.readUInt32LE()
+			};
+		}
+
+		this.parse(stream);
 	}
 }
 

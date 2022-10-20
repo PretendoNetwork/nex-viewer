@@ -1,7 +1,13 @@
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
-class AuthenticationInfo extends NEXTypes.Data {
+class AuthenticationInfo extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream

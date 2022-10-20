@@ -1,7 +1,13 @@
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
-class UserMessage extends NEXTypes.Data {
+class UserMessage extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -31,7 +37,13 @@ class MessageRecipient extends NEXTypes.Structure {
 	}
 }
 
-class TextMessage extends UserMessage {
+class TextMessage extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(UserMessage);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -41,7 +53,13 @@ class TextMessage extends UserMessage {
 	}
 }
 
-class BinaryMessage extends UserMessage {
+class BinaryMessage extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(UserMessage);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream

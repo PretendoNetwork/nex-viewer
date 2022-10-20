@@ -21,7 +21,13 @@ class Gathering extends NEXTypes.Structure {
 }
 NEXTypes.AnyDataHolder.addType('Gathering', Gathering);
 
-class PersistentGathering extends Gathering {
+class PersistentGathering extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(Gathering);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -38,7 +44,13 @@ class PersistentGathering extends Gathering {
 	}
 }
 
-class MatchmakeSession extends Gathering {
+class MatchmakeSession extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(Gathering);
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
