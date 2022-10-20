@@ -114,6 +114,7 @@ class NEXParser extends EventEmitter {
 				secureConnection.signatureKey = connection.signatureKey;
 				secureConnection.sessionKey = connection.sessionKey;
 				secureConnection.prudpVersion = connection.prudpVersion;
+				secureConnection.title = connection.title;
 				secureConnection.isSecureServer = true;
 
 				this.connections.push(secureConnection);
