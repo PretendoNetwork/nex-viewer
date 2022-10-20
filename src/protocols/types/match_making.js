@@ -75,13 +75,17 @@ class MatchmakeSession extends NEXTypes.Structure {
 			this.m_Option0 = stream.readUInt32LE();
 		}
 
-		if (stream.connection.title.nex_version.major >= 4) {
+		// TODO - Unsure if the minor check here is correct! This works for Splatoon
+		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 8) {
 			this.m_MatchmakeParam = stream.readNEXStructure(MatchmakeParam);
 			this.m_StartedTime = stream.readNEXDateTime();
 			this.m_UserPassword = stream.readNEXString();
 			this.m_ReferGid = stream.readUInt32LE();
 			this.m_UserPasswordEnabled = stream.readBoolean();
 			this.m_SystemPasswordEnabled = stream.readBoolean();
+		}
+
+		if (stream.connection.title.nex_version.major >= 4) {
 			this.m_Codeword = stream.readNEXString();
 		}
 	}
@@ -97,6 +101,7 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 		this.m_GameMode = stream.readNEXString();
 		this.m_MinParticipants = stream.readNEXString();
 		this.m_MaxParticipants = stream.readNEXString();
+		this.m_MatchmakeSystemType = stream.readNEXString();
 		this.m_VacantOnly = stream.readBoolean();
 		this.m_ExcludeLocked = stream.readBoolean();
 		this.m_ExcludeNonHostPid = stream.readBoolean();
@@ -106,11 +111,15 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 			this.m_VacantParticipants = stream.readUInt16LE();
 		}
 
-		if (stream.connection.title.nex_version.major >= 4) {
+		// TODO - Unsure if the minor check here is correct! This works for Splatoon
+		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 8) {
 			this.m_MatchmakeParam = stream.readNEXStructure(MatchmakeParam);
 			this.m_ExcludeUserPasswordSet = stream.readBoolean();
 			this.m_ExcludeSystemPasswordSet = stream.readBoolean();
 			this.m_ReferGid = stream.readUInt32LE();
+		}
+
+		if (stream.connection.title.nex_version.major >= 4) {
 			this.m_Codeword = stream.readNEXString();
 			this.m_ResultRange = stream.readNEXStructure(NEXTypes.ResultRange);
 		}
@@ -211,8 +220,11 @@ class AutoMatchmakeParam extends NEXTypes.Structure {
 		this.joinMessage = stream.readNEXString();
 		this.participationCount = stream.readUInt16LE();
 		this.lstSearchCriteria = stream.readNEXList(MatchmakeSessionSearchCriteria);
-		this.targetGids = stream.readNEXList(stream.readUInt32LE);
-		this.blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
+		//this.targetGids = stream.readNEXList(stream.readUInt32LE);
+
+		if (stream.connection.title.nex_version.major >= 4) {
+			this.blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
+		}
 	}
 }
 
