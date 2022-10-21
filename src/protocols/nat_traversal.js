@@ -3,7 +3,6 @@ const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
 const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
-const NEXTypes = require('../types');
 
 class NATTraversal {
 	static ProtocolID = 0x3;
