@@ -3,6 +3,7 @@ module.exports = {
 	0xA: require('./authentication'),
 	0xB: require('./secure_connection'),
 	0xE: require('./notifications'),
+	0x15: require('./match_making'),
 	0x1B: require('./message_delivery'),
 	0x32: require('./match_making_ext'),
 	0x64: require('./nintendo_notifications'),
