@@ -18,6 +18,7 @@ class NNAInfo extends NEXTypes.Structure {
 		this.unknown2 = stream.readUInt8();
 	}
 }
+NEXTypes.AnyDataHolder.addType('NNAInfo', NNAInfo);
 
 class PrincipalBasicInfo extends NEXTypes.Structure {
 	constructor() {
@@ -87,6 +88,7 @@ class NintendoPresenceV2 extends NEXTypes.Structure {
 		this.unknown7 = stream.readUInt8();
 	}
 }
+NEXTypes.AnyDataHolder.addType('NintendoPresenceV2', NintendoPresenceV2);
 
 class GameKey extends NEXTypes.Structure {
 	constructor() {
@@ -122,6 +124,7 @@ class PrincipalPreference extends NEXTypes.Structure {
 		this.blockFriendRequests = stream.readBoolean();
 	}
 }
+NEXTypes.AnyDataHolder.addType('PrincipalPreference', PrincipalPreference);
 
 class Comment extends NEXTypes.Structure {
 	constructor() {
@@ -161,6 +164,7 @@ class FriendInfo extends NEXTypes.Structure {
 		this.unknown = stream.readUInt64LE();
 	}
 }
+NEXTypes.AnyDataHolder.addType('FriendInfo', FriendInfo);
 
 class FriendRequest extends NEXTypes.Structure {
 	constructor() {
@@ -179,6 +183,7 @@ class FriendRequest extends NEXTypes.Structure {
 		this.sentOn = stream.readNEXDateTime();
 	}
 }
+NEXTypes.AnyDataHolder.addType('FriendRequest', FriendRequest);
 
 class FriendRequestMessage extends NEXTypes.Structure {
 	constructor() {
@@ -242,6 +247,23 @@ class PersistentNotification extends NEXTypes.Structure {
 	}
 }
 
+class PersistentNotificationList extends NEXTypes.Structure {
+	constructor() {
+		super();
+
+		this._parentTypesClasses.push(NEXTypes.Data);
+	}
+
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.notifications = stream.readNEXString(PersistentNotification);
+	}
+}
+NEXTypes.AnyDataHolder.addType('PersistentNotificationList', PersistentNotificationList);
+
 module.exports = {
 	NNAInfo,
 	PrincipalBasicInfo,
@@ -254,5 +276,6 @@ module.exports = {
 	FriendRequest,
 	FriendRequestMessage,
 	BlacklistedPrincipal,
-	PersistentNotification
+	PersistentNotification,
+	PersistentNotificationList
 };
