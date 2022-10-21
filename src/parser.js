@@ -17,6 +17,9 @@ const MAGIC_V0_SERVERBOUND = Buffer.from([0xAF, 0xA1]);
 const MAGIC_V0_CLIENTBOUND = Buffer.from([0xA1, 0xAF]);
 const MAGIC_V1 = Buffer.from([0xEA, 0xD0]);
 
+// * Magics to check for when parsing UDP packets
+const XID_MAGIC = Buffer.from([0x81, 0x01, 0x0]);
+
 class NEXParser extends EventEmitter {
 	constructor() {
 		super();
@@ -136,6 +139,10 @@ class NEXParser extends EventEmitter {
 	 * @returns {object} Carved out packet data or null if not valid UDP packet
 	 */
 	parseUDPPacket(frame) {
+		if (frame.subarray(17, 20).equals(XID_MAGIC)) {
+			return;
+		}
+
 		const stream = new Stream(frame);
 		stream.skip(0xE);  // Skip the ethernet header
 
