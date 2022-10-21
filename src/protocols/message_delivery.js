@@ -33,7 +33,7 @@ class MessageDelivery {
 		const handler = MessageDelivery.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown MessageDelivery method ID ${methodId} (0x${methodId.toString(16)}) (${MessageDelivery.MethodNames[methodId]})`);
+			console.log(`Unknown MessageDelivery method ID ${methodId} (0x${methodId?.toString(16)}) (${MessageDelivery.MethodNames[methodId]})`);
 			return;
 		}
 

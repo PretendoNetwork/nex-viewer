@@ -140,7 +140,7 @@ class MatchmakeExtension {
 		const handler = MatchmakeExtension.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown MatchmakeExtension method ID ${methodId} (0x${methodId.toString(16)}) (${MatchmakeExtension.MethodNames[methodId]})`);
+			console.log(`Unknown MatchmakeExtension method ID ${methodId} (0x${methodId?.toString(16)}) (${MatchmakeExtension.MethodNames[methodId]})`);
 			return;
 		}
 

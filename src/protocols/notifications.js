@@ -33,7 +33,7 @@ class Notifications {
 		const handler = Notifications.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown Notifications method ID ${methodId} (0x${methodId.toString(16)}) (${Notifications.MethodNames[methodId]})`);
+			console.log(`Unknown Notifications method ID ${methodId} (0x${methodId?.toString(16)}) (${Notifications.MethodNames[methodId]})`);
 			return;
 		}
 

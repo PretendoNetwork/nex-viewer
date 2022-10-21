@@ -41,7 +41,7 @@ class Authentication {
 		const handler = Authentication.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown Authentication method ID ${methodId} (0x${methodId.toString(16)}) (${Authentication.MethodNames[methodId]})`);
+			console.log(`Unknown Authentication method ID ${methodId} (0x${methodId?.toString(16)}) (${Authentication.MethodNames[methodId]})`);
 			return;
 		}
 

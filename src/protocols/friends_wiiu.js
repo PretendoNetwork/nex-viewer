@@ -53,7 +53,7 @@ class FriendsWiiU {
 		const handler = FriendsWiiU.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown FriendsWiiU method ID ${methodId} (0x${methodId.toString(16)}) (${FriendsWiiU.MethodNames[methodId]})`);
+			console.log(`Unknown FriendsWiiU method ID ${methodId} (0x${methodId?.toString(16)}) (${FriendsWiiU.MethodNames[methodId]})`);
 			return;
 		}
 

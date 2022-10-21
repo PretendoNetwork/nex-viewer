@@ -47,7 +47,7 @@ class SecureConnection {
 		const handler = SecureConnection.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown SecureConnection method ID ${methodId} (0x${methodId.toString(16)}) (${SecureConnection.MethodNames[methodId]})`);
+			console.log(`Unknown SecureConnection method ID ${methodId} (0x${methodId?.toString(16)}) (${SecureConnection.MethodNames[methodId]})`);
 			return;
 		}
 

@@ -131,7 +131,7 @@ class DataStore {
 		const handler = DataStore.Handlers[methodId];
 
 		if (!handler) {
-			console.log(`Unknown DataStore method ID ${methodId} (0x${methodId.toString(16)}) (${DataStore.MethodNames[methodId]})`);
+			console.log(`Unknown DataStore method ID ${methodId} (0x${methodId?.toString(16)}) (${DataStore.MethodNames[methodId]})`);
 			return;
 		}
 
