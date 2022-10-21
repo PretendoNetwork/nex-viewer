@@ -59,7 +59,12 @@ class Connection {
 	constructor(discriminator) {
 		this.discriminator = discriminator;
 		this.packets = [];
-		this.prudpVersion;
+
+		this.reset();
+	}
+
+	reset() {
+		this.prudpVersion = null;
 		this.accessKey = null;
 		this.accessKeySum = Buffer.alloc(4);
 		this.signatureKey = null;
@@ -70,9 +75,9 @@ class Connection {
 		this.rc4CipherToClient = crypto.createDecipheriv('rc4', 'CD&ML', '');
 		this.rc4CipherToServer = crypto.createDecipheriv('rc4', 'CD&ML', '');
 
-		this.clientPID;
-		this.clientNEXPassword;
-		this.secureServerStationURL;
+		this.clientPID = null;
+		this.clientNEXPassword = null;
+		this.secureServerStationURL = null;
 		this.checkForSecureServer = false;
 		this.isSecureServer = false;
 
@@ -141,6 +146,10 @@ class Connection {
 
 			this.packets.push(packet);
 			return;
+		}
+
+		if (packet.isToServer() && packet.isSyn() && this.isSecureServer === false) {
+			this.reset();
 		}
 
 		if (packet.isToServer() && !this.accessKey) {
