@@ -8,5 +8,6 @@ module.exports = {
 	0x64: require('./nintendo_notifications'),
 	0x66: require('./friends_wiiu'),
 	0x6d: require('./matchmake_extension'),
+	0x70: require('./ranking'),
 	0x73: require('./datastore')
 };
