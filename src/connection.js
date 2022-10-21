@@ -10,6 +10,7 @@ const Protocols = require('./protocols');
 const kerberos = require('./kerberos');
 const Authentication = require('./protocols/authentication');
 const Stream = require('./stream');
+const FragmentationManager = require('./fragmentation_manager');
 const { md5 } = require('./util');
 
 // * Find the NEX keys file path
@@ -83,6 +84,9 @@ class Connection {
 				patch: 0
 			}
 		};
+
+		this.fragmentationManager = new FragmentationManager(this.discriminator);
+		this.decryptedPayloads = {};
 	}
 
 	/**
@@ -185,68 +189,69 @@ class Connection {
 		}
 
 		if (packet.isData()) {
-			const payload = packet.payload;
+			const { fragments, seen } = this.fragmentationManager.update(packet);
 
-			if (payload.length > 0) {
-				// * Packet has data
+			if (fragments.length > 0) {
+				let decryptedPayload = Buffer.alloc(0);
 
-				let cipher;
+				if (!seen) {
+					for (const fragment of fragments) {
+						let cipher;
 
-				if (packet.isToServer()) {
-					// * Use the client->server cipher
-					cipher = this.rc4CipherToServer;
-				} else {
-					// * Use the server->client cipher
-					cipher = this.rc4CipherToClient;
-				}
+						if (packet.isToServer()) {
+							// * Use the client->server cipher
+							cipher = this.rc4CipherToServer;
+						} else {
+							// * Use the server->client cipher
+							cipher = this.rc4CipherToClient;
+						}
 
-				this.currentFragmentedPayload = Buffer.concat([this.currentFragmentedPayload, cipher.update(payload)]);
-
-				if (packet.fragmentId === 0) {
-					const decryptedPayload = this.currentFragmentedPayload;
-
-					packet.rmcMessage = new RMCMessage(decryptedPayload);
-
-					this.currentFragmentedPayload = Buffer.alloc(0);
-
-					const protocol = Protocols[packet.rmcMessage.protocolId];
-
-					if (!protocol) {
-						console.log(`Unknown protocol ID ${packet.rmcMessage.protocolId} (0x${packet.rmcMessage.protocolId.toString(16)})`);
-
-						this.packets.push(packet);
-						return;
+						decryptedPayload = Buffer.concat([decryptedPayload, cipher.update(fragment)]);
 					}
 
-					protocol.handlePacket(packet);
+					this.decryptedPayloads[packet.sequenceId] = decryptedPayload;
+				} else {
+					decryptedPayload = this.decryptedPayloads[packet.sequenceId];
+				}
 
-					if (packet.rmcMessage.isResponse()) {
-						if (packet.rmcMessage.protocolId === Authentication.ProtocolID) {
-							if (packet.rmcMessage.methodId === Authentication.Methods.Login || packet.rmcMessage.methodId === Authentication.Methods.LoginEx) {
-								this.clientPID = packet.rmcData.pidPrincipal;
-								this.clientNEXPassword = NEX_KEYS[this.clientPID];
-								this.secureServerStationURL = packet.rmcData.pConnectionData.stationUrl;
+				packet.rmcMessage = new RMCMessage(decryptedPayload);
 
-								if (!this.clientNEXPassword) {
-									throw new Error(`No NEX password set for PID ${this.clientPID}!`);
-								}
+				const protocol = Protocols[packet.rmcMessage.protocolId];
 
-								const ticketStream = new Stream(packet.rmcData.pbufResponse, this);
-								const ticket = new kerberos.KerberosTicket(ticketStream);
+				if (!protocol) {
+					console.log(`Unknown protocol ID ${packet.rmcMessage.protocolId} (0x${packet.rmcMessage.protocolId.toString(16)})`);
+					this.packets.push(packet);
+					return;
+				}
 
-								if (ticket.targetPID === this.clientPID) {
-									this.sessionKey = ticket.sessionKey;
-									this.checkForSecureServer = true;
-								}
+				protocol.handlePacket(packet);
+
+				if (packet.rmcMessage.isResponse()) {
+					if (packet.rmcMessage.protocolId === Authentication.ProtocolID) {
+						if (packet.rmcMessage.methodId === Authentication.Methods.Login || packet.rmcMessage.methodId === Authentication.Methods.LoginEx) {
+							this.clientPID = packet.rmcData.pidPrincipal;
+							this.clientNEXPassword = NEX_KEYS[this.clientPID];
+							this.secureServerStationURL = packet.rmcData.pConnectionData.stationUrl;
+
+							if (!this.clientNEXPassword) {
+								throw new Error(`No NEX password set for PID ${this.clientPID}!`);
 							}
 
-							if (packet.rmcMessage.methodId === Authentication.Methods.RequestTicket) {
-								const ticketStream = new Stream(packet.rmcData.bufResponse, this);
-								const ticket = new kerberos.KerberosTicket(ticketStream);
+							const ticketStream = new Stream(packet.rmcData.pbufResponse, this);
+							const ticket = new kerberos.KerberosTicket(ticketStream);
 
+							if (ticket.targetPID === this.clientPID) {
 								this.sessionKey = ticket.sessionKey;
 								this.checkForSecureServer = true;
 							}
+						}
+
+						if (packet.rmcMessage.methodId === Authentication.Methods.RequestTicket) {
+							const ticketStream = new Stream(packet.rmcData.bufResponse, this);
+							const ticket = new kerberos.KerberosTicket(ticketStream);
+
+							this.sessionKey = ticket.sessionKey;
+							this.checkForSecureServer = true;
 						}
 					}
 				}
