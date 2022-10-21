@@ -6,6 +6,8 @@ const Stream = require('../stream');
 
 const RankingTypes = require('./types/ranking');
 
+const RankingSplatoon = require('./patches/ranking_splatoon');
+
 class Ranking {
 	static ProtocolID = 0x70;
 
@@ -57,6 +59,12 @@ class Ranking {
 	 */
 	static handlePacket(packet) {
 		const methodId = packet.rmcMessage.methodId;
+
+		// Check if method is a Splatoon patched method
+		if (packet.connection.accessKey === '6f599f81' && methodId >= 0x10) {
+			RankingSplatoon.handlePacket(packet);
+			return;
+		}
 
 		const handler = Ranking.Handlers[methodId];
 
