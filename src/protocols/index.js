@@ -1,4 +1,5 @@
 module.exports = {
+	0x3: require('./nat_traversal'),
 	0xA: require('./authentication'),
 	0xB: require('./secure_connection'),
 	0xE: require('./notifications'),
