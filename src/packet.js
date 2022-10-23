@@ -36,10 +36,90 @@ class Packet {
 		this.sequenceId;
 		this.connectionSignature;
 		this.fragmentId;
-		this.rmcMessage;
-		this.rmcData; // * Decoded RMC body
+		this.rmcMessage = {};
+		this.rmcData = {}; // * Decoded RMC body
 
 		this.decode();
+	}
+
+	/**
+	 * @returns {object} JSON serialized data
+	 */
+	toJSON() {
+		const serialized = {
+			version: this.version,
+			source: this.source,
+			destination: this.destination,
+			flags: [],
+			sessionId: this.sessionId,
+			signature: this.signature.toString('hex'),
+			sequenceId: this.sequenceId,
+			fragmentId: this.fragmentId,
+			checksum: this.checksum,
+			rmc: {
+				protocolId: this.rmcMessage.protocolId,
+				methodId: this.rmcMessage.methodId,
+				callId: this.rmcMessage.callId,
+				errorCode: this.rmcMessage.errorCode,
+				data: this.rmcData
+			}
+		};
+
+		if (this.isToClient()) {
+			serialized.sourceAddress = this.connection.serverAddress;
+			serialized.destinationAddress = this.connection.clientAddress;
+		} else {
+			serialized.sourceAddress = this.connection.clientAddress;
+			serialized.destinationAddress = this.connection.serverAddress;
+		}
+
+		if (this.isSyn()) {
+			serialized.type = 'SYN';
+		}
+
+		if (this.isConnect()) {
+			serialized.type = 'CONNECT';
+		}
+
+		if (this.isData()) {
+			serialized.type = 'DATA';
+			serialized.fragmentId = this.fragmentId;
+		}
+
+		if (this.isDisconnect()) {
+			serialized.type = 'DISCONNECT';
+		}
+
+		if (this.isPing()) {
+			serialized.type = 'PING';
+		}
+
+		if (this.isUser()) {
+			serialized.type = 'USER';
+		}
+
+
+		if (this.hasFlagAck()) {
+			serialized.flags.push('ACK');
+		}
+
+		if (this.hasFlagReliable()) {
+			serialized.flags.push('RELIABLE');
+		}
+
+		if (this.hasFlagNeedAck()) {
+			serialized.flags.push('NEED_ACK');
+		}
+
+		if (this.hasFlagHasSize()) {
+			serialized.flags.push('HAS_SIZE');
+		}
+
+		if (this.hasFlagMultiAck()) {
+			serialized.flags.push('MULTI_ACK');
+		}
+
+		return serialized;
 	}
 
 	/**

@@ -71,18 +71,27 @@ class NEXParser extends EventEmitter {
 		// ? This packet gets treated as a PRUDPv1 packet as a result, even though it is not
 
 		let discriminator;
+		let clientAddress;
+		let serverAddress;
 		if (isPrivateIP(udpPacket.source)) {
 			// * client->server packet
 			discriminator = `${udpPacket.destination}:${udpPacket.destinationPort}`;
+			clientAddress = `${udpPacket.source}:${udpPacket.sourcePort}`;
+			serverAddress = discriminator;
 		} else {
 			// * server->client packet
 			discriminator = `${udpPacket.source}:${udpPacket.sourcePort}`;
+			clientAddress = `${udpPacket.destination}:${udpPacket.destinationPort}`;
+			serverAddress = discriminator;
 		}
 
 		let connection = this.connections.find(connection => connection.discriminator === discriminator);
 
 		if (!connection) {
 			connection = new Connection(discriminator);
+			connection.clientAddress = clientAddress;
+			connection.serverAddress = serverAddress;
+
 			this.connections.push(connection);
 		}
 
@@ -119,6 +128,9 @@ class NEXParser extends EventEmitter {
 				secureConnection.prudpVersion = connection.prudpVersion;
 				secureConnection.title = connection.title;
 				secureConnection.isSecureServer = true;
+
+				secureConnection.clientAddress = connection.clientAddress;
+				secureConnection.serverAddress = secureDiscriminator;
 
 				this.connections.push(secureConnection);
 			} else {

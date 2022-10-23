@@ -1,0 +1,56 @@
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100vh;
+	margin: 0;
+}
+
+body {
+	background-color: #F8F8F8;
+	margin: 0;
+	font-size: large;
+	overflow: hidden;
+}
+
+#header {
+	background: #5d8aad;
+	color: white;
+	padding: 5px;
+	font-family: system-ui;
+}
+
+main {
+	min-height: calc(100% - 30px);
+	padding: 10px;
+	height: auto;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	gap: 10px 10px;
+	grid-template-areas:
+		"packets packets"
+		"packet-details packet-hex";
+}
+
+#packets {
+	grid-area: packets;
+}
+
+#packet-details {
+	grid-area: packet-details;
+}
+
+#packet-hex {
+	grid-area: packet-hex;
+}
+
+#packets,
+#packet-details,
+#packet-hex {
+	border: 1px solid grey;
+	overflow-y: scroll;
+	font-family: monospace;
+}

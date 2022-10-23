@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+		<title>Document</title>
+
+		<link rel="stylesheet" href="./assets/css/main.css">
+		<link rel="stylesheet" href="./assets/css/packets-section.css">
+		<link rel="stylesheet" href="./assets/css/packet-details-section.css">
+		<link rel="stylesheet" href="./assets/css/packet-hex-section.css">
+	</head>
+	<body>
+		<section id="header">
+			NEX Viewer
+		</section>
+
+		<main>
+			<section id="packets">
+				<table id="packet-list">
+					<thead>
+						<tr>
+							<th>Source</th>
+							<th>Destination</th>
+							<th>Version</th>
+							<th>Type</th>
+							<th>Protocol</th>
+							<th>Method</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</section>
+
+			<section id="packet-details"></section>
+
+			<section id="packet-hex">
+				hex?
+			</section>
+		</main>
+	</body>
+</html>
+
+<script src="./assets/js/util.js"></script>
+<script src="./assets/js/renderer.js"></script>
+<script src="./assets/js/ipc.js"></script>

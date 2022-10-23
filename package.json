@@ -4,18 +4,17 @@
   "description": "Utility for parsing and (eventually) viewing NEX connections from WireShark network dumps",
   "main": "src/parser.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint ."
+    "lint": "./node_modules/.bin/eslint .",
+    "start": "electron ./app/"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "electron": "^21.2.0",
     "pcap-ng-parser": "^1.0.0",
     "pcap-parser": "^0.2.1",
     "private-ip": "^2.3.4"
-  },
-  "bin": {
-    "nex-viewer": "src/cli.js"
   },
   "devDependencies": {
     "eslint": "^8.24.0",

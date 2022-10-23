@@ -1,0 +1,51 @@
+/*
+Give the section 0 height initially.
+Height is set by the JS to account for overflow
+ */
+#packets {
+	height: 0px;
+}
+
+#packet-list {
+	border-collapse: collapse;
+	font-size: 16px;
+	min-width: 100%;
+	text-align: left;
+}
+
+/* Keep header at the top during scrolling */
+#packet-list thead {
+	position: sticky;
+	top: 0;
+	background: white;
+}
+
+/* Border between columns and remove click events */
+#packet-list th,
+#packet-list td {
+	border-right: 1px solid grey;
+	cursor: default;
+}
+
+#packet-list thead {
+	color: grey;
+	white-space: nowrap;
+}
+
+#packet-list tbody tr {
+	background: #DAEEFF;
+}
+
+#packet-list tbody tr:hover {
+	background: #8FBDDA !important;
+	color: black !important;
+}
+
+#packet-list tbody tr.selected {
+	background: #308dc7;
+	color: white;
+}
+
+#packet-list tbody td {
+	white-space: nowrap;
+}

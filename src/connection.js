@@ -92,6 +92,9 @@ class Connection {
 
 		this.fragmentationManager = new FragmentationManager(this.discriminator);
 		this.decryptedPayloads = {};
+
+		this.clientAddress;
+		this.serverAddress;
 	}
 
 	/**

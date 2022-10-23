@@ -1,0 +1,29 @@
+/* Put the first <details> tag into place */
+#packet-details>details {
+	padding-top: 10px;
+	padding-left: 30px;
+}
+
+/* Change the huge arrow with a smaller one */
+#packet-details details>summary {
+	list-style-type: '▸';
+}
+
+#packet-details details[open]>summary {
+	list-style-type: '▾';
+}
+
+/* Move the arrow/<summary> tag back in line with the rest of the list */
+#packet-details details {
+	margin-left: -10px;
+}
+
+/* Offset child <details> elements for a cascading effect */
+#packet-details details>div {
+	margin-left: 25px;
+}
+
+/* Offset spans */
+#packet-details span.name {
+	margin-right: 3px;
+}
