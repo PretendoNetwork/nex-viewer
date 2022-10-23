@@ -15,7 +15,7 @@ class NotificationEvent extends NEXTypes.Structure {
 		this.m_pidSource = stream.readUInt32LE();
 		this.m_uiType = stream.readUInt32LE();
 		this.m_uiParam1 = stream.readUInt32LE();
-		this.m_uiParam1 = stream.readUInt32LE();
+		this.m_uiParam2 = stream.readUInt32LE();
 		this.m_strParam = stream.readNEXString();
 	}
 }
