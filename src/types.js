@@ -56,6 +56,20 @@ class AnyDataHolder {
 		this.data;
 	}
 
+	toJSON() {
+		const json = {
+			typeName: this.typeName
+		};
+
+		if (this.data instanceof Buffer) {
+			json.data = this.data.toString('hex');
+		} else {
+			json.data = this.data;
+		}
+
+		return json;
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
