@@ -116,11 +116,16 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 			this.m_VacantParticipants = stream.readUInt16LE();
 		}
 
-		// TODO - Unsure if the minor check here is correct! This works for Splatoon
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 8) {
+		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 6) {
 			this.m_MatchmakeParam = stream.readNEXStructure(MatchmakeParam);
+		}
+
+		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 7) {
 			this.m_ExcludeUserPasswordSet = stream.readBoolean();
 			this.m_ExcludeSystemPasswordSet = stream.readBoolean();
+		}
+
+		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 8) {
 			this.m_ReferGid = stream.readUInt32LE();
 		}
 
