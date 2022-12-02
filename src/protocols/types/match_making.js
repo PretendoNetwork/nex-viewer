@@ -75,11 +75,16 @@ class MatchmakeSession extends NEXTypes.Structure {
 			this.m_Option0 = stream.readUInt32LE();
 		}
 
-		// TODO - Unsure if the minor check here is correct! This works for Splatoon
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 8) {
+		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 6) {
 			this.m_MatchmakeParam = stream.readNEXStructure(MatchmakeParam);
 			this.m_StartedTime = stream.readNEXDateTime();
+		}
+
+		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 7) {
 			this.m_UserPassword = stream.readNEXString();
+		}
+
+		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 8) {
 			this.m_ReferGid = stream.readUInt32LE();
 			this.m_UserPasswordEnabled = stream.readBoolean();
 			this.m_SystemPasswordEnabled = stream.readBoolean();
