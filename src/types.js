@@ -88,6 +88,33 @@ class AnyDataHolder {
 			this.data = stream.readBytes(this.length2);
 		}
 	}
+
+	toJSON() {
+		const data = {
+			typeName: {
+				__typeName: 'String',
+				__typeValue: this.typeName
+			},
+			length1: {
+				__typeName: 'uint32',
+				__typeValue: this.length1
+			},
+			length2: {
+				__typeName: 'uint32',
+				__typeValue: this.length2
+			},
+			objectData: {
+				__typeName: this.typeName, // * The type of the data changes and is stored in the typeName
+				__typeValue: this.data
+			}
+		};
+
+		if (data.objectData.__typeValue instanceof Buffer) {
+			data.objectData.__typeValue = data.objectData.__typeValue.toString('hex');
+		}
+
+		return data;
+	}
 }
 
 class RVConnectionData extends Structure {
