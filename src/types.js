@@ -10,6 +10,20 @@ class Structure {
 		};
 	}
 
+	toJSON() {
+		const json = {
+			__structureTypeName: this.constructor.name
+		};
+
+		for (const key in this) {
+			if (Object.hasOwnProperty.call(this, key)) {
+				json[key] = this[key];
+			}
+		}
+
+		return json;
+	}
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream NEX data stream
@@ -54,20 +68,6 @@ class AnyDataHolder {
 		this.length1;
 		this.length2;
 		this.data;
-	}
-
-	toJSON() {
-		const json = {
-			typeName: this.typeName
-		};
-
-		if (this.data instanceof Buffer) {
-			json.data = this.data.toString('hex');
-		} else {
-			json.data = this.data;
-		}
-
-		return json;
 	}
 
 	/**
