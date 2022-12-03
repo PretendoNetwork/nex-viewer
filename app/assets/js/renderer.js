@@ -31,37 +31,54 @@ function addPacketToList(packet) {
 	const source = document.createElement('td');
 	const destination = document.createElement('td');
 	const version = document.createElement('td');
-	const type = document.createElement('td');
-	const protocol = document.createElement('td');
-	const method = document.createElement('td');
+	const info = document.createElement('td');
 
-	let typeString = packet.type;
+	let infoString = packet.type;
+	let isAck = false;
 
 	if (packet.type === 'DATA') {
-		typeString += `, FRAGMENT=${packet.fragmentId}`;
+		infoString += `, FRAGMENT=${packet.fragmentId}`;
 	}
 
 	if (packet.flags.includes('ACK')) {
-		typeString += ', ACK';
+		infoString += ', ACK';
+		isAck = true;
 	}
 
 	if (packet.flags.includes('MULTI_ACK')) {
-		typeString += ', MULTI_ACK';
+		infoString += ', MULTI_ACK';
+		isAck = true;
+	}
+
+	if (packet.type === 'DATA' && packet.fragmentId === 0 && !isAck) {
+		infoString += `, ${packet.rmc.protocolName}->${packet.rmc.methodName}`;
+
+		if (packet.rmc.isRequest === true) {
+			infoString += ', REQUEST';
+		} else if (packet.rmc.isRequest === false) {
+			infoString += ', RESPONSE';
+
+			if (packet.rmc.isSuccess === true) {
+				infoString += ', SUCCESS';
+			} else if (packet.rmc.isSuccess === false) {
+				infoString += ', FAILURE';
+
+				if (packet.rmc.errorCode) {
+					infoString += `, ERROR CODE=0x${packet.rmc.errorCode.toString(16)}`;
+				}
+			}
+		}
 	}
 
 	source.appendChild(document.createTextNode(packet.sourceAddress));
 	destination.appendChild(document.createTextNode(packet.destinationAddress));
 	version.appendChild(document.createTextNode(`v${packet.version}`));
-	type.appendChild(document.createTextNode(typeString));
-	protocol.appendChild(document.createTextNode(packet.rmc.protocolId));
-	method.appendChild(document.createTextNode(packet.rmc.methodId));
+	info.appendChild(document.createTextNode(infoString));
 
 	tr.appendChild(source);
 	tr.appendChild(destination);
 	tr.appendChild(version);
-	tr.appendChild(type);
-	tr.appendChild(protocol);
-	tr.appendChild(method);
+	tr.appendChild(info);
 
 	tr.dataset.serialized = JSON.stringify(packet);
 
@@ -245,7 +262,7 @@ function updatePacketDetails(packet) {
 
 		const serializedRMCBodyDetails = document.createElement('details');
 		const serializedRMCBodySummary = document.createElement('summary');
-		const serializedRMCBodyDiv = serializeRMCBody(packet.rmc.data);
+		const serializedRMCBodyDiv = serializeRMCBody(packet.rmc.body);
 
 		serializedRMCBodySummary.appendChild(document.createTextNode('Body'));
 

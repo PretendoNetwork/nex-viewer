@@ -57,20 +57,24 @@ class Packet {
 			fragmentId: this.fragmentId,
 			checksum: this.checksum,
 			rmc: {
+				protocolName: this.rmcData.protocolName,
+				methodName: this.rmcData.methodName,
 				protocolId: this.rmcMessage.protocolId,
 				methodId: this.rmcMessage.methodId,
 				callId: this.rmcMessage.callId,
 				errorCode: this.rmcMessage.errorCode,
-				data: this.rmcData
+				body: this.rmcData.body
 			}
 		};
 
 		if (this.isToClient()) {
 			serialized.sourceAddress = this.connection.serverAddress;
 			serialized.destinationAddress = this.connection.clientAddress;
+			serialized.rmc.isRequest = false;
 		} else {
 			serialized.sourceAddress = this.connection.clientAddress;
 			serialized.destinationAddress = this.connection.serverAddress;
+			serialized.rmc.isRequest = true;
 		}
 
 		if (this.isSyn()) {
@@ -84,6 +88,10 @@ class Packet {
 		if (this.isData()) {
 			serialized.type = 'DATA';
 			serialized.fragmentId = this.fragmentId;
+
+			if (serialized.fragmentId === 0 && serialized.rmc.isRequest === false) {
+				serialized.rmc.isSuccess = this.rmcMessage.isSuccess?.() || undefined;
+			}
 		}
 
 		if (this.isDisconnect()) {
