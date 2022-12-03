@@ -13,6 +13,8 @@ function createWindow() {
 		}
 	});
 
+	window.webContents.openDevTools();
+
 	ipcMain.on('renderer-ready', () => {
 		const parser = new NEXParser();
 

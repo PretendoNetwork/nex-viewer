@@ -52,5 +52,11 @@ main {
 #packet-hex {
 	border: 1px solid grey;
 	overflow-y: scroll;
+	overflow-x: scroll;
 	font-family: monospace;
+	white-space: nowrap;
+}
+
+summary {
+	cursor: pointer;
 }

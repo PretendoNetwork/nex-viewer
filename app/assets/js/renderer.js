@@ -49,19 +49,12 @@ function addPacketToList(packet) {
 		typeString += ', MULTI_ACK';
 	}
 
-	const sourceContent = document.createTextNode(packet.sourceAddress);
-	const destinationContent = document.createTextNode(packet.destinationAddress);
-	const versionContent = document.createTextNode(`v${packet.version}`);
-	const typeContent = document.createTextNode(typeString);
-	const protocolContent = document.createTextNode(packet.rmc.protocolId);
-	const methodContent = document.createTextNode(packet.rmc.methodId);
-
-	source.appendChild(sourceContent);
-	destination.appendChild(destinationContent);
-	version.appendChild(versionContent);
-	type.appendChild(typeContent);
-	protocol.appendChild(protocolContent);
-	method.appendChild(methodContent);
+	source.appendChild(document.createTextNode(packet.sourceAddress));
+	destination.appendChild(document.createTextNode(packet.destinationAddress));
+	version.appendChild(document.createTextNode(`v${packet.version}`));
+	type.appendChild(document.createTextNode(typeString));
+	protocol.appendChild(document.createTextNode(packet.rmc.protocolId));
+	method.appendChild(document.createTextNode(packet.rmc.methodId));
 
 	tr.appendChild(source);
 	tr.appendChild(destination);
@@ -141,44 +134,24 @@ function updatePacketDetails(packet) {
 	rootElementChecksumName.classList.add('name');
 	rootElementChecksumValue.classList.add('value');
 
-	const rootSummaryContent = document.createTextNode('Packet');
-	const rootElementSourceNameContent = document.createTextNode('Source:');
-	const rootElementSourceValueContent = document.createTextNode(packet.source);
-	const rootElementDestinationNameContent = document.createTextNode('Destination:');
-	const rootElementDestinationValueContent = document.createTextNode(packet.destination);
-	const rootElementFlagsNameContent = document.createTextNode('Flags:');
-	const rootElementFlagsValueContent = document.createTextNode(JSON.stringify(packet.flags));
-	const rootElementTypeNameContent = document.createTextNode('Type:');
-	const rootElementTypeValueContent = document.createTextNode(packet.type);
-	const rootElementSessionIdNameContent = document.createTextNode('SessionId:');
-	const rootElementSessionIdValueContent = document.createTextNode(packet.sessionId);
-	const rootElementSignatureNameContent = document.createTextNode('Signature:');
-	const rootElementSignatureValueContent = document.createTextNode(packet.signature);
-	const rootElementSequenceIdNameContent = document.createTextNode('SequenceId:');
-	const rootElementSequenceIdValueContent = document.createTextNode(packet.sequenceId);
-	const rootElementFragmentIdNameContent = document.createTextNode('FragmentId:');
-	const rootElementFragmentIdValueContent = document.createTextNode(packet.fragmentId);
-	const rootElementChecksumNameContent = document.createTextNode('Checksum:');
-	const rootElementChecksumValueContent = document.createTextNode(packet.checksum);
-
-	rootElementSourceName.appendChild(rootElementSourceNameContent);
-	rootElementSourceValue.appendChild(rootElementSourceValueContent);
-	rootElementDestinationName.appendChild(rootElementDestinationNameContent);
-	rootElementDestinationValue.appendChild(rootElementDestinationValueContent);
-	rootElementFlagsName.appendChild(rootElementFlagsNameContent);
-	rootElementFlagsValue.appendChild(rootElementFlagsValueContent);
-	rootElementTypeName.appendChild(rootElementTypeNameContent);
-	rootElementTypeValue.appendChild(rootElementTypeValueContent);
-	rootElementSessionIdName.appendChild(rootElementSessionIdNameContent);
-	rootElementSessionIdValue.appendChild(rootElementSessionIdValueContent);
-	rootElementSignatureName.appendChild(rootElementSignatureNameContent);
-	rootElementSignatureValue.appendChild(rootElementSignatureValueContent);
-	rootElementSequenceIdName.appendChild(rootElementSequenceIdNameContent);
-	rootElementSequenceIdValue.appendChild(rootElementSequenceIdValueContent);
-	rootElementFragmentIdName.appendChild(rootElementFragmentIdNameContent);
-	rootElementFragmentIdValue.appendChild(rootElementFragmentIdValueContent);
-	rootElementChecksumName.appendChild(rootElementChecksumNameContent);
-	rootElementChecksumValue.appendChild(rootElementChecksumValueContent);
+	rootElementSourceName.appendChild(document.createTextNode('Source:'));
+	rootElementSourceValue.appendChild(document.createTextNode(packet.source));
+	rootElementDestinationName.appendChild(document.createTextNode('Destination:'));
+	rootElementDestinationValue.appendChild(document.createTextNode(packet.destination));
+	rootElementFlagsName.appendChild(document.createTextNode('Flags:'));
+	rootElementFlagsValue.appendChild(document.createTextNode(JSON.stringify(packet.flags)));
+	rootElementTypeName.appendChild(document.createTextNode('Type:'));
+	rootElementTypeValue.appendChild(document.createTextNode(packet.type));
+	rootElementSessionIdName.appendChild(document.createTextNode('SessionId:'));
+	rootElementSessionIdValue.appendChild(document.createTextNode(packet.sessionId));
+	rootElementSignatureName.appendChild(document.createTextNode('Signature:'));
+	rootElementSignatureValue.appendChild(document.createTextNode(packet.signature));
+	rootElementSequenceIdName.appendChild(document.createTextNode('SequenceId:'));
+	rootElementSequenceIdValue.appendChild(document.createTextNode(packet.sequenceId));
+	rootElementFragmentIdName.appendChild(document.createTextNode('FragmentId:'));
+	rootElementFragmentIdValue.appendChild(document.createTextNode(packet.fragmentId));
+	rootElementChecksumName.appendChild(document.createTextNode('Checksum:'));
+	rootElementChecksumValue.appendChild(document.createTextNode(packet.checksum));
 
 	rootElementSourceDiv.appendChild(rootElementSourceName);
 	rootElementSourceDiv.appendChild(rootElementSourceValue);
@@ -199,7 +172,7 @@ function updatePacketDetails(packet) {
 	rootElementChecksumDiv.appendChild(rootElementChecksumName);
 	rootElementChecksumDiv.appendChild(rootElementChecksumValue);
 
-	rootSummary.appendChild(rootSummaryContent);
+	rootSummary.appendChild(document.createTextNode('Packet'));
 
 	rootDiv.appendChild(rootElementSourceDiv);
 	rootDiv.appendChild(rootElementDestinationDiv);
@@ -247,23 +220,14 @@ function updatePacketDetails(packet) {
 		rmcRootDetailsErrorCodeName.classList.add('name');
 		rmcRootDetailsErrorCodeValue.classList.add('value');
 
-		const rmcRootDetailsProtcolIdNameContent = document.createTextNode('Protocol ID:');
-		const rmcRootDetailsProtcolIdValueContent = document.createTextNode(packet.rmc.protocolId);
-		const rmcRootDetailsMethodIdNameContent = document.createTextNode('Method ID:');
-		const rmcRootDetailsMethodIdValueContent = document.createTextNode(packet.rmc.methodId);
-		const rmcRootDetailsCallIdNameContent = document.createTextNode('Call ID:');
-		const rmcRootDetailsCallIdValueContent = document.createTextNode(packet.rmc.callId);
-		const rmcRootDetailsErrorCodeNameContent = document.createTextNode('Error Code:');
-		const rmcRootDetailsErrorCodeValueContent = document.createTextNode(packet.rmc.errorCode);
-
-		rmcRootDetailsProtcolIdName.appendChild(rmcRootDetailsProtcolIdNameContent);
-		rmcRootDetailsProtcolIdValue.appendChild(rmcRootDetailsProtcolIdValueContent);
-		rmcRootDetailsMethodIdName.appendChild(rmcRootDetailsMethodIdNameContent);
-		rmcRootDetailsMethodIdValue.appendChild(rmcRootDetailsMethodIdValueContent);
-		rmcRootDetailsCallIdName.appendChild(rmcRootDetailsCallIdNameContent);
-		rmcRootDetailsCallIdValue.appendChild(rmcRootDetailsCallIdValueContent);
-		rmcRootDetailsErrorCodeName.appendChild(rmcRootDetailsErrorCodeNameContent);
-		rmcRootDetailsErrorCodeValue.appendChild(rmcRootDetailsErrorCodeValueContent);
+		rmcRootDetailsProtcolIdName.appendChild(document.createTextNode('Protocol ID:'));
+		rmcRootDetailsProtcolIdValue.appendChild(document.createTextNode(packet.rmc.protocolId));
+		rmcRootDetailsMethodIdName.appendChild(document.createTextNode('Method ID:'));
+		rmcRootDetailsMethodIdValue.appendChild(document.createTextNode(packet.rmc.methodId));
+		rmcRootDetailsCallIdName.appendChild(document.createTextNode('Call ID:'));
+		rmcRootDetailsCallIdValue.appendChild(document.createTextNode(packet.rmc.callId));
+		rmcRootDetailsErrorCodeName.appendChild(document.createTextNode('Error Code:'));
+		rmcRootDetailsErrorCodeValue.appendChild(document.createTextNode(packet.rmc.errorCode));
 
 		rmcRootDetailsProtcolIdDiv.appendChild(rmcRootDetailsProtcolIdName);
 		rmcRootDetailsProtcolIdDiv.appendChild(rmcRootDetailsProtcolIdValue);
@@ -279,15 +243,22 @@ function updatePacketDetails(packet) {
 		rmcRootDetailsRoot.appendChild(rmcRootDetailsCallIdDiv);
 		rmcRootDetailsRoot.appendChild(rmcRootDetailsErrorCodeDiv);
 
-		//const rmcBody = serializeRMCBody(packet.rmc.data);
+		const serializedRMCBodyDetails = document.createElement('details');
+		const serializedRMCBodySummary = document.createElement('summary');
+		const serializedRMCBodyDiv = serializeRMCBody(packet.rmc.data);
+
+		serializedRMCBodySummary.appendChild(document.createTextNode('Body'));
+
+		serializedRMCBodyDetails.appendChild(serializedRMCBodySummary);
+		serializedRMCBodyDetails.appendChild(serializedRMCBodyDiv);
+
+		//console.log(packet.rmc.data);
 		const rmcBody = document.createElement('div');
-		rmcBody.appendChild(document.createTextNode('TODO - BODY'));
+		rmcBody.appendChild(serializedRMCBodyDetails);
 
 		rmcRootDetailsRoot.appendChild(rmcBody);
 
-		const rmcRootSummaryContent = document.createTextNode('RMC');
-
-		rmcRootSummary.appendChild(rmcRootSummaryContent);
+		rmcRootSummary.appendChild(document.createTextNode('RMC'));
 		rmcRootDetails.appendChild(rmcRootSummary);
 		rmcRootDetails.appendChild(rmcRootDetailsRoot);
 		rmcRoot.appendChild(rmcRootDetails);
@@ -304,7 +275,44 @@ function updatePacketDetails(packet) {
 }
 
 function serializeRMCBody(rmcData) {
-	console.log(rmcData);
+	const serializedRMCDataDiv = document.createElement('div');
+
+	for (const key in rmcData) {
+		if (Object.hasOwnProperty.call(rmcData, key)) {
+			const value = rmcData[key];
+			const typeName = value.__typeName;
+			const typeValue = value.__typeValue;
+
+			if (isObject(typeValue)) {
+				const serializedRMCDataDetails = document.createElement('details');
+				const serializedRMCDataSummary = document.createElement('summary');
+				const serializedRMCDataDiv2 = serializeRMCBody(typeValue);
+
+				serializedRMCDataSummary.appendChild(document.createTextNode(`${key} (${typeName})`));
+
+				serializedRMCDataDetails.appendChild(serializedRMCDataSummary);
+				serializedRMCDataDetails.appendChild(serializedRMCDataDiv2);
+
+				serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
+			} else {
+				const rmcValueElementDiv = document.createElement('div');
+				const rmcValueElementName = document.createElement('span');
+				const rmcValueElementValue = document.createElement('span');
+				rmcValueElementName.classList.add('name');
+				rmcValueElementValue.classList.add('value');
+
+				rmcValueElementName.appendChild(document.createTextNode(`${key} (${typeName}):`));
+				rmcValueElementValue.appendChild(document.createTextNode(typeValue));
+
+				rmcValueElementDiv.appendChild(rmcValueElementName);
+				rmcValueElementDiv.appendChild(rmcValueElementValue);
+
+				serializedRMCDataDiv.appendChild(rmcValueElementDiv);
+			}
+		}
+	}
+
+	return serializedRMCDataDiv;
 }
 
 document.addEventListener('click', event => {

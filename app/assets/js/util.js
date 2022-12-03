@@ -13,3 +13,7 @@ function ready(fn) {
 		document.addEventListener('DOMContentLoaded', fn);
 	}
 }
+
+function isObject(item) {
+	return (typeof item === 'object' && !Array.isArray(item) && item !== null);
+}
