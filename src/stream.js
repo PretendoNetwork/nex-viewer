@@ -342,7 +342,7 @@ class Stream {
 	 * @returns {NEXTypes.Structure} Extracted NEX Structure
 	 */
 	readNEXAnyDataHolder() {
-		return this.readNEXStructure(NEXTypes.AnyDataHolder).data;
+		return this.readNEXStructure(NEXTypes.AnyDataHolder);
 	}
 
 	/**
