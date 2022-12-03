@@ -36,7 +36,16 @@ class Packet {
 		this.sequenceId;
 		this.connectionSignature;
 		this.fragmentId;
-		this.rmcMessage = {};
+		this.rmcMessage = {
+			isRequest() {
+				// * Stub for broken packets
+				return undefined;
+			},
+			isSuccess() {
+				// * Stub for broken packets
+				return undefined;
+			}
+		};
 		this.rmcData = {}; // * Decoded RMC body
 
 		this.decode();
@@ -90,7 +99,7 @@ class Packet {
 			serialized.rmc.isRequest = this.rmcMessage.isRequest();
 
 			if (serialized.fragmentId === 0 && serialized.rmc.isRequest === false) {
-				serialized.rmc.isSuccess = this.rmcMessage.isSuccess() || undefined;
+				serialized.rmc.isSuccess = this.rmcMessage.isSuccess();
 			}
 		}
 
