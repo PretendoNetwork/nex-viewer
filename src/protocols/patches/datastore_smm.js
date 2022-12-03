@@ -68,7 +68,7 @@ class DataStoreSMM {
 		0x2f: DataStoreSMM.CustomSearchObject,
 		0x30: DataStoreSMM.RateCustomRanking,
 		0x31: DataStoreSMM.GetCustomRanking,
-		//0x32: DataStoreSMM.GetCustomRankingByDataId, // TODO - THIS IS BROKEN! NEEDS FIXED!
+		0x32: DataStoreSMM.GetCustomRankingByDataId,
 		0x33: DataStoreSMM.DeleteCustomRanking,
 		0x34: DataStoreSMM.AddToBufferQueue,
 		0x35: DataStoreSMM.AddToBufferQueues,
