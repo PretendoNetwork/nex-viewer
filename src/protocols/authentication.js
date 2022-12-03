@@ -3,9 +3,11 @@ const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
 const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
-const NEXTypes = require('../types');
 
 require('./types/authentication');
+
+const Requests = require('./requests/authentication');
+const Responses = require('./responses/authentication');
 
 class Authentication {
 	static ProtocolID = 0xA;
@@ -58,17 +60,9 @@ class Authentication {
 	 */
 	static Login(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				strUserName: stream.readNEXString()
-			};
+			return new Requests.LoginRequest(stream);
 		} else {
-			return {
-				retval: stream.readUInt32LE(),
-				pidPrincipal: stream.readUInt32LE(),
-				pbufResponse: stream.readNEXBuffer(),
-				pConnectionData: stream.readNEXStructure(NEXTypes.RVConnectionData),
-				strReturnMsg: stream.readNEXString()
-			};
+			return new Responses.LoginResponse(stream);
 		}
 	}
 
@@ -80,18 +74,9 @@ class Authentication {
 	 */
 	static LoginEx(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				strUserName: stream.readNEXString(),
-				oExtraData: stream.readNEXAnyDataHolder()
-			};
+			return new Requests.LoginExRequest(stream);
 		} else {
-			return {
-				retval: stream.readUInt32LE(),
-				pidPrincipal: stream.readUInt32LE(),
-				pbufResponse: stream.readNEXBuffer(),
-				pConnectionData: stream.readNEXStructure(NEXTypes.RVConnectionData),
-				strReturnMsg: stream.readNEXString()
-			};
+			return new Responses.LoginExResponse(stream);
 		}
 	}
 
@@ -103,15 +88,51 @@ class Authentication {
 	 */
 	static RequestTicket(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				idSource: stream.readUInt32LE(),
-				idTarget: stream.readUInt32LE()
-			};
+			return new Requests.RequestTicketRequest(stream);
 		} else {
-			return {
-				retval: stream.readUInt32LE(),
-				bufResponse: stream.readNEXBuffer()
-			};
+			return new Responses.RequestTicketResponse(stream);
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
+	static GetPID(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return new Requests.GetPIDRequest(stream);
+		} else {
+			return new Responses.GetPIDResponse(stream);
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
+	static GetName(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return new Requests.GetNameRequest(stream);
+		} else {
+			return new Responses.GetNameResponse(stream);
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
+	static LoginWithContext(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return new Requests.LoginWithContextRequest(stream);
+		} else {
+			return new Responses.LoginWithContextResponse(stream);
 		}
 	}
 }
