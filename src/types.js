@@ -198,6 +198,15 @@ class StationURL {
 		this.scheme = scheme;
 		Object.assign(this, parameters);
 	}
+
+	toJSON() {
+		return {
+			url: {
+				__typeName: 'String',
+				__typeValue: this._string
+			}
+		};
+	}
 }
 
 class DateTime { }
