@@ -220,6 +220,19 @@ class ResultRange extends Structure {
 		this.m_uiOffset = stream.readUInt32LE();
 		this.m_uiSize = stream.readUInt32LE();
 	}
+
+	toJSON() {
+		return {
+			m_uiOffset: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiOffset
+			},
+			m_uiSize: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiSize
+			}
+		};
+	}
 }
 
 class Result {
