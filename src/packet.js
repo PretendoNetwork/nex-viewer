@@ -70,11 +70,9 @@ class Packet {
 		if (this.isToClient()) {
 			serialized.sourceAddress = this.connection.serverAddress;
 			serialized.destinationAddress = this.connection.clientAddress;
-			serialized.rmc.isRequest = false;
 		} else {
 			serialized.sourceAddress = this.connection.clientAddress;
 			serialized.destinationAddress = this.connection.serverAddress;
-			serialized.rmc.isRequest = true;
 		}
 
 		if (this.isSyn()) {
@@ -89,8 +87,10 @@ class Packet {
 			serialized.type = 'DATA';
 			serialized.fragmentId = this.fragmentId;
 
+			serialized.rmc.isRequest = this.rmcMessage.isRequest();
+
 			if (serialized.fragmentId === 0 && serialized.rmc.isRequest === false) {
-				serialized.rmc.isSuccess = this.rmcMessage.isSuccess?.() || undefined;
+				serialized.rmc.isSuccess = this.rmcMessage.isSuccess() || undefined;
 			}
 		}
 
