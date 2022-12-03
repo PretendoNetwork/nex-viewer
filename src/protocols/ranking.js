@@ -11,6 +11,8 @@ const RankingSplatoon = require('./patches/ranking_splatoon');
 class Ranking {
 	static ProtocolID = 0x70;
 
+	static ProtocolName = 'Ranking';
+
 	static Methods = {
 		UploadScore: 0x01,
 		DeleteScore: 0x02,

@@ -7,6 +7,8 @@ const Stream = require('../stream');
 class NATTraversal {
 	static ProtocolID = 0x3;
 
+	static ProtocolName = 'NAT Traversal';
+
 	static Methods = {
 		RequestProbeInitiation: 0x1,
 		InitiateProbe: 0x2,

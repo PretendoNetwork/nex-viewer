@@ -9,6 +9,8 @@ const NotificationsTypes = require('./types/notifications');
 class Notifications {
 	static ProtocolID = 0xE;
 
+	static ProtocolName = 'Notification events';
+
 	static Methods = {
 		ProcessNotificationEvent: 0x1
 	};

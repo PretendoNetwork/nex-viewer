@@ -10,6 +10,8 @@ const MatchMakingTypes = require('./types/match_making');
 class MatchMaking {
 	static ProtocolID = 0x15;
 
+	static ProtocolName = 'Match making';
+
 	static Methods = {
 		RegisterGathering: 0x01,
 		UnregisterGathering: 0x02,

@@ -11,6 +11,8 @@ const NotificationsTypes = require('./types/notifications');
 class MatchmakeExtension {
 	static ProtocolID = 0x6d;
 
+	static ProtocolName = 'Matchmake extension';
+
 	static Methods = {
 		CloseParticipation: 0x01,
 		OpenParticipation: 0x02,

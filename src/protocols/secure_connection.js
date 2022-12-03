@@ -9,6 +9,8 @@ const SecureConnectionTypes = require('./types/secure_connection');
 class SecureConnection {
 	static ProtocolID = 0xB;
 
+	static ProtocolName = 'Secure Connection';
+
 	static Methods = {
 		Register: 0x1,
 		RequestConnectionData: 0x2,

@@ -12,6 +12,8 @@ const Responses = require('./responses/authentication');
 class Authentication {
 	static ProtocolID = 0xA;
 
+	static ProtocolName = 'Authentication';
+
 	static Methods = {
 		Login: 0x1,
 		LoginEx: 0x2,

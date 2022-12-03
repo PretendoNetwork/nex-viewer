@@ -9,6 +9,8 @@ require('./types/message_delivery');
 class MessageDelivery {
 	static ProtocolID = 0x1B;
 
+	static ProtocolName = 'Message Delivery';
+
 	static Methods = {
 		DeliverMessage: 0x1
 	};

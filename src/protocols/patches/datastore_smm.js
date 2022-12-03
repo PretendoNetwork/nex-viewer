@@ -10,6 +10,8 @@ const DataStoreSMMTypes = require('../types/datastore_smm');
 class DataStoreSMM {
 	static ProtocolID = 0x73;
 
+	static ProtocolName = 'DataStore (SMM)';
+
 	static Methods = {
 		GetObjectInfos: 0x2d,
 		GetMetaByOwnerId: 0x2e,

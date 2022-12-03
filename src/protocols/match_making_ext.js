@@ -9,6 +9,8 @@ const MatchMakingTypes = require('./types/match_making');
 class MatchMakingExt {
 	static ProtocolID = 0x32;
 
+	static ProtocolName = 'Match making (extension)';
+
 	static Methods = {
 		EndParticipation: 0x1,
 		GetParticipants: 0x2,

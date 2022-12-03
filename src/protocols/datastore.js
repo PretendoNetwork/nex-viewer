@@ -11,6 +11,8 @@ const DataStoreSMM = require('./patches/datastore_smm');
 class DataStore {
 	static ProtocolID = 0x73;
 
+	static ProtocolName = 'DataStore';
+
 	static Methods = {
 		PrepareGetObjectV1: 0x01,
 		PreparePostObjectV1: 0x02,

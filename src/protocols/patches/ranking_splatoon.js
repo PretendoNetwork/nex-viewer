@@ -7,6 +7,8 @@ const Stream = require('../../stream');
 class RankingSplatoon {
 	static ProtocolID = 0x70;
 
+	static ProtocolName = 'Ranking (Splatoon)';
+
 	static Methods = {
 		GetCompetitionRankingScore: 0x10,
 		GetcompetitionRankingScoreByPeriodList: 0x11,

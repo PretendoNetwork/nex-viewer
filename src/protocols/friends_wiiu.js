@@ -9,6 +9,8 @@ const FriendsWiiUTypes = require('./types/friends_wiiu');
 class FriendsWiiU {
 	static ProtocolID = 0x66;
 
+	static ProtocolName = 'Friends (Wii U)';
+
 	static Methods = {
 		UpdateAndGetAllInformation: 0x01,
 		AddFriend: 0x02,

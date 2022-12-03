@@ -9,6 +9,8 @@ const NintendoNotificationsTypes = require('./types/nintendo_notifications');
 class NintendoNotifications {
 	static ProtocolID = 0x64;
 
+	static ProtocolName = 'Nintendo notification events';
+
 	static Methods = {
 		ProcessNintendoNotificationEvent1: 0x1,
 		ProcessNintendoNotificationEvent2: 0x2
