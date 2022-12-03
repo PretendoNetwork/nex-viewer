@@ -238,18 +238,26 @@ class Connection {
 
 				protocol.handlePacket(packet);
 
+				if (!packet.rmcData.protocolName) {
+					packet.rmcData.protocolName = protocol.ProtocolName;
+				}
+
+				if (!packet.rmcData.methodName) {
+					packet.rmcData.methodName = protocol.MethodNames[packet.rmcMessage.methodId];
+				}
+
 				if (packet.rmcMessage.isResponse()) {
 					if (packet.rmcMessage.protocolId === Authentication.ProtocolID) {
 						if (packet.rmcMessage.methodId === Authentication.Methods.Login || packet.rmcMessage.methodId === Authentication.Methods.LoginEx) {
-							this.clientPID = packet.rmcData.pidPrincipal;
+							this.clientPID = packet.rmcData.body.pidPrincipal;
 							this.clientNEXPassword = NEX_KEYS[this.clientPID];
-							this.secureServerStationURL = packet.rmcData.pConnectionData.stationUrl;
+							this.secureServerStationURL = packet.rmcData.body.pConnectionData.stationUrl;
 
 							if (!this.clientNEXPassword) {
 								throw new Error(`No NEX password set for PID ${this.clientPID}!`);
 							}
 
-							const ticketStream = new Stream(packet.rmcData.pbufResponse, this);
+							const ticketStream = new Stream(packet.rmcData.body.pbufResponse, this);
 							const ticket = new kerberos.KerberosTicket(ticketStream);
 
 							if (ticket.targetPID === this.clientPID) {
@@ -259,7 +267,7 @@ class Connection {
 						}
 
 						if (packet.rmcMessage.methodId === Authentication.Methods.RequestTicket) {
-							const ticketStream = new Stream(packet.rmcData.bufResponse, this);
+							const ticketStream = new Stream(packet.rmcData.body.bufResponse, this);
 							const ticket = new kerberos.KerberosTicket(ticketStream);
 
 							this.sessionKey = ticket.sessionKey;

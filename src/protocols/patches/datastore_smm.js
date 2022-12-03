@@ -127,7 +127,11 @@ class DataStoreSMM {
 		const { rmcMessage } = packet;
 		const stream = new Stream(rmcMessage.body, packet.connection);
 
-		packet.rmcData = handler(rmcMessage, stream);
+		packet.rmcData = {
+			protocolName: this.ProtocolName,
+			methodName: this.MethodNames[methodId],
+			body: handler(rmcMessage, stream)
+		};
 	}
 
 	/**

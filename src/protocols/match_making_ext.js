@@ -51,7 +51,10 @@ class MatchMakingExt {
 
 		const { rmcMessage } = packet;
 		const stream = new Stream(rmcMessage.body, packet.connection);
-		packet.rmcData = handler(rmcMessage, stream);
+
+		packet.rmcData = {
+			body: handler(rmcMessage, stream)
+		};
 	}
 
 	/**
