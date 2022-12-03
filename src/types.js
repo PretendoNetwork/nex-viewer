@@ -131,6 +131,32 @@ class RVConnectionData extends Structure {
 			this.currentUTCTime = stream.readUInt64LE(); // If prudpv1
 		}
 	}
+
+	toJSON() {
+		const data = {
+			m_urlRegularProtocols: {
+				__typeName: 'StationURL',
+				__typeValue: this.stationUrl
+			},
+			m_lstSpecialProtocols: {
+				__typeName: 'List<uint8>',
+				__typeValue: this.specialProtocols
+			},
+			m_urlSpecialProtocols: {
+				__typeName: 'StationURL',
+				__typeValue: this.stationUrlSpecial
+			}
+		};
+
+		if (this.currentUTCTime) {
+			data.m_currentUTCTime = {
+				__typeName: 'DateTime',
+				__typeValue: this.currentUTCTime
+			}; // If prudpv1
+		}
+
+		return data;
+	}
 }
 
 class StationURL {
@@ -139,6 +165,7 @@ class StationURL {
 	 * @param {string} string StationURL string
 	 */
 	constructor(string) {
+		this._string = string;
 		this.address;
 		this.port;
 		this.stream;
