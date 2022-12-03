@@ -275,6 +275,44 @@ class Variant {
 			break;
 		}
 	}
+
+	toJSON() {
+		const data = {
+			type: {
+				__typeName: 'uint8',
+				__typeValue: this.type
+			},
+			value: {
+				__typeValue: this.value
+			}
+		};
+
+		switch (this.type) {
+		case 0:
+			data.value.__typeName = 'No value';
+			break;
+		case 1:
+			data.value.__typeName = 'sint64';
+			break;
+		case 2:
+			data.value.__typeName = 'double';
+			break;
+		case 3:
+			data.value.__typeName = 'boolean';
+			break;
+		case 4:
+			data.value.__typeName = 'String';
+			break;
+		case 5:
+			data.value.__typeName = 'DateTime';
+			break;
+		case 6:
+			data.value.__typeName = 'uint64';
+			break;
+		}
+
+		return data;
+	}
 }
 
 module.exports = {
