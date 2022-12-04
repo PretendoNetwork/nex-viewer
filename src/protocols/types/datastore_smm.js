@@ -12,6 +12,19 @@ class DataStoreFileServerObjectInfo extends NEXTypes.Structure {
 		this.dataId = stream.readUInt64LE();
 		this.getInfo = stream.readNEXStructure(DataStoreTypes.DataStoreReqGetInfo);
 	}
+
+	toJSON() {
+		return {
+			dataId: {
+				__typeName: 'uint64',
+				__typeValue: this.dataId
+			},
+			getInfo: {
+				__typeName: 'DataStoreReqGetInfo',
+				__typeValue: this.getInfo
+			}
+		};
+	}
 }
 
 class DataStoreGetMetaByOwnerIdParam extends NEXTypes.Structure {
@@ -23,7 +36,28 @@ class DataStoreGetMetaByOwnerIdParam extends NEXTypes.Structure {
 		this.ownerIds = stream.readNEXList(stream.readUInt32LE);
 		this.dataTypes = stream.readNEXList(stream.readUInt16LE);
 		this.resultOption = stream.readUInt8();
-		this.getInfo = stream.readNEXStructure(NEXTypes.ResultRange);
+		this.resultRange = stream.readNEXStructure(NEXTypes.ResultRange);
+	}
+
+	toJSON() {
+		return {
+			ownerIds: {
+				__typeName: 'List<uint32>',
+				__typeValue: this.ownerIds
+			},
+			dataTypes: {
+				__typeName: 'List<uint16>',
+				__typeValue: this.dataTypes
+			},
+			resultOption: {
+				__typeName: 'uint8',
+				__typeValue: this.resultOption
+			},
+			resultRange: {
+				__typeName: 'ResultRange',
+				__typeValue: this.resultRange
+			}
+		};
 	}
 }
 
@@ -38,6 +72,27 @@ class DataStoreRateCustomRankingParam extends NEXTypes.Structure {
 		this.score = stream.readUInt32LE();
 		this.period = stream.readUInt16LE();
 	}
+
+	toJSON() {
+		return {
+			dataId: {
+				__typeName: 'uint64',
+				__typeValue: this.dataId
+			},
+			applicationId: {
+				__typeName: 'uint32',
+				__typeValue: this.applicationId
+			},
+			score: {
+				__typeName: 'uint32',
+				__typeValue: this.score
+			},
+			period: {
+				__typeName: 'uint16',
+				__typeValue: this.period
+			}
+		};
+	}
 }
 
 class DataStoreGetCustomRankingParam extends NEXTypes.Structure {
@@ -49,7 +104,28 @@ class DataStoreGetCustomRankingParam extends NEXTypes.Structure {
 		this.applicationId = stream.readUInt32LE();
 		this.condition = stream.readNEXStructure(DataStoreCustomRankingRatingCondition);
 		this.resultOption = stream.readUInt8();
-		this.resultOption = stream.readNEXStructure(NEXTypes.ResultRange);
+		this.resultRange = stream.readNEXStructure(NEXTypes.ResultRange);
+	}
+
+	toJSON() {
+		return {
+			applicationId: {
+				__typeName: 'uint32',
+				__typeValue: this.applicationId
+			},
+			condition: {
+				__typeName: 'DataStoreCustomRankingRatingCondition',
+				__typeValue: this.condition
+			},
+			resultOption: {
+				__typeName: 'uint8',
+				__typeValue: this.resultOption
+			},
+			resultRange: {
+				__typeName: 'ResultRange',
+				__typeValue: this.resultRange
+			}
+		};
 	}
 }
 
@@ -63,6 +139,23 @@ class DataStoreCustomRankingRatingCondition extends NEXTypes.Structure {
 		this.minValue = stream.readInt32LE();
 		this.maxValue = stream.readInt32LE();
 	}
+
+	toJSON() {
+		return {
+			slot: {
+				__typeName: 'sint8',
+				__typeValue: this.slot
+			},
+			minValue: {
+				__typeName: 'sint32',
+				__typeValue: this.minValue
+			},
+			maxValue: {
+				__typeName: 'sint32',
+				__typeValue: this.maxValue
+			}
+		};
+	}
 }
 
 class DataStoreCustomRankingResult extends NEXTypes.Structure {
@@ -74,6 +167,23 @@ class DataStoreCustomRankingResult extends NEXTypes.Structure {
 		this.order = stream.readUInt32LE();
 		this.score = stream.readUInt32LE();
 		this.metaInfo = stream.readNEXStructure(DataStoreTypes.DataStoreMetaInfo);
+	}
+
+	toJSON() {
+		return {
+			order: {
+				__typeName: 'uint32',
+				__typeValue: this.order
+			},
+			score: {
+				__typeName: 'uint32',
+				__typeValue: this.score
+			},
+			metaInfo: {
+				__typeName: 'DataStoreMetaInfo',
+				__typeValue: this.metaInfo
+			}
+		};
 	}
 }
 
@@ -87,6 +197,23 @@ class DataStoreGetCustomRankingByDataIdParam extends NEXTypes.Structure {
 		this.metaInfo = stream.readNEXList(stream.readUInt64LE);
 		this.resultOption = stream.readUInt8();
 	}
+
+	toJSON() {
+		return {
+			applicationId: {
+				__typeName: 'uint32',
+				__typeValue: this.applicationId
+			},
+			metaInfo: {
+				__typeName: 'List<uint64>',
+				__typeValue: this.metaInfo
+			},
+			resultOption: {
+				__typeName: 'uint8',
+				__typeValue: this.resultOption
+			}
+		};
+	}
 }
 
 class BufferQueueParam extends NEXTypes.Structure {
@@ -97,6 +224,19 @@ class BufferQueueParam extends NEXTypes.Structure {
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
 		this.slot = stream.readUInt32LE();
+	}
+
+	toJSON() {
+		return {
+			dataId: {
+				__typeName: 'uint64',
+				__typeValue: this.dataId
+			},
+			slot: {
+				__typeName: 'uint32',
+				__typeValue: this.slot
+			}
+		};
 	}
 }
 
@@ -110,6 +250,23 @@ class DataStoreAttachFileParam extends NEXTypes.Structure {
 		this.referDataId = stream.readUInt64LE();
 		this.contentType = stream.readNEXString();
 	}
+
+	toJSON() {
+		return {
+			postParam: {
+				__typeName: 'DataStorePreparePostParam',
+				__typeValue: this.postParam
+			},
+			referDataId: {
+				__typeName: 'uint32',
+				__typeValue: this.referDataId
+			},
+			contentType: {
+				__typeName: 'String',
+				__typeValue: this.contentType
+			}
+		};
+	}
 }
 
 class DataStoreUploadCourseRecordParam extends NEXTypes.Structure {
@@ -122,6 +279,23 @@ class DataStoreUploadCourseRecordParam extends NEXTypes.Structure {
 		this.slot = stream.readUInt8();
 		this.score = stream.readInt32LE();
 	}
+
+	toJSON() {
+		return {
+			dataId: {
+				__typeName: 'uint64',
+				__typeValue: this.dataId
+			},
+			slot: {
+				__typeName: 'uint8',
+				__typeValue: this.slot
+			},
+			score: {
+				__typeName: 'sint32',
+				__typeValue: this.score
+			}
+		};
+	}
 }
 
 class DataStoreGetCourseRecordParam extends NEXTypes.Structure {
@@ -133,6 +307,19 @@ class DataStoreGetCourseRecordParam extends NEXTypes.Structure {
 		this.dataId = stream.readUInt64LE();
 		this.slot = stream.readUInt8();
 	}
+
+	toJSON() {
+		return {
+			dataId: {
+				__typeName: 'uint64',
+				__typeValue: this.dataId
+			},
+			slot: {
+				__typeName: 'uint8',
+				__typeValue: this.slot
+			}
+		};
+	}
 }
 
 class DataStoreGetCourseRecordResult extends NEXTypes.Structure {
@@ -143,11 +330,44 @@ class DataStoreGetCourseRecordResult extends NEXTypes.Structure {
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
 		this.slot = stream.readUInt8();
-		this.firstPid = stream.readUInt32LE();
-		this.bestPid = stream.readUInt32LE();
+		this.firstPid = stream.readUInt32LE(); // * NEX stores this as uint32 but is actually PID?
+		this.bestPid = stream.readUInt32LE(); // * NEX stores this as uint32 but is actually PID?
 		this.bestScore = stream.readInt32LE();
 		this.createdTime = stream.readNEXDateTime();
 		this.updatedTime = stream.readNEXDateTime();
+	}
+
+	toJSON() {
+		return {
+			dataId: {
+				__typeName: 'uint64',
+				__typeValue: this.dataId
+			},
+			slot: {
+				__typeName: 'uint8',
+				__typeValue: this.slot
+			},
+			firstPid: {
+				__typeName: 'uint32',
+				__typeValue: this.firstPid
+			},
+			bestPid: {
+				__typeName: 'uint32',
+				__typeValue: this.bestPid
+			},
+			bestScore: {
+				__typeName: 'sint32',
+				__typeValue: this.bestScore
+			},
+			createdTime: {
+				__typeName: 'DateTime',
+				__typeValue: this.createdTime
+			},
+			updatedTime: {
+				__typeName: 'DateTime',
+				__typeValue: this.updatedTime
+			}
+		};
 	}
 }
 
@@ -159,6 +379,19 @@ class DataStoreChangePlayablePlatformParam extends NEXTypes.Structure {
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
 		this.playablePlatform = stream.readUInt32LE();
+	}
+
+	toJSON() {
+		return {
+			dataId: {
+				__typeName: 'uint64',
+				__typeValue: this.dataId
+			},
+			playablePlatform: {
+				__typeName: 'uint32',
+				__typeValue: this.playablePlatform
+			}
+		};
 	}
 }
 
@@ -172,6 +405,27 @@ class DataStoreReportCourseParam extends NEXTypes.Structure {
 		this.miiName = stream.readNEXString();
 		this.reportCategory = stream.readUInt8();
 		this.reportReason = stream.readNEXString();
+	}
+
+	toJSON() {
+		return {
+			dataId: {
+				__typeName: 'uint64',
+				__typeValue: this.dataId
+			},
+			miiName: {
+				__typeName: 'String',
+				__typeValue: this.miiName
+			},
+			reportCategory: {
+				__typeName: 'uint8',
+				__typeValue: this.reportCategory
+			},
+			reportReason: {
+				__typeName: 'String',
+				__typeValue: this.reportReason
+			}
+		};
 	}
 }
 
