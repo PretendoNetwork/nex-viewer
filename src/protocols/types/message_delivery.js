@@ -1,6 +1,35 @@
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
+class MessageRecipient extends NEXTypes.Structure {
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.m_uiRecipientType = stream.readUInt32LE();
+		this.m_principalId = stream.readUInt32LE();
+		this.m_gatheringId = stream.readUInt32LE();
+	}
+
+	toJSON() {
+		return {
+			m_uiRecipientType: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiRecipientType
+			},
+			m_principalId: {
+				__typeName: 'PID',
+				__typeValue: this.m_principalId
+			},
+			m_gatheringId: {
+				__typeName: 'uint32',
+				__typeValue: this.m_gatheringId
+			}
+		};
+	}
+}
+
 class UserMessage extends NEXTypes.Structure {
 	constructor() {
 		super();
@@ -23,17 +52,50 @@ class UserMessage extends NEXTypes.Structure {
 		this.m_strSender = stream.readNEXString();
 		this.m_messageRecipient = stream.readNEXStructure(MessageRecipient);
 	}
-}
 
-class MessageRecipient extends NEXTypes.Structure {
-	/**
-	 *
-	 * @param {Stream} stream NEX data stream
-	 */
-	parse(stream) {
-		this.m_uiRecipientType = stream.readUInt32LE();
-		this.m_principalId = stream.readUInt32LE();
-		this.m_gatheringId = stream.readUInt32LE();
+	toJSON() {
+		return {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
+			m_uiID: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiID
+			},
+			m_uiParentID: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiParentID
+			},
+			m_pidSender: {
+				__typeName: 'PID',
+				__typeValue: this.m_pidSender
+			},
+			m_receptiontime: {
+				__typeName: 'DateTime',
+				__typeValue: this.m_receptiontime
+			},
+			m_uiLifeTime: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiLifeTime
+			},
+			m_uiFlags: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiFlags
+			},
+			m_strSubject: {
+				__typeName: 'String',
+				__typeValue: this.m_strSubject
+			},
+			m_strSender: {
+				__typeName: 'String',
+				__typeValue: this.m_strSender
+			},
+			m_messageRecipient: {
+				__typeName: 'MessageRecipient',
+				__typeValue: this.m_messageRecipient
+			}
+		};
 	}
 }
 
@@ -51,6 +113,19 @@ class TextMessage extends NEXTypes.Structure {
 	parse(stream) {
 		this.m_strTextBody = stream.readNEXString();
 	}
+
+	toJSON() {
+		return {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
+			m_strTextBody: {
+				__typeName: 'String',
+				__typeValue: this.m_strTextBody
+			}
+		};
+	}
 }
 
 class BinaryMessage extends NEXTypes.Structure {
@@ -66,6 +141,19 @@ class BinaryMessage extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.m_binaryBody = stream.readNEXQBuffer();
+	}
+
+	toJSON() {
+		return {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
+			m_binaryBody: {
+				__typeName: 'qBuffer',
+				__typeValue: this.m_binaryBody.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+			}
+		};
 	}
 }
 
