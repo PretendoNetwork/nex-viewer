@@ -108,7 +108,7 @@ class PersistentGathering extends NEXTypes.Structure {
 			},
 			m_ApplicationBuffer: {
 				__typeName: 'Buffer',
-				__typeValue: this.m_ApplicationBuffer.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.m_ApplicationBuffer
 			},
 			m_ParticipationStartDate: {
 				__typeName: 'DateTime',
@@ -205,7 +205,7 @@ class MatchmakeSession extends NEXTypes.Structure {
 			},
 			m_ApplicationBuffer: {
 				__typeName: 'DateTime',
-				__typeValue: this.m_ApplicationBuffer.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.m_ApplicationBuffer
 			},
 			m_ParticipationCount: {
 				__typeName: 'uint32',
@@ -223,7 +223,7 @@ class MatchmakeSession extends NEXTypes.Structure {
 		if (this.m_SessionKey !== undefined) {
 			data.m_SessionKey = {
 				__typeName: 'Buffer',
-				__typeValue: this.m_SessionKey.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.m_SessionKey
 			}; // If prudpv1
 		}
 
@@ -581,7 +581,7 @@ class UpdateMatchmakeSessionParam extends NEXTypes.Structure {
 			},
 			applicationBuffer: {
 				__typeName: 'Buffer',
-				__typeValue: this.applicationBuffer.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.applicationBuffer
 			},
 			progressScore: {
 				__typeName: 'uint8',

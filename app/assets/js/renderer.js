@@ -301,7 +301,11 @@ function serializeRMCBody(rmcData) {
 		if (Object.hasOwnProperty.call(rmcData, key)) {
 			const value = rmcData[key];
 			const typeName = value.__typeName;
-			const typeValue = value.__typeValue;
+			let typeValue = value.__typeValue;
+
+			if (typeName === 'Buffer' || typeName === 'qBuffer') {
+				typeValue = toHexString(typeValue.data); // * typeValue is a NodeJS Buffer object
+			}
 
 			if (key === '__typeInherits') {
 				for (const inheritedType of value) {

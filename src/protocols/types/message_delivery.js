@@ -151,7 +151,7 @@ class BinaryMessage extends NEXTypes.Structure {
 			})),
 			m_binaryBody: {
 				__typeName: 'qBuffer',
-				__typeValue: this.m_binaryBody.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.m_binaryBody
 			}
 		};
 	}

@@ -211,7 +211,7 @@ class DataStoreReqGetInfoV1 extends NEXTypes.Structure {
 			},
 			rootCaCert: {
 				__typeName: 'Buffer',
-				__typeValue: this.rootCaCert.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.rootCaCert
 			}
 		};
 	}
@@ -246,7 +246,7 @@ class DataStoreReqGetInfo extends NEXTypes.Structure {
 			},
 			rootCaCert: {
 				__typeName: 'Buffer',
-				__typeValue: this.rootCaCert.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.rootCaCert
 			},
 			dataId: {
 				__typeName: 'uint64',
@@ -291,7 +291,7 @@ class DataStorePreparePostParamV1 extends NEXTypes.Structure {
 			},
 			metaBinary: {
 				__typeName: 'qBuffer',
-				__typeValue: this.metaBinary.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.metaBinary
 			},
 			permission: {
 				__typeName: 'DataStorePermission',
@@ -311,7 +311,7 @@ class DataStorePreparePostParamV1 extends NEXTypes.Structure {
 			},
 			referDataId: {
 				__typeName: 'uint32',
-				__typeValue: this.referDataId.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.referDataId
 			},
 			tags: {
 				__typeName: 'List<String>',
@@ -359,7 +359,7 @@ class DataStoreReqPostInfoV1 extends NEXTypes.Structure {
 			},
 			rootCaCert: {
 				__typeName: 'Buffer',
-				__typeValue: this.rootCaCert.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.rootCaCert
 			}
 		};
 	}
@@ -458,7 +458,7 @@ class DataStoreChangeMetaParamV1 extends NEXTypes.Structure {
 			},
 			metaBinary: {
 				__typeName: 'qBuffer',
-				__typeValue: this.metaBinary.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.metaBinary
 			},
 			tags: {
 				__typeName: 'List<String>',
@@ -557,7 +557,7 @@ class DataStoreMetaInfo extends NEXTypes.Structure {
 			},
 			metaBinary: {
 				__typeName: 'qBuffer',
-				__typeValue: this.metaBinary.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.metaBinary
 			},
 			permission: {
 				__typeName: 'DataStorePermission',
@@ -735,7 +735,7 @@ class DataStoreReqUpdateInfo extends NEXTypes.Structure {
 			},
 			rootCaCert: {
 				__typeName: 'Buffer',
-				__typeValue: this.rootCaCert.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.rootCaCert
 			}
 		};
 	}
@@ -945,7 +945,7 @@ class DataStoreReqGetNotificationUrlInfo extends NEXTypes.Structure {
 			},
 			rootCaCert: {
 				__typeName: 'Buffer',
-				__typeValue: this.rootCaCert.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.rootCaCert
 			}
 		};
 	}
@@ -1226,7 +1226,7 @@ class DataStoreReqGetAdditionalMeta extends NEXTypes.Structure {
 			},
 			metaBinary: {
 				__typeName: 'qBuffer',
-				__typeValue: this.metaBinary.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.metaBinary
 			}
 		};
 	}
@@ -1337,7 +1337,7 @@ class DataStorePreparePostParam extends NEXTypes.Structure {
 			},
 			metaBinary: {
 				__typeName: 'qBuffer',
-				__typeValue: this.metaBinary.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.metaBinary
 			},
 			permission: {
 				__typeName: 'DataStorePermission',
@@ -1436,7 +1436,7 @@ class DataStoreReqPostInfo extends NEXTypes.Structure {
 			},
 			rootCaCert: {
 				__typeName: 'Buffer',
-				__typeValue: this.rootCaCert.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.rootCaCert
 			}
 		};
 	}

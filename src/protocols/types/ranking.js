@@ -93,7 +93,7 @@ class RankingRankData extends NEXTypes.Structure {
 			},
 			commonData: {
 				__typeName: 'Buffer',
-				__typeValue: this.commonData.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.commonData
 			}
 		};
 	}

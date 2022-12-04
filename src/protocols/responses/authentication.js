@@ -25,7 +25,7 @@ class LoginResponse {
 			},
 			pbufResponse: {
 				__typeName: 'Buffer',
-				__typeValue: this.pbufResponse.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.pbufResponse
 			},
 			pConnectionData: {
 				__typeName: 'RVConnectionData',
@@ -63,7 +63,7 @@ class LoginExResponse {
 			},
 			pbufResponse: {
 				__typeName: 'Buffer',
-				__typeValue: this.pbufResponse.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.pbufResponse
 			},
 			pConnectionData: {
 				__typeName: 'RVConnectionData',
@@ -94,7 +94,7 @@ class RequestTicketResponse {
 			},
 			bufResponse: {
 				__typeName: 'Buffer',
-				__typeValue: this.bufResponse.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.bufResponse
 			}
 		};
 	}
@@ -159,7 +159,7 @@ class LoginWithContextResponse {
 			},
 			pbufResponse: {
 				__typeName: 'Buffer',
-				__typeValue: this.pbufResponse.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+				__typeValue: this.pbufResponse
 			},
 			pConnectionData: {
 				__typeName: 'RVConnectionData',
