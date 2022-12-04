@@ -18,6 +18,31 @@ class NotificationEvent extends NEXTypes.Structure {
 		this.m_uiParam2 = stream.readUInt32LE();
 		this.m_strParam = stream.readNEXString();
 	}
+
+	toJSON() {
+		return {
+			m_pidSource: {
+				__typeName: 'PID',
+				__typeValue: this.m_pidSource
+			},
+			m_uiType: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiType
+			},
+			m_uiParam1: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiParam1
+			},
+			m_uiParam2: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiParam2
+			},
+			m_strParam: {
+				__typeName: 'String',
+				__typeValue: this.m_strParam
+			}
+		};
+	}
 }
 
 module.exports = {
