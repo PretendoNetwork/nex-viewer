@@ -18,6 +18,51 @@ class Gathering extends NEXTypes.Structure {
 		this.m_uiState = stream.readUInt32LE();
 		this.m_strDescription = stream.readNEXString();
 	}
+
+	toJSON() {
+		return {
+			m_idMyself: {
+				__typeName: 'uint32',
+				__typeValue: this.m_idMyself
+			},
+			m_pidOwner: {
+				__typeName: 'PID',
+				__typeValue: this.m_pidOwner
+			},
+			m_pidHost: {
+				__typeName: 'PID',
+				__typeValue: this.m_pidHost
+			},
+			m_uiMinParticipants: {
+				__typeName: 'uint16',
+				__typeValue: this.m_uiMinParticipants
+			},
+			m_uiMaxParticipants: {
+				__typeName: 'uint16',
+				__typeValue: this.m_uiMaxParticipants
+			},
+			m_uiParticipationPolicy: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiParticipationPolicy
+			},
+			m_uiPolicyArgument: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiPolicyArgument
+			},
+			m_uiFlags: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiFlags
+			},
+			m_uiState: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiState
+			},
+			m_strDescription: {
+				__typeName: 'String',
+				__typeValue: this.m_strDescription
+			}
+		};
+	}
 }
 NEXTypes.AnyDataHolder.addType('Gathering', Gathering);
 
@@ -41,6 +86,47 @@ class PersistentGathering extends NEXTypes.Structure {
 		this.m_ParticipationEndDate = stream.readNEXDateTime();
 		this.m_MatchmakeSessionCount = stream.readUInt32LE();
 		this.m_ParticipationCount = stream.readUInt32LE();
+	}
+
+	toJSON() {
+		return {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
+			m_CommunityType: {
+				__typeName: 'uint32',
+				__typeValue: this.m_CommunityType
+			},
+			m_Password: {
+				__typeName: 'String',
+				__typeValue: this.m_Password
+			},
+			m_Attribs: {
+				__typeName: 'List<uint32>',
+				__typeValue: this.m_Attribs
+			},
+			m_ApplicationBuffer: {
+				__typeName: 'Buffer',
+				__typeValue: this.m_ApplicationBuffer.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+			},
+			m_ParticipationStartDate: {
+				__typeName: 'DateTime',
+				__typeValue: this.m_ParticipationStartDate
+			},
+			m_ParticipationEndDate: {
+				__typeName: 'DateTime',
+				__typeValue: this.m_ParticipationEndDate
+			},
+			m_MatchmakeSessionCount: {
+				__typeName: 'uint32',
+				__typeValue: this.m_MatchmakeSessionCount
+			},
+			m_ParticipationCount: {
+				__typeName: 'uint32',
+				__typeValue: this.m_ParticipationCount
+			}
+		};
 	}
 }
 
@@ -94,6 +180,111 @@ class MatchmakeSession extends NEXTypes.Structure {
 			this.m_Codeword = stream.readNEXString();
 		}
 	}
+
+	toJSON() {
+		const data = {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
+			m_GameMode: {
+				__typeName: 'uint32',
+				__typeValue: this.m_GameMode
+			},
+			m_Attribs: {
+				__typeName: 'List<uint32>',
+				__typeValue: this.m_Attribs
+			},
+			m_OpenParticipation: {
+				__typeName: 'boolean',
+				__typeValue: this.m_OpenParticipation
+			},
+			m_MatchmakeSystemType: {
+				__typeName: 'uint32',
+				__typeValue: this.m_MatchmakeSystemType
+			},
+			m_ApplicationBuffer: {
+				__typeName: 'DateTime',
+				__typeValue: this.m_ApplicationBuffer.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+			},
+			m_ParticipationCount: {
+				__typeName: 'uint32',
+				__typeValue: this.m_ParticipationCount
+			}
+		};
+
+		if (this.m_ProgressScore !== undefined) {
+			data.m_ProgressScore = {
+				__typeName: 'uint8',
+				__typeValue: this.m_ProgressScore
+			}; // If prudpv1
+		}
+
+		if (this.m_SessionKey !== undefined) {
+			data.m_SessionKey = {
+				__typeName: 'Buffer',
+				__typeValue: this.m_SessionKey.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+			}; // If prudpv1
+		}
+
+		if (this.m_Option0 !== undefined) {
+			data.m_Option0 = {
+				__typeName: 'uint32',
+				__typeValue: this.m_Option0
+			}; // If prudpv1
+		}
+
+		if (this.m_MatchmakeParam !== undefined) {
+			data.m_MatchmakeParam = {
+				__typeName: 'MatchmakeParam',
+				__typeValue: this.m_MatchmakeParam
+			}; // If prudpv1
+		}
+
+		if (this.m_StartedTime !== undefined) {
+			data.m_StartedTime = {
+				__typeName: 'DateTime',
+				__typeValue: this.m_StartedTime
+			}; // If prudpv1
+		}
+
+		if (this.m_UserPassword !== undefined) {
+			data.m_UserPassword = {
+				__typeName: 'String',
+				__typeValue: this.m_UserPassword
+			}; // If prudpv1
+		}
+
+		if (this.m_ReferGid !== undefined) {
+			data.m_ReferGid = {
+				__typeName: 'uint32',
+				__typeValue: this.m_ReferGid
+			}; // If prudpv1
+		}
+
+		if (this.m_UserPasswordEnabled !== undefined) {
+			data.m_UserPasswordEnabled = {
+				__typeName: 'boolean',
+				__typeValue: this.m_UserPasswordEnabled
+			}; // If prudpv1
+		}
+
+		if (this.m_SystemPasswordEnabled !== undefined) {
+			data.m_SystemPasswordEnabled = {
+				__typeName: 'boolean',
+				__typeValue: this.m_SystemPasswordEnabled
+			}; // If prudpv1
+		}
+
+		if (this.m_Codeword !== undefined) {
+			data.m_Codeword = {
+				__typeName: 'String',
+				__typeValue: this.m_Codeword
+			}; // If prudpv1
+		}
+
+		return data;
+	}
 }
 
 class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
@@ -134,6 +325,102 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 			this.m_ResultRange = stream.readNEXStructure(NEXTypes.ResultRange);
 		}
 	}
+
+	toJSON() {
+		const data = {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
+			m_Attribs: {
+				__typeName: 'List<String>',
+				__typeValue: this.m_Attribs
+			},
+			m_GameMode: {
+				__typeName: 'String',
+				__typeValue: this.m_GameMode
+			},
+			m_MinParticipants: {
+				__typeName: 'String',
+				__typeValue: this.m_MinParticipants
+			},
+			m_MaxParticipants: {
+				__typeName: 'String',
+				__typeValue: this.m_MaxParticipants
+			},
+			m_MatchmakeSystemType: {
+				__typeName: 'String',
+				__typeValue: this.m_MatchmakeSystemType
+			},
+			m_VacantOnly: {
+				__typeName: 'boolean',
+				__typeValue: this.m_VacantOnly
+			},
+			m_ExcludeLocked: {
+				__typeName: 'boolean',
+				__typeValue: this.m_ExcludeLocked
+			},
+			m_ExcludeNonHostPid: {
+				__typeName: 'boolean',
+				__typeValue: this.m_ExcludeNonHostPid
+			},
+			m_SelectionMethod: {
+				__typeName: 'uint32',
+				__typeValue: this.m_SelectionMethod
+			}
+		};
+
+		if (this.m_VacantParticipants !== undefined) {
+			data.m_VacantParticipants = {
+				__typeName: 'uint16',
+				__typeValue: this.m_VacantParticipants
+			}; // If prudpv1
+		}
+
+		if (this.m_MatchmakeParam !== undefined) {
+			data.m_MatchmakeParam = {
+				__typeName: 'MatchmakeParam',
+				__typeValue: this.m_MatchmakeParam
+			}; // If prudpv1
+		}
+
+		if (this.m_ExcludeUserPasswordSet !== undefined) {
+			data.m_ExcludeUserPasswordSet = {
+				__typeName: 'boolean',
+				__typeValue: this.m_ExcludeUserPasswordSet
+			}; // If prudpv1
+		}
+
+		if (this.m_ExcludeSystemPasswordSet !== undefined) {
+			data.m_ExcludeSystemPasswordSet = {
+				__typeName: 'boolean',
+				__typeValue: this.m_ExcludeSystemPasswordSet
+			}; // If prudpv1
+		}
+
+		if (this.m_ReferGid !== undefined) {
+			data.m_ReferGid = {
+				__typeName: 'uint32',
+				__typeValue: this.m_ReferGid
+			}; // If prudpv1
+		}
+
+		if (this.m_Codeword !== undefined) {
+			data.m_Codeword = {
+				__typeName: 'String',
+				__typeValue: this.m_Codeword
+			}; // If prudpv1
+		}
+
+		if (this.m_ResultRange !== undefined) {
+			data.m_ResultRange = {
+				__typeName: 'ResultRange',
+				__typeValue: this.m_ResultRange
+			}; // If prudpv1
+		}
+
+		return data;
+	}
 }
 
 class CreateMatchmakeSessionParam extends NEXTypes.Structure {
@@ -148,6 +435,35 @@ class CreateMatchmakeSessionParam extends NEXTypes.Structure {
 		this.createMatchmakeSessionOption = stream.readUInt32LE();
 		this.joinMessage = stream.readNEXString();
 		this.participationCount = stream.readUInt16LE();
+	}
+
+	toJSON() {
+		return {
+			sourceMatchmakeSession: {
+				__typeName: 'MatchmakeSession',
+				__typeValue: this.sourceMatchmakeSession
+			},
+			additionalParticipants: {
+				__typeName: 'List<PID>',
+				__typeValue: this.additionalParticipants
+			},
+			gidForParticipationCheck: {
+				__typeName: 'uint32',
+				__typeValue: this.gidForParticipationCheck
+			},
+			createMatchmakeSessionOption: {
+				__typeName: 'uint32',
+				__typeValue: this.createMatchmakeSessionOption
+			},
+			joinMessage: {
+				__typeName: 'String',
+				__typeValue: this.joinMessage
+			},
+			participationCount: {
+				__typeName: 'uint16',
+				__typeValue: this.participationCount
+			}
+		};
 	}
 }
 
@@ -169,6 +485,55 @@ class JoinMatchmakeSessionParam extends NEXTypes.Structure {
 		this.extraParticipants = stream.readUInt16LE();
 		this.blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
 	}
+
+	toJSON() {
+		return {
+			gid: {
+				__typeName: 'uint32',
+				__typeValue: this.gid
+			},
+			additionalParticipants: {
+				__typeName: 'List<PID>',
+				__typeValue: this.additionalParticipants
+			},
+			gidForParticipationCheck: {
+				__typeName: 'uint32',
+				__typeValue: this.gidForParticipationCheck
+			},
+			joinMatchmakeSessionOption: {
+				__typeName: 'uint32',
+				__typeValue: this.joinMatchmakeSessionOption
+			},
+			joinMatchmakeSessionBehavior: {
+				__typeName: 'uint8',
+				__typeValue: this.joinMatchmakeSessionBehavior
+			},
+			strUserPassword: {
+				__typeName: 'String',
+				__typeValue: this.strUserPassword
+			},
+			strSystemPassword: {
+				__typeName: 'String',
+				__typeValue: this.strSystemPassword
+			},
+			joinMessage: {
+				__typeName: 'String',
+				__typeValue: this.joinMessage
+			},
+			participationCount: {
+				__typeName: 'uint16',
+				__typeValue: this.participationCount
+			},
+			extraParticipants: {
+				__typeName: 'uint16',
+				__typeValue: this.extraParticipants
+			},
+			blockListParam: {
+				__typeName: 'MatchmakeBlockListParam',
+				__typeValue: this.blockListParam
+			}
+		};
+	}
 }
 
 class UpdateMatchmakeSessionParam extends NEXTypes.Structure {
@@ -183,7 +548,7 @@ class UpdateMatchmakeSessionParam extends NEXTypes.Structure {
 		this.openParticipation = stream.readBoolean();
 		this.applicationBuffer = stream.readNEXBuffer();
 		this.progressScore = stream.readUInt8();
-		this.blockListParam = stream.readNEXStructure(MatchmakeParam);
+		this.matchmakeParam = stream.readNEXStructure(MatchmakeParam);
 		this.startedTime = stream.readNEXDateTime();
 		this.userPassword = stream.readNEXString();
 		this.gameMode = stream.readUInt32LE();
@@ -195,6 +560,79 @@ class UpdateMatchmakeSessionParam extends NEXTypes.Structure {
 		this.policyArgument = stream.readUInt32LE();
 		this.codeword = stream.readNEXString();
 	}
+
+	toJSON() {
+		return {
+			gid: {
+				__typeName: 'uint32',
+				__typeValue: this.gid
+			},
+			modificationFlag: {
+				__typeName: 'uint32',
+				__typeValue: this.modificationFlag
+			},
+			attributes: {
+				__typeName: 'List<PID>',
+				__typeValue: this.attributes
+			},
+			openParticipation: {
+				__typeName: 'boolean',
+				__typeValue: this.openParticipation
+			},
+			applicationBuffer: {
+				__typeName: 'Buffer',
+				__typeValue: this.applicationBuffer.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+			},
+			progressScore: {
+				__typeName: 'uint8',
+				__typeValue: this.progressScore
+			},
+			matchmakeParam: {
+				__typeName: 'MatchmakeParam',
+				__typeValue: this.matchmakeParam
+			},
+			startedTime: {
+				__typeName: 'DateTime',
+				__typeValue: this.startedTime
+			},
+			userPassword: {
+				__typeName: 'String',
+				__typeValue: this.userPassword
+			},
+			gameMode: {
+				__typeName: 'uint132',
+				__typeValue: this.gameMode
+			},
+			description: {
+				__typeName: 'String',
+				__typeValue: this.description
+			},
+			minParticipants: {
+				__typeName: 'uint16',
+				__typeValue: this.minParticipants
+			},
+			maxParticipants: {
+				__typeName: 'uint16',
+				__typeValue: this.maxParticipants
+			},
+			matchmakeSystemType: {
+				__typeName: 'Stri32',
+				__typeValue: this.matchmakeSystemType
+			},
+			participationPolicy: {
+				__typeName: 'uint32',
+				__typeValue: this.participationPolicy
+			},
+			policyArgument: {
+				__typeName: 'uint32',
+				__typeValue: this.policyArgument
+			},
+			codeword: {
+				__typeName: 'String',
+				__typeValue: this.codeword
+			}
+		};
+	}
 }
 
 class MatchmakeBlockListParam extends NEXTypes.Structure {
@@ -205,6 +643,15 @@ class MatchmakeBlockListParam extends NEXTypes.Structure {
 	parse(stream) {
 		this.optionFlag = stream.readUInt32LE();
 	}
+
+	toJSON() {
+		return {
+			optionFlag: {
+				__typeName: 'uint32',
+				__typeValue: this.optionFlag
+			}
+		};
+	}
 }
 
 class MatchmakeParam extends NEXTypes.Structure {
@@ -214,6 +661,15 @@ class MatchmakeParam extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.m_Params = stream.readNEXMap(stream.readNEXString, stream.readNEXVariant);
+	}
+
+	toJSON() {
+		return {
+			m_Params: {
+				__typeName: 'Map<String, Variant>',
+				__typeValue: this.m_Params
+			}
+		};
 	}
 }
 
@@ -230,11 +686,57 @@ class AutoMatchmakeParam extends NEXTypes.Structure {
 		this.joinMessage = stream.readNEXString();
 		this.participationCount = stream.readUInt16LE();
 		this.lstSearchCriteria = stream.readNEXList(MatchmakeSessionSearchCriteria);
-		//this.targetGids = stream.readNEXList(stream.readUInt32LE);
+		this.targetGids = stream.readNEXList(stream.readUInt32LE);
 
 		if (stream.connection.title.nex_version.major >= 4) {
 			this.blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
 		}
+	}
+
+	toJSON() {
+		const data = {
+			sourceMatchmakeSession: {
+				__typeName: 'MatchmakeSession',
+				__typeValue: this.sourceMatchmakeSession
+			},
+			additionalParticipants: {
+				__typeName: 'List<PID>',
+				__typeValue: this.additionalParticipants
+			},
+			gidForParticipationCheck: {
+				__typeName: 'uint32',
+				__typeValue: this.gidForParticipationCheck
+			},
+			autoMatchmakeOption: {
+				__typeName: 'uint32',
+				__typeValue: this.autoMatchmakeOption
+			},
+			joinMessage: {
+				__typeName: 'String',
+				__typeValue: this.joinMessage
+			},
+			participationCount: {
+				__typeName: 'uint16',
+				__typeValue: this.participationCount
+			},
+			lstSearchCriteria: {
+				__typeName: 'List<MatchmakeSessionSearchCriteria>',
+				__typeValue: this.lstSearchCriteria
+			},
+			targetGids: {
+				__typeName: 'List<uint32>',
+				__typeValue: this.targetGids
+			}
+		};
+
+		if (this.blockListParam !== undefined) {
+			data.blockListParam = {
+				__typeName: 'MatchmakeBlockListParam',
+				__typeValue: this.blockListParam
+			}; // If prudpv1
+		}
+
+		return data;
 	}
 }
 
@@ -248,6 +750,23 @@ class FindMatchmakeSessionByParticipantParam extends NEXTypes.Structure {
 		this.m_resultOptions = stream.readUInt32LE();
 		this.m_blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
 	}
+
+	toJSON() {
+		return {
+			m_principalIdList: {
+				__typeName: 'List<PID>',
+				__typeValue: this.m_principalIdList
+			},
+			m_resultOptions: {
+				__typeName: 'uint32',
+				__typeValue: this.m_resultOptions
+			},
+			m_blockListParam: {
+				__typeName: 'MatchmakeBlockListParam',
+				__typeValue: this.m_blockListParam
+			}
+		};
+	}
 }
 
 class FindMatchmakeSessionByParticipantResult extends NEXTypes.Structure {
@@ -259,6 +778,19 @@ class FindMatchmakeSessionByParticipantResult extends NEXTypes.Structure {
 		this.m_principalId = stream.readUInt32LE();
 		this.m_session = stream.readNEXStructure(MatchmakeSession);
 	}
+
+	toJSON() {
+		return {
+			m_principalId: {
+				__typeName: 'PID',
+				__typeValue: this.m_principalId
+			},
+			m_session: {
+				__typeName: 'MatchmakeSession',
+				__typeValue: this.m_session
+			}
+		};
+	}
 }
 
 class GatheringURLs extends NEXTypes.Structure {
@@ -269,6 +801,19 @@ class GatheringURLs extends NEXTypes.Structure {
 	parse(stream) {
 		this.m_gid = stream.readUInt32LE();
 		this.m_lstStationURLs = stream.readNEXStructure(stream.readNEXStationURL);
+	}
+
+	toJSON() {
+		return {
+			m_gid: {
+				__typeName: 'uint32',
+				__typeValue: this.m_gid
+			},
+			m_lstStationURLs: {
+				__typeName: 'List<StationURL>',
+				__typeValue: this.m_lstStationURLs
+			}
+		};
 	}
 }
 
@@ -282,6 +827,23 @@ class GatheringStats extends NEXTypes.Structure {
 		this.m_uiFlags = stream.readUInt32LE();
 		this.m_lstValues = stream.readNEXList(stream.readFloatLE);
 	}
+
+	toJSON() {
+		return {
+			m_pidParticipant: {
+				__typeName: 'PID',
+				__typeValue: this.m_pidParticipant
+			},
+			m_uiFlags: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiFlags
+			},
+			m_lstValues: {
+				__typeName: 'List<float>',
+				__typeValue: this.m_lstValues
+			}
+		};
+	}
 }
 
 class Invitation extends NEXTypes.Structure {
@@ -293,6 +855,23 @@ class Invitation extends NEXTypes.Structure {
 		this.m_idGathering = stream.readUInt32LE();
 		this.m_idGuest = stream.readUInt32LE();
 		this.m_strMessage = stream.readNEXString();
+	}
+
+	toJSON() {
+		return {
+			m_idGathering: {
+				__typeName: 'uint32',
+				__typeValue: this.m_idGathering
+			},
+			m_idGuest: {
+				__typeName: 'uint32',
+				__typeValue: this.m_idGuest
+			},
+			m_strMessage: {
+				__typeName: 'String',
+				__typeValue: this.m_strMessage
+			}
+		};
 	}
 }
 
@@ -307,6 +886,27 @@ class ParticipantDetails extends NEXTypes.Structure {
 		this.m_strMessage = stream.readNEXString();
 		this.m_uiParticipants = stream.readUInt16LE();
 	}
+
+	toJSON() {
+		return {
+			m_idParticipant: {
+				__typeName: 'PID',
+				__typeValue: this.m_idGathering
+			},
+			m_strName: {
+				__typeName: 'String',
+				__typeValue: this.m_idGuest
+			},
+			m_strMessage: {
+				__typeName: 'String',
+				__typeValue: this.m_strMessage
+			},
+			m_uiParticipants: {
+				__typeName: 'uint16',
+				__typeValue: this.m_strMessage
+			}
+		};
+	}
 }
 
 class DeletionEntry extends NEXTypes.Structure {
@@ -319,6 +919,23 @@ class DeletionEntry extends NEXTypes.Structure {
 		this.m_pid = stream.readUInt32LE();
 		this.m_uiReason = stream.readUInt32LE();
 	}
+
+	toJSON() {
+		return {
+			m_idGathering: {
+				__typeName: 'uint32',
+				__typeValue: this.m_idGathering
+			},
+			m_pid: {
+				__typeName: 'PID',
+				__typeValue: this.m_pid
+			},
+			m_uiReason: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiReason
+			}
+		};
+	}
 }
 
 class PlayingSession extends NEXTypes.Structure {
@@ -329,6 +946,19 @@ class PlayingSession extends NEXTypes.Structure {
 	parse(stream) {
 		this.m_PrincipalId = stream.readUInt32LE();
 		this.m_Gathering = stream.readNEXAnyDataHolder();
+	}
+
+	toJSON() {
+		return {
+			m_PrincipalId: {
+				__typeName: 'PID',
+				__typeValue: this.m_PrincipalId
+			},
+			m_Gathering: {
+				__typeName: 'AnyDataHolder',
+				__typeValue: this.m_Gathering
+			}
+		};
 	}
 }
 
@@ -343,6 +973,27 @@ class SimplePlayingSession extends NEXTypes.Structure {
 		this.m_GameMode = stream.readUInt32LE();
 		this.m_Attribute_0 = stream.readUInt32LE();
 	}
+
+	toJSON() {
+		return {
+			m_PrincipalID: {
+				__typeName: 'PID',
+				__typeValue: this.m_PrincipalID
+			},
+			m_GatheringID: {
+				__typeName: 'uint32',
+				__typeValue: this.m_GatheringID
+			},
+			m_GameMode: {
+				__typeName: 'uint32',
+				__typeValue: this.m_GameMode
+			},
+			m_Attribute_0: {
+				__typeName: 'uint32',
+				__typeValue: this.m_Attribute_0
+			}
+		};
+	}
 }
 
 class SimpleCommunity extends NEXTypes.Structure {
@@ -353,6 +1004,19 @@ class SimpleCommunity extends NEXTypes.Structure {
 	parse(stream) {
 		this.m_GatheringID = stream.readUInt32LE();
 		this.m_MatchmakeSessionCount = stream.readUInt32LE();
+	}
+
+	toJSON() {
+		return {
+			m_GatheringID: {
+				__typeName: 'uint32',
+				__typeValue: this.m_GatheringID
+			},
+			m_MatchmakeSessionCount: {
+				__typeName: 'uint32',
+				__typeValue: this.m_MatchmakeSessionCount
+			}
+		};
 	}
 }
 
