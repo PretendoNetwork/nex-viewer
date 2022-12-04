@@ -14,6 +14,35 @@ class RankingOrderParam extends NEXTypes.Structure {
 		this.offset = stream.readUInt32LE();
 		this.length = stream.readUInt8();
 	}
+
+	toJSON() {
+		return {
+			orderCalculation: {
+				__typeName: 'uint8',
+				__typeValue: this.orderCalculation
+			},
+			groupIndex: {
+				__typeName: 'uint8',
+				__typeValue: this.groupIndex
+			},
+			groupNum: {
+				__typeName: 'uint8',
+				__typeValue: this.groupNum
+			},
+			timeScope: {
+				__typeName: 'uint8',
+				__typeValue: this.timeScope
+			},
+			offset: {
+				__typeName: 'uint32',
+				__typeValue: this.offset
+			},
+			length: {
+				__typeName: 'uint8',
+				__typeValue: this.length
+			}
+		};
+	}
 }
 
 class RankingRankData extends NEXTypes.Structure {
@@ -31,6 +60,43 @@ class RankingRankData extends NEXTypes.Structure {
 		this.param = stream.readUInt64LE();
 		this.commonData = stream.readNEXBuffer();
 	}
+
+	toJSON() {
+		return {
+			principalId: {
+				__typeName: 'PID',
+				__typeValue: this.principalId
+			},
+			uniqueId: {
+				__typeName: 'uint64',
+				__typeValue: this.uniqueId
+			},
+			order: {
+				__typeName: 'uint32',
+				__typeValue: this.order
+			},
+			category: {
+				__typeName: 'uint32',
+				__typeValue: this.category
+			},
+			score: {
+				__typeName: 'uint32',
+				__typeValue: this.score
+			},
+			groups: {
+				__typeName: 'List<byte>',
+				__typeValue: this.groups
+			},
+			param: {
+				__typeName: 'uint64',
+				__typeValue: this.param
+			},
+			commonData: {
+				__typeName: 'Buffer',
+				__typeValue: this.commonData.toString('hex').toUpperCase().replace(/.{2}/g, '$&:')
+			}
+		};
+	}
 }
 
 class RankingResult extends NEXTypes.Structure {
@@ -42,6 +108,23 @@ class RankingResult extends NEXTypes.Structure {
 		this.rankDataList = stream.readNEXList(RankingRankData);
 		this.totalCount = stream.readUInt32LE();
 		this.sinceTime = stream.readNEXDateTime();
+	}
+
+	toJSON() {
+		return {
+			rankDataList: {
+				__typeName: 'List<RankingRankData>',
+				__typeValue: this.rankDataList
+			},
+			totalCount: {
+				__typeName: 'uint32',
+				__typeValue: this.totalCount
+			},
+			sinceTime: {
+				__typeName: 'DateTime',
+				__typeValue: this.sinceTime
+			}
+		};
 	}
 }
 
@@ -61,6 +144,27 @@ class RankingCachedResult extends NEXTypes.Structure {
 		this.expiredTime = stream.readNEXDateTime();
 		this.maxLength = stream.readUInt8();
 	}
+
+	toJSON() {
+		return {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
+			createdTime: {
+				__typeName: 'DateTime',
+				__typeValue: this.createdTime
+			},
+			expiredTime: {
+				__typeName: 'DateTime',
+				__typeValue: this.expiredTime
+			},
+			maxLength: {
+				__typeName: 'uint8',
+				__typeValue: this.maxLength
+			}
+		};
+	}
 }
 
 class RankingStats extends NEXTypes.Structure {
@@ -70,6 +174,15 @@ class RankingStats extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.statsList = stream.readNEXList(stream.readDoubleLE);
+	}
+
+	toJSON() {
+		return {
+			statsList: {
+				__typeName: 'List<Double>',
+				__typeValue: this.statsList
+			}
+		};
 	}
 }
 
@@ -86,6 +199,35 @@ class RankingScoreData extends NEXTypes.Structure {
 		this.groups = stream.readNEXList(stream.readUInt8);
 		this.param = stream.readUInt64LE();
 	}
+
+	toJSON() {
+		return {
+			category: {
+				__typeName: 'uint32',
+				__typeValue: this.category
+			},
+			score: {
+				__typeName: 'uint32',
+				__typeValue: this.score
+			},
+			orderBy: {
+				__typeName: 'uint8',
+				__typeValue: this.orderBy
+			},
+			updateMode: {
+				__typeName: 'uint8',
+				__typeValue: this.updateMode
+			},
+			groups: {
+				__typeName: 'List<uint8>',
+				__typeValue: this.groups
+			},
+			param: {
+				__typeName: 'uint64',
+				__typeValue: this.param
+			},
+		};
+	}
 }
 
 class RankingChangeAttributesParam extends NEXTypes.Structure {
@@ -97,6 +239,23 @@ class RankingChangeAttributesParam extends NEXTypes.Structure {
 		this.modificationFlag = stream.readUInt8();
 		this.groups = stream.readNEXList(stream.readUInt8);
 		this.param = stream.readUInt64LE();
+	}
+
+	toJSON() {
+		return {
+			modificationFlag: {
+				__typeName: 'uint8',
+				__typeValue: this.modificationFlag
+			},
+			groups: {
+				__typeName: 'List<uint8>',
+				__typeValue: this.groups
+			},
+			param: {
+				__typeName: 'uint64',
+				__typeValue: this.param
+			},
+		};
 	}
 }
 
