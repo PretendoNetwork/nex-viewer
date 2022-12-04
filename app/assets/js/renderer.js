@@ -303,31 +303,50 @@ function serializeRMCBody(rmcData) {
 			const typeName = value.__typeName;
 			const typeValue = value.__typeValue;
 
-			if (isObject(typeValue)) {
-				const serializedRMCDataDetails = document.createElement('details');
-				const serializedRMCDataSummary = document.createElement('summary');
-				const serializedRMCDataDiv2 = serializeRMCBody(typeValue);
+			if (key === '__typeInherits') {
+				for (const inheritedType of value) {
+					const inheritedTypeName = inheritedType.__typeName;
+					const inheritedTypeValue = inheritedType.__typeValue;
 
-				serializedRMCDataSummary.appendChild(document.createTextNode(`${key} (${typeName})`));
+					const serializedRMCDataDetails = document.createElement('details');
+					const serializedRMCDataSummary = document.createElement('summary');
+					const serializedRMCDataDiv2 = serializeRMCBody(inheritedTypeValue);
 
-				serializedRMCDataDetails.appendChild(serializedRMCDataSummary);
-				serializedRMCDataDetails.appendChild(serializedRMCDataDiv2);
+					serializedRMCDataSummary.appendChild(document.createTextNode(`Inherits from ${inheritedTypeName}`));
 
-				serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
+					serializedRMCDataDetails.appendChild(serializedRMCDataSummary);
+					serializedRMCDataDetails.appendChild(serializedRMCDataDiv2);
+
+					serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
+				}
+				console.log(value)
 			} else {
-				const rmcValueElementDiv = document.createElement('div');
-				const rmcValueElementName = document.createElement('span');
-				const rmcValueElementValue = document.createElement('span');
-				rmcValueElementName.classList.add('name');
-				rmcValueElementValue.classList.add('value');
+				if (isObject(typeValue)) {
+					const serializedRMCDataDetails = document.createElement('details');
+					const serializedRMCDataSummary = document.createElement('summary');
+					const serializedRMCDataDiv2 = serializeRMCBody(typeValue);
 
-				rmcValueElementName.appendChild(document.createTextNode(`${key} (${typeName}):`));
-				rmcValueElementValue.appendChild(document.createTextNode(typeValue));
+					serializedRMCDataSummary.appendChild(document.createTextNode(`${key} (${typeName})`));
 
-				rmcValueElementDiv.appendChild(rmcValueElementName);
-				rmcValueElementDiv.appendChild(rmcValueElementValue);
+					serializedRMCDataDetails.appendChild(serializedRMCDataSummary);
+					serializedRMCDataDetails.appendChild(serializedRMCDataDiv2);
 
-				serializedRMCDataDiv.appendChild(rmcValueElementDiv);
+					serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
+				} else {
+					const rmcValueElementDiv = document.createElement('div');
+					const rmcValueElementName = document.createElement('span');
+					const rmcValueElementValue = document.createElement('span');
+					rmcValueElementName.classList.add('name');
+					rmcValueElementValue.classList.add('value');
+
+					rmcValueElementName.appendChild(document.createTextNode(`${key} (${typeName}):`));
+					rmcValueElementValue.appendChild(document.createTextNode(typeValue));
+
+					rmcValueElementDiv.appendChild(rmcValueElementName);
+					rmcValueElementDiv.appendChild(rmcValueElementValue);
+
+					serializedRMCDataDiv.appendChild(rmcValueElementDiv);
+				}
 			}
 		}
 	}
