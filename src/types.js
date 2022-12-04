@@ -153,7 +153,7 @@ class RVConnectionData extends Structure {
 			}
 		};
 
-		if (this.currentUTCTime) {
+		if (this.currentUTCTime !== undefined) {
 			data.m_currentUTCTime = {
 				__typeName: 'DateTime',
 				__typeValue: this.currentUTCTime
