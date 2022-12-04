@@ -20,6 +20,10 @@ class NintendoNotificationEvent extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
 			m_uiType: {
 				__typeName: 'uint32',
 				__typeValue: this.m_uiType
@@ -56,6 +60,10 @@ class NintendoNotificationEventGeneral extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
 			m_u32Param: {
 				__typeName: 'uint32',
 				__typeValue: this.m_u32Param
@@ -98,6 +106,10 @@ class NintendoNotificationEventProfile extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
 			m_region: {
 				__typeName: 'uint8',
 				__typeValue: this.m_region
