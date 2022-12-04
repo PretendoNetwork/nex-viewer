@@ -24,6 +24,10 @@ class AuthenticationInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		const data = {
+			__typeInherits: this._parentTypes.map(value => ({
+				__typeName: value.constructor.name,
+				__typeValue: value
+			})),
 			m_authToken: {
 				__typeName: 'String',
 				__typeValue: this.m_authToken
