@@ -48,7 +48,12 @@ class Structure {
 
 // This is empty
 class Data extends Structure {
-	parse() { } // do nothing
+	// * This type contains nothing
+	parse() { }
+
+	toJSON() {
+		return {};
+	}
 }
 
 class AnyDataHolder {
