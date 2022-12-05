@@ -268,13 +268,12 @@ class Stream {
 	}
 
 	/**
-	 *
 	 * @param {(Function|NEXTypes.Structure)} keyType Function or Structure used for the keys of the map
-	 * @param {(Function|NEXTypes.Structure)} ValueType Function or Structure used for the values of the map
-	 * @returns {Array} NEX Map<keyType, valueType>
+	 * @param {(Function|NEXTypes.Structure)} valueType Function or Structure used for the values of the map
+	 * @returns {NEXTypes.Map} NEX Map<keyType, valueType>
 	 */
-	readNEXMap(keyType, ValueType) {
-		const map = {};
+	readNEXMap(keyType, valueType) {
+		const map = new NEXTypes.Map();
 
 		const length = this.readUInt32LE();
 
@@ -288,13 +287,13 @@ class Stream {
 				key = keyType.call(this);
 			}
 
-			if (ValueType.prototype instanceof NEXTypes.Structure) {
-				value = this.readNEXStructure(ValueType);
+			if (valueType.prototype instanceof NEXTypes.Structure) {
+				value = this.readNEXStructure(valueType);
 			} else {
-				value = ValueType.call(this);
+				value = valueType.call(this);
 			}
 
-			map[key] = value;
+			map.add(key, value);
 		}
 
 		return map;

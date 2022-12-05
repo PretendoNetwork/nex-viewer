@@ -14,6 +14,7 @@ const packetHexSection = document.getElementById('packet-hex');
 const packetsTableBodySection = packetsSection.querySelector('tbody');
 
 const LIST_TYPE_REGEX = /List<(.*)>/;
+const MAP_TYPE_REGEX = /Map<(.*)>/;
 
 /**
  * @returns {void}
@@ -383,7 +384,16 @@ function serializeRMCBody(rmcData) {
 
 					serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
 				} else if (isArray(typeValue)) {
-					const listType = typeName.match(LIST_TYPE_REGEX)[1];
+					let listType = typeName.match(LIST_TYPE_REGEX)?.[1] || typeName; // * Support Map lists
+					let isMap = false;
+					let mapKeyTypeName;
+					let mapValueTypeName;
+
+					if (listType.match(MAP_TYPE_REGEX)) {
+						isMap = true;
+						[mapKeyTypeName, mapValueTypeName] = listType.match(MAP_TYPE_REGEX)[1].split(', ');
+					}
+
 					const serializedRMCDataDetails = document.createElement('details');
 					const serializedRMCDataSummary = document.createElement('summary');
 
@@ -408,6 +418,11 @@ function serializeRMCBody(rmcData) {
 
 							serializedRMCDataDetails.appendChild(rmcValueElementDiv);
 						} else {
+							if (isMap) {
+								value.key.__typeName = mapKeyTypeName;
+								value.value.__typeName = mapValueTypeName;
+							}
+							
 							const rmcValueElementDiv = document.createElement('div');
 							const rmcValueElementSummary = document.createElement('summary');
 							const rmcValueElementDetails = document.createElement('details');

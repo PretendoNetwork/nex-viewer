@@ -329,6 +329,38 @@ class Variant {
 	}
 }
 
+class Map {
+	constructor() {
+		this.__realMap = {};
+	}
+
+	add(key, value) {
+		this.__realMap[key] = value;
+	}
+
+	toJSON() {
+		const list = [];
+
+		for (const key in this.__realMap) {
+			if (Object.hasOwnProperty.call(this.__realMap, key)) {
+				const value = this.__realMap[key];
+
+				// * __typeName is populated in the frontend
+				list.push({
+					key: {
+						__typeValue: key,
+					},
+					value: {
+						__typeValue: value,
+					}
+				});
+			}
+		}
+
+		return list;
+	}
+}
+
 module.exports = {
 	Structure,
 	Data,
@@ -338,5 +370,6 @@ module.exports = {
 	DateTime,
 	ResultRange,
 	Result,
-	Variant
+	Variant,
+	Map
 };
