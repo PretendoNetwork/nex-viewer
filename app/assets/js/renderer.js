@@ -3,7 +3,8 @@ import {
 	toHexString,
 	isObject,
 	isArray,
-	isNEXPrimative
+	isNEXPrimative,
+	emptyObject
 } from './util.js';
 
 const mainElement = document.querySelector('main');
@@ -280,19 +281,39 @@ function updatePacketDetails(packet) {
 		rmcRootDetailsRoot.appendChild(rmcRootDetailsCallIdDiv);
 
 		if (packet.rmc.isRequest === true || packet.rmc.isSuccess === true) {
-			const serializedRMCBodyDetails = document.createElement('details');
-			const serializedRMCBodySummary = document.createElement('summary');
-			const serializedRMCBodyDiv = serializeRMCBody(packet.rmc.body);
+			if (emptyObject(packet.rmc.body)) {
+				const rmcValueElementDiv = document.createElement('div');
+				const rmcValueElementName = document.createElement('span');
+				const rmcValueElementValue = document.createElement('span');
+				rmcValueElementName.classList.add('name');
+				rmcValueElementValue.classList.add('value');
 
-			serializedRMCBodySummary.appendChild(document.createTextNode('Body'));
+				rmcValueElementName.appendChild(document.createTextNode('Body:'));
 
-			serializedRMCBodyDetails.appendChild(serializedRMCBodySummary);
-			serializedRMCBodyDetails.appendChild(serializedRMCBodyDiv);
+				if (packet.rmc.isRequest) {
+					rmcValueElementValue.appendChild(document.createTextNode('This method takes no parameters'));
+				} else {
+					rmcValueElementValue.appendChild(document.createTextNode('This method doesn\'t return anything'));
+				}
 
-			const rmcBody = document.createElement('div');
-			rmcBody.appendChild(serializedRMCBodyDetails);
+				rmcValueElementDiv.appendChild(rmcValueElementName);
+				rmcValueElementDiv.appendChild(rmcValueElementValue);
 
-			rmcRootDetailsRoot.appendChild(rmcBody);
+				rmcRootDetailsRoot.appendChild(rmcValueElementDiv);
+			} else {
+				const serializedRMCBodyDetails = document.createElement('details');
+				const serializedRMCBodySummary = document.createElement('summary');
+
+				serializedRMCBodySummary.appendChild(document.createTextNode('Body'));
+
+				serializedRMCBodyDetails.appendChild(serializedRMCBodySummary);
+				serializedRMCBodyDetails.appendChild(serializeRMCBody(packet.rmc.body));
+
+				const rmcBody = document.createElement('div');
+				rmcBody.appendChild(serializedRMCBodyDetails);
+
+				rmcRootDetailsRoot.appendChild(rmcBody);
+			}
 		} else if (packet.rmc.isRequest === false && packet.rmc.isSuccess === false) {
 			// * Error codes only exist on responses
 			rmcRootDetailsRoot.appendChild(rmcRootDetailsErrorCodeDiv);

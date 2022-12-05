@@ -64,3 +64,11 @@ export function isNEXPrimative(typeName) {
 		'PID', // * PID is the same as a uint32
 	].includes(typeName);
 }
+
+/**
+ * @param {object} object Object to check if is empty
+ * @returns {boolean} Is empty?
+ */
+export function emptyObject(object) {
+	return Object.keys(object).length === 0;
+}
