@@ -7,7 +7,6 @@ const Stream = require('../stream');
 const Requests = require('./requests/nat_traversal');
 const Responses = require('./responses/nat_traversal');
 
-
 class NATTraversal {
 	static ProtocolID = 0x3;
 

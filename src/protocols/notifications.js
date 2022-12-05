@@ -4,8 +4,8 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
-const NotificationsTypes = require('./types/notifications');
-
+const Requests = require('./requests/notifications');
+const Responses = require('./responses/notifications');
 class Notifications {
 	static ProtocolID = 0xE;
 
@@ -55,11 +55,9 @@ class Notifications {
 	 */
 	static ProcessNotificationEvent(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				oEvent: stream.readNEXStructure(NotificationsTypes.NotificationEvent)
-			};
+			return new Requests.ProcessNotificationEventRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ProcessNotificationEventResponse(stream);
 		}
 	}
 }
