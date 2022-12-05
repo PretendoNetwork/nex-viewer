@@ -1,12 +1,10 @@
-/* eslint-env browser */
-
-function removeAllChildNodes(parent) {
+export function removeAllChildNodes(parent) {
 	while (parent.firstChild) {
 		parent.removeChild(parent.firstChild);
 	}
 }
 
-function ready(fn) {
+export function ready(fn) {
 	if (document.readyState !== 'loading') {
 		fn();
 	} else {
@@ -14,21 +12,21 @@ function ready(fn) {
 	}
 }
 
-function isObject(item) {
+export function isObject(item) {
 	return (typeof item === 'object' && !Array.isArray(item) && item !== null);
 }
 
-function isArray(item) {
+export function isArray(item) {
 	return (typeof item === 'object' && Array.isArray(item) && item !== null);
 }
 
-function toHexString(byteArray) {
+export function toHexString(byteArray) {
 	return Array.from(byteArray, function (byte) {
 		return ('0' + (byte & 0xFF).toString(16)).slice(-2);
 	}).join(':');
 }
 
-function isNEXPrimative(typeName) {
+export function isNEXPrimative(typeName) {
 	return [
 		'uint8',
 		'sint8',

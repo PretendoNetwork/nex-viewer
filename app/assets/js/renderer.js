@@ -1,4 +1,10 @@
-/* eslint-env browser */
+import {
+	removeAllChildNodes,
+	toHexString,
+	isObject,
+	isArray,
+	isNEXPrimative
+} from './util.js';
 
 const mainElement = document.querySelector('main');
 const packetsSection = document.getElementById('packets');
@@ -27,7 +33,7 @@ const mainElementResizeObserver = new ResizeObserver(() => {
 
 mainElementResizeObserver.observe(mainElement);
 
-function addPacketToList(packet) {
+export function addPacketToList(packet) {
 	const tr = document.createElement('tr');
 
 	const source = document.createElement('td');
@@ -369,7 +375,7 @@ function serializeRMCBody(rmcData) {
 							const rmcValueElementSummary = document.createElement('summary');
 							const rmcValueElementDetails = document.createElement('details');
 
-							rmcValueElementSummary.appendChild(document.createTextNode(`${key}[${i}] (${listType}):`));
+							rmcValueElementSummary.appendChild(document.createTextNode(`-${key}[${i}] (${listType}):`));
 
 							rmcValueElementDetails.appendChild(serializeRMCBody(value));
 							rmcValueElementDetails.appendChild(rmcValueElementSummary);
