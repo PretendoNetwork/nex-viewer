@@ -4,9 +4,10 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
-const RankingTypes = require('./types/ranking');
-
 const RankingSplatoon = require('./patches/ranking_splatoon');
+
+const Requests = require('./requests/ranking');
+const Responses = require('./responses/ranking');
 
 class Ranking {
 	static ProtocolID = 0x70;
@@ -91,12 +92,9 @@ class Ranking {
 	 */
 	static UploadScore(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				scoreData: stream.readNEXStructure(RankingTypes.RankingScoreData),
-				uniqueId: stream.readUInt64LE()
-			};
+			return new Requests.UploadScoreRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UploadScoreResponse(stream);
 		}
 	}
 
@@ -108,12 +106,9 @@ class Ranking {
 	 */
 	static DeleteScore(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				category: stream.readUInt32LE(),
-				uniqueId: stream.readUInt64LE()
-			};
+			return new Requests.DeleteScoreRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.DeleteScoreResponse(stream);
 		}
 	}
 
@@ -125,11 +120,9 @@ class Ranking {
 	 */
 	static DeleteAllScores(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				uniqueId: stream.readUInt64LE()
-			};
+			return new Requests.DeleteAllScoresRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.DeleteAllScoresResponse(stream);
 		}
 	}
 
@@ -141,12 +134,9 @@ class Ranking {
 	 */
 	static UploadCommonData(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				commonData: stream.readNEXBuffer(),
-				uniqueId: stream.readUInt64LE()
-			};
+			return new Requests.UploadCommonDataRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UploadCommonDataResponse(stream);
 		}
 	}
 
@@ -158,11 +148,9 @@ class Ranking {
 	 */
 	static DeleteCommonData(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				uniqueId: stream.readUInt64LE()
-			};
+			return new Requests.DeleteCommonDataRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.DeleteCommonDataResponse(stream);
 		}
 	}
 
@@ -174,13 +162,9 @@ class Ranking {
 	 */
 	static GetCommonData(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				uniqueId: stream.readUInt64LE()
-			};
+			return new Requests.GetCommonDataRequest(stream);
 		} else {
-			return {
-				commonData: stream.readNEXBuffer()
-			};
+			return new Responses.GetCommonDataResponse(stream);
 		}
 	}
 
@@ -192,13 +176,9 @@ class Ranking {
 	 */
 	static ChangeAttributes(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				category: stream.readUInt32LE(),
-				changeParam: stream.readNEXStructure(RankingTypes.RankingChangeAttributesParam),
-				uniqueId: stream.readUInt64LE()
-			};
+			return new Requests.ChangeAttributesRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ChangeAttributesResponse(stream);
 		}
 	}
 
@@ -210,12 +190,9 @@ class Ranking {
 	 */
 	static ChangeAllAttributes(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				changeParam: stream.readNEXStructure(RankingTypes.RankingChangeAttributesParam),
-				uniqueId: stream.readUInt64LE()
-			};
+			return new Requests.ChangeAllAttributesRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ChangeAllAttributesResponse(stream);
 		}
 	}
 
@@ -227,17 +204,9 @@ class Ranking {
 	 */
 	static GetRanking(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				rankingMode: stream.readUInt8(),
-				category: stream.readUInt32LE(),
-				orderParam: stream.readNEXStructure(RankingTypes.RankingOrderParam),
-				uniqueId: stream.readUInt64LE(),
-				principalId: stream.readUInt32LE()
-			};
+			return new Requests.GetRankingRequest(stream);
 		} else {
-			return {
-				pResult: stream.readNEXStructure(RankingTypes.RankingResult)
-			};
+			return new Responses.GetRankingResponse(stream);
 		}
 	}
 
@@ -249,17 +218,9 @@ class Ranking {
 	 */
 	static GetApproxOrder(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				category: stream.readUInt32LE(),
-				orderParam: stream.readNEXStructure(RankingTypes.RankingOrderParam),
-				score: stream.readUInt32LE(),
-				uniqueId: stream.readUInt64LE(),
-				principalId: stream.readUInt32LE()
-			};
+			return new Requests.GetApproxOrderRequest(stream);
 		} else {
-			return {
-				pOrder: stream.readUInt32LE()
-			};
+			return new Responses.GetApproxOrderResponse(stream);
 		}
 	}
 
@@ -271,15 +232,9 @@ class Ranking {
 	 */
 	static GetStats(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				category: stream.readUInt32LE(),
-				orderParam: stream.readNEXStructure(RankingTypes.RankingOrderParam),
-				flags: stream.readUInt32LE()
-			};
+			return new Requests.GetStatsRequest(stream);
 		} else {
-			return {
-				pStats: stream.readNEXStructure(RankingTypes.RankingStats)
-			};
+			return new Responses.GetStatsResponse(stream);
 		}
 	}
 
@@ -291,17 +246,9 @@ class Ranking {
 	 */
 	static GetRankingByPIDList(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				principalIdList: stream.readNEXList(stream.readUInt32LE),
-				rankingMode: stream.readUInt8(),
-				category: stream.readUInt32LE(),
-				orderParam: stream.readNEXStructure(RankingTypes.RankingOrderParam),
-				uniqueId: stream.readUInt64LE()
-			};
+			return new Requests.GetRankingByPIDListRequest(stream);
 		} else {
-			return {
-				pResult: stream.readNEXStructure(RankingTypes.RankingResult)
-			};
+			return new Responses.GetRankingByPIDListResponse(stream);
 		}
 	}
 
@@ -313,17 +260,9 @@ class Ranking {
 	 */
 	static GetRankingByUniqueIdList(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				nexUniqueIdList: stream.readNEXList(stream.readUInt64LE),
-				rankingMode: stream.readUInt8(),
-				category: stream.readUInt32LE(),
-				orderParam: stream.readNEXStructure(RankingTypes.RankingOrderParam),
-				uniqueId: stream.readUInt64LE()
-			};
+			return new Requests.GetRankingByUniqueIdListRequest(stream);
 		} else {
-			return {
-				pResult: stream.readNEXStructure(RankingTypes.RankingResult)
-			};
+			return new Responses.GetRankingByUniqueIdListResponse(stream);
 		}
 	}
 
@@ -335,14 +274,9 @@ class Ranking {
 	 */
 	static GetCachedTopXRanking(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				category: stream.readUInt32LE(),
-				orderParam: stream.readNEXStructure(RankingTypes.RankingOrderParam)
-			};
+			return new Requests.GetCachedTopXRankingRequest(stream);
 		} else {
-			return {
-				pResult: stream.readNEXStructure(RankingTypes.RankingCachedResult)
-			};
+			return new Responses.GetCachedTopXRankingResponse(stream);
 		}
 	}
 
@@ -354,14 +288,9 @@ class Ranking {
 	 */
 	static GetCachedTopXRankings(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				categories: stream.readNEXList(stream.readUInt32LE),
-				orderParams: stream.readNEXList(RankingTypes.RankingOrderParam)
-			};
+			return new Requests.GetCachedTopXRankingsRequest(stream);
 		} else {
-			return {
-				pResults: stream.readNEXList(RankingTypes.RankingCachedResult)
-			};
+			return new Responses.GetCachedTopXRankingsResponse(stream);
 		}
 	}
 }

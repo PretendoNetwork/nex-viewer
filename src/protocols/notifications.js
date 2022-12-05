@@ -6,6 +6,7 @@ const Stream = require('../stream');
 
 const Requests = require('./requests/notifications');
 const Responses = require('./responses/notifications');
+
 class Notifications {
 	static ProtocolID = 0xE;
 
