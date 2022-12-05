@@ -4,7 +4,8 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
-const FriendsWiiUTypes = require('./types/friends_wiiu');
+const Requests = require('./requests/friends_wiiu');
+const Responses = require('./responses/friends_wiiu');
 
 class FriendsWiiU {
 	static ProtocolID = 0x66;
@@ -75,23 +76,9 @@ class FriendsWiiU {
 	 */
 	static UpdateAndGetAllInformation(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				NNAInfo: stream.readNEXStructure(FriendsWiiUTypes.NNAInfo),
-				presence: stream.readNEXStructure(FriendsWiiUTypes.NintendoPresenceV2),
-				birthday: stream.readNEXDateTime()
-			};
+			return new Requests.UpdateAndGetAllInformationRequest(stream);
 		} else {
-			return {
-				principalPreference: stream.readNEXStructure(FriendsWiiUTypes.PrincipalPreference),
-				statusMessage: stream.readNEXStructure(FriendsWiiUTypes.Comment),
-				friendList: stream.readNEXList(FriendsWiiUTypes.FriendInfo),
-				sentFriendRequests: stream.readNEXList(FriendsWiiUTypes.FriendRequest),
-				receivedFriendRequests: stream.readNEXList(FriendsWiiUTypes.FriendRequest),
-				blacklist: stream.readNEXList(FriendsWiiUTypes.BlacklistedPrincipal),
-				unknown1: stream.readBoolean(),
-				notifications: stream.readNEXList(FriendsWiiUTypes.PersistentNotification),
-				unknown2: stream.readBoolean(),
-			};
+			return new Responses.UpdateAndGetAllInformationResponse(stream);
 		}
 	}
 
@@ -103,11 +90,9 @@ class FriendsWiiU {
 	 */
 	static UpdatePresence(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				presence: stream.readNEXStructure(FriendsWiiUTypes.NintendoPresenceV2)
-			};
+			return new Requests.UpdatePresenceRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UpdatePresenceResponse(stream);
 		}
 	}
 }
