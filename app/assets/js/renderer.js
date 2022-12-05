@@ -6,6 +6,8 @@ const packetDetailsSection = document.getElementById('packet-details');
 const packetHexSection = document.getElementById('packet-hex');
 const packetsTableBodySection = packetsSection.querySelector('tbody');
 
+const LIST_TYPE_REGEX = /List<(.*)>/;
+
 function resizePacketsSection() {
 	// * Hack to get the exact height of the element to match the grid
 	// * while being set to `display: block` for overflow
@@ -318,26 +320,65 @@ function serializeRMCBody(rmcData) {
 
 					const serializedRMCDataDetails = document.createElement('details');
 					const serializedRMCDataSummary = document.createElement('summary');
-					const serializedRMCDataDiv2 = serializeRMCBody(inheritedTypeValue);
 
 					serializedRMCDataSummary.appendChild(document.createTextNode(`Inherits from ${inheritedTypeName}`));
 
 					serializedRMCDataDetails.appendChild(serializedRMCDataSummary);
-					serializedRMCDataDetails.appendChild(serializedRMCDataDiv2);
+					serializedRMCDataDetails.appendChild(serializeRMCBody(inheritedTypeValue));
 
 					serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
 				}
-				console.log(value)
 			} else {
 				if (isObject(typeValue)) {
 					const serializedRMCDataDetails = document.createElement('details');
 					const serializedRMCDataSummary = document.createElement('summary');
-					const serializedRMCDataDiv2 = serializeRMCBody(typeValue);
 
 					serializedRMCDataSummary.appendChild(document.createTextNode(`${key} (${typeName})`));
 
 					serializedRMCDataDetails.appendChild(serializedRMCDataSummary);
-					serializedRMCDataDetails.appendChild(serializedRMCDataDiv2);
+					serializedRMCDataDetails.appendChild(serializeRMCBody(typeValue));
+
+					serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
+				} else if (isArray(typeValue)) {
+					const listType = typeName.match(LIST_TYPE_REGEX)[1];
+					const serializedRMCDataDetails = document.createElement('details');
+					const serializedRMCDataSummary = document.createElement('summary');
+
+					serializedRMCDataSummary.appendChild(document.createTextNode(`${key} (${typeName} length ${typeValue.length})`));
+					serializedRMCDataDetails.appendChild(serializedRMCDataSummary);
+
+					for (let i = 0; i < typeValue.length; i++) {
+						const value = typeValue[i];
+
+						if (isNEXPrimative(listType)) {
+							const rmcValueElementDiv = document.createElement('div');
+							const rmcValueElementName = document.createElement('span');
+							const rmcValueElementValue = document.createElement('span');
+							rmcValueElementName.classList.add('name');
+							rmcValueElementValue.classList.add('value');
+
+							rmcValueElementName.appendChild(document.createTextNode(`${key}[${i}] (${listType}):`));
+							rmcValueElementValue.appendChild(document.createTextNode(value));
+
+							rmcValueElementDiv.appendChild(rmcValueElementName);
+							rmcValueElementDiv.appendChild(rmcValueElementValue);
+
+							serializedRMCDataDetails.appendChild(rmcValueElementDiv);
+						} else {
+							const rmcValueElementDiv = document.createElement('div');
+							const rmcValueElementSummary = document.createElement('summary');
+							const rmcValueElementDetails = document.createElement('details');
+
+							rmcValueElementSummary.appendChild(document.createTextNode(`${key}[${i}] (${listType}):`));
+
+							rmcValueElementDetails.appendChild(serializeRMCBody(value));
+							rmcValueElementDetails.appendChild(rmcValueElementSummary);
+
+							rmcValueElementDiv.appendChild(rmcValueElementDetails);
+
+							serializedRMCDataDetails.appendChild(rmcValueElementDiv);
+						}
+					}
 
 					serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
 				} else {
