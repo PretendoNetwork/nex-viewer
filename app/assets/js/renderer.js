@@ -349,7 +349,7 @@ function serializeRMCBody(rmcData) {
 			const typeName = value.__typeName;
 			let typeValue = value.__typeValue;
 
-			if (typeName === 'Buffer' || typeName === 'qBuffer') {
+			if (typeName === 'Buffer' || typeName === 'qBuffer' || typeName === 'unknown') {
 				typeValue = toHexString(typeValue.data); // * typeValue is a NodeJS Buffer object
 			}
 
