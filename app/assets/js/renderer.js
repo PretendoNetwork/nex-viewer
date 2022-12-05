@@ -14,6 +14,9 @@ const packetsTableBodySection = packetsSection.querySelector('tbody');
 
 const LIST_TYPE_REGEX = /List<(.*)>/;
 
+/**
+ * @returns {void}
+ */
 function resizePacketsSection() {
 	// * Hack to get the exact height of the element to match the grid
 	// * while being set to `display: block` for overflow
@@ -33,6 +36,9 @@ const mainElementResizeObserver = new ResizeObserver(() => {
 
 mainElementResizeObserver.observe(mainElement);
 
+/**
+ * @param {object} packet PRUDP packet data to be added to the packet list
+ */
 export function addPacketToList(packet) {
 	const tr = document.createElement('tr');
 
@@ -93,6 +99,9 @@ export function addPacketToList(packet) {
 	packetsTableBodySection.appendChild(tr);
 }
 
+/**
+ * @param {Element} tr The row to be selected in the packet list
+ */
 function setSelectedPacketRow(tr) {
 	document.querySelector('tr.selected')?.classList.toggle('selected');
 	tr.classList.toggle('selected');
@@ -100,6 +109,9 @@ function setSelectedPacketRow(tr) {
 	updatePacketDetails(JSON.parse(tr.dataset.serialized));
 }
 
+/**
+ * @param {object} packet PRUDP packet data to be formatted in the details section
+ */
 function updatePacketDetails(packet) {
 	const root = document.createElement('details');
 	const rootSummary = document.createElement('summary');
@@ -302,6 +314,10 @@ function updatePacketDetails(packet) {
 	packetDetailsSection.appendChild(root);
 }
 
+/**
+ * @param {object} rmcData RMC data to serialize
+ * @returns {Element} HTML element containing serialized RMC data
+ */
 function serializeRMCBody(rmcData) {
 	const serializedRMCDataDiv = document.createElement('div');
 
