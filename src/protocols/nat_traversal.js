@@ -4,6 +4,10 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
+const Requests = require('./requests/nat_traversal');
+const Responses = require('./responses/nat_traversal');
+
+
 class NATTraversal {
 	static ProtocolID = 0x3;
 
@@ -65,12 +69,9 @@ class NATTraversal {
 	 */
 	static RequestProbeInitiation(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				urlTargetList: stream.readNEXList(stream.readNEXStationURL)
-			};
+			return new Requests.RequestProbeInitiationRequest(stream);
 		} else {
-			// * No response
-			return {};
+			return new Responses.RequestProbeInitiationResponse(stream);
 		}
 	}
 
@@ -82,12 +83,9 @@ class NATTraversal {
 	 */
 	static InitiateProbe(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				urlStationToProbe: stream.readNEXStationURL()
-			};
+			return new Requests.InitiateProbeRequest(stream);
 		} else {
-			// * No response
-			return {};
+			return new Responses.InitiateProbeResponse(stream);
 		}
 	}
 
@@ -99,13 +97,9 @@ class NATTraversal {
 	 */
 	static RequestProbeInitiationExt(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				urlTargetList: stream.readNEXList(stream.readNEXStationURL),
-				urlStationToProbe: stream.readNEXStationURL()
-			};
+			return new Requests.RequestProbeInitiationExtRequest(stream);
 		} else {
-			// * No response
-			return {};
+			return new Responses.RequestProbeInitiationExtResponse(stream);
 		}
 	}
 
@@ -117,14 +111,9 @@ class NATTraversal {
 	 */
 	static ReportNATTraversalResult(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				cid: stream.readUInt32LE(),
-				result: stream.readBoolean(),
-				rtt: stream.readUInt32LE() // ! THIS IS NOT PRESENT ON 3DS, ONLY WIIU/SWITCH
-			};
+			return new Requests.ReportNATTraversalResultRequest(stream);
 		} else {
-			// * No response
-			return {};
+			return new Responses.ReportNATTraversalResultResponse(stream);
 		}
 	}
 
@@ -136,14 +125,9 @@ class NATTraversal {
 	 */
 	static ReportNATProperties(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				natmapping: stream.readUInt32LE(),
-				natfiltering: stream.readUInt32LE(),
-				rtt: stream.readUInt32LE()
-			};
+			return new Requests.ReportNATPropertiesRequest(stream);
 		} else {
-			// * No response
-			return {};
+			return new Responses.ReportNATPropertiesResponse(stream);
 		}
 	}
 
@@ -155,16 +139,9 @@ class NATTraversal {
 	 */
 	static GetRelaySignatureKey(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {}; // * No request
+			return new Requests.GetRelaySignatureKeyRequest(stream);
 		} else {
-			return {
-				relayMode: stream.readInt32LE(),
-				currentUTCTime: stream.readNEXDateTime(),
-				address: stream.readNEXString(),
-				port: stream.readUInt16LE(),
-				relayAddressType: stream.readInt32LE(),
-				gameServerID: stream.readUInt32LE()
-			};
+			return new Responses.GetRelaySignatureKeyResponse(stream);
 		}
 	}
 
@@ -176,15 +153,9 @@ class NATTraversal {
 	 */
 	static ReportNATTraversalResultDetail(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				cid: stream.readUInt32LE(),
-				result: stream.readBoolean(),
-				detail: stream.readInt32LE(),
-				rtt: stream.readUInt32LE()
-			};
+			return new Requests.ReportNATTraversalResultDetailRequest(stream);
 		} else {
-			// * No response
-			return {};
+			return new Responses.ReportNATTraversalResultDetailResponse(stream);
 		}
 	}
 }
