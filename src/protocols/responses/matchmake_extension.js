@@ -1,6 +1,6 @@
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
-const MatchMakingTypes = require('./types/match_making');
-const NotificationsTypes = require('./types/notifications');
+const MatchMakingTypes = require('../types/match_making');
+const NotificationsTypes = require('../types/notifications');
 
 class CloseParticipationResponse {
 	// * Returns nothing
