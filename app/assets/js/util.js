@@ -62,6 +62,8 @@ export function isNEXPrimative(typeName) {
 		'boolean',
 		'String',
 		'PID', // * PID is the same as a uint32
+		'Buffer',
+		'qBuffer',
 	].includes(typeName);
 }
 

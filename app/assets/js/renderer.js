@@ -397,9 +397,13 @@ function serializeRMCBody(rmcData) {
 					serializedRMCDataDetails.appendChild(serializedRMCDataSummary);
 
 					for (let i = 0; i < typeValue.length; i++) {
-						const value = typeValue[i];
+						let value = typeValue[i];
 
 						if (isNEXPrimative(listType)) {
+							if (listType === 'Buffer' || listType === 'qBuffer' || listType === 'unknown') {
+								value = toHexString(value.data); // * value is a NodeJS Buffer object
+							}
+
 							const rmcValueElementDiv = document.createElement('div');
 							const rmcValueElementName = document.createElement('span');
 							const rmcValueElementValue = document.createElement('span');
@@ -418,7 +422,7 @@ function serializeRMCBody(rmcData) {
 								value.key.__typeName = mapKeyTypeName;
 								value.value.__typeName = mapValueTypeName;
 							}
-							
+
 							const rmcValueElementDiv = document.createElement('div');
 							const rmcValueElementSummary = document.createElement('summary');
 							const rmcValueElementDetails = document.createElement('details');
