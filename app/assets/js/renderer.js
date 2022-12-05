@@ -353,10 +353,6 @@ function serializeRMCBody(rmcData) {
 				typeValue = toHexString(typeValue.data); // * typeValue is a NodeJS Buffer object
 			}
 
-			if (typeName === 'boolean') {
-				typeValue = Boolean(typeValue);
-			}
-
 			if (key === '__typeInherits') {
 				for (const inheritedType of value) {
 					const inheritedTypeName = inheritedType.__typeName;
