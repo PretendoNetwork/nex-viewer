@@ -248,6 +248,15 @@ class Result {
 	constructor(resultCode) {
 		this.resultCode = resultCode;
 	}
+
+	toJSON() {
+		return {
+			resultCode: {
+				__typeName: 'uint32',
+				__typeValue: this.resultCode
+			}
+		};
+	}
 }
 
 class Variant {
