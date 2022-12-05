@@ -1,9 +1,16 @@
+
+/**
+ * @param {Element} parent Element whos children will be removed
+ */
 export function removeAllChildNodes(parent) {
 	while (parent.firstChild) {
 		parent.removeChild(parent.firstChild);
 	}
 }
 
+/**
+ * @param {Function} fn Callback function ran when frontend is ready for data
+ */
 export function ready(fn) {
 	if (document.readyState !== 'loading') {
 		fn();
@@ -12,20 +19,36 @@ export function ready(fn) {
 	}
 }
 
+/**
+ * @param {*} item Value to check if is Object
+ * @returns {boolean} Is object?
+ */
 export function isObject(item) {
 	return (typeof item === 'object' && !Array.isArray(item) && item !== null);
 }
 
+/**
+ * @param {*} item Value to check if is Array
+ * @returns {boolean} Is array?
+ */
 export function isArray(item) {
 	return (typeof item === 'object' && Array.isArray(item) && item !== null);
 }
 
+/**
+ * @param {Array.<number>} byteArray Array of bytes to convert to HEX string
+ * @returns {string} Formated HEX string
+ */
 export function toHexString(byteArray) {
 	return Array.from(byteArray, function (byte) {
 		return ('0' + (byte & 0xFF).toString(16)).slice(-2);
 	}).join(':');
 }
 
+/**
+ * @param {string} typeName Name of NEX type
+ * @returns {boolean} Is NEX primative?
+ */
 export function isNEXPrimative(typeName) {
 	return [
 		'uint8',
