@@ -6,6 +6,9 @@ const Stream = require('../stream');
 
 require('./types/message_delivery');
 
+const Requests = require('./requests/message_delivery');
+const Responses = require('./responses/message_delivery');
+
 class MessageDelivery {
 	static ProtocolID = 0x1B;
 
@@ -55,15 +58,11 @@ class MessageDelivery {
 	 */
 	static DeliverMessage(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				oUserMessage: stream.readNEXAnyDataHolder()
-			};
+			return new Requests.DeliverMessageRequest(stream);
 		} else {
-			// * No response
-			return {};
+			return new Responses.DeliverMessageResponse(stream);
 		}
 	}
 }
-
 
 module.exports = MessageDelivery;
