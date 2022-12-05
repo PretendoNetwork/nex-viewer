@@ -4,8 +4,8 @@ const PacketV1 = require('../../packetv1'); // eslint-disable-line no-unused-var
 const RMCMessage = require('../../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../../stream');
 
-const DataStoreTypes = require('../types/datastore');
-const DataStoreSMMTypes = require('../types/datastore_smm');
+const Requests = require('../requests/datastore_smm');
+const Responses = require('../responses/datastore_smm');
 
 class DataStoreSMM {
 	static ProtocolID = 0x73;
@@ -142,13 +142,9 @@ class DataStoreSMM {
 	 */
 	static GetObjectInfos(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIds: stream.readNEXList(stream.readUInt64LE)
-			};
+			return new Requests.GetObjectInfosRequest(stream);
 		} else {
-			return {
-				pInfos: stream.readNEXList(DataStoreSMMTypes.DataStoreFileServerObjectInfo)
-			};
+			return new Responses.GetObjectInfosResponse(stream);
 		}
 	}
 
@@ -160,14 +156,9 @@ class DataStoreSMM {
 	 */
 	static GetMetaByOwnerId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreSMMTypes.DataStoreGetMetaByOwnerIdParam)
-			};
+			return new Requests.GetMetaByOwnerIdRequest(stream);
 		} else {
-			return {
-				pMetaInfo: stream.readNEXList(DataStoreTypes.DataStoreMetaInfo),
-				pHasNext: stream.readBoolean()
-			};
+			return new Responses.GetMetaByOwnerIdResponse(stream);
 		}
 	}
 
@@ -179,14 +170,9 @@ class DataStoreSMM {
 	 */
 	static CustomSearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				condition: stream.readUInt32LE(),
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam)
-			};
+			return new Requests.CustomSearchObjectRequest(stream);
 		} else {
-			return {
-				pSearchResult: stream.readNEXStructure(DataStoreTypes.DataStoreSearchResult)
-			};
+			return new Responses.CustomSearchObjectResponse(stream);
 		}
 	}
 
@@ -198,11 +184,9 @@ class DataStoreSMM {
 	 */
 	static RateCustomRanking(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				params: stream.readNEXList(DataStoreSMMTypes.DataStoreRateCustomRankingParam)
-			};
+			return new Requests.RateCustomRankingRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.RateCustomRankingResponse(stream);
 		}
 	}
 
@@ -214,14 +198,9 @@ class DataStoreSMM {
 	 */
 	static GetCustomRanking(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreSMMTypes.DataStoreGetCustomRankingParam)
-			};
+			return new Requests.GetCustomRankingRequest(stream);
 		} else {
-			return {
-				pRankingResult: stream.readNEXList(DataStoreSMMTypes.DataStoreCustomRankingResult),
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.GetCustomRankingResponse(stream);
 		}
 	}
 
@@ -233,14 +212,9 @@ class DataStoreSMM {
 	 */
 	static GetCustomRankingByDataId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreSMMTypes.DataStoreGetCustomRankingByDataIdParam)
-			};
+			return new Requests.GetCustomRankingByDataIdRequest(stream);
 		} else {
-			return {
-				pRankingResult: stream.readNEXList(DataStoreSMMTypes.DataStoreCustomRankingResult, stream),
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.GetCustomRankingByDataIdResponse(stream);
 		}
 	}
 
@@ -252,11 +226,9 @@ class DataStoreSMM {
 	 */
 	static DeleteCustomRanking(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIdList: stream.readNEXList(stream.readUInt64LE)
-			};
+			return new Requests.DeleteCustomRankingRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.DeleteCustomRankingResponse(stream);
 		}
 	}
 
@@ -268,12 +240,9 @@ class DataStoreSMM {
 	 */
 	static AddToBufferQueue(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreSMMTypes.BufferQueueParam),
-				buffer: stream.readNEXQBuffer()
-			};
+			return new Requests.AddToBufferQueueRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.AddToBufferQueueResponse(stream);
 		}
 	}
 
@@ -285,14 +254,9 @@ class DataStoreSMM {
 	 */
 	static AddToBufferQueues(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				params: stream.readNEXList(DataStoreSMMTypes.BufferQueueParam),
-				buffers: stream.readNEXList(stream.readNEXQBuffer)
-			};
+			return new Requests.AddToBufferQueuesRequest(stream);
 		} else {
-			return {
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.AddToBufferQueuesResponse(stream);
 		}
 	}
 
@@ -304,13 +268,9 @@ class DataStoreSMM {
 	 */
 	static GetBufferQueue(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreSMMTypes.BufferQueueParam)
-			};
+			return new Requests.GetBufferQueueRequest(stream);
 		} else {
-			return {
-				pBufferQueue: stream.readNEXList(stream.readNEXQBuffer)
-			};
+			return new Responses.GetBufferQueueResponse(stream);
 		}
 	}
 
@@ -322,14 +282,9 @@ class DataStoreSMM {
 	 */
 	static GetBufferQueues(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXList(DataStoreSMMTypes.BufferQueueParam)
-			};
+			return new Requests.GetBufferQueuesRequest(stream);
 		} else {
-			return {
-				pBufferQueueLst: stream.readNEXList(() => stream.readNEXList(stream.readNEXQBuffer)), // * 2D List
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.GetBufferQueuesResponse(stream);
 		}
 	}
 
@@ -341,13 +296,9 @@ class DataStoreSMM {
 	 */
 	static ClearBufferQueues(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				params: stream.readNEXList(DataStoreSMMTypes.BufferQueueParam)
-			};
+			return new Requests.ClearBufferQueuesRequest(stream);
 		} else {
-			return {
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.ClearBufferQueuesResponse(stream);
 		}
 	}
 
@@ -359,13 +310,9 @@ class DataStoreSMM {
 	 */
 	static CompleteAttachFile(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreCompletePostParam)
-			};
+			return new Requests.CompleteAttachFileRequest(stream);
 		} else {
-			return {
-				pUrl: stream.readNEXString()
-			};
+			return new Responses.CompleteAttachFileResponse(stream);
 		}
 	}
 
@@ -377,13 +324,9 @@ class DataStoreSMM {
 	 */
 	static CompleteAttachFileV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreCompletePostParamV1)
-			};
+			return new Requests.CompleteAttachFileV1Request(stream);
 		} else {
-			return {
-				pUrl: stream.readNEXString()
-			};
+			return new Responses.CompleteAttachFileV1Response(stream);
 		}
 	}
 
@@ -395,13 +338,9 @@ class DataStoreSMM {
 	 */
 	static PrepareAttachFile(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreSMMTypes.DataStoreAttachFileParam)
-			};
+			return new Requests.PrepareAttachFileRequest(stream);
 		} else {
-			return {
-				pReqPostInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqPostInfo)
-			};
+			return new Responses.PrepareAttachFileResponse(stream);
 		}
 	}
 
@@ -413,15 +352,9 @@ class DataStoreSMM {
 	 */
 	static ConditionalSearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				condition: stream.readUInt32LE(),
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam),
-				extraData: stream.readNEXList(stream.readNEXString),
-			};
+			return new Requests.ConditionalSearchObjectRequest(stream);
 		} else {
-			return {
-				pRankingResults: stream.readNEXList(DataStoreSMMTypes.DataStoreCustomRankingResult)
-			};
+			return new Responses.ConditionalSearchObjectResponse(stream);
 		}
 	}
 
@@ -433,13 +366,9 @@ class DataStoreSMM {
 	 */
 	static GetApplicationConfig(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				applicationId: stream.readUInt32LE()
-			};
+			return new Requests.GetApplicationConfigRequest(stream);
 		} else {
-			return {
-				config: stream.readNEXList(stream.readInt32LE)
-			};
+			return new Responses.GetApplicationConfigResponse(stream);
 		}
 	}
 
@@ -451,13 +380,9 @@ class DataStoreSMM {
 	 */
 	static SetApplicationConfig(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				applicationId: stream.readUInt32LE(),
-				key: stream.readUInt32LE(),
-				value: stream.readInt32LE()
-			};
+			return new Requests.SetApplicationConfigRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.SetApplicationConfigResponse(stream);
 		}
 	}
 
@@ -469,12 +394,9 @@ class DataStoreSMM {
 	 */
 	static DeleteApplicationConfig(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				applicationId: stream.readUInt32LE(),
-				key: stream.readUInt32LE()
-			};
+			return new Requests.DeleteApplicationConfigRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.DeleteApplicationConfigResponse(stream);
 		}
 	}
 
@@ -486,14 +408,9 @@ class DataStoreSMM {
 	 */
 	static LatestCourseSearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam),
-				extraData: stream.readNEXList(stream.readNEXString)
-			};
+			return new Requests.LatestCourseSearchObjectRequest(stream);
 		} else {
-			return {
-				pRankingResults: stream.readNEXList(DataStoreSMMTypes.DataStoreCustomRankingResult)
-			};
+			return new Responses.LatestCourseSearchObjectResponse(stream);
 		}
 	}
 
@@ -505,14 +422,9 @@ class DataStoreSMM {
 	 */
 	static FollowingsLatestCourseSearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam),
-				extraData: stream.readNEXList(stream.readNEXString)
-			};
+			return new Requests.FollowingsLatestCourseSearchObjectRequest(stream);
 		} else {
-			return {
-				pRankingResults: stream.readNEXList(DataStoreSMMTypes.DataStoreCustomRankingResult)
-			};
+			return new Responses.FollowingsLatestCourseSearchObjectResponse(stream);
 		}
 	}
 
@@ -524,14 +436,9 @@ class DataStoreSMM {
 	 */
 	static RecommendedCourseSearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam),
-				extraData: stream.readNEXList(stream.readNEXString)
-			};
+			return new Requests.RecommendedCourseSearchObjectRequest(stream);
 		} else {
-			return {
-				pRankingResults: stream.readNEXList(DataStoreSMMTypes.DataStoreCustomRankingResult)
-			};
+			return new Responses.RecommendedCourseSearchObjectResponse(stream);
 		}
 	}
 
@@ -543,14 +450,9 @@ class DataStoreSMM {
 	 */
 	static ScoreRangeCascadedSearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam),
-				extraData: stream.readNEXList(stream.readNEXString)
-			};
+			return new Requests.ScoreRangeCascadedSearchObjectRequest(stream);
 		} else {
-			return {
-				pRankingResults: stream.readNEXList(DataStoreSMMTypes.DataStoreCustomRankingResult)
-			};
+			return new Responses.ScoreRangeCascadedSearchObjectResponse(stream);
 		}
 	}
 
@@ -562,14 +464,9 @@ class DataStoreSMM {
 	 */
 	static SuggestedCourseSearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam),
-				extraData: stream.readNEXList(stream.readNEXString)
-			};
+			return new Requests.SuggestedCourseSearchObjectRequest(stream);
 		} else {
-			return {
-				pRankingResults: stream.readNEXList(DataStoreSMMTypes.DataStoreCustomRankingResult)
-			};
+			return new Responses.SuggestedCourseSearchObjectResponse(stream);
 		}
 	}
 
@@ -581,15 +478,9 @@ class DataStoreSMM {
 	 */
 	static PreparePostObjectWithOwnerIdAndDataId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				ownerId: stream.readUInt32LE(),
-				dataId: stream.readUInt64LE(),
-				param: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParam)
-			};
+			return new Requests.PreparePostObjectWithOwnerIdAndDataIdRequest(stream);
 		} else {
-			return {
-				pReqPostInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqPostInfo)
-			};
+			return new Responses.PreparePostObjectWithOwnerIdAndDataIdResponse(stream);
 		}
 	}
 
@@ -601,12 +492,9 @@ class DataStoreSMM {
 	 */
 	static CompletePostObjectWithOwnerId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				ownerId: stream.readUInt32LE(),
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreCompletePostParam)
-			};
+			return new Requests.CompletePostObjectWithOwnerIdRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.CompletePostObjectWithOwnerIdResponse(stream);
 		}
 	}
 
@@ -618,11 +506,9 @@ class DataStoreSMM {
 	 */
 	static UploadCourseRecord(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreSMMTypes.DataStoreUploadCourseRecordParam)
-			};
+			return new Requests.UploadCourseRecordRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UploadCourseRecordResponse(stream);
 		}
 	}
 
@@ -634,13 +520,9 @@ class DataStoreSMM {
 	 */
 	static GetCourseRecord(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreSMMTypes.DataStoreGetCourseRecordParam)
-			};
+			return new Requests.GetCourseRecordRequest(stream);
 		} else {
-			return {
-				result: stream.readNEXStructure(DataStoreSMMTypes.DataStoreGetCourseRecordResult)
-			};
+			return new Responses.GetCourseRecordResponse(stream);
 		}
 	}
 
@@ -652,11 +534,9 @@ class DataStoreSMM {
 	 */
 	static DeleteCourseRecord(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreSMMTypes.DataStoreGetCourseRecordParam)
-			};
+			return new Requests.DeleteCourseRecordRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.DeleteCourseRecordResponse(stream);
 		}
 	}
 
@@ -668,13 +548,9 @@ class DataStoreSMM {
 	 */
 	static GetApplicationConfigString(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				applicationId: stream.readUInt32LE()
-			};
+			return new Requests.GetApplicationConfigStringRequest(stream);
 		} else {
-			return {
-				config: stream.readNEXList(stream.readNEXString)
-			};
+			return new Responses.GetApplicationConfigStringResponse(stream);
 		}
 	}
 
@@ -686,13 +562,9 @@ class DataStoreSMM {
 	 */
 	static SetApplicationConfigString(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				applicationId: stream.readUInt32LE(),
-				key: stream.readUInt32LE(),
-				value: stream.readNEXString()
-			};
+			return new Requests.SetApplicationConfigStringRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.SetApplicationConfigStringResponse(stream);
 		}
 	}
 
@@ -704,13 +576,9 @@ class DataStoreSMM {
 	 */
 	static GetDeletionReason(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIdLst: stream.readNEXList(stream.readUInt64LE)
-			};
+			return new Requests.GetDeletionReasonRequest(stream);
 		} else {
-			return {
-				pDeletionReasons: stream.readNEXList(stream.readUInt32LE)
-			};
+			return new Responses.GetDeletionReasonResponse(stream);
 		}
 	}
 
@@ -722,12 +590,9 @@ class DataStoreSMM {
 	 */
 	static SetDeletionReason(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIdLst: stream.readNEXList(stream.readUInt64LE),
-				deletionReason: stream.readUInt32LE()
-			};
+			return new Requests.SetDeletionReasonRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.SetDeletionReasonResponse(stream);
 		}
 	}
 
@@ -739,16 +604,9 @@ class DataStoreSMM {
 	 */
 	static GetMetasWithCourseRecord(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				params: stream.readNEXList(DataStoreSMMTypes.DataStoreGetCourseRecordParam),
-				metaParam: stream.readNEXStructure(DataStoreTypes.DataStoreGetMetaParam)
-			};
+			return new Requests.GetMetasWithCourseRecordRequest(stream);
 		} else {
-			return {
-				pMetaInfo: stream.readNEXList(DataStoreTypes.DataStoreMetaInfo),
-				pCourseResults: stream.readNEXList(DataStoreSMMTypes.DataStoreGetCourseRecordResult),
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.GetMetasWithCourseRecordResponse(stream);
 		}
 	}
 
@@ -760,13 +618,9 @@ class DataStoreSMM {
 	 */
 	static CheckRateCustomRankingCounter(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				applicationId: stream.readUInt32LE()
-			};
+			return new Requests.CheckRateCustomRankingCounterRequest(stream);
 		} else {
-			return {
-				isBelowThreshold: stream.readBoolean()
-			};
+			return new Responses.CheckRateCustomRankingCounterResponse(stream);
 		}
 	}
 
@@ -778,11 +632,9 @@ class DataStoreSMM {
 	 */
 	static ResetRateCustomRankingCounter(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				applicationId: stream.readUInt32LE()
-			};
+			return new Requests.ResetRateCustomRankingCounterRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ResetRateCustomRankingCounterResponse(stream);
 		}
 	}
 
@@ -794,14 +646,9 @@ class DataStoreSMM {
 	 */
 	static BestScoreRateCourseSearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam),
-				extraData: stream.readNEXList(stream.readNEXString)
-			};
+			return new Requests.BestScoreRateCourseSearchObjectRequest(stream);
 		} else {
-			return {
-				pRankingResults: stream.readNEXList(DataStoreSMMTypes.DataStoreCustomRankingResult)
-			};
+			return new Responses.BestScoreRateCourseSearchObjectResponse(stream);
 		}
 	}
 
@@ -813,14 +660,9 @@ class DataStoreSMM {
 	 */
 	static CTRPickUpCourseSearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam),
-				extraData: stream.readNEXList(stream.readNEXString)
-			};
+			return new Requests.CTRPickUpCourseSearchObjectRequest(stream);
 		} else {
-			return {
-				pRankingResults: stream.readNEXList(DataStoreSMMTypes.DataStoreCustomRankingResult)
-			};
+			return new Responses.CTRPickUpCourseSearchObjectResponse(stream);
 		}
 	}
 
@@ -832,13 +674,9 @@ class DataStoreSMM {
 	 */
 	static SetCachedRanking(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				rankingType: stream.readNEXString(),
-				rankingArgs: stream.readNEXList(stream.readNEXString),
-				dataIdLst: stream.readNEXList(stream.readUInt64LE)
-			};
+			return new Requests.SetCachedRankingRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.SetCachedRankingResponse(stream);
 		}
 	}
 
@@ -850,12 +688,9 @@ class DataStoreSMM {
 	 */
 	static DeleteCachedRanking(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				rankingType: stream.readNEXString(),
-				rankingArgs: stream.readNEXList(stream.readNEXString)
-			};
+			return new Requests.DeleteCachedRankingRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.DeleteCachedRankingResponse(stream);
 		}
 	}
 
@@ -867,29 +702,24 @@ class DataStoreSMM {
 	 */
 	static ChangePlayablePlatform(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				params: stream.readNEXList(DataStoreSMMTypes.DataStoreChangePlayablePlatformParam)
-			};
+			return new Requests.ChangePlayablePlatformRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ChangePlayablePlatformResponse(stream);
 		}
 	}
 
 	/**
 	 *
 	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
 	 * @returns {object} Parsed RMC body
 	 */
-	static SearchUnknownPlatformObjects(rmcMessage) {
+	static SearchUnknownPlatformObjects(rmcMessage, stream) {
 		// ! This function has an unknown request/response format
 		if (rmcMessage.isRequest()) {
-			return {
-				unknown: rmcMessage.body
-			};
+			return new Requests.SearchUnknownPlatformObjectsRequest(stream);
 		} else {
-			return {
-				unknown: rmcMessage.body
-			};
+			return new Responses.SearchUnknownPlatformObjectsResponse(stream);
 		}
 	}
 
@@ -901,11 +731,9 @@ class DataStoreSMM {
 	 */
 	static ReportCourse(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreSMMTypes.DataStoreReportCourseParam)
-			};
+			return new Requests.ReportCourseRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ReportCourseResponse(stream);
 		}
 	}
 }
