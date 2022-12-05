@@ -3,8 +3,9 @@ const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
 const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
-const NEXTypes = require('../types');
-const SecureConnectionTypes = require('./types/secure_connection');
+
+const Requests = require('./requests/secure_connection');
+const Responses = require('./responses/secure_connection');
 
 class SecureConnection {
 	static ProtocolID = 0xB;
@@ -69,15 +70,9 @@ class SecureConnection {
 	 */
 	static Register(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				vecMyURLs: stream.readNEXList(stream.readNEXStationURL)
-			};
+			return new Requests.RegisterRequest(stream);
 		} else {
-			return {
-				retval: stream.readUInt32LE(),
-				pidConnectionID: stream.readUInt32LE(),
-				urlPublic: stream.readNEXStationURL()
-			};
+			return new Responses.SendReportResponse(stream);
 		}
 	}
 
@@ -89,15 +84,9 @@ class SecureConnection {
 	 */
 	static RequestConnectionData(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				cidTarget: stream.readUInt32LE(),
-				pidTarget: stream.readUInt32LE()
-			};
+			return new Requests.RequestConnectionDataRequest(stream);
 		} else {
-			return {
-				retval: stream.readBoolean(),
-				pvecConnectionsData: stream.readNEXList(SecureConnectionTypes.ConnectionData)
-			};
+			return new Responses.SendReportResponse(stream);
 		}
 	}
 
@@ -109,15 +98,9 @@ class SecureConnection {
 	 */
 	static RequestUrls(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				cidTarget: stream.readUInt32LE(),
-				pidTarget: stream.readUInt32LE()
-			};
+			return new Requests.RequestUrlsRequest(stream);
 		} else {
-			return {
-				retval: stream.readBoolean(),
-				plstURLs: stream.readNEXList(NEXTypes.StationURL)
-			};
+			return new Responses.SendReportResponse(stream);
 		}
 	}
 
@@ -129,16 +112,9 @@ class SecureConnection {
 	 */
 	static RegisterEx(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				vecMyURLs: stream.readNEXList(stream.readNEXStationURL),
-				hCustomData: stream.readNEXAnyDataHolder()
-			};
+			return new Requests.RegisterExRequest(stream);
 		} else {
-			return {
-				retval: stream.readUInt32LE(),
-				pidConnectionID: stream.readUInt32LE(),
-				urlPublic: stream.readNEXStationURL()
-			};
+			return new Responses.SendReportResponse(stream);
 		}
 	}
 
@@ -149,9 +125,23 @@ class SecureConnection {
 	 */
 	static TestConnectivity(rmcMessage) {
 		if (rmcMessage.isRequest()) {
-			return {}; // * No request
+			return new Requests.TestConnectivityRequest();
 		} else {
-			return {}; // * No response
+			return new Responses.SendReportResponse();
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
+	static UpdateURLs(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return new Requests.UpdateURLsRequest(stream);
+		} else {
+			return new Responses.UpdateURLsResponse(stream);
 		}
 	}
 
@@ -163,12 +153,9 @@ class SecureConnection {
 	 */
 	static ReplaceURL(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				target: stream.readNEXStationURL(),
-				url: stream.readNEXStationURL()
-			};
+			return new Requests.ReplaceURLRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.SendReportResponse(stream);
 		}
 	}
 
@@ -180,12 +167,9 @@ class SecureConnection {
 	 */
 	static SendReport(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				reportId: stream.readUInt32LE(),
-				reportData: stream.readNEXQBuffer()
-			};
+			return new Requests.SendReportRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.SendReportResponse(stream);
 		}
 	}
 }
