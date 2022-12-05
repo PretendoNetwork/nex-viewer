@@ -3,10 +3,9 @@ const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
 const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
-const NEXTypes = require('../types');
 
-const MatchMakingTypes = require('./types/match_making');
-const NotificationsTypes = require('./types/notifications');
+const Requests = require('./requests/matchmake_extension');
+const Responses = require('./responses/matchmake_extension');
 
 class MatchmakeExtension {
 	static ProtocolID = 0x6d;
@@ -162,11 +161,9 @@ class MatchmakeExtension {
 	 */
 	static CloseParticipation(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE()
-			};
+			return new Requests.CloseParticipationRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.CloseParticipationResponse(stream);
 		}
 	}
 
@@ -178,11 +175,9 @@ class MatchmakeExtension {
 	 */
 	static OpenParticipation(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE()
-			};
+			return new Requests.OpenParticipationRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.OpenParticipationResponse(stream);
 		}
 	}
 
@@ -194,14 +189,9 @@ class MatchmakeExtension {
 	 */
 	static AutoMatchmake_Postpone(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				anyGathering: stream.readNEXAnyDataHolder(),
-				strMessage: stream.readNEXString()
-			};
+			return new Requests.AutoMatchmake_PostponeRequest(stream);
 		} else {
-			return {
-				joinedGathering: stream.readNEXAnyDataHolder()
-			};
+			return new Responses.AutoMatchmake_PostponeResponse(stream);
 		}
 	}
 
@@ -213,14 +203,9 @@ class MatchmakeExtension {
 	 */
 	static BrowseMatchmakeSession(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				searchCriteria: stream.readNEXStructure(MatchMakingTypes.MatchmakeSessionSearchCriteria),
-				resultRange: stream.readNEXStructure(NEXTypes.ResultRange)
-			};
+			return new Requests.BrowseMatchmakeSessionRequest(stream);
 		} else {
-			return {
-				lstGathering: stream.readNEXList(stream.readNEXAnyDataHolder)
-			};
+			return new Responses.BrowseMatchmakeSessionResponse(stream);
 		}
 	}
 
@@ -232,15 +217,9 @@ class MatchmakeExtension {
 	 */
 	static BrowseMatchmakeSessionWithHostUrls(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				searchCriteria: stream.readNEXStructure(MatchMakingTypes.MatchmakeSessionSearchCriteria),
-				resultRange: stream.readNEXStructure(NEXTypes.ResultRange)
-			};
+			return new Requests.BrowseMatchmakeSessionWithHostUrlsRequest(stream);
 		} else {
-			return {
-				lstGathering: stream.readNEXList(stream.readNEXAnyDataHolder),
-				lstGatheringUrls: stream.readNEXList(MatchMakingTypes.GatheringURLs)
-			};
+			return new Responses.BrowseMatchmakeSessionWithHostUrlsResponse(stream);
 		}
 	}
 
@@ -252,21 +231,9 @@ class MatchmakeExtension {
 	 */
 	static CreateMatchmakeSession(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			const returnData = {
-				anyGathering: stream.readNEXAnyDataHolder(),
-				strMessage: stream.readNEXString()
-			};
-
-			if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 5) {
-				returnData.participationCount = stream.readUInt16LE();
-			}
-
-			return returnData;
+			return new Requests.CreateMatchmakeSessionRequest(stream);
 		} else {
-			return {
-				gid: stream.readUInt32LE(),
-				sessionKey: stream.readNEXBuffer()
-			};
+			return new Responses.CreateMatchmakeSessionResponse(stream);
 		}
 	}
 
@@ -278,14 +245,9 @@ class MatchmakeExtension {
 	 */
 	static JoinMatchmakeSession(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE(),
-				strMessage: stream.readNEXString()
-			};
+			return new Requests.JoinMatchmakeSessionRequest(stream);
 		} else {
-			return {
-				sessionKey: stream.readNEXBuffer()
-			};
+			return new Responses.JoinMatchmakeSessionResponse(stream);
 		}
 	}
 
@@ -297,13 +259,9 @@ class MatchmakeExtension {
 	 */
 	static ModifyCurrentGameAttribute(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE(),
-				attribIndex: stream.readUInt32LE(),
-				newValue: stream.readUInt32LE()
-			};
+			return new Requests.ModifyCurrentGameAttributeRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ModifyCurrentGameAttributeResponse(stream);
 		}
 	}
 
@@ -315,16 +273,9 @@ class MatchmakeExtension {
 	 */
 	static UpdateNotificationData(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			// * This has a different format on the Switch
-			// * On the Switch uiParam1 and uiParam2 are uint64
-			return {
-				uiType: stream.readUInt32LE(),
-				uiParam1: stream.readUInt32LE(),
-				uiParam2: stream.readUInt32LE(),
-				strParam: stream.readNEXString()
-			};
+			return new Requests.UpdateNotificationDataRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UpdateNotificationDataResponse(stream);
 		}
 	}
 
@@ -336,13 +287,9 @@ class MatchmakeExtension {
 	 */
 	static GetFriendNotificationData(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				uiType: stream.readInt32LE()
-			};
+			return new Requests.GetFriendNotificationDataRequest(stream);
 		} else {
-			return {
-				dataList: stream.readNEXList(NotificationsTypes.NotificationEvent)
-			};
+			return new Responses.GetFriendNotificationDataResponse(stream);
 		}
 	}
 
@@ -354,12 +301,9 @@ class MatchmakeExtension {
 	 */
 	static UpdateApplicationBuffer(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readInt32LE(),
-				applicationBuffer: stream.readNEXBuffer()
-			};
+			return new Requests.UpdateApplicationBufferRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UpdateApplicationBufferResponse(stream);
 		}
 	}
 
@@ -371,12 +315,9 @@ class MatchmakeExtension {
 	 */
 	static UpdateMatchmakeSessionAttribute(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readInt32LE(),
-				attribs: stream.readNEXList(stream.readInt32LE)
-			};
+			return new Requests.UpdateMatchmakeSessionAttributeRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UpdateMatchmakeSessionAttributeResponse(stream);
 		}
 	}
 
@@ -388,13 +329,9 @@ class MatchmakeExtension {
 	 */
 	static GetlstFriendNotificationData(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstTypes: stream.readNEXList(stream.readInt32LE)
-			};
+			return new Requests.GetlstFriendNotificationDataRequest(stream);
 		} else {
-			return {
-				dataList: stream.readNEXList(NotificationsTypes.NotificationEvent)
-			};
+			return new Responses.GetlstFriendNotificationDataResponse(stream);
 		}
 	}
 
@@ -406,11 +343,9 @@ class MatchmakeExtension {
 	 */
 	static UpdateMatchmakeSession(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				anyGathering: stream.readNEXAnyDataHolder()
-			};
+			return new Requests.UpdateMatchmakeSessionRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UpdateMatchmakeSessionResponse(stream);
 		}
 	}
 
@@ -422,15 +357,9 @@ class MatchmakeExtension {
 	 */
 	static AutoMatchmakeWithSearchCriteria_Postpone(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstSearchCriteria: stream.readNEXList(MatchMakingTypes.MatchmakeSessionSearchCriteria),
-				anyGathering: stream.readNEXAnyDataHolder(),
-				strMessage: stream.readNEXString()
-			};
+			return new Requests.AutoMatchmakeWithSearchCriteria_PostponeRequest(stream);
 		} else {
-			return {
-				joinedGathering: stream.readNEXAnyDataHolder()
-			};
+			return new Responses.AutoMatchmakeWithSearchCriteria_PostponeResponse(stream);
 		}
 	}
 
@@ -442,13 +371,9 @@ class MatchmakeExtension {
 	 */
 	static GetPlayingSession(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstPid: stream.readNEXList(stream.readUInt32LE)
-			};
+			return new Requests.GetPlayingSessionRequest(stream);
 		} else {
-			return {
-				lstPlayingSession: stream.readNEXList(MatchMakingTypes.PlayingSession)
-			};
+			return new Responses.GetPlayingSessionResponse(stream);
 		}
 	}
 
@@ -460,14 +385,9 @@ class MatchmakeExtension {
 	 */
 	static CreateCommunity(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				community: stream.readNEXStructure(MatchMakingTypes.PersistentGathering),
-				strMessage: stream.readNEXString(),
-			};
+			return new Requests.CreateCommunityRequest(stream);
 		} else {
-			return {
-				gid: stream.readUInt32LE()
-			};
+			return new Responses.CreateCommunityResponse(stream);
 		}
 	}
 
@@ -479,11 +399,9 @@ class MatchmakeExtension {
 	 */
 	static UpdateCommunity(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				community: stream.readNEXStructure(MatchMakingTypes.PersistentGathering)
-			};
+			return new Requests.UpdateCommunityRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UpdateCommunityResponse(stream);
 		}
 	}
 
@@ -495,13 +413,9 @@ class MatchmakeExtension {
 	 */
 	static JoinCommunity(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE(),
-				strMessage: stream.readNEXString(),
-				strPassword: stream.readNEXString()
-			};
+			return new Requests.JoinCommunityRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.JoinCommunityResponse(stream);
 		}
 	}
 
@@ -513,13 +427,9 @@ class MatchmakeExtension {
 	 */
 	static FindCommunityByGatheringId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstGid: stream.readNEXList(stream.readUInt32LE)
-			};
+			return new Requests.FindCommunityByGatheringIdRequest(stream);
 		} else {
-			return {
-				lstCommunity: stream.readNEXList(MatchMakingTypes.PersistentGathering)
-			};
+			return new Responses.FindCommunityByGatheringIdResponse(stream);
 		}
 	}
 
@@ -531,14 +441,9 @@ class MatchmakeExtension {
 	 */
 	static FindOfficialCommunity(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				isAvailableOnly: stream.readBoolean(),
-				resultRange: stream.readNEXStructure(NEXTypes.ResultRange)
-			};
+			return new Requests.FindOfficialCommunityRequest(stream);
 		} else {
-			return {
-				lstCommunity: stream.readNEXList(MatchMakingTypes.PersistentGathering)
-			};
+			return new Responses.FindOfficialCommunityResponse(stream);
 		}
 	}
 
@@ -550,14 +455,9 @@ class MatchmakeExtension {
 	 */
 	static FindCommunityByParticipant(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				pid: stream.readUInt32LE(),
-				resultRange: stream.readNEXStructure(NEXTypes.ResultRange)
-			};
+			return new Requests.FindCommunityByParticipantRequest(stream);
 		} else {
-			return {
-				lstCommunity: stream.readNEXList(MatchMakingTypes.PersistentGathering)
-			};
+			return new Responses.FindCommunityByParticipantResponse(stream);
 		}
 	}
 
@@ -569,12 +469,9 @@ class MatchmakeExtension {
 	 */
 	static UpdatePrivacySetting(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				onlineStatus: stream.readBoolean(),
-				participationCommunity: stream.readBoolean()
-			};
+			return new Requests.UpdatePrivacySettingRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UpdatePrivacySettingResponse(stream);
 		}
 	}
 
@@ -586,11 +483,9 @@ class MatchmakeExtension {
 	 */
 	static GetMyBlockList(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {}; // * No request
+			return new Requests.GetMyBlockListRequest(stream);
 		} else {
-			return {
-				lstPrincipalId: stream.readNEXList(stream.readUInt32LE)
-			};
+			return new Responses.GetMyBlockListResponse(stream);
 		}
 	}
 
@@ -602,11 +497,9 @@ class MatchmakeExtension {
 	 */
 	static AddToBlockList(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstPrincipalId: stream.readNEXList(stream.readUInt32LE)
-			};
+			return new Requests.AddToBlockListRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.AddToBlockListResponse(stream);
 		}
 	}
 
@@ -618,11 +511,9 @@ class MatchmakeExtension {
 	 */
 	static RemoveFromBlockList(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstPrincipalId: stream.readNEXList(stream.readUInt32LE)
-			};
+			return new Requests.RemoveFromBlockListRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.RemoveFromBlockListResponse(stream);
 		}
 	}
 
@@ -633,9 +524,9 @@ class MatchmakeExtension {
 	 */
 	static ClearMyBlockList(rmcMessage) {
 		if (rmcMessage.isRequest()) {
-			return {}; // * No request
+			return new Requests.ClearMyBlockListRequest();
 		} else {
-			return {}; // * No response
+			return new Responses.ClearMyBlockListResponse();
 		}
 	}
 
@@ -647,13 +538,9 @@ class MatchmakeExtension {
 	 */
 	static ReportViolation(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				pid: stream.readUInt32LE(),
-				userName: stream.readNEXString(),
-				violationCode: stream.readUInt32LE()
-			};
+			return new Requests.ReportViolationRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ReportViolationResponse(stream);
 		}
 	}
 
@@ -665,12 +552,9 @@ class MatchmakeExtension {
 	 */
 	static IsViolationUser(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {}; // * No request
+			return new Requests.IsViolationUserRequest(stream);
 		} else {
-			return {
-				flag: stream.readBoolean(),
-				score: stream.readUInt32LE()
-			};
+			return new Responses.IsViolationUserResponse(stream);
 		}
 	}
 
@@ -682,16 +566,9 @@ class MatchmakeExtension {
 	 */
 	static JoinMatchmakeSessionEx(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE(),
-				strMessage: stream.readNEXString(),
-				dontCareMyBlockList: stream.readBoolean(),
-				participationCount: stream.readUInt16LE()
-			};
+			return new Requests.JoinMatchmakeSessionExRequest(stream);
 		} else {
-			return {
-				sessionKey: stream.readNEXBuffer()
-			};
+			return new Responses.JoinMatchmakeSessionExResponse(stream);
 		}
 	}
 
@@ -703,14 +580,9 @@ class MatchmakeExtension {
 	 */
 	static GetSimplePlayingSession(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstPrincipalId: stream.readNEXList(stream.readUInt32LE),
-				includeLoginUser: stream.readBoolean()
-			};
+			return new Requests.GetSimplePlayingSessionRequest(stream);
 		} else {
-			return {
-				lstSimplePlayingSession: stream.readNEXList(MatchMakingTypes.SimplePlayingSession)
-			};
+			return new Responses.GetSimplePlayingSessionResponse(stream);
 		}
 	}
 
@@ -722,13 +594,9 @@ class MatchmakeExtension {
 	 */
 	static GetSimpleCommunity(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gatheringIdList: stream.readNEXList(stream.readUInt32LE)
-			};
+			return new Requests.GetSimpleCommunityRequest(stream);
 		} else {
-			return {
-				lstSimpleCommunityList: stream.readNEXList(MatchMakingTypes.SimpleCommunity)
-			};
+			return new Responses.GetSimpleCommunityResponse(stream);
 		}
 	}
 
@@ -740,15 +608,9 @@ class MatchmakeExtension {
 	 */
 	static AutoMatchmakeWithGatheringId_Postpone(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstGid: stream.readNEXList(stream.readUInt32LE),
-				anyGathering: stream.readNEXAnyDataHolder(),
-				strMessage: stream.readNEXString()
-			};
+			return new Requests.AutoMatchmakeWithGatheringId_PostponeRequest(stream);
 		} else {
-			return {
-				joinedGathering: stream.readNEXAnyDataHolder()
-			};
+			return new Responses.AutoMatchmakeWithGatheringId_PostponeResponse(stream);
 		}
 	}
 
@@ -760,12 +622,9 @@ class MatchmakeExtension {
 	 */
 	static UpdateProgressScore(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE(),
-				progressScore: stream.readUInt8()
-			};
+			return new Requests.UpdateProgressScoreRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UpdateProgressScoreResponse(stream);
 		}
 	}
 
@@ -777,16 +636,9 @@ class MatchmakeExtension {
 	 */
 	static DebugNotifyEvent(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				pid: stream.readUInt32LE(),
-				mainType: stream.readUInt32LE(),
-				subType: stream.readUInt32LE(),
-				param1: stream.readUInt64LE(),
-				param2: stream.readUInt64LE(),
-				stringParam: stream.readNEXString()
-			};
+			return new Requests.DebugNotifyEventRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.DebugNotifyEventResponse(stream);
 		}
 	}
 
@@ -798,13 +650,9 @@ class MatchmakeExtension {
 	 */
 	static GenerateMatchmakeSessionSystemPassword(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE()
-			};
+			return new Requests.GenerateMatchmakeSessionSystemPasswordRequest(stream);
 		} else {
-			return {
-				password: stream.readNEXString()
-			};
+			return new Responses.GenerateMatchmakeSessionSystemPasswordResponse(stream);
 		}
 	}
 
@@ -816,11 +664,9 @@ class MatchmakeExtension {
 	 */
 	static ClearMatchmakeSessionSystemPassword(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE()
-			};
+			return new Requests.ClearMatchmakeSessionSystemPasswordRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ClearMatchmakeSessionSystemPasswordResponse(stream);
 		}
 	}
 
@@ -832,13 +678,9 @@ class MatchmakeExtension {
 	 */
 	static CreateMatchmakeSessionWithParam(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				createMatchmakeSessionParam: stream.readNEXStructure(MatchMakingTypes.CreateMatchmakeSessionParam)
-			};
+			return new Requests.CreateMatchmakeSessionWithParamRequest(stream);
 		} else {
-			return {
-				joinedMatchmakeSession: stream.readNEXStructure(MatchMakingTypes.MatchmakeSession)
-			};
+			return new Responses.CreateMatchmakeSessionWithParamResponse(stream);
 		}
 	}
 
@@ -850,13 +692,9 @@ class MatchmakeExtension {
 	 */
 	static JoinMatchmakeSessionWithParam(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				joinMatchmakeSessionParam: stream.readNEXStructure(MatchMakingTypes.JoinMatchmakeSessionParam)
-			};
+			return new Requests.JoinMatchmakeSessionWithParamRequest(stream);
 		} else {
-			return {
-				joinedMatchmakeSession: stream.readNEXStructure(MatchMakingTypes.MatchmakeSession)
-			};
+			return new Responses.JoinMatchmakeSessionWithParamResponse(stream);
 		}
 	}
 
@@ -868,13 +706,9 @@ class MatchmakeExtension {
 	 */
 	static AutoMatchmakeWithParam_Postpone(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				autoMatchmakeParam: stream.readNEXStructure(MatchMakingTypes.AutoMatchmakeParam)
-			};
+			return new Requests.AutoMatchmakeWithParam_PostponeRequest(stream);
 		} else {
-			return {
-				joinedMatchmakeSession: stream.readNEXStructure(MatchMakingTypes.MatchmakeSession)
-			};
+			return new Responses.AutoMatchmakeWithParam_PostponeResponse(stream);
 		}
 	}
 
@@ -886,13 +720,9 @@ class MatchmakeExtension {
 	 */
 	static FindMatchmakeSessionByGatheringIdDetail(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE()
-			};
+			return new Requests.FindMatchmakeSessionByGatheringIdDetailRequest(stream);
 		} else {
-			return {
-				matchmakeSession: stream.readNEXStructure(MatchMakingTypes.MatchmakeSession)
-			};
+			return new Responses.FindMatchmakeSessionByGatheringIdDetailResponse(stream);
 		}
 	}
 
@@ -904,14 +734,9 @@ class MatchmakeExtension {
 	 */
 	static BrowseMatchmakeSessionNoHolder(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				searchCriteria: stream.readNEXStructure(MatchMakingTypes.MatchmakeSessionSearchCriteria),
-				resultRange: stream.readNEXStructure(NEXTypes.ResultRange)
-			};
+			return new Requests.BrowseMatchmakeSessionNoHolderRequest(stream);
 		} else {
-			return {
-				lstMatchmakeSession: stream.readNEXList(MatchMakingTypes.MatchmakeSession)
-			};
+			return new Responses.BrowseMatchmakeSessionNoHolderResponse(stream);
 		}
 	}
 
@@ -923,15 +748,9 @@ class MatchmakeExtension {
 	 */
 	static BrowseMatchmakeSessionWithHostUrlsNoHolder(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				searchCriteria: stream.readNEXStructure(MatchMakingTypes.MatchmakeSessionSearchCriteria),
-				resultRange: stream.readNEXStructure(NEXTypes.ResultRange)
-			};
+			return new Requests.BrowseMatchmakeSessionWithHostUrlsNoHolderRequest(stream);
 		} else {
-			return {
-				lstMatchmakeSession: stream.readNEXList(MatchMakingTypes.MatchmakeSession),
-				lstGatheringUrls: stream.readNEXList(MatchMakingTypes.GatheringURLs)
-			};
+			return new Responses.BrowseMatchmakeSessionWithHostUrlsNoHolderResponse(stream);
 		}
 	}
 
@@ -943,11 +762,9 @@ class MatchmakeExtension {
 	 */
 	static UpdateMatchmakeSessionPart(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				updateMatchmakeSessionParam: stream.readNEXStructure(MatchMakingTypes.UpdateMatchmakeSessionParam)
-			};
+			return new Requests.UpdateMatchmakeSessionPartRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UpdateMatchmakeSessionPartResponse(stream);
 		}
 	}
 
@@ -959,13 +776,9 @@ class MatchmakeExtension {
 	 */
 	static RequestMatchmaking(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				autoMatchmakeParam: stream.readNEXStructure(MatchMakingTypes.AutoMatchmakeParam)
-			};
+			return new Requests.RequestMatchmakingRequest(stream);
 		} else {
-			return {
-				requestId: stream.readUInt64LE()
-			};
+			return new Responses.RequestMatchmakingResponse(stream);
 		}
 	}
 
@@ -977,11 +790,9 @@ class MatchmakeExtension {
 	 */
 	static WithdrawMatchmaking(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				requestId: stream.readUInt64LE()
-			};
+			return new Requests.WithdrawMatchmakingRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.WithdrawMatchmakingResponse(stream);
 		}
 	}
 
@@ -992,9 +803,9 @@ class MatchmakeExtension {
 	 */
 	static WithdrawMatchmakingAll(rmcMessage) {
 		if (rmcMessage.isRequest()) {
-			return {}; // * No request
+			return new Requests.WithdrawMatchmakingAllRequest();
 		} else {
-			return {}; // * No response
+			return new Responses.WithdrawMatchmakingAllResponse();
 		}
 	}
 
@@ -1006,13 +817,9 @@ class MatchmakeExtension {
 	 */
 	static FindMatchmakeSessionByGatheringId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstGid: stream.readNEXList(stream.readUInt32LE)
-			};
+			return new Requests.FindMatchmakeSessionByGatheringIdRequest(stream);
 		} else {
-			return {
-				lstMatchmakeSession: stream.readNEXList(MatchMakingTypes.MatchmakeSession)
-			};
+			return new Responses.FindMatchmakeSessionByGatheringIdResponse(stream);
 		}
 	}
 
@@ -1024,13 +831,9 @@ class MatchmakeExtension {
 	 */
 	static FindMatchmakeSessionBySingleGatheringId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				gid: stream.readUInt32LE()
-			};
+			return new Requests.FindMatchmakeSessionBySingleGatheringIdRequest(stream);
 		} else {
-			return {
-				matchmakeSession: stream.readNEXStructure(MatchMakingTypes.MatchmakeSession)
-			};
+			return new Responses.FindMatchmakeSessionBySingleGatheringIdResponse(stream);
 		}
 	}
 
@@ -1042,14 +845,9 @@ class MatchmakeExtension {
 	 */
 	static FindMatchmakeSessionByOwner(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				id: stream.readUInt32LE(),
-				resultRange: stream.readNEXStructure(NEXTypes.ResultRange)
-			};
+			return new Requests.FindMatchmakeSessionByOwnerRequest(stream);
 		} else {
-			return {
-				lstMatchmakeSession: stream.readNEXList(MatchMakingTypes.MatchmakeSession)
-			};
+			return new Responses.FindMatchmakeSessionByOwnerResponse(stream);
 		}
 	}
 
@@ -1061,13 +859,9 @@ class MatchmakeExtension {
 	 */
 	static FindMatchmakeSessionByParticipant(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(MatchMakingTypes.FindMatchmakeSessionByParticipantParam)
-			};
+			return new Requests.FindMatchmakeSessionByParticipantRequest(stream);
 		} else {
-			return {
-				lstSession: stream.readNEXList(MatchMakingTypes.FindMatchmakeSessionByParticipantResult)
-			};
+			return new Responses.FindMatchmakeSessionByParticipantResponse(stream);
 		}
 	}
 
@@ -1079,13 +873,9 @@ class MatchmakeExtension {
 	 */
 	static BrowseMatchmakeSessionNoHolderNoResultRange(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				searchCriteria: stream.readNEXStructure(MatchMakingTypes.MatchmakeSessionSearchCriteria)
-			};
+			return new Requests.BrowseMatchmakeSessionNoHolderNoResultRangeRequest(stream);
 		} else {
-			return {
-				lstMatchmakeSession: stream.readNEXList(MatchMakingTypes.MatchmakeSession)
-			};
+			return new Responses.BrowseMatchmakeSessionNoHolderNoResultRangeResponse(stream);
 		}
 	}
 
@@ -1097,14 +887,9 @@ class MatchmakeExtension {
 	 */
 	static BrowseMatchmakeSessionWithHostUrlsNoHolderNoResultRange(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				searchCriteria: stream.readNEXStructure(MatchMakingTypes.MatchmakeSessionSearchCriteria)
-			};
+			return new Requests.BrowseMatchmakeSessionWithHostUrlsNoHolderNoResultRangeRequest(stream);
 		} else {
-			return {
-				lstMatchmakeSession: stream.readNEXList(MatchMakingTypes.MatchmakeSession),
-				lstGatheringUrls: stream.readNEXList(MatchMakingTypes.GatheringURLs)
-			};
+			return new Responses.BrowseMatchmakeSessionWithHostUrlsNoHolderNoResultRangeResponse(stream);
 		}
 	}
 }
