@@ -204,7 +204,7 @@ class MatchmakeSession extends NEXTypes.Structure {
 				__typeValue: this.m_MatchmakeSystemType
 			},
 			m_ApplicationBuffer: {
-				__typeName: 'DateTime',
+				__typeName: 'Buffer',
 				__typeValue: this.m_ApplicationBuffer
 			},
 			m_ParticipationCount: {
