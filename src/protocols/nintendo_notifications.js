@@ -4,7 +4,8 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
-const NintendoNotificationsTypes = require('./types/nintendo_notifications');
+const Requests = require('./requests/nintendo_notifications');
+const Responses = require('./responses/nintendo_notifications');
 
 class NintendoNotifications {
 	static ProtocolID = 0x64;
@@ -57,11 +58,9 @@ class NintendoNotifications {
 	 */
 	static ProcessNintendoNotificationEvent1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				eventObject: stream.readNEXStructure(NintendoNotificationsTypes.NintendoNotificationEvent)
-			};
+			return new Requests.ProcessNintendoNotificationEvent1Request(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ProcessNintendoNotificationEvent1Response(stream);
 		}
 	}
 
@@ -73,11 +72,9 @@ class NintendoNotifications {
 	 */
 	static ProcessNintendoNotificationEvent2(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				eventObject: stream.readNEXStructure(NintendoNotificationsTypes.NintendoNotificationEvent)
-			};
+			return new Requests.ProcessNintendoNotificationEvent2Request(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ProcessNintendoNotificationEvent2Response(stream);
 		}
 	}
 }

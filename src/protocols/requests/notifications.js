@@ -1,5 +1,5 @@
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
-const NotificationsTypes = require('./types/notifications');
+const NotificationsTypes = require('../types/notifications');
 
 class ProcessNotificationEventRequest {
 	/**
