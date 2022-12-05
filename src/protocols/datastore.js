@@ -4,9 +4,10 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
-const DataStoreTypes = require('./types/datastore');
-
 const DataStoreSMM = require('./patches/datastore_smm');
+
+const Requests = require('./requests/datastore');
+const Responses = require('./responses/datastore');
 
 class DataStore {
 	static ProtocolID = 0x73;
@@ -153,13 +154,9 @@ class DataStore {
 	 */
 	static PrepareGetObjectV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStorePrepareGetParamV1)
-			};
+			return new Requests.PrepareGetObjectV1Request(stream);
 		} else {
-			return {
-				pReqGetInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqGetInfoV1)
-			};
+			return new Responses.PrepareGetObjectV1Response(stream);
 		}
 	}
 
@@ -171,13 +168,9 @@ class DataStore {
 	 */
 	static PreparePostObjectV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParamV1)
-			};
+			return new Requests.PreparePostObjectV1Request(stream);
 		} else {
-			return {
-				pReqPostInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqPostInfoV1)
-			};
+			return new Responses.PreparePostObjectV1Response(stream);
 		}
 	}
 
@@ -189,11 +182,9 @@ class DataStore {
 	 */
 	static CompletePostObjectV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreCompletePostParamV1)
-			};
+			return new Requests.CompletePostObjectV1Request(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.CompletePostObjectV1Response(stream);
 		}
 	}
 
@@ -205,11 +196,9 @@ class DataStore {
 	 */
 	static DeleteObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreDeleteParam)
-			};
+			return new Requests.DeleteObjectRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.DeleteObjectResponse(stream);
 		}
 	}
 
@@ -221,14 +210,9 @@ class DataStore {
 	 */
 	static DeleteObjects(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				params: stream.readNEXList(DataStoreTypes.DataStoreDeleteParam),
-				transactional: stream.readBoolean()
-			};
+			return new Requests.DeleteObjectsRequest(stream);
 		} else {
-			return {
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.DeleteObjectsResponse(stream);
 		}
 	}
 
@@ -240,11 +224,9 @@ class DataStore {
 	 */
 	static ChangeMetaV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreChangeMetaParamV1)
-			};
+			return new Requests.ChangeMetaV1Request(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ChangeMetaV1Response(stream);
 		}
 	}
 
@@ -256,15 +238,9 @@ class DataStore {
 	 */
 	static ChangeMetasV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIds: stream.readNEXList(stream.readUInt64LE),
-				params: stream.readNEXList(DataStoreTypes.DataStoreChangeMetaParamV1),
-				transactional: stream.readBoolean()
-			};
+			return new Requests.ChangeMetasV1Request(stream);
 		} else {
-			return {
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.ChangeMetasV1Response(stream);
 		}
 	}
 
@@ -276,13 +252,9 @@ class DataStore {
 	 */
 	static GetMeta(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetMetaParam)
-			};
+			return new Requests.GetMetaRequest(stream);
 		} else {
-			return {
-				pMetaInfo: stream.readNEXStructure(DataStoreTypes.DataStoreMetaInfo)
-			};
+			return new Responses.GetMetaResponse(stream);
 		}
 	}
 
@@ -294,15 +266,9 @@ class DataStore {
 	 */
 	static GetMetas(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIds: stream.readNEXList(stream.readUInt64LE),
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetMetaParam)
-			};
+			return new Requests.GetMetasRequest(stream);
 		} else {
-			return {
-				pMetaInfo: stream.readNEXList(DataStoreTypes.DataStoreMetaInfo),
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.GetMetasResponse(stream);
 		}
 	}
 
@@ -314,13 +280,9 @@ class DataStore {
 	 */
 	static PrepareUpdateObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStorePrepareUpdateParam)
-			};
+			return new Requests.PrepareUpdateObjectRequest(stream);
 		} else {
-			return {
-				pReqUpdateInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqUpdateInfo),
-			};
+			return new Responses.PrepareUpdateObjectResponse(stream);
 		}
 	}
 
@@ -332,11 +294,9 @@ class DataStore {
 	 */
 	static CompleteUpdateObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreCompleteUpdateParam)
-			};
+			return new Requests.CompleteUpdateObjectRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.CompleteUpdateObjectResponse(stream);
 		}
 	}
 
@@ -348,13 +308,9 @@ class DataStore {
 	 */
 	static SearchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam)
-			};
+			return new Requests.SearchObjectRequest(stream);
 		} else {
-			return {
-				pSearchResult: stream.readNEXStructure(DataStoreTypes.DataStoreSearchResult)
-			};
+			return new Responses.SearchObjectResponse(stream);
 		}
 	}
 
@@ -366,13 +322,9 @@ class DataStore {
 	 */
 	static GetNotificationUrl(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetNotificationUrlParam)
-			};
+			return new Requests.GetNotificationUrlRequest(stream);
 		} else {
-			return {
-				info: stream.readNEXStructure(DataStoreTypes.DataStoreReqGetNotificationUrlInfo)
-			};
+			return new Responses.GetNotificationUrlResponse(stream);
 		}
 	}
 
@@ -384,14 +336,9 @@ class DataStore {
 	 */
 	static GetNewArrivedNotificationsV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetNewArrivedNotificationsParam)
-			};
+			return new Requests.GetNewArrivedNotificationsV1Request(stream);
 		} else {
-			return {
-				pResult: stream.readNEXStructure(DataStoreTypes.DataStoreNotificationV1),
-				pHasNext: stream.readBoolean()
-			};
+			return new Responses.GetNewArrivedNotificationsV1Response(stream);
 		}
 	}
 
@@ -403,15 +350,9 @@ class DataStore {
 	 */
 	static RateObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				target: stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget),
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreRateObjectParam),
-				fetchRatings: stream.readBoolean()
-			};
+			return new Requests.RateObjectRequest(stream);
 		} else {
-			return {
-				pRating: stream.readNEXStructure(DataStoreTypes.DataStoreRatingInfo)
-			};
+			return new Responses.RateObjectResponse(stream);
 		}
 	}
 
@@ -423,14 +364,9 @@ class DataStore {
 	 */
 	static GetRating(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				target: stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget),
-				accessPassword: stream.readUInt64LE()
-			};
+			return new Requests.GetRatingRequest(stream);
 		} else {
-			return {
-				pRating: stream.readNEXStructure(DataStoreTypes.DataStoreRatingInfo)
-			};
+			return new Responses.GetRatingResponse(stream);
 		}
 	}
 
@@ -442,15 +378,9 @@ class DataStore {
 	 */
 	static GetRatings(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIds: stream.readNEXList(stream.readUInt64LE),
-				accessPassword: stream.readUInt64LE()
-			};
+			return new Requests.GetRatingsRequest(stream);
 		} else {
-			return {
-				pRatings: stream.readNEXList(() => stream.readNEXList(DataStoreTypes.DataStoreRatingInfoWithSlot)), // * 2D List
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.GetRatingsResponse(stream);
 		}
 	}
 
@@ -462,12 +392,9 @@ class DataStore {
 	 */
 	static ResetRating(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				target: stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget),
-				accessPassword: stream.readUInt64LE()
-			};
+			return new Requests.ResetRatingRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ResetRatingResponse(stream);
 		}
 	}
 
@@ -479,14 +406,9 @@ class DataStore {
 	 */
 	static ResetRatings(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIds: stream.readNEXList(stream.readUInt64LE),
-				transactional: stream.readBoolean()
-			};
+			return new Requests.ResetRatingsRequest(stream);
 		} else {
-			return {
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.ResetRatingsResponse(stream);
 		}
 	}
 
@@ -498,13 +420,9 @@ class DataStore {
 	 */
 	static GetSpecificMetaV1(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetSpecificMetaParamV1)
-			};
+			return new Requests.GetSpecificMetaV1Request(stream);
 		} else {
-			return {
-				pMetaInfos: stream.readNEXList(DataStoreTypes.DataStoreSpecificMetaInfoV1)
-			};
+			return new Responses.GetSpecificMetaV1Response(stream);
 		}
 	}
 
@@ -516,13 +434,9 @@ class DataStore {
 	 */
 	static PostMetaBinary(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParam)
-			};
+			return new Requests.PostMetaBinaryRequest(stream);
 		} else {
-			return {
-				dataId: stream.readUInt64LE()
-			};
+			return new Responses.PostMetaBinaryResponse(stream);
 		}
 	}
 
@@ -534,11 +448,9 @@ class DataStore {
 	 */
 	static TouchObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreTouchObjectParam)
-			};
+			return new Requests.TouchObjectRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.TouchObjectResponse(stream);
 		}
 	}
 
@@ -550,15 +462,9 @@ class DataStore {
 	 */
 	static GetRatingWithLog(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				target: stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget),
-				accessPassword: stream.readUInt64LE()
-			};
+			return new Requests.GetRatingWithLogRequest(stream);
 		} else {
-			return {
-				pRating: stream.readNEXStructure(DataStoreTypes.DataStoreRatingInfo),
-				pRatingLog: stream.readNEXStructure(DataStoreTypes.DataStoreRatingLog)
-			};
+			return new Responses.GetRatingWithLogResponse(stream);
 		}
 	}
 
@@ -570,13 +476,9 @@ class DataStore {
 	 */
 	static PreparePostObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParam)
-			};
+			return new Requests.PreparePostObjectRequest(stream);
 		} else {
-			return {
-				pReqPostInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqPostInfo)
-			};
+			return new Responses.PreparePostObjectResponse(stream);
 		}
 	}
 
@@ -588,13 +490,9 @@ class DataStore {
 	 */
 	static PrepareGetObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStorePrepareGetParam)
-			};
+			return new Requests.PrepareGetObjectRequest(stream);
 		} else {
-			return {
-				pReqGetInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqGetInfo)
-			};
+			return new Responses.PrepareGetObjectResponse(stream);
 		}
 	}
 
@@ -606,11 +504,9 @@ class DataStore {
 	 */
 	static CompletePostObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreCompletePostParam)
-			};
+			return new Requests.CompletePostObjectRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.CompletePostObjectResponse(stream);
 		}
 	}
 
@@ -622,14 +518,9 @@ class DataStore {
 	 */
 	static GetNewArrivedNotifications(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetNewArrivedNotificationsParam)
-			};
+			return new Requests.GetNewArrivedNotificationsRequest(stream);
 		} else {
-			return {
-				pResult: stream.readNEXList(DataStoreTypes.DataStoreNotification),
-				pHasNext: stream.readBoolean()
-			};
+			return new Responses.GetNewArrivedNotificationsResponse(stream);
 		}
 	}
 
@@ -641,13 +532,9 @@ class DataStore {
 	 */
 	static GetSpecificMeta(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreGetSpecificMetaParam)
-			};
+			return new Requests.GetSpecificMetaRequest(stream);
 		} else {
-			return {
-				pMetaInfos: stream.readNEXList(DataStoreTypes.DataStoreSpecificMetaInfo)
-			};
+			return new Responses.GetSpecificMetaResponse(stream);
 		}
 	}
 
@@ -659,14 +546,9 @@ class DataStore {
 	 */
 	static GetPersistenceInfo(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				ownerId: stream.readUInt32LE(),
-				persistenceSlotId: stream.readUInt16LE()
-			};
+			return new Requests.GetPersistenceInfoRequest(stream);
 		} else {
-			return {
-				pPersistenceInfo: stream.readNEXList(DataStoreTypes.DataStorePersistenceInfo)
-			};
+			return new Responses.GetPersistenceInfoResponse(stream);
 		}
 	}
 
@@ -678,15 +560,9 @@ class DataStore {
 	 */
 	static GetPersistenceInfos(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				ownerId: stream.readUInt32LE(),
-				persistenceSlotIds: stream.readNEXList(stream.readUInt16LE)
-			};
+			return new Requests.GetPersistenceInfosRequest(stream);
 		} else {
-			return {
-				pPersistenceInfo: stream.readNEXList(DataStoreTypes.DataStorePersistenceInfo),
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.GetPersistenceInfosResponse(stream);
 		}
 	}
 
@@ -698,13 +574,9 @@ class DataStore {
 	 */
 	static PerpetuateObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				persistenceSlotId: stream.readUInt16LE(),
-				dataId: stream.readUInt64LE(),
-				deleteLastObject: stream.readBoolean()
-			};
+			return new Requests.PerpetuateObjectRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.PerpetuateObjectResponse(stream);
 		}
 	}
 
@@ -716,12 +588,9 @@ class DataStore {
 	 */
 	static UnperpetuateObject(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				persistenceSlotId: stream.readUInt16LE(),
-				deleteLastObject: stream.readBoolean()
-			};
+			return new Requests.UnperpetuateObjectRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.UnperpetuateObjectResponse(stream);
 		}
 	}
 
@@ -733,14 +602,9 @@ class DataStore {
 	 */
 	static PrepareGetObjectOrMetaBinary(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStorePrepareGetParam)
-			};
+			return new Requests.PrepareGetObjectOrMetaBinaryRequest(stream);
 		} else {
-			return {
-				pReqGetInfo: stream.readNEXStructure(DataStoreTypes.DataStoreReqGetInfo),
-				pReqGetAdditionalMeta: stream.readNEXStructure(DataStoreTypes.DataStoreReqGetAdditionalMeta)
-			};
+			return new Responses.PrepareGetObjectOrMetaBinaryResponse(stream);
 		}
 	}
 
@@ -752,13 +616,9 @@ class DataStore {
 	 */
 	static GetPasswordInfo(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataId: stream.readUInt64LE()
-			};
+			return new Requests.GetPasswordInfoRequest(stream);
 		} else {
-			return {
-				pPasswordInfo: stream.readNEXStructure(DataStoreTypes.DataStorePasswordInfo)
-			};
+			return new Responses.GetPasswordInfoResponse(stream);
 		}
 	}
 
@@ -770,14 +630,9 @@ class DataStore {
 	 */
 	static GetPasswordInfos(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIds: stream.readNEXList(stream.readUInt64LE)
-			};
+			return new Requests.GetPasswordInfosRequest(stream);
 		} else {
-			return {
-				pPasswordInfo: stream.readNEXList(DataStoreTypes.DataStorePasswordInfo),
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.GetPasswordInfosResponse(stream);
 		}
 	}
 
@@ -789,14 +644,9 @@ class DataStore {
 	 */
 	static GetMetasMultipleParam(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				params: stream.readNEXList(DataStoreTypes.DataStoreGetMetaParam)
-			};
+			return new Requests.GetMetasMultipleParamRequest(stream);
 		} else {
-			return {
-				pMetaInfo: stream.readNEXList(DataStoreTypes.DataStoreMetaInfo),
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.GetMetasMultipleParamResponse(stream);
 		}
 	}
 
@@ -808,11 +658,9 @@ class DataStore {
 	 */
 	static CompletePostObjects(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIds: stream.readNEXList(stream.readUInt64LE)
-			};
+			return new Requests.CompletePostObjectsRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.CompletePostObjectsResponse(stream);
 		}
 	}
 
@@ -824,11 +672,9 @@ class DataStore {
 	 */
 	static ChangeMeta(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreChangeMetaParam)
-			};
+			return new Requests.ChangeMetaRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.ChangeMetaResponse(stream);
 		}
 	}
 
@@ -840,15 +686,9 @@ class DataStore {
 	 */
 	static ChangeMetas(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIds: stream.readNEXList(stream.readUInt64LE),
-				params: stream.readNEXList(DataStoreTypes.DataStoreChangeMetaParam),
-				transactional: stream.readBoolean()
-			};
+			return new Requests.ChangeMetasRequest(stream);
 		} else {
-			return {
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.ChangeMetasResponse(stream);
 		}
 	}
 
@@ -860,17 +700,9 @@ class DataStore {
 	 */
 	static RateObjects(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				targets: stream.readNEXList(DataStoreTypes.DataStoreRatingTarget),
-				params: stream.readNEXList(DataStoreTypes.DataStoreRateObjectParam),
-				transactional: stream.readBoolean(),
-				fetchRatings: stream.readBoolean()
-			};
+			return new Requests.RateObjectsRequest(stream);
 		} else {
-			return {
-				pRatings: stream.readNEXList(DataStoreTypes.DataStoreRatingInfo),
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.RateObjectsResponse(stream);
 		}
 	}
 
@@ -882,12 +714,9 @@ class DataStore {
 	 */
 	static PostMetaBinaryWithDataId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataId: stream.readUInt64LE(),
-				param: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParam)
-			};
+			return new Requests.PostMetaBinaryWithDataIdRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.PostMetaBinaryWithDataIdResponse(stream);
 		}
 	}
 
@@ -899,15 +728,9 @@ class DataStore {
 	 */
 	static PostMetaBinariesWithDataId(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIds: stream.readNEXList(stream.readUInt64LE),
-				params: stream.readNEXList(DataStoreTypes.DataStorePreparePostParam),
-				transactional: stream.readBoolean()
-			};
+			return new Requests.PostMetaBinariesWithDataIdRequest(stream);
 		} else {
-			return {
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.PostMetaBinariesWithDataIdResponse(stream);
 		}
 	}
 
@@ -919,16 +742,9 @@ class DataStore {
 	 */
 	static RateObjectWithPosting(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				target: stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget),
-				rateParam: stream.readNEXStructure(DataStoreTypes.DataStoreRateObjectParam),
-				postParam: stream.readNEXStructure(DataStoreTypes.DataStorePreparePostParam),
-				transactional: stream.readBoolean()
-			};
+			return new Requests.RateObjectWithPostingRequest(stream);
 		} else {
-			return {
-				pRating: stream.readNEXStructure(DataStoreTypes.DataStoreRatingInfo)
-			};
+			return new Responses.RateObjectWithPostingResponse(stream);
 		}
 	}
 
@@ -940,18 +756,9 @@ class DataStore {
 	 */
 	static RateObjectsWithPosting(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				target: stream.readNEXList(DataStoreTypes.DataStoreRatingTarget),
-				rateParam: stream.readNEXList(DataStoreTypes.DataStoreRateObjectParam),
-				postParam: stream.readNEXList(DataStoreTypes.DataStorePreparePostParam),
-				transactional: stream.readBoolean(),
-				fetchRatings: stream.readBoolean()
-			};
+			return new Requests.RateObjectsWithPostingRequest(stream);
 		} else {
-			return {
-				pRatings: stream.readNEXList(DataStoreTypes.DataStoreRatingInfo),
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.RateObjectsWithPostingResponse(stream);
 		}
 	}
 
@@ -963,14 +770,9 @@ class DataStore {
 	 */
 	static GetObjectInfos(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				dataIds: stream.readNEXList(stream.readUInt64LE)
-			};
+			return new Requests.GetObjectInfosRequest(stream);
 		} else {
-			return {
-				pInfos: stream.readNEXList(DataStoreTypes.DataStoreReqGetInfo),
-				pResults: stream.readNEXList(stream.readNEXResult)
-			};
+			return new Responses.GetObjectInfosResponse(stream);
 		}
 	}
 
@@ -982,13 +784,9 @@ class DataStore {
 	 */
 	static SearchObjectLight(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				param: stream.readNEXStructure(DataStoreTypes.DataStoreSearchParam)
-			};
+			return new Requests.SearchObjectLightRequest(stream);
 		} else {
-			return {
-				pSearchResult: stream.readNEXStructure(DataStoreTypes.DataStoreSearchResult)
-			};
+			return new Responses.SearchObjectLightResponse(stream);
 		}
 	}
 }
