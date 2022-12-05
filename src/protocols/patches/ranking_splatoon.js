@@ -4,6 +4,9 @@ const PacketV1 = require('../../packetv1'); // eslint-disable-line no-unused-var
 const RMCMessage = require('../../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../../stream');
 
+const Requests = require('../requests/ranking_splatoon');
+const Responses = require('../responses/ranking_splatoon');
+
 class RankingSplatoon {
 	static ProtocolID = 0x70;
 
@@ -56,75 +59,58 @@ class RankingSplatoon {
 	/**
 	 *
 	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
 	 * @returns {object} Parsed RMC body
 	 */
-	static GetCompetitionRankingScore(rmcMessage) {
-		// ! This function has an unknown request/response format
+	static GetCompetitionRankingScore(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				unknown: rmcMessage.body
-			};
+			return new Requests.GetCompetitionRankingScoreRequest(stream);
 		} else {
-			return {
-				unknown: rmcMessage.body
-			};
+			return new Responses.GetCompetitionRankingScoreResponse(stream);
 		}
 	}
 
 	/**
 	 *
 	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
 	 * @returns {object} Parsed RMC body
 	 */
-	static GetcompetitionRankingScoreByPeriodList(rmcMessage) {
-		// ! This function has an unknown request/response format
+	static GetcompetitionRankingScoreByPeriodList(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				unknown: rmcMessage.body
-			};
+			return new Requests.GetcompetitionRankingScoreByPeriodListRequest(stream);
 		} else {
-			return {
-				unknown: rmcMessage.body
-			};
+			return new Responses.GetcompetitionRankingScoreByPeriodListResponse(stream);
 		}
 	}
 
 	/**
 	 *
 	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
 	 * @returns {object} Parsed RMC body
 	 */
-	static UploadCompetitionRankingScore(rmcMessage) {
-		// ! This function has an unknown request/response format
+	static UploadCompetitionRankingScore(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				unknown: rmcMessage.body
-			};
+			return new Requests.UploadCompetitionRankingScoreRequest(stream);
 		} else {
-			return {
-				unknown: rmcMessage.body
-			};
+			return new Responses.UploadCompetitionRankingScoreResponse(stream);
 		}
 	}
 
 	/**
 	 *
 	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
 	 * @returns {object} Parsed RMC body
 	 */
-	static DeleteCompetitionRankingScore(rmcMessage) {
-		// ! This function has an unknown request/response format
+	static DeleteCompetitionRankingScore(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				unknown: rmcMessage.body
-			};
+			return new Requests.DeleteCompetitionRankingScoreRequest(stream);
 		} else {
-			return {
-				unknown: rmcMessage.body
-			};
+			return new Responses.DeleteCompetitionRankingScoreResponse(stream);
 		}
 	}
 }
-
 
 module.exports = RankingSplatoon;
