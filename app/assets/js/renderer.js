@@ -391,7 +391,7 @@ function serializeRMCBody(rmcData) {
 							const rmcValueElementSummary = document.createElement('summary');
 							const rmcValueElementDetails = document.createElement('details');
 
-							rmcValueElementSummary.appendChild(document.createTextNode(`-${key}[${i}] (${listType}):`));
+							rmcValueElementSummary.appendChild(document.createTextNode(`${key}[${i}] (${listType}):`));
 
 							rmcValueElementDetails.appendChild(serializeRMCBody(value));
 							rmcValueElementDetails.appendChild(rmcValueElementSummary);
