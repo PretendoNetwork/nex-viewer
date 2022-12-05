@@ -4,7 +4,8 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
-const MatchMakingTypes = require('./types/match_making');
+const Requests = require('./requests/match_making_ext');
+const Responses = require('./responses/match_making_ext');
 
 class MatchMakingExt {
 	static ProtocolID = 0x32;
@@ -65,14 +66,9 @@ class MatchMakingExt {
 	 */
 	static EndParticipation(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				idGathering: stream.readUInt32LE(),
-				strMessage: stream.readNEXString()
-			};
+			return new Requests.EndParticipationRequest(stream);
 		} else {
-			return {
-				retval: stream.readBoolean()
-			};
+			return new Responses.EndParticipationResponse(stream);
 		}
 	}
 
@@ -84,14 +80,9 @@ class MatchMakingExt {
 	 */
 	static GetParticipants(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				idGathering: stream.readUInt32LE(),
-				bOnlyActive: stream.readBoolean()
-			};
+			return new Requests.GetParticipantsRequest(stream);
 		} else {
-			return {
-				lstParticipants: stream.readNEXList(stream.readUInt32LE)
-			};
+			return new Responses.GetParticipantsResponse(stream);
 		}
 	}
 
@@ -103,14 +94,9 @@ class MatchMakingExt {
 	 */
 	static GetDetailedParticipants(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				idGathering: stream.readUInt32LE(),
-				bOnlyActive: stream.readBoolean()
-			};
+			return new Requests.GetDetailedParticipantsRequest(stream);
 		} else {
-			return {
-				lstParticipants: stream.readNEXList(MatchMakingTypes.ParticipantDetails)
-			};
+			return new Responses.GetDetailedParticipantsResponse(stream);
 		}
 	}
 
@@ -122,13 +108,9 @@ class MatchMakingExt {
 	 */
 	static GetParticipantsURLs(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstGatherings: stream.readNEXList(stream.readUInt32LE)
-			};
+			return new Requests.GetParticipantsURLsRequest(stream);
 		} else {
-			return {
-				lstGatheringURLs: stream.readNEXList(MatchMakingTypes.GatheringURLs)
-			};
+			return new Responses.GetParticipantsURLsResponse(stream);
 		}
 	}
 
@@ -140,14 +122,9 @@ class MatchMakingExt {
 	 */
 	static GetGatheringRelations(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				id: stream.readUInt32LE(),
-				descr: stream.readNEXString()
-			};
+			return new Requests.GetGatheringRelationsRequest(stream);
 		} else {
-			return {
-				retval: stream.readNEXString()
-			};
+			return new Responses.GetGatheringRelationsResponse(stream);
 		}
 	}
 
@@ -159,12 +136,9 @@ class MatchMakingExt {
 	 */
 	static DeleteFromDeletions(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			return {
-				lstDeletions: stream.readNEXList(stream.readUInt32LE),
-				pid: stream.readUInt32LE()
-			};
+			return new Requests.DeleteFromDeletionsRequest(stream);
 		} else {
-			return {}; // * No response
+			return new Responses.DeleteFromDeletionsResponse(stream);
 		}
 	}
 }
