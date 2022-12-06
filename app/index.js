@@ -16,7 +16,7 @@ const defaultSettings = {
 let settings = defaultSettings;
 
 if (!fs.existsSync(settingsRootPath)) {
-	fs.writeFileSync(JSON.stringify(defaultSettings));
+	fs.writeFileSync(settingsRootPath, JSON.stringify(defaultSettings));
 } else {
 	settings = require(settingsRootPath);
 }

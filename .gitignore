@@ -61,3 +61,4 @@ typings/
 nex-keys.txt
 *.pcapng
 t.js
+builds

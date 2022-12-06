@@ -1,23 +1,53 @@
 {
   "name": "nex-viewer",
   "version": "1.0.0",
-  "description": "Utility for parsing and (eventually) viewing NEX connections from WireShark network dumps",
+  "description": "Utility for parsing and viewing NEX connections from packet captures",
   "main": "src/parser.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint .",
-    "start": "electron ./app/"
+    "start": "electron ./app/",
+    "app:dir": "electron-builder --dir",
+    "app:dist": "electron-builder"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Jonathan Barrow",
+    "email": "jonbarrow1998@gmail.com",
+    "url": "https://jonbarrow.dev/"
+  },
   "license": "ISC",
   "dependencies": {
-    "electron": "^21.2.0",
     "pcap-ng-parser": "^1.0.0",
     "pcap-parser": "^0.2.1",
     "private-ip": "^2.3.4"
   },
   "devDependencies": {
+    "electron": "^21.2.0",
+    "electron-builder": "^23.6.0",
     "eslint": "^8.24.0",
     "eslint-plugin-jsdoc": "^39.3.6"
+  },
+  "build": {
+    "productName": "NEX Viewer",
+    "appId": "network.pretendo.nex-viewer",
+    "directories": {
+      "output": "builds"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Development"
+    },
+    "files": [
+      "!builds",
+      "!test",
+      "!.gitignore",
+      "!README.md",
+      "!access.txt",
+      "!nex.txt",
+      "!build_games_list.js"
+    ]
   }
 }
