@@ -222,7 +222,7 @@ class GetParticipantsResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.retval = stream.readNEXList(stream.readUInt32LE);
+		this.retval = stream.readNEXList(stream.readPID);
 	}
 
 	toJSON() {

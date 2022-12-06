@@ -51,7 +51,7 @@ class RankingRankData extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.principalId = stream.readUInt32LE();
+		this.principalId = stream.readPID();
 		this.uniqueId = stream.readUInt64LE();
 		this.order = stream.readUInt32LE();
 		this.category = stream.readUInt32LE();

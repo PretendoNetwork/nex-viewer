@@ -321,7 +321,7 @@ class GetMyBlockListResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.lstPrincipalId = stream.readNEXList(stream.readUInt32LE);
+		this.lstPrincipalId = stream.readNEXList(stream.readPID);
 	}
 
 	toJSON() {

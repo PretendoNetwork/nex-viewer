@@ -8,8 +8,8 @@ class Gathering extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.m_idMyself = stream.readUInt32LE();
-		this.m_pidOwner = stream.readUInt32LE();
-		this.m_pidHost = stream.readUInt32LE();
+		this.m_pidOwner = stream.readPID();
+		this.m_pidHost = stream.readPID();
 		this.m_uiMinParticipants = stream.readUInt16LE();
 		this.m_uiMaxParticipants = stream.readUInt16LE();
 		this.m_uiParticipationPolicy = stream.readUInt32LE();
@@ -430,7 +430,7 @@ class CreateMatchmakeSessionParam extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.sourceMatchmakeSession = stream.readNEXStructure(MatchmakeSession);
-		this.additionalParticipants = stream.readNEXList(stream.readUInt32LE);
+		this.additionalParticipants = stream.readNEXList(stream.readPID);
 		this.gidForParticipationCheck = stream.readUInt32LE();
 		this.createMatchmakeSessionOption = stream.readUInt32LE();
 		this.joinMessage = stream.readNEXString();
@@ -474,7 +474,7 @@ class JoinMatchmakeSessionParam extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.gid = stream.readUInt32LE();
-		this.additionalParticipants = stream.readNEXList(stream.readUInt32LE);
+		this.additionalParticipants = stream.readNEXList(stream.readPID);
 		this.gidForParticipationCheck = stream.readUInt32LE();
 		this.joinMatchmakeSessionOption = stream.readUInt32LE();
 		this.joinMatchmakeSessionBehavior = stream.readUInt8();
@@ -572,7 +572,7 @@ class UpdateMatchmakeSessionParam extends NEXTypes.Structure {
 				__typeValue: this.modificationFlag
 			},
 			attributes: {
-				__typeName: 'List<PID>',
+				__typeName: 'List<uint32>',
 				__typeValue: this.attributes
 			},
 			openParticipation: {
@@ -680,7 +680,7 @@ class AutoMatchmakeParam extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.sourceMatchmakeSession = stream.readNEXStructure(MatchmakeSession);
-		this.additionalParticipants = stream.readNEXList(stream.readUInt32LE);
+		this.additionalParticipants = stream.readNEXList(stream.readPID);
 		this.gidForParticipationCheck = stream.readUInt32LE();
 		this.autoMatchmakeOption = stream.readUInt32LE();
 		this.joinMessage = stream.readNEXString();
@@ -746,7 +746,7 @@ class FindMatchmakeSessionByParticipantParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.m_principalIdList = stream.readNEXList(stream.readUInt32LE);
+		this.m_principalIdList = stream.readNEXList(stream.readPID);
 		this.m_resultOptions = stream.readUInt32LE();
 		this.m_blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
 	}
@@ -775,7 +775,7 @@ class FindMatchmakeSessionByParticipantResult extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.m_principalId = stream.readUInt32LE();
+		this.m_principalId = stream.readPID();
 		this.m_session = stream.readNEXStructure(MatchmakeSession);
 	}
 
@@ -823,7 +823,7 @@ class GatheringStats extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.m_pidParticipant = stream.readUInt32LE();
+		this.m_pidParticipant = stream.readPID();
 		this.m_uiFlags = stream.readUInt32LE();
 		this.m_lstValues = stream.readNEXList(stream.readFloatLE);
 	}
@@ -881,7 +881,7 @@ class ParticipantDetails extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.m_idParticipant = stream.readUInt32LE();
+		this.m_idParticipant = stream.readPID();
 		this.m_strName = stream.readNEXString();
 		this.m_strMessage = stream.readNEXString();
 		this.m_uiParticipants = stream.readUInt16LE();
@@ -916,7 +916,7 @@ class DeletionEntry extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.m_idGathering = stream.readUInt32LE();
-		this.m_pid = stream.readUInt32LE();
+		this.m_pid = stream.readPID();
 		this.m_uiReason = stream.readUInt32LE();
 	}
 
@@ -944,7 +944,7 @@ class PlayingSession extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.m_PrincipalId = stream.readUInt32LE();
+		this.m_PrincipalId = stream.readPID();
 		this.m_Gathering = stream.readNEXAnyDataHolder();
 	}
 
@@ -968,7 +968,7 @@ class SimplePlayingSession extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.m_PrincipalID = stream.readUInt32LE();
+		this.m_PrincipalID = stream.readPID();
 		this.m_GatheringID = stream.readUInt32LE();
 		this.m_GameMode = stream.readUInt32LE();
 		this.m_Attribute_0 = stream.readUInt32LE();

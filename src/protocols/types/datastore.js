@@ -36,7 +36,7 @@ class DataStorePermission extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.permission = stream.readUInt8();
-		this.recipientIds = stream.readNEXList(stream.readUInt32LE);
+		this.recipientIds = stream.readNEXList(stream.readPID);
 	}
 
 	toJSON() {
@@ -161,7 +161,7 @@ class DataStorePersistenceTarget extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.ownerId = stream.readUInt32LE();
+		this.ownerId = stream.readPID();
 		this.persistenceSlotId = stream.readUInt16LE();
 	}
 
@@ -513,7 +513,7 @@ class DataStoreMetaInfo extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt64LE();
-		this.ownerId = stream.readUInt32LE();
+		this.ownerId = stream.readPID();
 		this.size = stream.readUInt32LE();
 		this.name = stream.readNEXString();
 		this.dataType = stream.readUInt16LE();
@@ -777,7 +777,7 @@ class DataStoreSearchParam extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.searchTarget = stream.readUInt8();
-		this.ownerIds = stream.readNEXList(stream.readInt32LE);
+		this.ownerIds = stream.readNEXList(stream.readPID);
 		this.ownerType = stream.readUInt8();
 		this.destinationIds = stream.readNEXList(stream.readInt64LE);
 		this.dataType = stream.readUInt16LE();
@@ -1074,7 +1074,7 @@ class DataStoreSpecificMetaInfoV1 extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.dataId = stream.readUInt32LE();
-		this.ownerId = stream.readUInt32LE();
+		this.ownerId = stream.readPID();
 		this.size = stream.readUInt32LE();
 		this.dataType = stream.readUInt16LE();
 		this.version = stream.readUInt16LE();
@@ -1142,7 +1142,7 @@ class DataStoreRatingLog extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.isRated = stream.readBoolean();
-		this.pid = stream.readUInt32LE();
+		this.pid = stream.readPID();
 		this.ratingValue = stream.readInt64LE();
 		this.lockExpirationTime = stream.readNEXDateTime();
 	}
@@ -1175,7 +1175,7 @@ class DataStorePersistenceInfo extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.ownerId = stream.readUInt32LE();
+		this.ownerId = stream.readPID();
 		this.persistenceSlotId = stream.readUInt16LE();
 		this.dataId = stream.readUInt64LE();
 	}
@@ -1204,7 +1204,7 @@ class DataStoreReqGetAdditionalMeta extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.ownerId = stream.readUInt32LE();
+		this.ownerId = stream.readPID();
 		this.dataType = stream.readUInt16LE();
 		this.version = stream.readUInt16LE();
 		this.metaBinary = stream.readNEXQBuffer();

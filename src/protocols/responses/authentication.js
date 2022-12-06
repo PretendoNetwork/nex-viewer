@@ -7,7 +7,7 @@ class LoginResponse {
 	 */
 	constructor(stream) {
 		this.retval = stream.readUInt32LE();
-		this.pidPrincipal = stream.readUInt32LE();
+		this.pidPrincipal = stream.readPID();
 		this.pbufResponse = stream.readNEXBuffer();
 		this.pConnectionData = stream.readNEXStructure(NEXTypes.RVConnectionData);
 		this.strReturnMsg = stream.readNEXString();
@@ -45,7 +45,7 @@ class LoginExResponse {
 	 */
 	constructor(stream) {
 		this.retval = stream.readUInt32LE();
-		this.pidPrincipal = stream.readUInt32LE();
+		this.pidPrincipal = stream.readPID();
 		this.pbufResponse = stream.readNEXBuffer();
 		this.pConnectionData = stream.readNEXStructure(NEXTypes.RVConnectionData);
 		this.strReturnMsg = stream.readNEXString();
@@ -105,7 +105,7 @@ class GetPIDResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.retval = stream.readUInt32LE();
+		this.retval = stream.readPID();
 	}
 
 	toJSON() {
@@ -142,7 +142,7 @@ class LoginWithContextResponse {
 	 */
 	constructor(stream) {
 		this.retval = stream.readUInt32LE();
-		this.pidPrincipal = stream.readUInt32LE();
+		this.pidPrincipal = stream.readPID();
 		this.pbufResponse = stream.readNEXBuffer();
 		this.pConnectionData = stream.readNEXStructure(NEXTypes.RVConnectionData);
 	}

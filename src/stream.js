@@ -219,6 +219,15 @@ class Stream {
 	}
 
 	/**
+	 *
+	 * @returns {number} User PID
+	 */
+	readPID() {
+		// TODO - Check if this is a Switch connection, and if so read uint64
+		return this.readUInt32LE();
+	}
+
+	/**
 	 * @returns {string} NEX string
 	 */
 	readNEXString() {

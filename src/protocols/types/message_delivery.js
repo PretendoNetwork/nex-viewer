@@ -8,7 +8,7 @@ class MessageRecipient extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.m_uiRecipientType = stream.readUInt32LE();
-		this.m_principalId = stream.readUInt32LE();
+		this.m_principalId = stream.readPID();
 		this.m_gatheringId = stream.readUInt32LE();
 	}
 
@@ -44,7 +44,7 @@ class UserMessage extends NEXTypes.Structure {
 	parse(stream) {
 		this.m_uiID = stream.readUInt32LE();
 		this.m_uiParentID = stream.readUInt32LE();
-		this.m_pidSender = stream.readUInt32LE();
+		this.m_pidSender = stream.readPID();
 		this.m_receptiontime = stream.readNEXDateTime();
 		this.m_uiLifeTime = stream.readUInt32LE();
 		this.m_uiFlags = stream.readUInt32LE();

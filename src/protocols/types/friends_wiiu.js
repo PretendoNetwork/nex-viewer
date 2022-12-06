@@ -53,7 +53,7 @@ class PrincipalBasicInfo extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.pid = stream.readUInt32LE();
+		this.pid = stream.readPID();
 		this.nnid = stream.readNEXString();
 		this.mii = stream.readNEXStructure(MiiV2);
 		this.unknown2 = stream.readUInt8();
@@ -155,7 +155,7 @@ class NintendoPresenceV2 extends NEXTypes.Structure {
 		this.unknown3 = stream.readUInt8();
 		this.gameServerId = stream.readUInt32LE();
 		this.unknown4 = stream.readUInt32LE();
-		this.pid = stream.readUInt32LE();
+		this.pid = stream.readPID();
 		this.gatheringId = stream.readUInt32LE();
 		this.applicationData = stream.readNEXBuffer();
 		this.unknown5 = stream.readUInt8();

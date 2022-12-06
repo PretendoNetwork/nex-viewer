@@ -362,7 +362,7 @@ class GetPlayingSessionRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.lstPid = stream.readNEXList(stream.readUInt32LE);
+		this.lstPid = stream.readNEXList(stream.readPID);
 	}
 
 	toJSON() {
@@ -490,7 +490,7 @@ class FindCommunityByParticipantRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.pid = stream.readUInt32LE();
+		this.pid = stream.readPID();
 		this.resultRange = stream.readNEXStructure(NEXTypes.ResultRange);
 	}
 
@@ -543,7 +543,7 @@ class AddToBlockListRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.lstPrincipalId = stream.readNEXList(stream.readUInt32LE);
+		this.lstPrincipalId = stream.readNEXList(stream.readPID);
 	}
 
 	toJSON() {
@@ -561,7 +561,7 @@ class RemoveFromBlockListRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.lstPrincipalId = stream.readNEXList(stream.readUInt32LE);
+		this.lstPrincipalId = stream.readNEXList(stream.readPID);
 	}
 
 	toJSON() {
@@ -586,7 +586,7 @@ class ReportViolationRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.pid = stream.readUInt32LE();
+		this.pid = stream.readPID();
 		this.userName = stream.readNEXString();
 		this.violationCode = stream.readUInt32LE();
 	}
@@ -654,7 +654,7 @@ class GetSimplePlayingSessionRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.lstPrincipalId = stream.readNEXList(stream.readUInt32LE);
+		this.lstPrincipalId = stream.readNEXList(stream.readPID);
 		this.includeLoginUser = stream.readBoolean();
 	}
 
@@ -746,7 +746,7 @@ class DebugNotifyEventRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.pid = stream.readUInt32LE();
+		this.pid = stream.readPID();
 		this.mainType = stream.readUInt32LE();
 		this.subType = stream.readUInt32LE();
 		this.param1 = stream.readUInt64LE();
@@ -1040,7 +1040,7 @@ class FindMatchmakeSessionByOwnerRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.id = stream.readUInt32LE();
+		this.id = stream.readPID();
 		this.resultRange = stream.readNEXStructure(NEXTypes.ResultRange);
 	}
 

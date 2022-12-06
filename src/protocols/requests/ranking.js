@@ -185,7 +185,7 @@ class GetRankingRequest {
 		this.category = stream.readUInt32LE();
 		this.orderParam = stream.readNEXStructure(RankingTypes.RankingOrderParam);
 		this.uniqueId = stream.readUInt64LE();
-		this.principalId = stream.readUInt32LE();
+		this.principalId = stream.readPID();
 	}
 
 	toJSON() {
@@ -223,7 +223,7 @@ class GetApproxOrderRequest {
 		this.orderParam = stream.readNEXStructure(RankingTypes.RankingOrderParam);
 		this.score = stream.readUInt32LE();
 		this.uniqueId = stream.readUInt64LE();
-		this.principalId = stream.readUInt32LE();
+		this.principalId = stream.readPID();
 	}
 
 	toJSON() {
@@ -285,7 +285,7 @@ class GetRankingByPIDListRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.principalIdList = stream.readNEXList(stream.readUInt32LE);
+		this.principalIdList = stream.readNEXList(stream.readPID);
 		this.rankingMode = stream.readUInt8();
 		this.category = stream.readUInt32LE();
 		this.orderParam = stream.readNEXStructure(RankingTypes.RankingOrderParam);

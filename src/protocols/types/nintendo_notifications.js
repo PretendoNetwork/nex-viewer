@@ -14,7 +14,7 @@ class NintendoNotificationEvent extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.m_uiType = stream.readUInt32LE();
-		this.m_pidSender = stream.readUInt32LE();
+		this.m_pidSender = stream.readPID();
 		this.m_dataholder = stream.readNEXAnyDataHolder();
 	}
 

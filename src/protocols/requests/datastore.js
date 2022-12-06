@@ -565,7 +565,7 @@ class GetPersistenceInfoRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.ownerId = stream.readUInt32LE();
+		this.ownerId = stream.readPID();
 		this.persistenceSlotId = stream.readUInt16LE();
 	}
 
@@ -588,7 +588,7 @@ class GetPersistenceInfosRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.ownerId = stream.readUInt32LE();
+		this.ownerId = stream.readPID();
 		this.persistenceSlotIds = stream.readNEXList(stream.readUInt16LE);
 	}
 
@@ -1030,5 +1030,5 @@ module.exports = {
 	RateObjectWithPostingRequest,
 	RateObjectsWithPostingRequest,
 	GetObjectInfosRequest,
-	SearchObjectLightRequest,
+	SearchObjectLightRequest
 };

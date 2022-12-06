@@ -116,7 +116,7 @@ class DeleteFromDeletionsRequest {
 	 */
 	constructor(stream) {
 		this.lstDeletions = stream.readNEXList(stream.readUInt32LE);
-		this.pid = stream.readUInt32LE();
+		this.pid = stream.readPID();
 	}
 
 	toJSON() {

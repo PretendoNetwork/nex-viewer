@@ -25,7 +25,7 @@ class GetParticipantsResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.lstParticipants = stream.readNEXList(stream.readUInt32LE);
+		this.lstParticipants = stream.readNEXList(stream.readPID);
 	}
 
 	toJSON() {

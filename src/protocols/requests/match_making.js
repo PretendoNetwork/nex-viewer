@@ -80,7 +80,7 @@ class InviteRequest {
 	 */
 	constructor(stream) {
 		this.idGathering = stream.readUInt32LE();
-		this.lstPrincipals = stream.readNEXList(stream.readUInt32LE);
+		this.lstPrincipals = stream.readNEXList(stream.readPID);
 		this.strMessage = stream.readNEXString();
 	}
 
@@ -154,7 +154,7 @@ class CancelInvitationRequest {
 	 */
 	constructor(stream) {
 		this.idGathering = stream.readUInt32LE();
-		this.lstPrincipals = stream.readNEXList(stream.readUInt32LE);
+		this.lstPrincipals = stream.readNEXList(stream.readPID);
 		this.strMessage = stream.readNEXString();
 	}
 
@@ -271,7 +271,7 @@ class AddParticipantsRequest {
 	 */
 	constructor(stream) {
 		this.idGathering = stream.readUInt32LE();
-		this.lstPrincipals = stream.readNEXList(stream.readUInt32LE);
+		this.lstPrincipals = stream.readNEXList(stream.readPID);
 		this.strMessage = stream.readNEXString();
 	}
 
@@ -439,7 +439,7 @@ class FindByOwnerRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.id = stream.readUInt32LE();
+		this.id = stream.readPID();
 		this.resultRange = stream.readNEXStructure(NEXTypes.ResultRange);
 	}
 
@@ -462,7 +462,7 @@ class FindByParticipantsRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.pid = stream.readNEXList(stream.readUInt32LE);
+		this.pid = stream.readNEXList(stream.readPID);
 	}
 
 	toJSON() {
@@ -650,7 +650,7 @@ class GetStatsRequest {
 	 */
 	constructor(stream) {
 		this.idGathering = stream.readUInt32LE();
-		this.lstParticipants = stream.readNEXList(stream.readUInt32LE);
+		this.lstParticipants = stream.readNEXList(stream.readPID);
 		this.lstColumns = stream.readNEXList(stream.readUInt8);
 	}
 
@@ -737,7 +737,7 @@ class MigrateGatheringOwnershipV1Request {
 	 */
 	constructor(stream) {
 		this.gid = stream.readUInt32LE();
-		this.lstPotentialNewOwnersID = stream.readNEXStructure(stream.readUInt32LE);
+		this.lstPotentialNewOwnersID = stream.readNEXStructure(stream.readPID);
 	}
 
 	toJSON() {
@@ -911,7 +911,7 @@ class MigrateGatheringOwnershipRequest {
 	 */
 	constructor(stream) {
 		this.gid = stream.readUInt32LE();
-		this.lstPotentialNewOwnersID = stream.readNEXList(stream.readUInt32LE);
+		this.lstPotentialNewOwnersID = stream.readNEXList(stream.readPID);
 		this.participantsOnly = stream.readBoolean();
 	}
 

@@ -46,8 +46,8 @@ class RequestTicketRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.idSource = stream.readUInt32LE();
-		this.idTarget = stream.readUInt32LE();
+		this.idSource = stream.readPID();
+		this.idTarget = stream.readPID();
 	}
 
 	toJSON() {
@@ -87,7 +87,7 @@ class GetNameRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.id = stream.readUInt32LE();
+		this.id = stream.readPID();
 	}
 
 	toJSON() {
