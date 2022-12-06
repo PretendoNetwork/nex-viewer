@@ -11,7 +11,7 @@ const mainElement = document.querySelector('main');
 const packetsSection = document.getElementById('packets');
 const packetDetailsSection = document.getElementById('packet-details');
 const packetHexSection = document.getElementById('packet-hex');
-const packetsTableBodySection = packetsSection.querySelector('tbody');
+export const packetsTableBodySection = packetsSection.querySelector('tbody');
 
 const LIST_TYPE_REGEX = /List<(.*)>/;
 const MAP_TYPE_REGEX = /Map<(.*)>/;

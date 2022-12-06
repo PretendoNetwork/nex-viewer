@@ -1,7 +1,79 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const fs = require('node:fs');
+const path = require('node:path');
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const NEXParser = require(__dirname + '/../');
 
 BigInt.prototype.toJSON = function () { return this.toString(); };
+
+app.setName('NEX Viewer');
+const appUserDataPath = app.getPath('userData');
+const settingsRootPath = path.join(appUserDataPath, 'settings.json');
+
+const defaultSettings = {
+	recent_files: []
+};
+
+let settings = defaultSettings;
+
+if (!fs.existsSync(settingsRootPath)) {
+	fs.writeFileSync(JSON.stringify(defaultSettings));
+} else {
+	settings = require(settingsRootPath);
+}
+
+for (const recentFile of settings.recent_files) {
+	// TODO - Actually store these
+	app.addRecentDocument(recentFile);
+}
+
+const menuTemplate = [
+	{
+		label: 'File',
+		id: 'file',
+		submenu: [
+			{
+				label: 'Open File',
+				async click(menuItem, browserWindow) {
+					const result = await dialog.showOpenDialog({
+						properties: ['openFile'],
+						filters: [
+							{ name: 'Packet Capture', extensions: ['pcapng', 'pcap'] }
+						]
+					});
+
+					if (result.canceled) {
+						return;
+					}
+
+					browserWindow.webContents.send('clear-packet-list');
+
+					const filePath = result.filePaths[0];
+
+					const parser = new NEXParser();
+
+					parser.on('packet', packet => {
+						const serialized = JSON.stringify(packet);
+						browserWindow.webContents.send('packet', serialized);
+					});
+
+					parser.parse(filePath);
+				}
+			},
+			{
+				label: 'Open Recent',
+				role: 'recentdocuments',
+				submenu: [
+					{
+						label: 'Clear Recent',
+						role: 'clearrecentdocuments'
+					}
+				]
+			}
+		]
+	}
+];
+
+const menu = Menu.buildFromTemplate(menuTemplate);
 
 function createWindow() {
 	const window = new BrowserWindow({
@@ -16,14 +88,7 @@ function createWindow() {
 	window.webContents.openDevTools();
 
 	ipcMain.on('renderer-ready', () => {
-		const parser = new NEXParser();
-
-		parser.on('packet', packet => {
-			const serialized = JSON.stringify(packet);
-			window.webContents.send('packet', serialized);
-		});
-
-		parser.parse(__dirname + '/../test/smm1/smm.pcapng');
+		Menu.setApplicationMenu(menu);
 	});
 
 	window.maximize();
@@ -31,6 +96,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+	Menu.setApplicationMenu(Menu.buildFromTemplate([])); // * Clear menu before frontend loads
 	createWindow();
 
 	app.on('activate', () => {
