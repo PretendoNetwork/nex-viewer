@@ -286,6 +286,7 @@ class MatchmakeSession extends NEXTypes.Structure {
 		return data;
 	}
 }
+NEXTypes.AnyDataHolder.addType('MatchmakeSession', MatchmakeSession);
 
 class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 	/**
