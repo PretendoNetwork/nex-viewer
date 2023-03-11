@@ -484,7 +484,11 @@ class JoinMatchmakeSessionParam extends NEXTypes.Structure {
 		this.joinMessage = stream.readNEXString();
 		this.participationCount = stream.readUInt16LE();
 		this.extraParticipants = stream.readUInt16LE();
-		this.blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
+
+		// TODO - Make this better. Dirty hack to skip this check on Minecraft: Wii U Edition
+		if (stream.connection.title.access_key !== 'f1b61c8e') {
+			this.blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
+		}
 	}
 
 	toJSON() {
