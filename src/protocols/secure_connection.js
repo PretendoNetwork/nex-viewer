@@ -72,7 +72,7 @@ class SecureConnection {
 		if (rmcMessage.isRequest()) {
 			return new Requests.RegisterRequest(stream);
 		} else {
-			return new Responses.SendReportResponse(stream);
+			return new Responses.RegisterResponse(stream);
 		}
 	}
 
@@ -86,7 +86,7 @@ class SecureConnection {
 		if (rmcMessage.isRequest()) {
 			return new Requests.RequestConnectionDataRequest(stream);
 		} else {
-			return new Responses.SendReportResponse(stream);
+			return new Responses.RequestConnectionDataResponse(stream);
 		}
 	}
 
@@ -100,7 +100,7 @@ class SecureConnection {
 		if (rmcMessage.isRequest()) {
 			return new Requests.RequestUrlsRequest(stream);
 		} else {
-			return new Responses.SendReportResponse(stream);
+			return new Responses.RequestUrlsResponse(stream);
 		}
 	}
 
@@ -114,7 +114,7 @@ class SecureConnection {
 		if (rmcMessage.isRequest()) {
 			return new Requests.RegisterExRequest(stream);
 		} else {
-			return new Responses.SendReportResponse(stream);
+			return new Responses.RegisterExResponse(stream);
 		}
 	}
 
@@ -127,7 +127,7 @@ class SecureConnection {
 		if (rmcMessage.isRequest()) {
 			return new Requests.TestConnectivityRequest();
 		} else {
-			return new Responses.SendReportResponse();
+			return new Responses.TestConnectivityResponse();
 		}
 	}
 
@@ -155,7 +155,7 @@ class SecureConnection {
 		if (rmcMessage.isRequest()) {
 			return new Requests.ReplaceURLRequest(stream);
 		} else {
-			return new Responses.SendReportResponse(stream);
+			return new Responses.ReplaceURLResponse(stream);
 		}
 	}
 
