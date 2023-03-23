@@ -484,5 +484,14 @@
             "patch": 1
         },
         "access_key": "2ff15f7e"
+    },
+    {
+        "name": "Mario vs. Donkey Kong: Tipping Stars",
+        "nex_version": {
+            "major": 3,
+            "minor": 5,
+            "patch": 0
+        },
+        "access_key": "d8927c3f"
     }
 ]
