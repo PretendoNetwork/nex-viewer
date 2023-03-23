@@ -472,6 +472,100 @@ class DataStoreChangeMetaParamV1 extends NEXTypes.Structure {
 	}
 }
 
+class DataStoreChangeMetaParam extends NEXTypes.Structure {
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.dataId = stream.readUInt64LE();
+		this.modifiesFlag = stream.readUInt32LE();
+		this.name = stream.readNEXString();
+		this.permission = stream.readNEXStructure(DataStorePermission);
+		this.delPermission = stream.readNEXStructure(DataStorePermission);
+		this.period = stream.readUInt16LE();
+		this.metaBinary = stream.readNEXQBuffer();
+		this.tags = stream.readNEXList(stream.readNEXString);
+		this.updatePassword = stream.readUInt64LE();
+		this.referredCnt = stream.readUInt32LE();
+		this.dataType = stream.readUInt16LE();
+		this.status = stream.readUInt8();
+		this.compareParam = stream.readNEXStructure(DataStoreChangeMetaCompareParam);
+
+		if (stream.connection.title.nex_version.major >= 4) {
+			// TODO - Verify this, seems to be true?
+			this.persistenceTarget = stream.readNEXStructure(DataStorePersistenceTarget);
+		}
+	}
+
+	toJSON() {
+		const data = {
+			dataId: {
+				__typeName: 'uint64',
+				__typeValue: this.dataId
+			},
+			modifiesFlag: {
+				__typeName: 'uint32',
+				__typeValue: this.modifiesFlag
+			},
+			name: {
+				__typeName: 'String',
+				__typeValue: this.name
+			},
+			permission: {
+				__typeName: 'DataStorePermission',
+				__typeValue: this.permission
+			},
+			delPermission: {
+				__typeName: 'DataStorePermission',
+				__typeValue: this.delPermission
+			},
+			period: {
+				__typeName: 'uint16',
+				__typeValue: this.period
+			},
+			metaBinary: {
+				__typeName: 'qBuffer',
+				__typeValue: this.metaBinary
+			},
+			tags: {
+				__typeName: 'List<String>',
+				__typeValue: this.tags
+			},
+			updatePassword: {
+				__typeName: 'uint64',
+				__typeValue: this.updatePassword
+			},
+			referredCnt: {
+				__typeName: 'uint32',
+				__typeValue: this.referredCnt
+			},
+			dataType: {
+				__typeName: 'uint16',
+				__typeValue: this.dataType
+			},
+			status: {
+				__typeName: 'uint8',
+				__typeValue: this.status
+			},
+			compareParam: {
+				__typeName: 'DataStoreChangeMetaCompareParam',
+				__typeValue: this.compareParam
+			}
+		};
+
+		if (this.persistenceTarget !== undefined) {
+			// * If NEX 4.x.x (?)
+			data.persistenceTarget = {
+				__typeName: 'DataStorePersistenceTarget',
+				__typeValue: this.persistenceTarget
+			};
+		}
+
+		return data;
+	}
+}
+
 class DataStoreGetMetaParam extends NEXTypes.Structure {
 	/**
 	 *
@@ -1466,6 +1560,70 @@ class DataStoreCompletePostParam extends NEXTypes.Structure {
 	}
 }
 
+class DataStoreChangeMetaCompareParam extends NEXTypes.Structure {
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.comparisonFlag = stream.readUInt32LE();
+		this.name = stream.readNEXString();
+		this.permission = stream.readNEXStructure(DataStorePermission);
+		this.delPermission = stream.readNEXStructure(DataStorePermission);
+		this.period = stream.readUInt16LE();
+		this.metaBinary = stream.readNEXQBuffer();
+		this.tags = stream.readNEXList(stream.readNEXString);
+		this.referredCnt = stream.readUInt32LE();
+		this.dataType = stream.readUInt16LE();
+		this.status = stream.readUInt8();
+	}
+
+	toJSON() {
+		return {
+			comparisonFlag: {
+				__typeName: 'uint32',
+				__typeValue: this.comparisonFlag
+			},
+			name: {
+				__typeName: 'String',
+				__typeValue: this.name
+			},
+			permission: {
+				__typeName: 'DataStorePermission',
+				__typeValue: this.permission
+			},
+			delPermission: {
+				__typeName: 'DataStorePermission',
+				__typeValue: this.delPermission
+			},
+			period: {
+				__typeName: 'uint16',
+				__typeValue: this.period
+			},
+			metaBinary: {
+				__typeName: 'qBuffer',
+				__typeValue: this.metaBinary
+			},
+			tags: {
+				__typeName: 'List<String>',
+				__typeValue: this.tags
+			},
+			referredCnt: {
+				__typeName: 'uint32',
+				__typeValue: this.referredCnt
+			},
+			dataType: {
+				__typeName: 'uint16',
+				__typeValue: this.dataType
+			},
+			status: {
+				__typeName: 'uint8',
+				__typeValue: this.status
+			}
+		};
+	}
+}
+
 module.exports = {
 	DataStoreKeyValue,
 	DataStorePermission,
@@ -1480,6 +1638,7 @@ module.exports = {
 	DataStoreCompletePostParamV1,
 	DataStoreDeleteParam,
 	DataStoreChangeMetaParamV1,
+	DataStoreChangeMetaParam,
 	DataStoreGetMetaParam,
 	DataStoreMetaInfo,
 	DataStoreRatingInfoWithSlot,
@@ -1506,5 +1665,6 @@ module.exports = {
 	DataStorePreparePostParam,
 	DataStorePersistenceInitParam,
 	DataStoreReqPostInfo,
-	DataStoreCompletePostParam
+	DataStoreCompletePostParam,
+	DataStoreChangeMetaCompareParam
 };
