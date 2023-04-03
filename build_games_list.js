@@ -23,6 +23,9 @@ const titles = [
 
 // Fill in title NEX details
 for (const line of nexLines) {
+	// Discard empty lines
+	if (!line) continue;
+
 	const [name, nexVersion] = line.split('|');
 	const [major, minor, patch] = nexVersion.trim().split('.');
 
@@ -39,6 +42,9 @@ for (const line of nexLines) {
 
 // Match the titles access key
 for (const line of accessLines) {
+	// Discard empty lines
+	if (!line) continue;
+
 	const [name, accessKey] = line.split('|');
 
 	const game = titles.find(game => game.name === name.trim());

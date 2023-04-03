@@ -39,3 +39,9 @@ Wii Sports Club | 4d324052
 XenobladeX | 59d7be84
 Zen Pinball 2 | 2ff15f7e
 役満 鳳凰 | 23aab2d3
+Mario vs. DK: Tipping Stars | d8927c3f
+Mario Kart 7 | 6181dff1
+Badge Arcade | 82d5962d
+Pokémon Bank | 9a2961d8
+IronFall Invasion | feb81c7c
+Steel Diver: Sub Wars | fb9537fe
