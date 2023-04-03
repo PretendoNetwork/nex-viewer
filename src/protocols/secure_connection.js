@@ -4,6 +4,8 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
+const SecureConnectionBadgeArcade = require('./patches/secure_connection_badge_arcade');
+
 const Requests = require('./requests/secure_connection');
 const Responses = require('./responses/secure_connection');
 
@@ -46,6 +48,12 @@ class SecureConnection {
 	 */
 	static handlePacket(packet) {
 		const methodId = packet.rmcMessage.methodId;
+
+		// Check if method is a Badge Arcade patched method
+		if (packet.connection.accessKey === '82d5962d' && methodId >= 0x9) {
+			SecureConnectionBadgeArcade.handlePacket(packet);
+			return;
+		}
 
 		const handler = SecureConnection.Handlers[methodId];
 
