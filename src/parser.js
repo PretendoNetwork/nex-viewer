@@ -13,8 +13,8 @@ const Stream = require('./stream');
 // ! PRUDPv0 does not have magics
 // ! Nintendo uses standardized source/destinations with NEX
 // ! Checking the source/destination can tell us if it's v0
-const MAGIC_V0_SERVERBOUND = Buffer.from([0xAF, 0xA1]);
-const MAGIC_V0_CLIENTBOUND = Buffer.from([0xA1, 0xAF]);
+const MAGIC_SERVERBOUND = Buffer.from([0xAF, 0xA1]);
+const MAGIC_CLIENTBOUND = Buffer.from([0xA1, 0xAF]);
 const MAGIC_V1 = Buffer.from([0xEA, 0xD0]);
 
 // * Magics to check for when parsing UDP packets
@@ -101,8 +101,16 @@ class NEXParser extends EventEmitter {
 		const magic = stream.readBytes(0x2);
 
 		if (magic.equals(MAGIC_V1)) {
-			packet = new PacketV1(connection, udpPacket.payload);
-		} else if (magic.equals(MAGIC_V0_SERVERBOUND) || magic.equals(MAGIC_V0_CLIENTBOUND)) {
+			// * Skip Quazal Net-Z packets
+			stream.skip(0x4);
+			const source_destination = stream.readBytes(0x2);
+
+			if (source_destination.equals(MAGIC_SERVERBOUND) || source_destination.equals(MAGIC_CLIENTBOUND)) {
+				packet = new PacketV1(connection, udpPacket.payload);
+			} else {
+				return;
+			}
+		} else if (magic.equals(MAGIC_SERVERBOUND) || magic.equals(MAGIC_CLIENTBOUND)) {
 			packet = new PacketV0(connection, udpPacket.payload);
 		} else {
 			// Not a NEX packet

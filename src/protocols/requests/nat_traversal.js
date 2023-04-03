@@ -66,7 +66,10 @@ class ReportNATTraversalResultRequest {
 	constructor(stream) {
 		this.cid = stream.readUInt32LE();
 		this.result = stream.readBoolean();
-		this.rtt = stream.readUInt32LE(); // ! THIS IS NOT PRESENT ON 3DS, ONLY WIIU/SWITCH
+
+		if (stream.hasDataLeft()) {
+			this.rtt = stream.readUInt32LE(); // ! THIS IS NOT PRESENT ON 3DS, ONLY WIIU/SWITCH
+		}
 	}
 
 	toJSON() {
