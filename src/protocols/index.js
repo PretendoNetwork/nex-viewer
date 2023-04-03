@@ -10,6 +10,7 @@ module.exports = {
 	0x65: require('./friends_3ds'),
 	0x66: require('./friends_wiiu'),
 	0x6d: require('./matchmake_extension'),
+	0x6e: require('./utility'),
 	0x70: require('./ranking'),
 	0x73: require('./datastore')
 };
