@@ -417,7 +417,7 @@ class DataStoreDeleteParam extends NEXTypes.Structure {
 	toJSON() {
 		return {
 			dataId: {
-				__typeName: 'uint32',
+				__typeName: 'uint64',
 				__typeValue: this.dataId
 			},
 			updatePassword: {
@@ -1289,7 +1289,7 @@ class DataStoreRatingLog extends NEXTypes.Structure {
 	parse(stream) {
 		this.isRated = stream.readBoolean();
 		this.pid = stream.readPID();
-		this.ratingValue = stream.readInt64LE();
+		this.ratingValue = stream.readInt32LE();
 		this.lockExpirationTime = stream.readNEXDateTime();
 	}
 

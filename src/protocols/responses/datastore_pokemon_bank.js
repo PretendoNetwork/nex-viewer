@@ -190,10 +190,7 @@ class PrepareGetBankObjectResponse {
 	 */
 	constructor(stream) {
 		this.pTransactionParam = stream.readNEXStructure(DataStorePokemonBankTypes.BankTransactionParam);
-
-		// * Although the structure is labeled as DataStoreReqGetInfo,
-		// * it actually has the contents of DataStoreReqGetInfoV1
-		this.pReqGetInfo = stream.readNEXStructure(DataStoreTypes.DataStoreReqGetInfoV1);
+		this.pReqGetInfo = stream.readNEXStructure(DataStoreTypes.DataStoreReqGetInfo);
 	}
 
 	toJSON() {

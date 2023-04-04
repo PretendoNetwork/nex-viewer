@@ -93,7 +93,7 @@ class GetIntegerSettingsResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.integerSettings = stream.readNEXMap(stream.readUInt16LE, stream.readSInt32LE);
+		this.integerSettings = stream.readNEXMap(stream.readUInt16LE, stream.readInt32LE);
 	}
 
 	toJSON() {
