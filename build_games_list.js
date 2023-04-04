@@ -70,9 +70,9 @@ for (const line of nexMatchMakingLines) {
 				patch: 0
 			},
 			nex_match_making_version: {
-				major: 0,
-				minor: 0,
-				patch: 0
+				major: Number(major),
+				minor: Number(minor),
+				patch: Number(patch)
 			}
 		});
 	}
@@ -104,9 +104,9 @@ for (const line of nexDataStoreLines) {
 				patch: 0
 			},
 			nex_datastore_version: {
-				major: 0,
-				minor: 0,
-				patch: 0
+				major: Number(major),
+				minor: Number(minor),
+				patch: Number(patch)
 			}
 		});
 	}
