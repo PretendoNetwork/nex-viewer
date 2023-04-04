@@ -142,6 +142,13 @@ class MatchmakeSession extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_match_making_version) {
+			nexVersion = stream.connection.title.nex_match_making_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.m_GameMode = stream.readUInt32LE();
 		this.m_Attribs = stream.readNEXList(stream.readUInt32LE);
 		this.m_OpenParticipation = stream.readBoolean();
@@ -149,34 +156,34 @@ class MatchmakeSession extends NEXTypes.Structure {
 		this.m_ApplicationBuffer = stream.readNEXBuffer();
 		this.m_ParticipationCount = stream.readUInt32LE();
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 5) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
 			this.m_ProgressScore = stream.readUInt8();
 		}
 
-		if (stream.connection.title.nex_version.major >= 3) {
+		if (nexVersion.major >= 3) {
 			this.m_SessionKey = stream.readNEXBuffer();
 		}
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 5) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
 			this.m_Option0 = stream.readUInt32LE();
 		}
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 6) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 6) {
 			this.m_MatchmakeParam = stream.readNEXStructure(MatchmakeParam);
 			this.m_StartedTime = stream.readNEXDateTime();
 		}
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 7) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 7) {
 			this.m_UserPassword = stream.readNEXString();
 		}
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 8) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 8) {
 			this.m_ReferGid = stream.readUInt32LE();
 			this.m_UserPasswordEnabled = stream.readBoolean();
 			this.m_SystemPasswordEnabled = stream.readBoolean();
 		}
 
-		if (stream.connection.title.nex_version.major >= 4) {
+		if (nexVersion.major >= 4) {
 			this.m_Codeword = stream.readNEXString();
 		}
 	}
@@ -294,6 +301,13 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_match_making_version) {
+			nexVersion = stream.connection.title.nex_match_making_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.m_Attribs = stream.readNEXList(stream.readNEXString);
 		this.m_GameMode = stream.readNEXString();
 		this.m_MinParticipants = stream.readNEXString();
@@ -304,24 +318,24 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 		this.m_ExcludeNonHostPid = stream.readBoolean();
 		this.m_SelectionMethod = stream.readUInt32LE();
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 5) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
 			this.m_VacantParticipants = stream.readUInt16LE();
 		}
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 6) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 6) {
 			this.m_MatchmakeParam = stream.readNEXStructure(MatchmakeParam);
 		}
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 7) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 7) {
 			this.m_ExcludeUserPasswordSet = stream.readBoolean();
 			this.m_ExcludeSystemPasswordSet = stream.readBoolean();
 		}
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 8) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 8) {
 			this.m_ReferGid = stream.readUInt32LE();
 		}
 
-		if (stream.connection.title.nex_version.major >= 4) {
+		if (nexVersion.major >= 4) {
 			this.m_Codeword = stream.readNEXString();
 			this.m_ResultRange = stream.readNEXStructure(NEXTypes.ResultRange);
 		}
@@ -684,6 +698,13 @@ class AutoMatchmakeParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_match_making_version) {
+			nexVersion = stream.connection.title.nex_match_making_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.sourceMatchmakeSession = stream.readNEXStructure(MatchmakeSession);
 		this.additionalParticipants = stream.readNEXList(stream.readPID);
 		this.gidForParticipationCheck = stream.readUInt32LE();
@@ -693,7 +714,7 @@ class AutoMatchmakeParam extends NEXTypes.Structure {
 		this.lstSearchCriteria = stream.readNEXList(MatchmakeSessionSearchCriteria);
 		this.targetGids = stream.readNEXList(stream.readUInt32LE);
 
-		if (stream.connection.title.nex_version.major >= 4) {
+		if (nexVersion.major >= 4) {
 			this.blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
 		}
 	}

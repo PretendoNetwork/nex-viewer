@@ -1,542 +1,601 @@
 [
     {
         "name": "Friends",
+        "access_key": "ridfebb9",
         "nex_version": {
             "major": 0,
             "minor": 0,
             "patch": 0
-        },
-        "access_key": "ridfebb9"
+        }
     },
     {
         "name": "Axiom Verge",
+        "access_key": "24e0a63b",
         "nex_version": {
             "major": 3,
             "minor": 10,
             "patch": 0
-        },
-        "access_key": "24e0a63b"
+        }
     },
     {
         "name": "Disney Infinity [2.0]",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 5,
             "patch": 2
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "Disney INFINITY",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 5,
             "patch": 2
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "DISNEY INFINITY 3.0",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 9,
             "patch": 1
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "SONIC LOST WORLD",
+        "access_key": "69a9fc95",
         "nex_version": {
             "major": 3,
             "minor": 3,
             "patch": 0
-        },
-        "access_key": "69a9fc95"
+        }
     },
     {
         "name": "Trine 2",
+        "access_key": "f9c35adc",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "f9c35adc"
+        }
     },
     {
         "name": "LOST REAVERS",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 10,
             "patch": 0
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "Mario & Sonic Rio 2016",
+        "access_key": "63fecb0f",
         "nex_version": {
             "major": 3,
             "minor": 9,
             "patch": 1
-        },
-        "access_key": "63fecb0f"
+        }
     },
     {
         "name": "Devil's Third",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 6,
             "patch": 1
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "Xenoblade Chronicles X",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 5,
             "patch": 5
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "XenobladeX",
+        "access_key": "59d7be84",
         "nex_version": {
             "major": 3,
             "minor": 5,
             "patch": 5
-        },
-        "access_key": "59d7be84"
+        }
     },
     {
         "name": "Mighty No. 9",
+        "access_key": "bb980c2e",
         "nex_version": {
             "major": 3,
             "minor": 9,
             "patch": 1
-        },
-        "access_key": "bb980c2e"
+        }
     },
     {
         "name": "MARIO & SONIC SOCHI 2014",
+        "access_key": "585214a5",
         "nex_version": {
             "major": 3,
             "minor": 4,
             "patch": 0
-        },
-        "access_key": "585214a5"
+        }
     },
     {
         "name": "DKC: Tropical Freeze",
+        "access_key": "7fcf384a",
         "nex_version": {
             "major": 3,
             "minor": 4,
             "patch": 0
-        },
-        "access_key": "7fcf384a"
+        }
     },
     {
         "name": "Minecraft: Wii U Edition",
+        "access_key": "f1b61c8e",
         "nex_version": {
             "major": 3,
             "minor": 10,
             "patch": 0
-        },
-        "access_key": "f1b61c8e"
+        }
     },
     {
         "name": "DuckTales: Remastered",
+        "access_key": "1294a96c",
         "nex_version": {
             "major": 3,
             "minor": 3,
             "patch": 0
-        },
-        "access_key": "1294a96c"
+        }
     },
     {
         "name": "POKKÉN TOURNAMENT",
+        "access_key": "6ef3adf1",
         "nex_version": {
             "major": 3,
             "minor": 10,
             "patch": 0
-        },
-        "access_key": "6ef3adf1"
+        }
     },
     {
         "name": "FotNS: Ken's Rage 2",
+        "access_key": "9994e29c",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "9994e29c"
+        }
     },
     {
         "name": "Sonic Transformed",
+        "access_key": "b26a3421",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "b26a3421"
+        }
     },
     {
         "name": "RTK 12",
+        "access_key": "bfede098",
         "nex_version": {
             "major": 3,
             "minor": 4,
             "patch": 0
-        },
-        "access_key": "bfede098"
+        }
     },
     {
         "name": "Hyrule Warriors",
+        "access_key": "7fcc1f7c",
         "nex_version": {
             "major": 3,
             "minor": 8,
             "patch": 0
-        },
-        "access_key": "7fcc1f7c"
+        }
     },
     {
         "name": "PUYOPUYOTETRIS",
+        "access_key": "4eb0ca36",
         "nex_version": {
             "major": 3,
             "minor": 5,
             "patch": 2
-        },
-        "access_key": "4eb0ca36"
+        }
     },
     {
         "name": "Legend of Kay",
+        "access_key": "478232f3",
         "nex_version": {
             "major": 3,
             "minor": 8,
             "patch": 3
-        },
-        "access_key": "478232f3"
+        }
     },
     {
         "name": "SI2",
+        "access_key": "44adeb87",
         "nex_version": {
             "major": 3,
             "minor": 6,
             "patch": 1
-        },
-        "access_key": "44adeb87"
+        }
     },
     {
         "name": "Runner2",
+        "access_key": "1084452a",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "1084452a"
+        }
     },
     {
         "name": "Nova-111",
+        "access_key": "bafe9856",
         "nex_version": {
             "major": 3,
             "minor": 8,
             "patch": 3
-        },
-        "access_key": "bafe9856"
+        }
     },
     {
         "name": "OlliOlli",
+        "access_key": "60e5df12",
         "nex_version": {
             "major": 3,
             "minor": 6,
             "patch": 1
-        },
-        "access_key": "60e5df12"
+        }
     },
     {
         "name": "Mario Tennis: Ultra Smash",
+        "access_key": "c69b92a0",
         "nex_version": {
             "major": 3,
             "minor": 9,
             "patch": 1
-        },
-        "access_key": "c69b92a0"
+        }
     },
     {
         "name": "Super Smash Bros.",
+        "access_key": "2869ba38",
         "nex_version": {
             "major": 3,
             "minor": 6,
             "patch": 27
-        },
-        "access_key": "2869ba38"
+        }
     },
     {
         "name": "Wii Sports Club",
+        "access_key": "4d324052",
         "nex_version": {
             "major": 3,
             "minor": 4,
             "patch": 7
-        },
-        "access_key": "4d324052"
+        }
     },
     {
         "name": "MARIO KART 8",
+        "access_key": "25dbf96a",
         "nex_version": {
             "major": 3,
             "minor": 5,
             "patch": 4
-        },
-        "access_key": "25dbf96a"
+        }
     },
     {
         "name": "Super Mario Maker",
+        "access_key": "9f2b4678",
         "nex_version": {
             "major": 3,
             "minor": 8,
             "patch": 12
-        },
-        "access_key": "9f2b4678"
+        }
     },
     {
         "name": "Splatoon",
+        "access_key": "6f599f81",
         "nex_version": {
             "major": 3,
             "minor": 8,
             "patch": 3
-        },
-        "access_key": "6f599f81"
+        }
     },
     {
         "name": "MH3G HD Ver.",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 5
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "MH3U",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 5
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "Animal Crossing Plaza",
+        "access_key": "7b9b09cb",
         "nex_version": {
             "major": 3,
             "minor": 5,
             "patch": 1
-        },
-        "access_key": "7b9b09cb"
+        }
     },
     {
         "name": "Star Fox Guard (Demo)",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 8,
             "patch": 2
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "Star Fox Guard",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 8,
             "patch": 2
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "BIOHAZARD REVELATIONS UE",
+        "access_key": "59d539a9",
         "nex_version": {
             "major": 3,
             "minor": 2,
             "patch": 1
-        },
-        "access_key": "59d539a9"
+        }
     },
     {
         "name": "RESIDENT EVIL REVELATIONS",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 2,
             "patch": 1
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "役満 鳳凰",
+        "access_key": "23aab2d3",
         "nex_version": {
             "major": 3,
             "minor": 6,
             "patch": 14
-        },
-        "access_key": "23aab2d3"
+        }
     },
     {
         "name": "FAST Racing NEO",
+        "access_key": "811aa39f",
         "nex_version": {
             "major": 3,
             "minor": 9,
             "patch": 1
-        },
-        "access_key": "811aa39f"
+        }
     },
     {
         "name": "TEKKEN TAG 2 Wii U EDITION",
+        "access_key": "0f037f64",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "0f037f64"
+        }
     },
     {
         "name": "WARRIORS OROCHI 3 Hyper",
+        "access_key": "d74bb27d",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "d74bb27d"
+        }
     },
     {
         "name": "PIKMIN 3",
+        "access_key": "f6accfc1",
         "nex_version": {
             "major": 3,
             "minor": 3,
             "patch": 0
-        },
-        "access_key": "f6accfc1"
+        }
     },
     {
         "name": "NINJA GAIDEN 3: Razor's Edge",
+        "access_key": "f857b4bd",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "f857b4bd"
+        }
     },
     {
         "name": "Injustice: Gods Among Us",
+        "access_key": "65e9f4d6",
         "nex_version": {
             "major": 3,
             "minor": 2,
             "patch": 1
-        },
-        "access_key": "65e9f4d6"
+        }
     },
     {
         "name": "Nano Assault Neo",
+        "access_key": "7e484a8e",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "7e484a8e"
+        }
     },
     {
         "name": "Terraria",
+        "access_key": "3d37fbdb",
         "nex_version": {
             "major": 3,
             "minor": 8,
             "patch": 3
-        },
-        "access_key": "3d37fbdb"
+        }
     },
     {
         "name": "Puddle",
+        "access_key": "afcffb5c",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "afcffb5c"
+        }
     },
     {
         "name": "Game Party",
+        "access_key": "",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": ""
+        }
     },
     {
         "name": "Star Wars Pinball",
+        "access_key": "ecd0e530",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "ecd0e530"
+        }
     },
     {
         "name": "Zen Pinball 2",
+        "access_key": "2ff15f7e",
         "nex_version": {
             "major": 3,
             "minor": 0,
             "patch": 1
-        },
-        "access_key": "2ff15f7e"
+        }
     },
     {
         "name": "Mario vs. DK: Tipping Stars",
+        "access_key": "d8927c3f",
         "nex_version": {
             "major": 3,
             "minor": 7,
             "patch": 1
-        },
-        "access_key": "d8927c3f"
+        }
     },
     {
         "name": "Mario Kart 7",
+        "access_key": "6181dff1",
         "nex_version": {
-            "major": 0,
+            "major": 3,
+            "minor": 4,
+            "patch": 17
+        },
+        "nex_match_making_version": {
+            "major": 2,
             "minor": 0,
             "patch": 0
-        },
-        "access_key": "6181dff1"
+        }
     },
     {
         "name": "Badge Arcade",
+        "access_key": "82d5962d",
         "nex_version": {
             "major": 3,
             "minor": 7,
             "patch": 16
-        },
-        "access_key": "82d5962d"
+        }
     },
     {
         "name": "Pokémon Bank",
+        "access_key": "9a2961d8",
         "nex_version": {
             "major": 3,
             "minor": 4,
             "patch": 13
-        },
-        "access_key": "9a2961d8"
+        }
     },
     {
         "name": "IronFall Invasion",
+        "access_key": "feb81c7c",
         "nex_version": {
             "major": 3,
             "minor": 7,
             "patch": 18
-        },
-        "access_key": "feb81c7c"
+        }
     },
     {
         "name": "Steel Diver: Sub Wars",
+        "access_key": "fb9537fe",
         "nex_version": {
             "major": 3,
             "minor": 7,
             "patch": 18
-        },
-        "access_key": "fb9537fe"
+        }
+    },
+    {
+        "name": "Metroid Prime: FF",
+        "access_key": "f79fb3c5",
+        "nex_version": {
+            "major": 3,
+            "minor": 9,
+            "patch": 17
+        }
+    },
+    {
+        "name": "Animal Crossing: New Leaf",
+        "access_key": "d6f08b40",
+        "nex_version": {
+            "major": 0,
+            "minor": 0,
+            "patch": 0
+        }
+    },
+    {
+        "name": "Kid Icarus Uprising",
+        "access_key": "58a7e494",
+        "nex_version": {
+            "major": 0,
+            "minor": 0,
+            "patch": 0
+        }
+    },
+    {
+        "name": "Luigi's Mansion 2",
+        "access_key": "3861a9f8",
+        "nex_version": {
+            "major": 0,
+            "minor": 0,
+            "patch": 0
+        }
+    },
+    {
+        "name": "Pokémon X/Y",
+        "access_key": "876138df",
+        "nex_version": {
+            "major": 0,
+            "minor": 0,
+            "patch": 0
+        }
+    },
+    {
+        "name": "TLoZ: Tri Force Heroes",
+        "access_key": "c1621b84",
+        "nex_version": {
+            "major": 0,
+            "minor": 0,
+            "patch": 0
+        }
     }
 ]

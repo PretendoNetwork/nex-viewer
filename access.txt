@@ -1,5 +1,7 @@
+Animal Crossing: New Leaf | d6f08b40
 Animal Crossing Plaza | 7b9b09cb
 Axiom Verge | 24e0a63b
+Badge Arcade | 82d5962d
 BIOHAZARD REVELATIONS UE | 59d539a9
 DKC: Tropical Freeze | 7fcf384a
 DuckTales: Remastered | 1294a96c
@@ -7,11 +9,17 @@ FAST Racing NEO | 811aa39f
 FotNS: Ken's Rage 2 | 9994e29c
 Hyrule Warriors | 7fcc1f7c
 Injustice: Gods Among Us | 65e9f4d6
+IronFall Invasion | feb81c7c
+Kid Icarus Uprising | 58a7e494
 Legend of Kay | 478232f3
+Luigi's Mansion 2 | 3861a9f8
 MARIO & SONIC SOCHI 2014 | 585214a5
 MARIO KART 8 | 25dbf96a
 Mario & Sonic Rio 2016 | 63fecb0f
+Mario Kart 7 | 6181dff1
 Mario Tennis: Ultra Smash | c69b92a0
+Mario vs. DK: Tipping Stars | d8927c3f
+Metroid Prime: FF | f79fb3c5
 Mighty No. 9 | bb980c2e
 Minecraft: Wii U Edition | f1b61c8e
 NINJA GAIDEN 3: Razor's Edge | f857b4bd
@@ -19,6 +27,8 @@ Nano Assault Neo | 7e484a8e
 Nova-111 | bafe9856
 OlliOlli | 60e5df12
 PIKMIN 3 | f6accfc1
+Pokémon Bank | 9a2961d8
+Pokémon X/Y | 876138df
 POKKÉN TOURNAMENT | 6ef3adf1
 PUYOPUYOTETRIS | 4eb0ca36
 Puddle | afcffb5c
@@ -29,19 +39,15 @@ SONIC LOST WORLD | 69a9fc95
 Sonic Transformed | b26a3421
 Splatoon | 6f599f81
 Star Wars Pinball | ecd0e530
+Steel Diver: Sub Wars | fb9537fe
 Super Mario Maker | 9f2b4678
 Super Smash Bros. | 2869ba38
 TEKKEN TAG 2 Wii U EDITION | 0f037f64
 Terraria | 3d37fbdb
+TLoZ: Tri Force Heroes | c1621b84
 Trine 2 | f9c35adc
 WARRIORS OROCHI 3 Hyper | d74bb27d
 Wii Sports Club | 4d324052
 XenobladeX | 59d7be84
 Zen Pinball 2 | 2ff15f7e
 役満 鳳凰 | 23aab2d3
-Mario vs. DK: Tipping Stars | d8927c3f
-Mario Kart 7 | 6181dff1
-Badge Arcade | 82d5962d
-Pokémon Bank | 9a2961d8
-IronFall Invasion | feb81c7c
-Steel Diver: Sub Wars | fb9537fe

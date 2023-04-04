@@ -478,6 +478,13 @@ class DataStoreChangeMetaParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_datastore_version) {
+			nexVersion = stream.connection.title.nex_datastore_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.dataId = stream.readUInt64LE();
 		this.modifiesFlag = stream.readUInt32LE();
 		this.name = stream.readNEXString();
@@ -492,7 +499,7 @@ class DataStoreChangeMetaParam extends NEXTypes.Structure {
 		this.status = stream.readUInt8();
 		this.compareParam = stream.readNEXStructure(DataStoreChangeMetaCompareParam);
 
-		if (stream.connection.title.nex_version.major >= 4) {
+		if (nexVersion.major >= 4) {
 			// TODO - Verify this, seems to be true?
 			this.persistenceTarget = stream.readNEXStructure(DataStorePersistenceTarget);
 		}
