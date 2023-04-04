@@ -73,7 +73,7 @@ class ReportNATTraversalResultRequest {
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			cid: {
 				__typeName: 'uint32',
 				__typeValue: this.cid
@@ -81,12 +81,17 @@ class ReportNATTraversalResultRequest {
 			result: {
 				__typeName: 'boolean',
 				__typeValue: this.result
-			},
-			rtt: {
-				__typeName: 'uint32',
-				__typeValue: this.rtt
 			}
 		};
+
+		if (this.rtt !== undefined) {
+			data.rtt = {
+				__typeName: 'uint32',
+				__typeValue: this.rtt
+			};
+		}
+
+		return data;
 	}
 }
 
