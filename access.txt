@@ -42,6 +42,7 @@ Star Wars Pinball | ecd0e530
 Steel Diver: Sub Wars | fb9537fe
 Super Mario Maker | 9f2b4678
 Super Smash Bros. | 2869ba38
+Team Kirby Clash Deluxe | e0c85605
 TEKKEN TAG 2 Wii U EDITION | 0f037f64
 Terraria | 3d37fbdb
 TLoZ: Tri Force Heroes | c1621b84

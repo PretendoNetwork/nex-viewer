@@ -554,6 +554,15 @@
         }
     },
     {
+        "name": "Team Kirby Clash Deluxe",
+        "access_key": "e0c85605",
+        "nex_version": {
+            "major": 3,
+            "minor": 10,
+            "patch": 26
+        }
+    },
+    {
         "name": "Animal Crossing: New Leaf",
         "access_key": "d6f08b40",
         "nex_version": {
