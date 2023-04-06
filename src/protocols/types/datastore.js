@@ -514,8 +514,7 @@ class DataStoreChangeMetaParam extends NEXTypes.Structure {
 		this.status = stream.readUInt8();
 		this.compareParam = stream.readNEXStructure(DataStoreChangeMetaCompareParam);
 
-		if (nexVersion.major >= 4) {
-			// TODO - Verify this, seems to be true?
+		if (this._structureHeader.version >= 1) {
 			this.persistenceTarget = stream.readNEXStructure(DataStorePersistenceTarget);
 		}
 	}

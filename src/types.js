@@ -132,8 +132,8 @@ class RVConnectionData extends Structure {
 		this.specialProtocols = stream.readNEXList(stream.readUInt8);
 		this.stationUrlSpecial = stream.readNEXStationURL();
 
-		if (stream.connection.prudpVersion === 1) {
-			this.currentUTCTime = stream.readUInt64LE(); // If prudpv1
+		if (this._structureHeader.version >= 1) {
+			this.currentUTCTime = stream.readUInt64LE();
 		}
 	}
 
@@ -157,7 +157,7 @@ class RVConnectionData extends Structure {
 			data.m_currentUTCTime = {
 				__typeName: 'DateTime',
 				__typeValue: this.currentUTCTime
-			}; // If prudpv1
+			};
 		}
 
 		return data;
