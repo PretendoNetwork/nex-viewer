@@ -563,6 +563,15 @@
         }
     },
     {
+        "name": "Yo-kai Watch 2",
+        "access_key": "7ab183bb",
+        "nex_version": {
+            "major": 3,
+            "minor": 6,
+            "patch": 18
+        }
+    },
+    {
         "name": "Animal Crossing: New Leaf",
         "access_key": "d6f08b40",
         "nex_version": {

@@ -59,3 +59,4 @@ IronFall Invasion            | 3.7.18
 Steel Diver: Sub Wars        | 3.7.18
 Metroid Prime: FF            | 3.9.17
 Team Kirby Clash Deluxe      | 3.10.26
+Yo-kai Watch 2               | 3.6.18

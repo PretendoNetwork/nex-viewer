@@ -50,5 +50,6 @@ Trine 2 | f9c35adc
 WARRIORS OROCHI 3 Hyper | d74bb27d
 Wii Sports Club | 4d324052
 XenobladeX | 59d7be84
+Yo-kai Watch 2 | 7ab183bb
 Zen Pinball 2 | 2ff15f7e
 役満 鳳凰 | 23aab2d3
