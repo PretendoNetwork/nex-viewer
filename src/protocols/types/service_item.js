@@ -173,7 +173,7 @@ class ServiceItemPurchaseInfo extends NEXTypes.Structure {
 		this.transactionId = stream.readNEXString();
 		this.extTransactionId = stream.readNEXString();
 		this.itemCode = stream.readNEXString();
-		this.postBalance = stream.readNEXStructure( ServiceItemAmount);
+		this.postBalance = stream.readNEXStructure(ServiceItemAmount);
 	}
 
 	toJSON() {
@@ -334,10 +334,10 @@ class ServiceItemListItem extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		this.itemCode = stream.readNEXString();
-		this.regularPrice = stream.readNEXStructure( ServiceItemAmount);
+		this.regularPrice = stream.readNEXStructure(ServiceItemAmount);
 		this.taxExcluded = stream.readBoolean();
 		this.initialPurchaseOnly = stream.readBoolean();
-		this.limitation = stream.readNEXStructure( ServiceItemLimitation);
+		this.limitation = stream.readNEXStructure(ServiceItemLimitation);
 		this.attributes = stream.readNEXList(ServiceItemAttribute);
 	}
 
@@ -381,7 +381,7 @@ class ServiceItemCatalog extends NEXTypes.Structure {
 		this.offset = stream.readUInt32LE();
 		this.listItems = stream.readNEXList(ServiceItemListItem);
 		this.isBalanceAvailable = stream.readBoolean();
-		this.balance = stream.readNEXStructure( ServiceItemAmount);
+		this.balance = stream.readNEXStructure(ServiceItemAmount);
 
 	}
 
@@ -514,7 +514,7 @@ class ServiceItemGetPrepurchaseInfoParam extends NEXTypes.Structure {
 	parse(stream) {
 		this.itemCode = stream.readNEXString();
 		this.referenceId = stream.readNEXString();
-		this.limitation = stream.readNEXStructure( ServiceItemLimitation);
+		this.limitation = stream.readNEXStructure(ServiceItemLimitation);
 		this.language = stream.readNEXString();
 		this.uniqueId = stream.readUInt32LE();
 
@@ -610,14 +610,14 @@ class ServiceItemPrepurchaseInfo extends NEXTypes.Structure {
 	parse(stream) {
 		this.itemCode = stream.readNEXString();
 		this.priceId = stream.readNEXString();
-		this.regularPrice = stream.readNEXStructure( ServiceItemAmount);
+		this.regularPrice = stream.readNEXStructure(ServiceItemAmount);
 		this.isTaxAvailable = stream.readBoolean();
-		this.taxAmount = stream.readNEXStructure( ServiceItemAmount);
-		this.totalAmount = stream.readNEXStructure( ServiceItemAmount);
-		this.currentBalance = stream.readNEXStructure( ServiceItemAmount);
-		this.postBalance = stream.readNEXStructure( ServiceItemAmount);
-		this.currentRightInfo = stream.readNEXStructure(  ServiceItemPrepurchaseRightInfo);
-		this.postRightInfo = stream.readNEXStructure(  ServiceItemPrepurchaseRightInfo);
+		this.taxAmount = stream.readNEXStructure(ServiceItemAmount);
+		this.totalAmount = stream.readNEXStructure(ServiceItemAmount);
+		this.currentBalance = stream.readNEXStructure(ServiceItemAmount);
+		this.postBalance = stream.readNEXStructure(ServiceItemAmount);
+		this.currentRightInfo = stream.readNEXStructure(ServiceItemPrepurchaseRightInfo);
+		this.postRightInfo = stream.readNEXStructure(ServiceItemPrepurchaseRightInfo);
 	}
 
 	toJSON() {
@@ -772,12 +772,17 @@ class ServiceItemAccountRight extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		this.limitation = stream.readNEXStructure( ServiceItemLimitation);
+		this.pid = stream.readPID();
+		this.limitation = stream.readNEXStructure(ServiceItemLimitation);
 		this.rightBinaries = stream.readNEXList(ServiceItemRightBinary);
 	}
 
 	toJSON() {
 		return {
+			pid: {
+				__typeName: 'PID',
+				__typeValue: this.pid
+			},
 			limitation: {
 				__typeName: 'ServiceItemLimitation',
 				__typeValue: this.limitation
@@ -1058,10 +1063,10 @@ class ServiceItemTransaction extends NEXTypes.Structure {
 		this.time = stream.readNEXDateTime();
 		this.transactionType = stream.readUInt32LE();
 		this.transactionDescription = stream.readNEXString();
-		this.transactionAmount = stream.readNEXStructure( ServiceItemAmount);
+		this.transactionAmount = stream.readNEXStructure(ServiceItemAmount);
 		this.itemCode = stream.readNEXString();
 		this.referenceId = stream.readNEXString();
-		this.limitation = stream.readNEXStructure( ServiceItemLimitation);
+		this.limitation = stream.readNEXStructure(ServiceItemLimitation);
 	}
 
 	toJSON() {

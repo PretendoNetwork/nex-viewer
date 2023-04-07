@@ -493,13 +493,6 @@ class DataStoreChangeMetaParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_datastore_version) {
-			nexVersion = stream.connection.title.nex_datastore_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
-
 		this.dataId = stream.readUInt64LE();
 		this.modifiesFlag = stream.readUInt32LE();
 		this.name = stream.readNEXString();
