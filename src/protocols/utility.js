@@ -4,6 +4,8 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
+const UtilityMK7 = require('./patches/utility_mk7');
+
 const Requests = require('./requests/utility');
 const Responses = require('./responses/utility');
 
@@ -47,8 +49,9 @@ class Utility {
 	static handlePacket(packet) {
 		const methodId = packet.rmcMessage.methodId;
 
-		// TODO - Add patches for Mario Kart 7
+		// Check if method is a MK7 patched method
 		if (packet.connection.accessKey === '6181dff1') {
+			UtilityMK7.handlePacket(packet);
 			return;
 		}
 
