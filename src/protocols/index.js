@@ -13,5 +13,6 @@ module.exports = {
 	0x6e: require('./utility'),
 	0x70: require('./ranking'),
 	0x73: require('./datastore'),
-	0x77: require('./service_item')
+	0x77: require('./service_item'),
+	0xC8: require('./shop')
 };
