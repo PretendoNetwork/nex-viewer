@@ -51,18 +51,29 @@ class RankingRankData extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_ranking_version) {
+			nexVersion = stream.connection.title.nex_ranking_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.principalId = stream.readPID();
 		this.uniqueId = stream.readUInt64LE();
 		this.order = stream.readUInt32LE();
 		this.category = stream.readUInt32LE();
 		this.score = stream.readUInt32LE();
-		this.groups = stream.readNEXList(stream.readUInt8); // * List<byte>, uint8 is same thing as a byte
+		this.groups = stream.readNEXBuffer(); // * Appears on some games as List<byte>
 		this.param = stream.readUInt64LE();
 		this.commonData = stream.readNEXBuffer();
+
+		if (this._structureHeader.version >= 1) {
+			this.updateTime = stream.readNEXDateTime();
+		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			principalId: {
 				__typeName: 'PID',
 				__typeValue: this.principalId
@@ -84,7 +95,7 @@ class RankingRankData extends NEXTypes.Structure {
 				__typeValue: this.score
 			},
 			groups: {
-				__typeName: 'List<byte>',
+				__typeName: 'Buffer',
 				__typeValue: this.groups
 			},
 			param: {
@@ -96,6 +107,15 @@ class RankingRankData extends NEXTypes.Structure {
 				__typeValue: this.commonData
 			}
 		};
+
+		if (this.updateTime !== undefined) {
+			data.updateTime = {
+				__typeName: 'DateTime',
+				__typeValue: this.updateTime
+			};
+		}
+
+		return data;
 	}
 }
 

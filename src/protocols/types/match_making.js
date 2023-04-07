@@ -865,7 +865,7 @@ class GatheringStats extends NEXTypes.Structure {
 				__typeValue: this.m_uiFlags
 			},
 			m_lstValues: {
-				__typeName: 'List<float>',
+				__typeName: 'List<Float>',
 				__typeValue: this.m_lstValues
 			}
 		};
