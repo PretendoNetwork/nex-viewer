@@ -235,11 +235,22 @@ function updatePacketDetails(packet) {
 		const rmcRootSummary = document.createElement('summary');
 		const rmcRootDetailsRoot = document.createElement('div');
 
-		const rmcRootDetailsProtcolIdDiv = document.createElement('div');
-		const rmcRootDetailsProtcolIdName = document.createElement('span');
-		const rmcRootDetailsProtcolIdValue = document.createElement('span');
-		rmcRootDetailsProtcolIdName.classList.add('name');
-		rmcRootDetailsProtcolIdValue.classList.add('value');
+		const rmcRootDetailsProtocolIdDiv = document.createElement('div');
+		const rmcRootDetailsProtocolIdName = document.createElement('span');
+		const rmcRootDetailsProtocolIdValue = document.createElement('span');
+		rmcRootDetailsProtocolIdName.classList.add('name');
+		rmcRootDetailsProtocolIdValue.classList.add('value');
+
+		let rmcRootDetailsCustomIdDiv;
+		let rmcRootDetailsCustomIdName;
+		let rmcRootDetailsCustomIdValue;
+		if (packet.rmc.protocolId === 0x7F) {
+			rmcRootDetailsCustomIdDiv = document.createElement('div');
+			rmcRootDetailsCustomIdName = document.createElement('span');
+			rmcRootDetailsCustomIdValue = document.createElement('span');
+			rmcRootDetailsCustomIdName.classList.add('name');
+			rmcRootDetailsCustomIdValue.classList.add('value');
+		}
 
 		const rmcRootDetailsMethodIdDiv = document.createElement('div');
 		const rmcRootDetailsMethodIdName = document.createElement('span');
@@ -259,8 +270,14 @@ function updatePacketDetails(packet) {
 		rmcRootDetailsErrorCodeName.classList.add('name');
 		rmcRootDetailsErrorCodeValue.classList.add('value');
 
-		rmcRootDetailsProtcolIdName.appendChild(document.createTextNode('Protocol ID:'));
-		rmcRootDetailsProtcolIdValue.appendChild(document.createTextNode(packet.rmc.protocolId));
+		rmcRootDetailsProtocolIdName.appendChild(document.createTextNode('Protocol ID:'));
+		rmcRootDetailsProtocolIdValue.appendChild(document.createTextNode(packet.rmc.protocolId));
+
+		if (packet.rmc.protocolId === 0x7F) {
+			rmcRootDetailsCustomIdName.appendChild(document.createTextNode('Custom ID:'));
+			rmcRootDetailsCustomIdValue.appendChild(document.createTextNode(packet.rmc.customId));
+		}
+
 		rmcRootDetailsMethodIdName.appendChild(document.createTextNode('Method ID:'));
 		rmcRootDetailsMethodIdValue.appendChild(document.createTextNode(packet.rmc.methodId));
 		rmcRootDetailsCallIdName.appendChild(document.createTextNode('Call ID:'));
@@ -268,8 +285,14 @@ function updatePacketDetails(packet) {
 		rmcRootDetailsErrorCodeName.appendChild(document.createTextNode('Error Code:'));
 		rmcRootDetailsErrorCodeValue.appendChild(document.createTextNode(packet.rmc.errorCode));
 
-		rmcRootDetailsProtcolIdDiv.appendChild(rmcRootDetailsProtcolIdName);
-		rmcRootDetailsProtcolIdDiv.appendChild(rmcRootDetailsProtcolIdValue);
+		rmcRootDetailsProtocolIdDiv.appendChild(rmcRootDetailsProtocolIdName);
+		rmcRootDetailsProtocolIdDiv.appendChild(rmcRootDetailsProtocolIdValue);
+
+		if (packet.rmc.protocolId === 0x7F) {
+			rmcRootDetailsCustomIdDiv.appendChild(rmcRootDetailsCustomIdName);
+			rmcRootDetailsCustomIdDiv.appendChild(rmcRootDetailsCustomIdValue);
+		}
+
 		rmcRootDetailsMethodIdDiv.appendChild(rmcRootDetailsMethodIdName);
 		rmcRootDetailsMethodIdDiv.appendChild(rmcRootDetailsMethodIdValue);
 		rmcRootDetailsCallIdDiv.appendChild(rmcRootDetailsCallIdName);
@@ -277,7 +300,12 @@ function updatePacketDetails(packet) {
 		rmcRootDetailsErrorCodeDiv.appendChild(rmcRootDetailsErrorCodeName);
 		rmcRootDetailsErrorCodeDiv.appendChild(rmcRootDetailsErrorCodeValue);
 
-		rmcRootDetailsRoot.appendChild(rmcRootDetailsProtcolIdDiv);
+		rmcRootDetailsRoot.appendChild(rmcRootDetailsProtocolIdDiv);
+
+		if (packet.rmc.protocolId === 0x7F) {
+			rmcRootDetailsRoot.appendChild(rmcRootDetailsCustomIdDiv);
+		}
+
 		rmcRootDetailsRoot.appendChild(rmcRootDetailsMethodIdDiv);
 		rmcRootDetailsRoot.appendChild(rmcRootDetailsCallIdDiv);
 

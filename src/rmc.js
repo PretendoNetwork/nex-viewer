@@ -14,7 +14,7 @@ class RMCMessage {
 
 		this.size;
 		this.protocolId; // * ORed with 0x80 on requests
-		this.extendedProtocolId; // * Only exists if protocl ID is 0x7F
+		this.customId; // * Only exists if protocol ID is 0x7F
 		this.callId;
 		this.methodId; // * ORed with 0x8000 on responses
 		this.body;
@@ -42,7 +42,7 @@ class RMCMessage {
 		}
 
 		if (this.protocolId === 0x7F) {
-			this.extendedProtocolId = stream.readUInt16LE();
+			this.customId = stream.readUInt16LE();
 		}
 
 		if (this.isRequest()) {

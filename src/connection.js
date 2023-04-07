@@ -228,10 +228,18 @@ class Connection {
 
 				packet.rmcMessage = new RMCMessage(decryptedPayload);
 
-				const protocol = Protocols[packet.rmcMessage.protocolId];
+				// * If the packet has a custom ID, check the protocol list with it
+				let protocolId;
+				if (packet.rmcMessage.protocolId === 0x7F) {
+					protocolId = packet.rmcMessage.customId;
+				} else {
+					protocolId = packet.rmcMessage.protocolId;
+				}
+
+				const protocol = Protocols[protocolId];
 
 				if (!protocol) {
-					console.log(`Unknown protocol ID ${packet.rmcMessage.protocolId} (0x${packet.rmcMessage.protocolId.toString(16)})`);
+					console.log(`Unknown protocol ID ${protocolId} (0x${protocolId.toString(16)})`);
 					this.packets.push(packet);
 					return;
 				}

@@ -69,6 +69,7 @@ class Packet {
 				protocolName: this.rmcData.protocolName,
 				methodName: this.rmcData.methodName,
 				protocolId: this.rmcMessage.protocolId,
+				customId: this.rmcMessage.customId,
 				methodId: this.rmcMessage.methodId,
 				callId: this.rmcMessage.callId,
 				errorCode: this.rmcMessage.errorCode,
