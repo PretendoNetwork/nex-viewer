@@ -5,6 +5,8 @@ const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
 const DataStoreSMM = require('./patches/datastore_smm');
+const DataStoreBadgeArcade = require('./patches/datastore_badge_arcade');
+const DataStorePokemonBank = require('./patches/datastore_pokemon_bank');
 
 const Requests = require('./requests/datastore');
 const Responses = require('./responses/datastore');
@@ -128,6 +130,18 @@ class DataStore {
 		// Check if method is a SMM patched method
 		if (packet.connection.accessKey === '9f2b4678' && methodId >= 0x2D) {
 			DataStoreSMM.handlePacket(packet);
+			return;
+		}
+
+		// Check if method is a Badge Arcade patched method
+		if (packet.connection.accessKey === '82d5962d' && methodId >= 0x2D) {
+			DataStoreBadgeArcade.handlePacket(packet);
+			return;
+		}
+
+		// Check if method is a Pokémon Bank patched method
+		if (packet.connection.accessKey === '9a2961d8' && methodId >= 0x28) {
+			DataStorePokemonBank.handlePacket(packet);
 			return;
 		}
 

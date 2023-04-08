@@ -223,15 +223,25 @@ class DataStoreReqGetInfo extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_datastore_version) {
+			nexVersion = stream.connection.title.nex_datastore_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.url = stream.readNEXString();
 		this.requestHeaders = stream.readNEXList(DataStoreKeyValue);
 		this.size = stream.readUInt32LE();
 		this.rootCaCert = stream.readNEXBuffer();
-		this.dataId = stream.readUInt64LE();
+
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+			this.dataId = stream.readUInt64LE();
+		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			url: {
 				__typeName: 'String',
 				__typeValue: this.url
@@ -247,12 +257,17 @@ class DataStoreReqGetInfo extends NEXTypes.Structure {
 			rootCaCert: {
 				__typeName: 'Buffer',
 				__typeValue: this.rootCaCert
-			},
-			dataId: {
-				__typeName: 'uint64',
-				__typeValue: this.dataId
 			}
 		};
+
+		if (this.dataId !== undefined) {
+			data.dataId = {
+				__typeName: 'uint64',
+				__typeValue: this.dataId
+			};
+		}
+
+		return data;
 	}
 }
 
@@ -402,7 +417,7 @@ class DataStoreDeleteParam extends NEXTypes.Structure {
 	toJSON() {
 		return {
 			dataId: {
-				__typeName: 'uint32',
+				__typeName: 'uint64',
 				__typeValue: this.dataId
 			},
 			updatePassword: {
@@ -492,8 +507,7 @@ class DataStoreChangeMetaParam extends NEXTypes.Structure {
 		this.status = stream.readUInt8();
 		this.compareParam = stream.readNEXStructure(DataStoreChangeMetaCompareParam);
 
-		if (stream.connection.title.nex_version.major >= 4) {
-			// TODO - Verify this, seems to be true?
+		if (this._structureHeader.version >= 1) {
 			this.persistenceTarget = stream.readNEXStructure(DataStorePersistenceTarget);
 		}
 	}
@@ -768,14 +782,24 @@ class DataStorePrepareUpdateParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_datastore_version) {
+			nexVersion = stream.connection.title.nex_datastore_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.dataId = stream.readInt64LE();
 		this.size = stream.readUInt32LE();
 		this.updatePassword = stream.readInt64LE();
-		this.extraData = stream.readNEXList(stream.readNEXString);
+
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+			this.extraData = stream.readNEXList(stream.readNEXString);
+		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -787,12 +811,17 @@ class DataStorePrepareUpdateParam extends NEXTypes.Structure {
 			updatePassword: {
 				__typeName: 'uint64',
 				__typeValue: this.updatePassword
-			},
-			extraData: {
-				__typeName: 'List<String>',
-				__typeValue: this.extraData
 			}
 		};
+
+		if (this.extraData !== undefined) {
+			data.extraData = {
+				__typeName: 'List<String>',
+				__typeValue: this.extraData
+			};
+		}
+
+		return data;
 	}
 }
 
@@ -870,6 +899,13 @@ class DataStoreSearchParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_datastore_version) {
+			nexVersion = stream.connection.title.nex_datastore_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.searchTarget = stream.readUInt8();
 		this.ownerIds = stream.readNEXList(stream.readPID);
 		this.ownerType = stream.readUInt8();
@@ -886,11 +922,14 @@ class DataStoreSearchParam extends NEXTypes.Structure {
 		this.resultRange = stream.readNEXStructure(NEXTypes.ResultRange);
 		this.resultOption = stream.readUInt8();
 		this.minimalRatingFrequency = stream.readUInt32LE();
-		this.useCache = stream.readBoolean();
+
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+			this.useCache = stream.readBoolean();
+		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			searchTarget: {
 				__typeName: 'uint8',
 				__typeValue: this.searchTarget
@@ -954,12 +993,17 @@ class DataStoreSearchParam extends NEXTypes.Structure {
 			minimalRatingFrequency: {
 				__typeName: 'uint32',
 				__typeValue: this.minimalRatingFrequency
-			},
-			useCache: {
-				__typeName: 'boolean',
-				__typeValue: this.useCache
 			}
 		};
+
+		if (this.useCache !== undefined) {
+			data.useCache = {
+				__typeName: 'boolean',
+				__typeValue: this.useCache
+			};
+		}
+
+		return data;
 	}
 }
 
@@ -1237,7 +1281,7 @@ class DataStoreRatingLog extends NEXTypes.Structure {
 	parse(stream) {
 		this.isRated = stream.readBoolean();
 		this.pid = stream.readPID();
-		this.ratingValue = stream.readInt64LE();
+		this.ratingValue = stream.readInt32LE();
 		this.lockExpirationTime = stream.readNEXDateTime();
 	}
 
@@ -1361,15 +1405,25 @@ class DataStorePrepareGetParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_datastore_version) {
+			nexVersion = stream.connection.title.nex_datastore_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.dataId = stream.readUInt64LE();
 		this.lockId = stream.readUInt32LE();
 		this.persistenceTarget = stream.readNEXStructure(DataStorePersistenceTarget);
 		this.accessPassword = stream.readUInt64LE();
-		this.extraData = stream.readNEXList(stream.readNEXString);
+
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+			this.extraData = stream.readNEXList(stream.readNEXString);
+		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -1385,12 +1439,17 @@ class DataStorePrepareGetParam extends NEXTypes.Structure {
 			accessPassword: {
 				__typeName: 'uint64',
 				__typeValue: this.accessPassword
-			},
-			extraData: {
-				__typeName: 'List<String>',
-				__typeValue: this.extraData
 			}
 		};
+
+		if (this.extraData !== undefined) {
+			data.extraData = {
+				__typeName: 'List<String>',
+				__typeValue: this.extraData
+			};
+		}
+
+		return data;
 	}
 }
 
@@ -1400,6 +1459,13 @@ class DataStorePreparePostParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_datastore_version) {
+			nexVersion = stream.connection.title.nex_datastore_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.size = stream.readUInt32LE();
 		this.name = stream.readNEXString();
 		this.dataType = stream.readUInt16LE();
@@ -1412,11 +1478,14 @@ class DataStorePreparePostParam extends NEXTypes.Structure {
 		this.tags = stream.readNEXList(stream.readNEXString);
 		this.ratingInitParams = stream.readNEXList(DataStoreRatingInitParamWithSlot);
 		this.persistenceInitParam = stream.readNEXStructure(DataStorePersistenceInitParam);
-		this.extraData = stream.readNEXList(stream.readNEXString);
+
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+			this.extraData = stream.readNEXList(stream.readNEXString);
+		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			size: {
 				__typeName: 'uint32',
 				__typeValue: this.size
@@ -1464,12 +1533,17 @@ class DataStorePreparePostParam extends NEXTypes.Structure {
 			persistenceInitParam: {
 				__typeName: 'DataStorePersistenceInitParam',
 				__typeValue: this.persistenceInitParam
-			},
-			extraData: {
-				__typeName: 'List<String>',
-				__typeValue: this.extraData
 			}
 		};
+
+		if (this.extraData !== undefined) {
+			data.extraData = {
+				__typeName: 'List<String>',
+				__typeValue: this.extraData
+			};
+		}
+
+		return data;
 	}
 }
 

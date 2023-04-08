@@ -1,6 +1,26 @@
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
+class AccountExtraInfo extends NEXTypes.Structure {
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.token = stream.readNEXString();
+	}
+
+	toJSON() {
+		return {
+			token: {
+				__typeName: 'String',
+				__typeValue: this.token
+			}
+		};
+	}
+}
+NEXTypes.AnyDataHolder.addType('AccountExtraInfo', AccountExtraInfo);
+
 class NintendoLoginData extends NEXTypes.Structure {
 	/**
 	 *
@@ -46,6 +66,7 @@ class ConnectionData extends NEXTypes.Structure {
 }
 
 module.exports = {
+	AccountExtraInfo,
 	NintendoLoginData,
 	ConnectionData
 };

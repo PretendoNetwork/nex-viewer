@@ -112,10 +112,17 @@ class CreateMatchmakeSessionRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_match_making_version) {
+			nexVersion = stream.connection.title.nex_match_making_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.anyGathering = stream.readNEXAnyDataHolder();
 		this.strMessage = stream.readNEXString();
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 5) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
 			this.participationCount = stream.readUInt16LE();
 		}
 	}
@@ -765,7 +772,7 @@ class DebugNotifyEventRequest {
 				__typeValue: this.mainType
 			},
 			subType: {
-				__typeName: 'ui9nt32',
+				__typeName: 'uint32',
 				__typeValue: this.subType
 			},
 			param1: {

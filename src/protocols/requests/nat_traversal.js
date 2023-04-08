@@ -66,11 +66,14 @@ class ReportNATTraversalResultRequest {
 	constructor(stream) {
 		this.cid = stream.readUInt32LE();
 		this.result = stream.readBoolean();
-		this.rtt = stream.readUInt32LE(); // ! THIS IS NOT PRESENT ON 3DS, ONLY WIIU/SWITCH
+
+		if (stream.hasDataLeft()) {
+			this.rtt = stream.readUInt32LE(); // ! THIS IS NOT PRESENT ON 3DS, ONLY WIIU/SWITCH
+		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			cid: {
 				__typeName: 'uint32',
 				__typeValue: this.cid
@@ -78,12 +81,17 @@ class ReportNATTraversalResultRequest {
 			result: {
 				__typeName: 'boolean',
 				__typeValue: this.result
-			},
-			rtt: {
-				__typeName: 'uint32',
-				__typeValue: this.rtt
 			}
 		};
+
+		if (this.rtt !== undefined) {
+			data.rtt = {
+				__typeName: 'uint32',
+				__typeValue: this.rtt
+			};
+		}
+
+		return data;
 	}
 }
 

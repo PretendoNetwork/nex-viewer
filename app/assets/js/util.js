@@ -59,6 +59,8 @@ export function isNEXPrimative(typeName) {
 		'sint32',
 		'uint64',
 		'sint64',
+		'Float',
+		'Double',
 		'boolean',
 		'String',
 		'PID', // * PID is the same as a uint32

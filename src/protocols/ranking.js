@@ -5,6 +5,7 @@ const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
 const RankingSplatoon = require('./patches/ranking_splatoon');
+const RankingMK7 = require('./patches/ranking_mk7');
 
 const Requests = require('./requests/ranking');
 const Responses = require('./responses/ranking');
@@ -66,6 +67,12 @@ class Ranking {
 		// Check if method is a Splatoon patched method
 		if (packet.connection.accessKey === '6f599f81' && methodId >= 0x10) {
 			RankingSplatoon.handlePacket(packet);
+			return;
+		}
+
+		// Check if method is a MK7 patched method
+		if (packet.connection.accessKey === '6181dff1' && methodId >= 0x10) {
+			RankingMK7.handlePacket(packet);
 			return;
 		}
 

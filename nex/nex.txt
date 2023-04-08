@@ -51,3 +51,12 @@ Puddle                       | 3.0.1
 Game Party                   | 3.0.1
 Star Wars Pinball            | 3.0.1
 Zen Pinball 2                | 3.0.1
+Mario vs. DK: Tipping Stars  | 3.7.1
+Mario Kart 7                 | 3.4.17
+Badge Arcade                 | 3.7.16
+Pokémon Bank                 | 3.4.13
+IronFall Invasion            | 3.7.18
+Steel Diver: Sub Wars        | 3.7.18
+Metroid Prime: FF            | 3.9.17
+Team Kirby Clash Deluxe      | 3.10.26
+Yo-kai Watch 2               | 3.6.18
