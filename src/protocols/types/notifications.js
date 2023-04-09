@@ -12,15 +12,21 @@ class NotificationEvent extends NEXTypes.Structure {
 		// * A 3rd m_uiParam3 uint64 is also added
 		// * In revision 1 of the protocol on Switch, an additional m_mapParam Map<String, Variant> is added
 
+		const nexVersion = stream.connection.title.nex_version;
+
 		this.m_pidSource = stream.readPID();
 		this.m_uiType = stream.readUInt32LE();
 		this.m_uiParam1 = stream.readUInt32LE();
 		this.m_uiParam2 = stream.readUInt32LE();
 		this.m_strParam = stream.readNEXString();
+
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+			this.m_uiParam3 = stream.readUInt32LE();
+		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			m_pidSource: {
 				__typeName: 'PID',
 				__typeValue: this.m_pidSource
@@ -42,6 +48,15 @@ class NotificationEvent extends NEXTypes.Structure {
 				__typeValue: this.m_strParam
 			}
 		};
+
+		if (this.m_uiParam3 !== undefined) {
+			data.m_uiParam3 = {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiParam3
+			};
+		}
+
+		return data;
 	}
 }
 
