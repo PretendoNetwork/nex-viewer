@@ -45,7 +45,7 @@ const menuTemplate = [
 						return;
 					}
 
-					browserWindow.webContents.send('clear-packet-list');
+					browserWindow.webContents.send('clear-sections');
 
 					const filePath = result.filePaths[0];
 
@@ -54,6 +54,11 @@ const menuTemplate = [
 					parser.on('packet', packet => {
 						const serialized = JSON.stringify(packet);
 						browserWindow.webContents.send('packet', serialized);
+					});
+
+					parser.on('connections', connections => {
+						const serialized = JSON.stringify(connections);
+						browserWindow.webContents.send('connections', serialized);
 					});
 
 					parser.parse(filePath);

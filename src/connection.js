@@ -63,6 +63,14 @@ class Connection {
 		this.reset();
 	}
 
+	toJSON() {
+		return {
+			discriminator: this.discriminator,
+			title: this.title,
+			secure: this.isSecureServer
+		};
+	}
+
 	reset() {
 		this.prudpVersion = null;
 		this.accessKey = null;

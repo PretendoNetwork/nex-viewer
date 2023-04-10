@@ -46,6 +46,11 @@ Height is set by the JS to account for overflow
 	color: white;
 }
 
+#packet-list tbody tr.hidden {
+	display: none;
+}
+
 #packet-list tbody td {
 	white-space: nowrap;
+	cursor: pointer;
 }

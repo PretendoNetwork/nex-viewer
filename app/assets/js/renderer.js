@@ -9,8 +9,8 @@ import {
 
 const mainElement = document.querySelector('main');
 const packetsSection = document.getElementById('packets');
-const packetDetailsSection = document.getElementById('packet-details');
-const packetHexSection = document.getElementById('packet-hex');
+export const packetDetailsSection = document.getElementById('packet-details');
+export const connectionsListSection = document.getElementById('connections-list');
 export const packetsTableBodySection = packetsSection.querySelector('tbody');
 
 const LIST_TYPE_REGEX = /List<(.*)>/;
@@ -29,7 +29,7 @@ function resizePacketsSection() {
 	// Sometimes doesn't visually update?
 	packetsSection.style.height = height;
 	packetDetailsSection.style.height = height;
-	packetHexSection.style.height = height;
+	connectionsListSection.style.height = height;
 }
 
 const mainElementResizeObserver = new ResizeObserver(() => {
@@ -39,9 +39,68 @@ const mainElementResizeObserver = new ResizeObserver(() => {
 mainElementResizeObserver.observe(mainElement);
 
 /**
+ * @param {object} connections List of NEX connections
+ */
+export function populateConnectionsList(connections) {
+	for (const connection of connections) {
+		const connectionElementDiv = document.createElement('div');
+		connectionElementDiv.classList.add('connection');
+
+		const title = `${connection.discriminator} ${connection.title.name || 'Unknown'} (${connection.secure ? 'Secure' : 'Authentication'})`;
+
+		const connectionTitle = document.createElement('span');
+		connectionTitle.appendChild(document.createTextNode(title));
+
+		connectionElementDiv.appendChild(connectionTitle);
+
+		connectionElementDiv.addEventListener('click', () => {
+			if (connectionElementDiv.classList.contains('selected')) {
+				removePacketFilter();
+			} else {
+				filterPacketsByDiscriminator(connection.discriminator);
+			}
+
+			document.querySelector('.connection.selected')?.classList.toggle('selected');
+			connectionElementDiv.classList.toggle('selected');
+		});
+
+		connectionsListSection.appendChild(connectionElementDiv);
+	}
+}
+
+/**
+ * Removes the packet filtering and shows all packets
+ */
+function removePacketFilter() {
+	const packets = packetsTableBodySection.querySelectorAll('tbody tr');
+
+	for (const packet of packets) {
+		packet.classList.remove('hidden');
+	}
+}
+
+/**
+ * @param {string} discriminator Connection discriminator
+ */
+function filterPacketsByDiscriminator(discriminator) {
+	const packets = packetsTableBodySection.querySelectorAll('tbody tr');
+
+	for (const packet of packets) {
+		packet.classList.remove('hidden');
+
+		const packetData = JSON.parse(packet.dataset.serialized);
+
+		if (packetData.sourceAddress !== discriminator && packetData.destinationAddress !== discriminator) {
+			packet.classList.add('hidden');
+		}
+	}
+}
+
+/**
  * @param {object} packet PRUDP packet data to be added to the packet list
  */
 export function addPacketToList(packet) {
+
 	const tr = document.createElement('tr');
 
 	const source = document.createElement('td');

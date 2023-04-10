@@ -40,10 +40,18 @@ class NEXParser extends EventEmitter {
 
 		if (extension === '.pcapng') {
 			const pcapNgParser = new PCAPNGParser();
-			fs.createReadStream(capturePath).pipe(pcapNgParser).on('data', this.handlePacket.bind(this));
+			fs.createReadStream(capturePath)
+				.pipe(pcapNgParser)
+				.on('data', this.handlePacket.bind(this))
+				.on('close', () => {
+					this.emit('connections', this.connections);
+				});
 		} else {
 			const parser = pcapp.parse(capturePath);
 			parser.on('packet', this.handlePacket.bind(this));
+			parser.on('end', () => {
+				this.emit('connections', this.connections);
+			});
 		}
 	}
 
@@ -93,6 +101,7 @@ class NEXParser extends EventEmitter {
 			connection.serverAddress = serverAddress;
 
 			this.connections.push(connection);
+			this.emit('connection', connection);
 		}
 
 		let packet;

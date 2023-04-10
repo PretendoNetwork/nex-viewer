@@ -1,0 +1,15 @@
+#connections-list .connection {
+	padding-top: 5px;
+	padding-left: 30px;
+	cursor: pointer;
+}
+
+#connections-list .connection:hover {
+	background: #8FBDDA !important;
+	color: black !important;
+}
+
+#connections-list .connection.selected {
+	background: #308dc7;
+	color: white;
+}
