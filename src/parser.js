@@ -93,7 +93,9 @@ class NEXParser extends EventEmitter {
 			serverAddress = discriminator;
 		}
 
-		let connection = this.connections.find(connection => connection.discriminator === discriminator);
+		// * Find the latest connection to avoid broken packets
+		// * when disconnecting and reconnecting to the same server.
+		let connection = this.connections.findLast(connection => connection.discriminator === discriminator);
 
 		let newConnection = false;
 		if (!connection) {
