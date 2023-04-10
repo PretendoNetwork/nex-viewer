@@ -95,13 +95,13 @@ class NEXParser extends EventEmitter {
 
 		let connection = this.connections.find(connection => connection.discriminator === discriminator);
 
+		let newConnection = false;
 		if (!connection) {
 			connection = new Connection(discriminator);
 			connection.clientAddress = clientAddress;
 			connection.serverAddress = serverAddress;
 
-			this.connections.push(connection);
-			this.emit('connection', connection);
+			newConnection = true;
 		}
 
 		let packet;
@@ -124,6 +124,12 @@ class NEXParser extends EventEmitter {
 		} else {
 			// Not a NEX packet
 			return;
+		}
+
+		// * Add conenctions after packet validation
+		if (newConnection) {
+			this.connections.push(connection);
+			this.emit('connection', connection);
 		}
 
 		connection.handlePacket(packet);
