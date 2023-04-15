@@ -278,13 +278,18 @@ class RateObjectRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
+		const nexVersion = stream.connection.title.nex_version;
+
 		this.target = stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget);
 		this.param = stream.readNEXStructure(DataStoreTypes.DataStoreRateObjectParam);
-		this.fetchRatings = stream.readBoolean();
+
+		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+			this.fetchRatings = stream.readBoolean();
+		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			target: {
 				__typeName: 'DataStoreRatingTarget',
 				__typeValue: this.target
@@ -293,11 +298,16 @@ class RateObjectRequest {
 				__typeName: 'DataStoreRateObjectParam',
 				__typeValue: this.param
 			},
-			fetchRatings: {
+		};
+
+		if (this.fetchRatings !== undefined) {
+			data.fetchRatings = {
 				__typeName: 'boolean',
 				__typeValue: this.fetchRatings
-			}
-		};
+			};
+		}
+
+		return data;
 	}
 }
 
