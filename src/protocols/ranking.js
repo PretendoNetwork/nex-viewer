@@ -71,7 +71,7 @@ class Ranking {
 		}
 
 		// Check if method is a MK7 patched method
-		if (packet.connection.accessKey === '6181dff1' && methodId >= 0x10) {
+		if (packet.connection.accessKey === '6181dff1') {
 			RankingMK7.handlePacket(packet);
 			return;
 		}
