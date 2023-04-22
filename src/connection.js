@@ -33,7 +33,15 @@ if (!fs.existsSync(NEX_KEYS_FILE_PATH)) {
 // * Parse out the NEX keys
 // * Format is one PID:KEY per line
 const NEX_KEYS_FILE = fs.readFileSync(NEX_KEYS_FILE_PATH, { encoding: 'utf-8' });
-const NEX_KEYS = Object.fromEntries(NEX_KEYS_FILE.split('\n').filter(line => line).map(combo => combo.split(':')));
+const NEX_KEYS = Object.fromEntries(NEX_KEYS_FILE.split('\n').filter(line => line).map(combo => {
+	const parts = combo.split(':');
+	const pid = parts.shift();
+	const password = parts.join(':');
+
+	return [pid, password];
+}));
+
+console.log(NEX_KEYS);
 
 // * Derive Kerberos keys from passwords
 for (let pid in NEX_KEYS) {
