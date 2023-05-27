@@ -357,7 +357,7 @@ class AutoMatchmakeWithSearchCriteria_PostponeRequest {
 				__typeValue: this.anyGathering
 			},
 			strMessage: {
-				__typeName: 'AnyDataHolder',
+				__typeName: 'String',
 				__typeValue: this.strMessage
 			}
 		};

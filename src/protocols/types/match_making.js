@@ -156,7 +156,7 @@ class MatchmakeSession extends NEXTypes.Structure {
 		this.m_ApplicationBuffer = stream.readNEXBuffer();
 		this.m_ParticipationCount = stream.readUInt32LE();
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 4) {
 			this.m_ProgressScore = stream.readUInt8();
 		}
 
@@ -318,7 +318,7 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 		this.m_ExcludeNonHostPid = stream.readBoolean();
 		this.m_SelectionMethod = stream.readUInt32LE();
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 4) {
 			this.m_VacantParticipants = stream.readUInt16LE();
 		}
 
