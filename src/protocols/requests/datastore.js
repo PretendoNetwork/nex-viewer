@@ -278,7 +278,12 @@ class RateObjectRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		const nexVersion = stream.connection.title.nex_version;
+		let nexVersion;
+		if (stream.connection.title.nex_datastore_version) {
+			nexVersion = stream.connection.title.nex_datastore_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
 
 		this.target = stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget);
 		this.param = stream.readNEXStructure(DataStoreTypes.DataStoreRateObjectParam);

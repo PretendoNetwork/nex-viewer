@@ -13,6 +13,7 @@ class UtilityMK7 {
 	static ProtocolName = 'Utility (MK7)';
 
 	static Methods = {
+		AcquireNexUniqueId: 0x4,
 		UnknownMethod0x5: 0x5
 	};
 
@@ -23,6 +24,7 @@ class UtilityMK7 {
 	}, {});
 
 	static Handlers = {
+		0x4: UtilityMK7.AcquireNexUniqueId,
 		0x5: UtilityMK7.UnknownMethod0x5
 	};
 
@@ -48,6 +50,20 @@ class UtilityMK7 {
 			methodName: this.MethodNames[methodId],
 			body: handler(rmcMessage, stream)
 		};
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
+	static AcquireNexUniqueId(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return new Requests.AcquireNexUniqueIdRequest(stream);
+		} else {
+			return new Responses.AcquireNexUniqueIdResponse(stream);
+		}
 	}
 
 	/**
