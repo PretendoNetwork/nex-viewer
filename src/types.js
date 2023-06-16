@@ -133,7 +133,7 @@ class RVConnectionData extends Structure {
 		this.stationUrlSpecial = stream.readNEXStationURL();
 
 		if (this._structureHeader.version >= 1) {
-			this.currentUTCTime = stream.readUInt64LE();
+			this.currentUTCTime = stream.readNEXDateTime();
 		}
 	}
 
@@ -214,7 +214,60 @@ class StationURL {
 	}
 }
 
-class DateTime { }
+class DateTime {
+	/**
+	 *
+	 * @param {bigint} value DateTime value
+	 */
+	constructor(value) {
+		this.value = value;
+
+	}
+
+	getSeconds() {
+		return Number(this.value & 63n)
+	}
+
+	getMinutes() {
+		return Number((this.value >> 6n) & 63n)
+	}
+
+	getHours() {
+		return Number((this.value >> 12n) & 31n)
+	}
+
+	getDay() {
+		return Number((this.value >> 17n) & 31n)
+	}
+
+	getMonth() {
+		return Number((this.value >> 22n) & 15n) - 1
+	}
+
+	getYear() {
+		return Number(this.value >> 26n)
+	}
+
+	standard() {
+		return new Date(Date.UTC(
+			this.getYear(),
+			this.getMonth(),
+			this.getDay(),
+			this.getHours(),
+			this.getMinutes(),
+			this.getSeconds()
+		))
+	}
+
+	toJSON() {
+		return {
+			date: {
+				__typeName: 'Date',
+				__typeValue: this.standard()
+			}
+		};
+	}
+}
 
 class ResultRange extends Structure {
 	/**
