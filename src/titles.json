@@ -499,8 +499,8 @@
         "access_key": "6181dff1",
         "nex_version": {
             "major": 3,
-            "minor": 4,
-            "patch": 17
+            "minor": 1,
+            "patch": 0
         },
         "nex_match_making_version": {
             "major": 2,
@@ -569,6 +569,24 @@
             "major": 3,
             "minor": 6,
             "patch": 18
+        }
+    },
+    {
+        "name": "Wii Karaoke U",
+        "access_key": "dfc5a4ac",
+        "nex_version": {
+            "major": 3,
+            "minor": 4,
+            "patch": 0
+        }
+    },
+    {
+        "name": "Pokémon Rumble World",
+        "access_key": "844f1d0c",
+        "nex_version": {
+            "major": 3,
+            "minor": 7,
+            "patch": 1
         }
     },
     {
