@@ -8,8 +8,7 @@ class NotificationEvent extends NEXTypes.Structure {
 	 */
 	parse(stream) {
 		// * This has a different structure on the Switch
-		// * On the Switch m_pidSource, m_uiParam1 and m_uiParam2 are uint64
-		// * A 3rd m_uiParam3 uint64 is also added
+		// * On the Switch m_pidSource, m_uiParam1, m_uiParam2 and m_uiParam3 are uint64
 		// * In revision 1 of the protocol on Switch, an additional m_mapParam Map<String, Variant> is added
 
 		const nexVersion = stream.connection.title.nex_version;
@@ -20,7 +19,7 @@ class NotificationEvent extends NEXTypes.Structure {
 		this.m_uiParam2 = stream.readUInt32LE();
 		this.m_strParam = stream.readNEXString();
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 4) {
 			this.m_uiParam3 = stream.readUInt32LE();
 		}
 	}

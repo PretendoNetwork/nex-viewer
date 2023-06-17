@@ -569,7 +569,6 @@ class DataStoreChangeMetaParam extends NEXTypes.Structure {
 		};
 
 		if (this.persistenceTarget !== undefined) {
-			// * If NEX 4.x.x (?)
 			data.persistenceTarget = {
 				__typeName: 'DataStorePersistenceTarget',
 				__typeValue: this.persistenceTarget
@@ -899,13 +898,6 @@ class DataStoreSearchParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_datastore_version) {
-			nexVersion = stream.connection.title.nex_datastore_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
-
 		this.searchTarget = stream.readUInt8();
 		this.ownerIds = stream.readNEXList(stream.readPID);
 		this.ownerType = stream.readUInt8();
@@ -923,8 +915,16 @@ class DataStoreSearchParam extends NEXTypes.Structure {
 		this.resultOption = stream.readUInt8();
 		this.minimalRatingFrequency = stream.readUInt32LE();
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (this._structureHeader.version >= 1) {
 			this.useCache = stream.readBoolean();
+		}
+
+		if (this._structureHeader.version >= 3) {
+			this.totalCountEnabled = stream.readBoolean();
+		}
+
+		if (this._structureHeader.version >= 2) {
+			this.dataTypes = stream.readNEXList(stream.readUInt16LE);
 		}
 	}
 
@@ -1000,6 +1000,20 @@ class DataStoreSearchParam extends NEXTypes.Structure {
 			data.useCache = {
 				__typeName: 'boolean',
 				__typeValue: this.useCache
+			};
+		}
+
+		if (this.totalCountEnabled !== undefined) {
+			data.totalCountEnabled = {
+				__typeName: 'boolean',
+				__typeValue: this.totalCountEnabled
+			};
+		}
+
+		if (this.dataTypes !== undefined) {
+			data.dataTypes = {
+				__typeName: 'List<uint16>',
+				__typeValue: this.dataTypes
 			};
 		}
 

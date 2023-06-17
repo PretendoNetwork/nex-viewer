@@ -321,8 +321,7 @@ class Stream {
 	 * @returns {number} NEX DateTime
 	 */
 	readNEXDateTime() {
-		// TODO - Return a NEXTypes.DateTime
-		return this.readUInt64LE();
+		return new NEXTypes.DateTime(this.readUInt64LE());
 	}
 
 	/**

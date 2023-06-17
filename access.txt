@@ -28,6 +28,7 @@ Nova-111 | bafe9856
 OlliOlli | 60e5df12
 PIKMIN 3 | f6accfc1
 Pokémon Bank | 9a2961d8
+Pokémon Rumble World | 844f1d0c
 Pokémon X/Y | 876138df
 POKKÉN TOURNAMENT | 6ef3adf1
 PUYOPUYOTETRIS | 4eb0ca36
@@ -48,6 +49,7 @@ Terraria | 3d37fbdb
 TLoZ: Tri Force Heroes | c1621b84
 Trine 2 | f9c35adc
 WARRIORS OROCHI 3 Hyper | d74bb27d
+Wii Karaoke U | dfc5a4ac
 Wii Sports Club | 4d324052
 XenobladeX | 59d7be84
 Yo-kai Watch 2 | 7ab183bb
