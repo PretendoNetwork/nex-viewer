@@ -106,68 +106,82 @@ class NEXParser extends EventEmitter {
 			newConnection = true;
 		}
 
-		let packet;
 		const stream = new Stream(udpPacket.payload);
 
-		const magic = stream.readBytes(0x2);
+		// * PRUDP may send multiple packets in a single UDP packet, so we read the UDP payload recursively
+		while (stream.hasDataLeft()) {
+			let packet;
 
-		if (magic.equals(MAGIC_V1)) {
-			// * Skip Quazal Net-Z packets
-			stream.skip(0x4);
-			const source_destination = stream.readBytes(0x2);
+			const magic = stream.readBytes(0x2);
 
-			if (source_destination.equals(MAGIC_SERVERBOUND) || source_destination.equals(MAGIC_CLIENTBOUND)) {
-				packet = new PacketV1(connection, udpPacket.payload);
+			if (magic.equals(MAGIC_V1)) {
+				// * Skip Quazal Net-Z packets
+				stream.skip(0x1);
+
+				const packetSpecificDataLength = stream.readUInt8();
+				const payloadSize = stream.readUInt16LE();
+				const source_destination = stream.readBytes(0x2);
+
+				if (source_destination.equals(MAGIC_SERVERBOUND) || source_destination.equals(MAGIC_CLIENTBOUND)) {
+					// * Restore offset to start of payload
+					stream.skip(-0x8);
+
+					// * PRUDPv1 size = magic + header + signature + packetSpecificData + payload
+					const payload = stream.readBytes(2 + 12 + 16 + packetSpecificDataLength + payloadSize)
+					packet = new PacketV1(connection, payload);
+				} else {
+					stream.readRest();
+					return;
+				}
+			} else if (magic.equals(MAGIC_SERVERBOUND) || magic.equals(MAGIC_CLIENTBOUND)) {
+				packet = new PacketV0(connection, udpPacket.payload);
 			} else {
+				// Not a NEX packet
+				stream.readRest();
 				return;
 			}
-		} else if (magic.equals(MAGIC_SERVERBOUND) || magic.equals(MAGIC_CLIENTBOUND)) {
-			packet = new PacketV0(connection, udpPacket.payload);
-		} else {
-			// Not a NEX packet
-			return;
-		}
 
-		// * Add conenctions after packet validation
-		if (newConnection) {
-			this.connections.push(connection);
-			this.emit('connection', connection);
-		}
-
-		connection.handlePacket(packet);
-
-		if (connection.secureServerStationURL && connection.checkForSecureServer) {
-			const secureIP = connection.secureServerStationURL.address;
-			const securePort = connection.secureServerStationURL.port;
-			const secureDiscriminator = `${secureIP}:${securePort}`;
-
-			if (connection.discriminator !== secureDiscriminator) {
-				// * Secure server on different address, make a new connection
-				const secureConnection = new Connection(secureDiscriminator);
-
-				secureConnection.setRC4Key(connection.sessionKey);
-				secureConnection.accessKey = connection.accessKey;
-				secureConnection.accessKeySum = connection.accessKeySum;
-				secureConnection.signatureKey = connection.signatureKey;
-				secureConnection.sessionKey = connection.sessionKey;
-				secureConnection.prudpVersion = connection.prudpVersion;
-				secureConnection.title = connection.title;
-				secureConnection.isSecureServer = true;
-
-				secureConnection.clientAddress = connection.clientAddress;
-				secureConnection.serverAddress = secureDiscriminator;
-
-				this.connections.push(secureConnection);
-			} else {
-				// * Secure server is at the same address, just update key
-				connection.isSecureServer = true;
-				connection.setRC4Key(connection.sessionKey);
+			// * Add conenctions after packet validation
+			if (newConnection) {
+				this.connections.push(connection);
+				this.emit('connection', connection);
 			}
 
-			connection.checkForSecureServer = false;
-		}
+			connection.handlePacket(packet);
 
-		this.emit('packet', packet);
+			if (connection.secureServerStationURL && connection.checkForSecureServer) {
+				const secureIP = connection.secureServerStationURL.address;
+				const securePort = connection.secureServerStationURL.port;
+				const secureDiscriminator = `${secureIP}:${securePort}`;
+
+				if (connection.discriminator !== secureDiscriminator) {
+					// * Secure server on different address, make a new connection
+					const secureConnection = new Connection(secureDiscriminator);
+
+					secureConnection.setRC4Key(connection.sessionKey);
+					secureConnection.accessKey = connection.accessKey;
+					secureConnection.accessKeySum = connection.accessKeySum;
+					secureConnection.signatureKey = connection.signatureKey;
+					secureConnection.sessionKey = connection.sessionKey;
+					secureConnection.prudpVersion = connection.prudpVersion;
+					secureConnection.title = connection.title;
+					secureConnection.isSecureServer = true;
+
+					secureConnection.clientAddress = connection.clientAddress;
+					secureConnection.serverAddress = secureDiscriminator;
+
+					this.connections.push(secureConnection);
+				} else {
+					// * Secure server is at the same address, just update key
+					connection.isSecureServer = true;
+					connection.setRC4Key(connection.sessionKey);
+				}
+
+				connection.checkForSecureServer = false;
+			}
+
+			this.emit('packet', packet);
+		}
 	}
 
 	/**
