@@ -225,27 +225,27 @@ class DateTime {
 	}
 
 	getSeconds() {
-		return Number(this.value & 63n)
+		return Number(this.value & 63n);
 	}
 
 	getMinutes() {
-		return Number((this.value >> 6n) & 63n)
+		return Number((this.value >> 6n) & 63n);
 	}
 
 	getHours() {
-		return Number((this.value >> 12n) & 31n)
+		return Number((this.value >> 12n) & 31n);
 	}
 
 	getDay() {
-		return Number((this.value >> 17n) & 31n)
+		return Number((this.value >> 17n) & 31n);
 	}
 
 	getMonth() {
-		return Number((this.value >> 22n) & 15n) - 1
+		return Number((this.value >> 22n) & 15n) - 1;
 	}
 
 	getYear() {
-		return Number(this.value >> 26n)
+		return Number(this.value >> 26n);
 	}
 
 	standard() {
@@ -256,7 +256,7 @@ class DateTime {
 			this.getHours(),
 			this.getMinutes(),
 			this.getSeconds()
-		))
+		));
 	}
 
 	toJSON() {
