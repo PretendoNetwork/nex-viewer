@@ -5,7 +5,9 @@ import {
 	addPacketToList,
 	connectionsListSection,
 	packetDetailsSection,
-	packetsTableBodySection
+	packetsTableBodySection,
+	hidePingPackets,
+	showPingPackets
 } from './renderer.js';
 
 ipcRenderer.on('clear-sections', () => {
@@ -21,6 +23,10 @@ ipcRenderer.on('packet', (event, packet) => {
 ipcRenderer.on('connections', (event, connections) => {
 	populateConnectionsList(JSON.parse(connections));
 });
+
+ipcRenderer.on('hide-ping-packets', hidePingPackets);
+
+ipcRenderer.on('show-ping-packets', showPingPackets);
 
 ready(() => {
 	ipcRenderer.send('renderer-ready');

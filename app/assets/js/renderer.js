@@ -12,6 +12,7 @@ const packetsSection = document.getElementById('packets');
 export const packetDetailsSection = document.getElementById('packet-details');
 export const connectionsListSection = document.getElementById('connections-list');
 export const packetsTableBodySection = packetsSection.querySelector('tbody');
+let displayPingPackets = false;
 
 const LIST_TYPE_REGEX = /List<(.*)>/;
 const MAP_TYPE_REGEX = /Map<(.*)>/;
@@ -80,6 +81,30 @@ function removePacketFilter() {
 }
 
 /**
+ * Hides PING packets from the packets view
+ */
+export function hidePingPackets() {
+	displayPingPackets = true;
+	const packetsToHide = packetsTableBodySection.querySelectorAll('[data-packet-type="PING"]:not(.hidden)');
+
+	for (const packet of packetsToHide) {
+		packet.classList.add('hidden');
+	}
+}
+
+/**
+ * Shows PING packets in the packets view
+ */
+export function showPingPackets() {
+	displayPingPackets = false;
+	const packetsToShow = packetsTableBodySection.querySelectorAll('[data-packet-type="PING"].hidden');
+
+	for (const packet of packetsToShow) {
+		packet.classList.remove('hidden');
+	}
+}
+
+/**
  * @param {string} discriminator Connection discriminator
  */
 function filterPacketsByDiscriminator(discriminator) {
@@ -91,6 +116,10 @@ function filterPacketsByDiscriminator(discriminator) {
 		const packetData = JSON.parse(packet.dataset.serialized);
 
 		if (packetData.sourceAddress !== discriminator && packetData.destinationAddress !== discriminator) {
+			packet.classList.add('hidden');
+		}
+
+		if (displayPingPackets && packet.dataset.packetType === 'PING') {
 			packet.classList.add('hidden');
 		}
 	}
@@ -156,6 +185,11 @@ export function addPacketToList(packet) {
 	tr.appendChild(info);
 
 	tr.dataset.serialized = JSON.stringify(packet);
+	tr.dataset.packetType = packet.type;
+
+	if (displayPingPackets && packet.type === 'PING') {
+		tr.classList.add('hidden');
+	}
 
 	packetsTableBodySection.appendChild(tr);
 }

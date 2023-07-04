@@ -75,6 +75,24 @@ const menuTemplate = [
 				]
 			}
 		]
+	},
+	{
+		label: 'Options',
+		id: 'options',
+		submenu: [
+			{
+				label: 'Hide PING packets',
+				type: 'checkbox',
+				checked: false,
+				async click(menuItem, browserWindow) {
+					if (menuItem.checked) {
+						browserWindow.webContents.send('hide-ping-packets');
+					} else {
+						browserWindow.webContents.send('show-ping-packets');
+					}
+				}
+			}
+		]
 	}
 ];
 
