@@ -498,19 +498,9 @@
         "name": "Mario Kart 7",
         "access_key": "6181dff1",
         "nex_version": {
-            "major": 3,
-            "minor": 1,
-            "patch": 0
-        },
-        "nex_datastore_version": {
             "major": 2,
-            "minor": 0,
-            "patch": 0
-        },
-        "nex_match_making_version": {
-            "major": 2,
-            "minor": 0,
-            "patch": 0
+            "minor": 4,
+            "patch": 3
         }
     },
     {
@@ -591,7 +581,7 @@
         "nex_version": {
             "major": 3,
             "minor": 8,
-            "patch": 13
+            "patch": 2
         }
     },
     {
@@ -599,8 +589,8 @@
         "access_key": "0fabeff2",
         "nex_version": {
             "major": 2,
-            "minor": 0,
-            "patch": 0
+            "minor": 6,
+            "patch": 1
         }
     },
     {
