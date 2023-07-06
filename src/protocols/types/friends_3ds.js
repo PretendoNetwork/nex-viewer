@@ -34,6 +34,7 @@ class GameKey extends NEXTypes.Structure {
 		};
 	}
 }
+NEXTypes.AnyDataHolder.addType('GameKey', GameKey);
 
 class NintendoPresence extends NEXTypes.Structure {
 	constructor() {
@@ -108,6 +109,7 @@ class NintendoPresence extends NEXTypes.Structure {
 		};
 	}
 }
+NEXTypes.AnyDataHolder.addType('NintendoPresence', NintendoPresence);
 
 class FriendPresence extends NEXTypes.Structure {
 	constructor() {
