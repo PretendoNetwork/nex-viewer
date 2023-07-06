@@ -80,21 +80,36 @@ class CreateMatchmakeSessionResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_match_making_version) {
+			nexVersion = stream.connection.title.nex_match_making_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.gid = stream.readUInt32LE();
-		this.sessionKey = stream.readNEXBuffer();
+
+		if (nexVersion.major >= 3) {
+			this.sessionKey = stream.readNEXBuffer();
+		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			gid: {
 				__typeName: 'uint32',
 				__typeValue: this.gid
-			},
-			sessionKey: {
-				__typeName: 'Buffer',
-				__typeValue: this.sessionKey
 			}
 		};
+
+		if (this.sessionKey !== undefined) {
+			data.sessionKey = {
+				__typeName: 'Buffer',
+				__typeValue: this.sessionKey
+			};
+		}
+
+		return data;
 	}
 }
 
@@ -103,16 +118,29 @@ class JoinMatchmakeSessionResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.sessionKey = stream.readNEXBuffer();
+		let nexVersion;
+		if (stream.connection.title.nex_match_making_version) {
+			nexVersion = stream.connection.title.nex_match_making_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
+		if (nexVersion.major >= 3) {
+			this.sessionKey = stream.readNEXBuffer();
+		}
 	}
 
 	toJSON() {
-		return {
-			sessionKey: {
+		const data = {};
+
+		if (this.sessionKey !== undefined) {
+			data.sessionKey = {
 				__typeName: 'Buffer',
 				__typeValue: this.sessionKey
-			}
-		};
+			};
+		}
+
+		return data;
 	}
 }
 

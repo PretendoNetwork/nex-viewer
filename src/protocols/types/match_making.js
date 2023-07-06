@@ -316,7 +316,10 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 		this.m_VacantOnly = stream.readBoolean();
 		this.m_ExcludeLocked = stream.readBoolean();
 		this.m_ExcludeNonHostPid = stream.readBoolean();
-		this.m_SelectionMethod = stream.readUInt32LE();
+
+		if (nexVersion.major >= 3) {
+			this.m_SelectionMethod = stream.readUInt32LE();
+		}
 
 		if (nexVersion.major >= 3 && nexVersion.minor >= 4) {
 			this.m_VacantParticipants = stream.readUInt16LE();
@@ -378,12 +381,15 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 			m_ExcludeNonHostPid: {
 				__typeName: 'boolean',
 				__typeValue: this.m_ExcludeNonHostPid
-			},
-			m_SelectionMethod: {
-				__typeName: 'uint32',
-				__typeValue: this.m_SelectionMethod
 			}
 		};
+
+		if (this.m_SelectionMethod !== undefined) {
+			data.m_SelectionMethod = {
+				__typeName: 'uint32',
+				__typeValue: this.m_SelectionMethod
+			};
+		}
 
 		if (this.m_VacantParticipants !== undefined) {
 			data.m_VacantParticipants = {
