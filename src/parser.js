@@ -127,7 +127,7 @@ class NEXParser extends EventEmitter {
 					stream.skip(-0x8);
 
 					// * PRUDPv1 size = magic + header + signature + packetSpecificData + payload
-					const payload = stream.readBytes(2 + 12 + 16 + packetSpecificDataLength + payloadSize)
+					const payload = stream.readBytes(2 + 12 + 16 + packetSpecificDataLength + payloadSize);
 					packet = new PacketV1(connection, payload);
 				} else {
 					stream.readRest();
