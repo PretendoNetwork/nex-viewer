@@ -7,6 +7,8 @@ const Stream = require('../stream');
 const Requests = require('./requests/storage_manager');
 const Responses = require('./responses/storage_manager');
 
+// * This is the predecessor of the current Utility protocol.
+// * It has been replaced on NEX 3.0.0 with Utility
 class StorageManager {
 	static ProtocolID = 0x6e;
 

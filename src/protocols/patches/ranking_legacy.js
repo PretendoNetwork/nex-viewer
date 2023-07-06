@@ -7,6 +7,8 @@ const Stream = require('../../stream');
 const Requests = require('../requests/ranking_legacy');
 const Responses = require('../responses/ranking_legacy');
 
+// * This is the old version of the Ranking protocol.
+// * It has been rewritten on NEX 3.0.0 to the current Ranking protocol
 class RankingLegacy {
 	static ProtocolID = 0x6e;
 
