@@ -62,3 +62,4 @@ Team Kirby Clash Deluxe      | 3.10.26
 Yo-kai Watch 2               | 3.6.18
 Wii Karaoke U                | 3.4.0
 Pokémon Rumble World         | 3.8.13
+Mario Tennis Open            | 2.0.0

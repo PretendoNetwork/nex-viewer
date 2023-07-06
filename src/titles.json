@@ -502,6 +502,11 @@
             "minor": 1,
             "patch": 0
         },
+        "nex_datastore_version": {
+            "major": 2,
+            "minor": 0,
+            "patch": 0
+        },
         "nex_match_making_version": {
             "major": 2,
             "minor": 0,
@@ -585,8 +590,17 @@
         "access_key": "844f1d0c",
         "nex_version": {
             "major": 3,
-            "minor": 7,
-            "patch": 1
+            "minor": 8,
+            "patch": 13
+        }
+    },
+    {
+        "name": "Mario Tennis Open",
+        "access_key": "0fabeff2",
+        "nex_version": {
+            "major": 2,
+            "minor": 0,
+            "patch": 0
         }
     },
     {
