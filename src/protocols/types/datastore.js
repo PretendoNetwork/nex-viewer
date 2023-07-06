@@ -776,6 +776,8 @@ class DataStoreRatingInfo extends NEXTypes.Structure {
 }
 
 class DataStorePrepareUpdateParam extends NEXTypes.Structure {
+	#dataIdType;
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -792,10 +794,10 @@ class DataStorePrepareUpdateParam extends NEXTypes.Structure {
 			this.dataId = stream.readUInt64LE();
 
 			// * Hack to get the proper type when encoding to JSON
-			this.dataIdType = 'uint64';
+			this.#dataIdType = 'uint64';
 		} else {
 			this.dataId = stream.readUInt32LE();
-			this.dataIdType = 'uint32';
+			this.#dataIdType = 'uint32';
 		}
 
 		this.size = stream.readUInt32LE();
@@ -812,7 +814,7 @@ class DataStorePrepareUpdateParam extends NEXTypes.Structure {
 	toJSON() {
 		const data = {
 			dataId: {
-				__typeName: this.dataIdType,
+				__typeName: this.#dataIdType,
 				__typeValue: this.dataId
 			},
 			size: {
@@ -840,6 +842,8 @@ class DataStorePrepareUpdateParam extends NEXTypes.Structure {
 }
 
 class DataStoreReqUpdateInfo extends NEXTypes.Structure {
+	#versionType;
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -856,10 +860,10 @@ class DataStoreReqUpdateInfo extends NEXTypes.Structure {
 			this.version = stream.readUInt32LE();
 
 			// * Hack to get the proper type when encoding to JSON
-			this.versionType = 'uint32';
+			this.#versionType = 'uint32';
 		} else {
 			this.version = stream.readUInt16LE();
-			this.versionType = 'uint16';
+			this.#versionType = 'uint16';
 		}
 
 		this.url = stream.readNEXString();
@@ -871,7 +875,7 @@ class DataStoreReqUpdateInfo extends NEXTypes.Structure {
 	toJSON() {
 		return {
 			version: {
-				__typeName: this.versionType,
+				__typeName: this.#versionType,
 				__typeValue: this.version
 			},
 			url: {
@@ -895,6 +899,9 @@ class DataStoreReqUpdateInfo extends NEXTypes.Structure {
 }
 
 class DataStoreCompleteUpdateParam extends NEXTypes.Structure {
+	#dataIdType;
+	#versionType;
+
 	/**
 	 *
 	 * @param {Stream} stream NEX data stream
@@ -911,18 +918,18 @@ class DataStoreCompleteUpdateParam extends NEXTypes.Structure {
 			this.dataId = stream.readUInt64LE();
 
 			// * Hack to get the proper type when encoding to JSON
-			this.dataIdType = 'uint64';
+			this.#dataIdType = 'uint64';
 		} else {
 			this.dataId = stream.readUInt32LE();
-			this.dataIdType = 'uint32';
+			this.#dataIdType = 'uint32';
 		}
 
 		if (nexVersion.major >= 3) {
 			this.version = stream.readUInt32LE();
-			this.versionType = 'uint32';
+			this.#versionType = 'uint32';
 		} else {
 			this.version = stream.readUInt16LE();
-			this.versionType = 'uint16';
+			this.#versionType = 'uint16';
 		}
 
 		this.isSuccess = stream.readBoolean();
@@ -931,11 +938,11 @@ class DataStoreCompleteUpdateParam extends NEXTypes.Structure {
 	toJSON() {
 		return {
 			dataId: {
-				__typeName: this.dataIdType,
+				__typeName: this.#dataIdType,
 				__typeValue: this.dataId
 			},
 			version: {
-				__typeName: this.versionType,
+				__typeName: this.#versionType,
 				__typeValue: this.version
 			},
 			isSuccess: {
