@@ -49,8 +49,16 @@ class Utility {
 	static handlePacket(packet) {
 		const methodId = packet.rmcMessage.methodId;
 
-		// Check if game uses Storage Manager instead of Utility
-		if (packet.connection.accessKey === '6181dff1' || packet.connection.accessKey === '0fabeff2') {
+		let nexVersion;
+		if (packet.connection.title.nex_utility_version) {
+			nexVersion = packet.connection.title.nex_utility_version;
+		} else {
+			nexVersion = packet.connection.title.nex_version;
+		}
+
+		// Check if game uses Storage Manager instead of Utility. Since there aren't many games that use it,
+		// assume games not listed on title list to use Utility
+		if (nexVersion.major < 3 && nexVersion.major > 0) {
 			StorageManager.handlePacket(packet);
 			return;
 		}

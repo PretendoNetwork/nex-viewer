@@ -70,8 +70,16 @@ class Ranking {
 			return;
 		}
 
-		// Check if method is a legacy method
-		if (packet.connection.accessKey === '6181dff1' || packet.connection.accessKey === '0fabeff2') {
+		let nexVersion;
+		if (packet.connection.title.nex_ranking_version) {
+			nexVersion = packet.connection.title.nex_ranking_version;
+		} else {
+			nexVersion = packet.connection.title.nex_version;
+		}
+
+		// Check if game uses legacy Ranking. Since there aren't many games that use it,
+		// assume games not listed on title list to use modern Ranking
+		if (nexVersion.major < 3 && nexVersion.major > 0) {
 			RankingLegacy.handlePacket(packet);
 			return;
 		}
