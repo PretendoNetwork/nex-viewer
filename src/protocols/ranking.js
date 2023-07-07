@@ -5,7 +5,7 @@ const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
 const RankingSplatoon = require('./patches/ranking_splatoon');
-const RankingMK7 = require('./patches/ranking_mk7');
+const RankingLegacy = require('./patches/ranking_legacy');
 
 const Requests = require('./requests/ranking');
 const Responses = require('./responses/ranking');
@@ -70,9 +70,17 @@ class Ranking {
 			return;
 		}
 
-		// Check if method is a MK7 patched method
-		if (packet.connection.accessKey === '6181dff1') {
-			RankingMK7.handlePacket(packet);
+		let nexVersion;
+		if (packet.connection.title.nex_ranking_version) {
+			nexVersion = packet.connection.title.nex_ranking_version;
+		} else {
+			nexVersion = packet.connection.title.nex_version;
+		}
+
+		// Check if game uses legacy Ranking. Since there aren't many games that use it,
+		// assume games not listed on title list to use modern Ranking
+		if (nexVersion.major < 3 && nexVersion.major > 0) {
+			RankingLegacy.handlePacket(packet);
 			return;
 		}
 

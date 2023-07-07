@@ -17,6 +17,7 @@ MARIO & SONIC SOCHI 2014 | 585214a5
 MARIO KART 8 | 25dbf96a
 Mario & Sonic Rio 2016 | 63fecb0f
 Mario Kart 7 | 6181dff1
+Mario Tennis Open | 0fabeff2
 Mario Tennis: Ultra Smash | c69b92a0
 Mario vs. DK: Tipping Stars | d8927c3f
 Metroid Prime: FF | f79fb3c5

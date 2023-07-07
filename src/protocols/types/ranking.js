@@ -51,6 +51,13 @@ class RankingRankData extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		let nexVersion;
+		if (stream.connection.title.nex_ranking_version) {
+			nexVersion = stream.connection.title.nex_ranking_version;
+		} else {
+			nexVersion = stream.connection.title.nex_version;
+		}
+
 		this.principalId = stream.readPID();
 		this.uniqueId = stream.readUInt64LE();
 		this.order = stream.readUInt32LE();
@@ -60,7 +67,7 @@ class RankingRankData extends NEXTypes.Structure {
 		this.param = stream.readUInt64LE();
 		this.commonData = stream.readNEXBuffer();
 
-		if (this._structureHeader.version >= 1) {
+		if (nexVersion.major >= 3 && nexVersion.minor >= 6) {
 			this.updateTime = stream.readNEXDateTime();
 		}
 	}

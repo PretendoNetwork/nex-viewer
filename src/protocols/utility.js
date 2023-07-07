@@ -4,7 +4,7 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
-const UtilityMK7 = require('./patches/utility_mk7');
+const StorageManager = require('./storage_manager');
 
 const Requests = require('./requests/utility');
 const Responses = require('./responses/utility');
@@ -49,9 +49,17 @@ class Utility {
 	static handlePacket(packet) {
 		const methodId = packet.rmcMessage.methodId;
 
-		// Check if method is a MK7 patched method
-		if (packet.connection.accessKey === '6181dff1') {
-			UtilityMK7.handlePacket(packet);
+		let nexVersion;
+		if (packet.connection.title.nex_utility_version) {
+			nexVersion = packet.connection.title.nex_utility_version;
+		} else {
+			nexVersion = packet.connection.title.nex_version;
+		}
+
+		// Check if game uses Storage Manager instead of Utility. Since there aren't many games that use it,
+		// assume games not listed on title list to use Utility
+		if (nexVersion.major < 3 && nexVersion.major > 0) {
+			StorageManager.handlePacket(packet);
 			return;
 		}
 

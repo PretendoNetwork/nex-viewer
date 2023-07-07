@@ -498,14 +498,9 @@
         "name": "Mario Kart 7",
         "access_key": "6181dff1",
         "nex_version": {
-            "major": 3,
-            "minor": 1,
-            "patch": 0
-        },
-        "nex_match_making_version": {
             "major": 2,
-            "minor": 0,
-            "patch": 0
+            "minor": 4,
+            "patch": 3
         }
     },
     {
@@ -585,7 +580,16 @@
         "access_key": "844f1d0c",
         "nex_version": {
             "major": 3,
-            "minor": 7,
+            "minor": 8,
+            "patch": 2
+        }
+    },
+    {
+        "name": "Mario Tennis Open",
+        "access_key": "0fabeff2",
+        "nex_version": {
+            "major": 2,
+            "minor": 6,
             "patch": 1
         }
     },

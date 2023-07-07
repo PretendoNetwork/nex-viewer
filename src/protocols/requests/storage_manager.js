@@ -1,19 +1,19 @@
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 
-class AcquireNexUniqueIdRequest {
+class AcquireCardIdRequest {
 	// * Requests nothing
 	toJSON() {
 		return {};
 	}
 }
 
-class UnknownMethod0x5Request {
+class ActivateWithCardIdRequest {
 	/**
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
 		this.unknown = stream.readUInt8();
-		this.pNexUniqueId = stream.readUInt64LE();
+		this.cardId = stream.readUInt64LE();
 	}
 
 	toJSON() {
@@ -22,15 +22,15 @@ class UnknownMethod0x5Request {
 				__typeName: 'uint8',
 				__typeValue: this.unknown
 			},
-			pNexUniqueId: {
+			cardId: {
 				__typeName: 'uint64',
-				__typeValue: this.pNexUniqueId
+				__typeValue: this.cardId
 			}
 		};
 	}
 }
 
 module.exports = {
-	AcquireNexUniqueIdRequest,
-	UnknownMethod0x5Request
+	AcquireCardIdRequest,
+	ActivateWithCardIdRequest
 };

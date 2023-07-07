@@ -52,7 +52,7 @@ Game Party                   | 3.0.1
 Star Wars Pinball            | 3.0.1
 Zen Pinball 2                | 3.0.1
 Mario vs. DK: Tipping Stars  | 3.7.1
-Mario Kart 7                 | 3.1.0
+Mario Kart 7                 | 2.4.3
 Badge Arcade                 | 3.7.16
 Pokémon Bank                 | 3.4.13
 IronFall Invasion            | 3.7.18
@@ -61,4 +61,5 @@ Metroid Prime: FF            | 3.9.17
 Team Kirby Clash Deluxe      | 3.10.26
 Yo-kai Watch 2               | 3.6.18
 Wii Karaoke U                | 3.4.0
-Pokémon Rumble World         | 3.8.13
+Pokémon Rumble World         | 3.8.2
+Mario Tennis Open            | 2.6.1
