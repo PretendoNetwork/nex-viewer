@@ -501,64 +501,7 @@ function serializeRMCBody(rmcData) {
 
 					serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
 				} else if (isArray(typeValue)) {
-					let listType = typeName.match(LIST_TYPE_REGEX)?.[1] || typeName; // * Support Map lists
-					let isMap = false;
-					let mapKeyTypeName;
-					let mapValueTypeName;
-
-					if (listType.match(MAP_TYPE_REGEX)) {
-						isMap = true;
-						[mapKeyTypeName, mapValueTypeName] = listType.match(MAP_TYPE_REGEX)[1].split(', ');
-					}
-
-					const serializedRMCDataDetails = document.createElement('details');
-					const serializedRMCDataSummary = document.createElement('summary');
-
-					serializedRMCDataSummary.appendChild(document.createTextNode(`${key} (${typeName} length ${typeValue.length})`));
-					serializedRMCDataDetails.appendChild(serializedRMCDataSummary);
-
-					for (let i = 0; i < typeValue.length; i++) {
-						let value = typeValue[i];
-
-						if (isNEXPrimative(listType)) {
-							if (listType === 'Buffer' || listType === 'qBuffer' || listType === 'unknown') {
-								value = toHexString(value.data); // * value is a NodeJS Buffer object
-							}
-
-							const rmcValueElementDiv = document.createElement('div');
-							const rmcValueElementName = document.createElement('span');
-							const rmcValueElementValue = document.createElement('span');
-							rmcValueElementName.classList.add('name');
-							rmcValueElementValue.classList.add('value');
-
-							rmcValueElementName.appendChild(document.createTextNode(`${key}[${i}] (${listType}):`));
-							rmcValueElementValue.appendChild(document.createTextNode(value));
-
-							rmcValueElementDiv.appendChild(rmcValueElementName);
-							rmcValueElementDiv.appendChild(rmcValueElementValue);
-
-							serializedRMCDataDetails.appendChild(rmcValueElementDiv);
-						} else {
-							if (isMap) {
-								value.key.__typeName = mapKeyTypeName;
-								value.value.__typeName = mapValueTypeName;
-							}
-
-							const rmcValueElementDiv = document.createElement('div');
-							const rmcValueElementSummary = document.createElement('summary');
-							const rmcValueElementDetails = document.createElement('details');
-
-							rmcValueElementSummary.appendChild(document.createTextNode(`${key}[${i}] (${listType}):`));
-
-							rmcValueElementDetails.appendChild(serializeRMCBody(value));
-							rmcValueElementDetails.appendChild(rmcValueElementSummary);
-
-							rmcValueElementDiv.appendChild(rmcValueElementDetails);
-
-							serializedRMCDataDetails.appendChild(rmcValueElementDiv);
-						}
-					}
-
+					const serializedRMCDataDetails = serializeNEXList(key, value);
 					serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
 				} else {
 					const rmcValueElementDiv = document.createElement('div');
@@ -580,6 +523,89 @@ function serializeRMCBody(rmcData) {
 	}
 
 	return serializedRMCDataDiv;
+}
+
+/**
+ * @param {string} key Name of NEX list
+ * @param {object} value NEX list to serialize
+ * @returns {Element} HTML element containing serialized NEX list
+ */
+function serializeNEXList(key, value) {
+	const typeName = value.__typeName;
+	let typeValue = value.__typeValue;
+
+	let listType = typeName.match(LIST_TYPE_REGEX)?.[1] || typeName; // * Support Map lists
+	let isMap = false;
+	let isList = false;
+	let mapKeyTypeName;
+	let mapValueTypeName;
+
+	if (listType.match(MAP_TYPE_REGEX)) {
+		isMap = true;
+		[mapKeyTypeName, mapValueTypeName] = listType.match(MAP_TYPE_REGEX)[1].split(', ');
+	}
+
+	if (listType.match(LIST_TYPE_REGEX)) {
+		isList = true;
+	}
+
+	const serializedRMCDataDetails = document.createElement('details');
+	const serializedRMCDataSummary = document.createElement('summary');
+
+	serializedRMCDataSummary.appendChild(document.createTextNode(`${key} (${typeName} length ${typeValue.length})`));
+	serializedRMCDataDetails.appendChild(serializedRMCDataSummary);
+
+	for (let i = 0; i < typeValue.length; i++) {
+		let value = typeValue[i];
+
+		if (isNEXPrimative(listType)) {
+			if (listType === 'Buffer' || listType === 'qBuffer' || listType === 'unknown') {
+				value = toHexString(value.data); // * value is a NodeJS Buffer object
+			}
+
+			const rmcValueElementDiv = document.createElement('div');
+			const rmcValueElementName = document.createElement('span');
+			const rmcValueElementValue = document.createElement('span');
+			rmcValueElementName.classList.add('name');
+			rmcValueElementValue.classList.add('value');
+
+			rmcValueElementName.appendChild(document.createTextNode(`${key}[${i}] (${listType}):`));
+			rmcValueElementValue.appendChild(document.createTextNode(value));
+
+			rmcValueElementDiv.appendChild(rmcValueElementName);
+			rmcValueElementDiv.appendChild(rmcValueElementValue);
+
+			serializedRMCDataDetails.appendChild(rmcValueElementDiv);
+		} else if (isList) {
+			const listValue = {};
+			listValue.__typeName = listType;
+			listValue.__typeValue = value;
+
+			const rmcListElementDiv = document.createElement('div');
+			rmcListElementDiv.appendChild(serializeNEXList(`${key}[${i}]`, listValue));
+			serializedRMCDataDetails.appendChild(rmcListElementDiv);
+		} else {
+			if (isMap) {
+				value.key.__typeName = mapKeyTypeName;
+				value.value.__typeName = mapValueTypeName;
+			}
+
+			const rmcValueElementDiv = document.createElement('div');
+			const rmcValueElementSummary = document.createElement('summary');
+			const rmcValueElementDetails = document.createElement('details');
+
+			rmcValueElementSummary.appendChild(document.createTextNode(`${key}[${i}] (${listType}):`));
+			rmcValueElementDetails.appendChild(serializeRMCBody(value));
+
+			rmcValueElementDetails.appendChild(rmcValueElementSummary);
+
+			rmcValueElementDiv.appendChild(rmcValueElementDetails);
+
+			serializedRMCDataDetails.appendChild(rmcValueElementDiv);
+		}
+	}
+
+	return serializedRMCDataDetails;
 }
 
 document.addEventListener('click', event => {
