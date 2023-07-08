@@ -539,7 +539,6 @@ function serializeNEXList(key, value) {
 	let isList = false;
 	let mapKeyTypeName;
 	let mapValueTypeName;
-	let listValueTypeName;
 
 	if (listType.match(MAP_TYPE_REGEX)) {
 		isMap = true;
@@ -548,8 +547,6 @@ function serializeNEXList(key, value) {
 
 	if (listType.match(LIST_TYPE_REGEX)) {
 		isList = true;
-
-		listValueTypeName = listType.match(LIST_TYPE_REGEX)[1];
 	}
 
 	const serializedRMCDataDetails = document.createElement('details');
@@ -579,6 +576,14 @@ function serializeNEXList(key, value) {
 			rmcValueElementDiv.appendChild(rmcValueElementValue);
 
 			serializedRMCDataDetails.appendChild(rmcValueElementDiv);
+		} else if (isList) {
+			const listValue = {};
+			listValue.__typeName = listType;
+			listValue.__typeValue = value;
+
+			const rmcListElementDiv = document.createElement('div');
+			rmcListElementDiv.appendChild(serializeNEXList(`${key}[${i}]`, listValue));
+			serializedRMCDataDetails.appendChild(rmcListElementDiv);
 		} else {
 			if (isMap) {
 				value.key.__typeName = mapKeyTypeName;
@@ -590,18 +595,7 @@ function serializeNEXList(key, value) {
 			const rmcValueElementDetails = document.createElement('details');
 
 			rmcValueElementSummary.appendChild(document.createTextNode(`${key}[${i}] (${listType}):`));
-
-			if (isList) {
-				const listValue = {};
-				listValue.__typeName = listValueTypeName;
-				listValue.__typeValue = value;
-
-				const rmcListElementDiv = document.createElement('div');
-				rmcListElementDiv.appendChild(serializeNEXList(`${key}[${i}]`, listValue));
-				rmcValueElementDetails.appendChild(rmcListElementDiv);
-			} else {
-				rmcValueElementDetails.appendChild(serializeRMCBody(value));
-			}
+			rmcValueElementDetails.appendChild(serializeRMCBody(value));
 
 			rmcValueElementDetails.appendChild(rmcValueElementSummary);
 
