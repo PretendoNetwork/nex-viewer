@@ -6,57 +6,75 @@ class PacketV0 extends Packet {
 	/**
 	 *
 	 * @param {Connection} connection NEX connection
-	 * @param {Buffer} data Packet data
+	 * @param {Stream} stream Packet data stream
 	 */
-	constructor(connection, data) {
-		super(connection, data);
+	constructor(connection, stream) {
+		super(connection, stream);
 
 		this.version = 0;
 
 		this.checksum;
+		this.packetData;  // * Used for easy checksum generation
 	}
 
 	decode() {
-		const stream = new Stream(this.data);
+		const start = this.stream.pos();
 
-		this.source = stream.readUInt8();
-		this.destination = stream.readUInt8();
+		this.source = this.stream.readUInt8();
+		this.destination = this.stream.readUInt8();
 
-		const typeAndFlags = stream.readUInt16LE();
+		const typeAndFlags = this.stream.readUInt16LE();
 
 		this.flags = typeAndFlags >> 4;
 		this.type = typeAndFlags & 0xF;
-		this.sessionId = stream.readUInt8();
-		this.signature = stream.readBytes(0x4);
-		this.sequenceId = stream.readUInt16LE();
+
+		if (this.type > 4) {
+			throw new Error(`Invalid packet type. Expected 1-4, got ${this.type}`);
+		}
+
+		if (this.flags > 15) {
+			throw new Error(`Invalid packet flags. Expected 0-15, got ${this.flags}`);
+		}
+
+		this.sessionId = this.stream.readUInt8();
+		this.signature = this.stream.readBytes(0x4);
+		this.sequenceId = this.stream.readUInt16LE();
 
 		if (this.isSyn() || this.isConnect()) {
-			this.connectionSignature = stream.readBytes(0x4);
+			this.connectionSignature = this.stream.readBytes(0x4);
 		}
 
 		if (this.isData()) {
-			this.fragmentId = stream.readUInt8();
+			this.fragmentId = this.stream.readUInt8();
 		}
 
 		let payloadSize = 0;
 
 		if (this.hasFlagHasSize()) {
-			payloadSize = stream.readUInt16LE();
+			payloadSize = this.stream.readUInt16LE();
 		} else {
-			payloadSize = stream.remaining() - 1;
+			payloadSize = this.stream.remaining() - 1;
 		}
 
-		this.payload = stream.readBytes(payloadSize);
-		this.checksum = stream.readUInt8();
+		if (payloadSize > (this.stream.remaining() - 1)) {
+			throw new Error(`Packet payload too large. Payload space left is ${this.stream.remaining() - 1}, got ${payloadSize}`);
+		}
 
-		// TODO - Verify checksum
+		this.payload = this.stream.readBytes(payloadSize);
+
+		const end = this.stream.pos();
+
+		// * Quick hack to be used in packet calculation
+		// * so we don't have to build this buffer again
+		this.packetData = this.stream._buffer.subarray(start, end);
+
+		this.checksum = this.stream.readUInt8();
 
 		if (this.connection.accessKey) {
-			// Found access key, can now check packet signatures
+			// * Found access key, can now check packet checksum
 			const calculatedChecksum = this.calculateChecksum();
 			if (calculatedChecksum !== this.checksum) {
-				console.log(this);
-				throw new Error('Failed to validate v0 checksum');
+				throw new Error(`Invalid PRUDPv0 packet checksum. Expected ${this.checksum}, got ${calculatedChecksum}`);
 			}
 		}
 	}
@@ -78,7 +96,7 @@ class PacketV0 extends Packet {
 			base = sum(Buffer.from(key));
 		}
 
-		const data = this.data.subarray(0, this.data.length - 1);
+		const data = this.packetData;
 
 		const numWords = Math.floor(data.length / 4);
 		const words = [];

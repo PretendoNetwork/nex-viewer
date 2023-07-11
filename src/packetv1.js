@@ -14,13 +14,13 @@ class PacketV1 extends Packet {
 	/**
 	 *
 	 * @param {Connection} connection NEX connection
-	 * @param {Buffer} data Packet data
+	 * @param {Stream} stream Packet data stream
 	 */
-	constructor(connection, data) {
-		super(connection, data);
+	constructor(connection, stream) {
+		super(connection, stream);
 
 		this.version = 1;
-
+		this.headerStream; // * Used for easy signature generation
 		this.substreamId;
 		this.prudpProtocolMinorVersion;
 		this.supportedFunctions;
@@ -30,71 +30,68 @@ class PacketV1 extends Packet {
 	}
 
 	decode() {
-		const stream = new Stream(this.data);
+		this.stream.skip(0x2); // * Skip the magic
 
-		stream.skip(0x2); // Skip the magic
+		this.headerStream = new Stream(this.stream.readBytes(0xC));
 
-		// Start of packet header
-		stream.skip(0x1); // Skip the PRUDP version, always 1
+		this.headerStream.skip(0x1); // * Skip the PRUDP version, always 1
 
-		const packetSpecificDataLength = stream.readUInt8();
-		const payloadSize = stream.readUInt16LE();
+		const packetSpecificDataLength = this.headerStream.readUInt8();
+		const payloadSize = this.headerStream.readUInt16LE();
 
-		this.source = stream.readUInt8();
-		this.destination = stream.readUInt8();
+		this.source = this.headerStream.readUInt8();
+		this.destination = this.headerStream.readUInt8();
 
-		const typeAndFlags = stream.readUInt16LE();
+		const typeAndFlags = this.headerStream.readUInt16LE();
 
 		this.flags = typeAndFlags >> 4;
 		this.type = typeAndFlags & 0xF;
 
-		this.sessionId = stream.readUInt8();
-		this.substreamId = stream.readUInt8();
-		this.sequenceId = stream.readUInt16LE();
-		// End packet header
+		this.sessionId = this.headerStream.readUInt8();
+		this.substreamId = this.headerStream.readUInt8();
+		this.sequenceId = this.headerStream.readUInt16LE();
 
-		this.signature = stream.readBytes(0x10);
-		this.packetSpecificData = stream.readBytes(packetSpecificDataLength);
+		this.signature = this.stream.readBytes(0x10);
+		this.packetSpecificData = this.stream.readBytes(packetSpecificDataLength);
 
 		this.parsePacketSpecificData();
 
-		this.payload = stream.readBytes(payloadSize);
+		this.payload = this.stream.readBytes(payloadSize);
 
 		if (this.connection.accessKey) {
-			// Found access key, can now check packet signatures
+			// * Found access key, can now check packet signature
 			const calculatedSignature = this.calculateSignature();
 			if (!calculatedSignature.equals(this.signature)) {
-				console.log(this);
-				throw new Error('Failed to validate v1 signature');
+				throw new Error(`Invalid PRUDPv1 packet signature. Expected ${this.signature}, got ${calculatedSignature}`);
 			}
 		}
 	}
 
 	parsePacketSpecificData() {
-		const stream = new Stream(this.packetSpecificData);
+		const packetSpecificDataStream = new Stream(this.packetSpecificData);
 
-		while (stream.hasDataLeft()) {
-			const optionId = stream.readUInt8();
-			const optionSize = stream.readUInt8();
+		while (packetSpecificDataStream.hasDataLeft()) {
+			const optionId = packetSpecificDataStream.readUInt8();
+			const optionSize = packetSpecificDataStream.readUInt8();
 
 			switch (optionId) {
 			case OPTION_SUPPORTED_FUNCTIONS: {
-				const optionData = stream.readUInt32LE();
+				const optionData = packetSpecificDataStream.readUInt32LE();
 				this.prudpProtocolMinorVersion = optionData & 0xFF;
 				this.supportedFunctions = optionData >> 8;
 				break;
 			}
 			case OPTION_CONNECTION_SIGNATURE:
-				this.connectionSignature = stream.readBytes(optionSize);
+				this.connectionSignature = packetSpecificDataStream.readBytes(optionSize);
 				break;
 			case OPTION_FRAGMENT_ID:
-				this.fragmentId = stream.readUInt8();
+				this.fragmentId = packetSpecificDataStream.readUInt8();
 				break;
 			case OPTION_INITIAL_SEQUENCE_ID:
-				this.initialSequenceId = stream.readUInt16LE();
+				this.initialSequenceId = packetSpecificDataStream.readUInt16LE();
 				break;
 			case OPTION_MAX_SUBSTREAM_ID:
-				this.maximumSubstreamId = stream.readUInt8();
+				this.maximumSubstreamId = packetSpecificDataStream.readUInt8();
 				break;
 			}
 		}
@@ -142,7 +139,7 @@ class PacketV1 extends Packet {
 
 		const hmac = crypto.createHmac('md5', signatureKey);
 
-		hmac.update(this.data.subarray(6, 14)); // Bytes 0x4 - 0xC of the packet header
+		hmac.update(this.headerStream._buffer.subarray(0x4, 0xC));
 		hmac.update(sessionKey);
 		hmac.update(accessKeySum);
 		hmac.update(connectionSignature);

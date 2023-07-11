@@ -13,9 +13,7 @@ const Stream = require('./stream');
 // ! PRUDPv0 does not have magics
 // ! Nintendo uses standardized source/destinations with NEX
 // ! Checking the source/destination can tell us if it's v0
-const MAGIC_SERVERBOUND = Buffer.from([0xAF, 0xA1]);
-const MAGIC_CLIENTBOUND = Buffer.from([0xA1, 0xAF]);
-const MAGIC_V1 = Buffer.from([0xEA, 0xD0]);
+const PRUDP_V1_MAGIC = Buffer.from([0xEA, 0xD0]);
 
 // * Magics to check for when parsing UDP packets
 const XID_MAGIC = Buffer.from([0x81, 0x01, 0x0]);
@@ -113,32 +111,63 @@ class NEXParser extends EventEmitter {
 			let packet;
 
 			const magic = stream.readBytes(0x2);
+			stream.skip(-0x2);
 
-			if (magic.equals(MAGIC_V1)) {
-				// * Skip Quazal Net-Z packets
-				stream.skip(0x1);
-
-				const packetSpecificDataLength = stream.readUInt8();
-				const payloadSize = stream.readUInt16LE();
-				const source_destination = stream.readBytes(0x2);
-
-				if (source_destination.equals(MAGIC_SERVERBOUND) || source_destination.equals(MAGIC_CLIENTBOUND)) {
-					// * Restore offset to start of payload
-					stream.skip(-0x8);
-
-					// * PRUDPv1 size = magic + header + signature + packetSpecificData + payload
-					const payload = stream.readBytes(2 + 12 + 16 + packetSpecificDataLength + payloadSize);
-					packet = new PacketV1(connection, payload);
-				} else {
-					stream.readRest();
+			if (magic.equals(PRUDP_V1_MAGIC)) {
+				try {
+					packet = new PacketV1(connection, stream);
+				} catch (error) {
+					stream.readRest(); // * Dispose of the rest of the data in the stream
 					return;
 				}
-			} else if (magic.equals(MAGIC_SERVERBOUND) || magic.equals(MAGIC_CLIENTBOUND)) {
-				packet = new PacketV0(connection, udpPacket.payload);
 			} else {
-				// Not a NEX packet
-				stream.readRest();
-				return;
+				// * Assume packet is v0 and just Try It
+				try {
+					// * THIS IS *EXPECTED* TO FAIL OFTEN!
+					// * PRUDPv0 DOES NOT HAVE A MAGIC LIKE v1!
+					// * OUR BEST OPTION IS TO GUESS
+					packet = new PacketV0(connection, stream);
+				} catch (error) {
+					stream.readRest(); // * Dispose of the rest of the data in the stream
+					return;
+				}
+			}
+
+			if (packet.isSyn()) {
+				if (packet.isToClient() && !connection.doneClientSyn) {
+					// * SYN packet from the server without seeing one from the client yet
+					return;
+				}
+
+				if (packet.isToServer()) {
+					connection.doneClientSyn = true;
+				}
+
+				if (packet.isToClient()) {
+					connection.doneServerSyn = true;
+				}
+			}
+
+			if (packet.isConnect()) {
+				if (!connection.doneClientSyn || !connection.doneServerSyn) {
+					// * CONNECT packet without completing the SYN sequence
+					return;
+				}
+
+				if (packet.isToServer()) {
+					connection.doneClientConnect = true;
+				}
+
+				if (packet.isToClient()) {
+					connection.doneServerConnect = true;
+				}
+			}
+
+			if (packet.isData()) {
+				if (!connection.doneClientConnect || !connection.doneServerConnect) {
+					// * DATA packet without completing the CONNECT sequence
+					return;
+				}
 			}
 
 			// * Add conenctions after packet validation

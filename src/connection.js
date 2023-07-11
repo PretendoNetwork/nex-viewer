@@ -41,8 +41,6 @@ const NEX_KEYS = Object.fromEntries(NEX_KEYS_FILE.split('\n').filter(line => lin
 	return [pid, password];
 }));
 
-console.log(NEX_KEYS);
-
 // * Derive Kerberos keys from passwords
 for (let pid in NEX_KEYS) {
 	const key = NEX_KEYS[pid];
@@ -67,6 +65,16 @@ class Connection {
 	constructor(discriminator) {
 		this.discriminator = discriminator;
 		this.packets = [];
+
+		// * These are used as part of the heuristics during packet parsing
+		// * to know if a packet is legitimate or not.
+		// * For example if a CONNECT packet comes in before the SYN packets,
+		// * of if a DATA packet comes in before the CONNECT packets. These
+		// * packets will be marked as illegitimate
+		this.doneClientSyn = false;
+		this.doneServerSyn = false;
+		this.doneClientConnect = false;
+		this.doneServerConnect = false;
 
 		this.reset();
 	}

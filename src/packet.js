@@ -1,4 +1,5 @@
 const Connection = require('./connection'); // eslint-disable-line no-unused-vars
+const Stream = require('./stream'); // eslint-disable-line no-unused-vars
 
 class Packet {
 	static FLAGS = {
@@ -21,11 +22,11 @@ class Packet {
 	/**
 	 *
 	 * @param {Connection} connection NEX connection
-	 * @param {Buffer} data Packet data
+	 * @param {Stream} stream Packet data stream
 	 */
-	constructor(connection, data) {
+	constructor(connection, stream) {
 		this.connection = connection;
-		this.data = data;
+		this.stream = stream;
 
 		this.version;
 		this.source;

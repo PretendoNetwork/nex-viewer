@@ -15,10 +15,18 @@ class Stream {
 
 	/**
 	 *
+	 * @returns {number} Current offset into the data
+	 */
+	pos() {
+		return this._offset;
+	}
+
+	/**
+	 *
 	 * @returns {boolean} True if has data left to read
 	 */
 	hasDataLeft() {
-		return this._offset < this._buffer.length;
+		return this.pos() < this._buffer.length;
 	}
 
 	/**
@@ -26,7 +34,7 @@ class Stream {
 	 * @returns {number} Bytes left in the stream from current position
 	 */
 	remaining() {
-		return this._buffer.length - this._offset;
+		return this._buffer.length - this.pos();
 	}
 
 	/**
@@ -43,7 +51,7 @@ class Stream {
 	 * @returns {Buffer} Read bytes
 	 */
 	read(len) {
-		const read = this._buffer.subarray(this._offset, this._offset + len);
+		const read = this._buffer.subarray(this.pos(), this.pos() + len);
 		this._offset += len;
 
 		return read;
