@@ -66,6 +66,29 @@ class UnknownMethod0xFResponse {
 	}
 }
 
+class GetTotalResponse {
+	/**
+	 * @param {Stream} stream NEX data stream
+	 */
+	constructor(stream) {
+		this.unknown = stream.readUInt16LE();
+		this.total = stream.readUInt32LE();
+	}
+
+	toJSON() {
+		return {
+			unknown: {
+				__typeName: 'uint16',
+				__typeValue: this.unknown
+			},
+			total: {
+				__typeName: 'uint32',
+				__typeValue: this.total
+			}
+		};
+	}
+}
+
 class UploadScoreWithLimitResponse {
 	/**
 	 * @param {Stream} stream NEX data stream
@@ -157,6 +180,7 @@ module.exports = {
 	UploadCommonDataResponse,
 	UnknownMethod0xEResponse,
 	UnknownMethod0xFResponse,
+	GetTotalResponse,
 	UploadScoreWithLimitResponse,
 	UploadSpecificPeriodScoreResponse,
 	GetSpecificPeriodDataListResponse,

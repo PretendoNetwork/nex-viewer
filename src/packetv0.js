@@ -23,6 +23,27 @@ class PacketV0 extends Packet {
 		this.source = this.stream.readUInt8();
 		this.destination = this.stream.readUInt8();
 
+		// * Skip Quazal Net-Z packets
+		if ((this.source & 0xF) === (this.destination & 0xF)) { // * The source and destination ports are the same
+			throw new Error(`Source and destination ports are the same. Source ${this.source}, destination ${this.destination}`);
+		}
+
+		if ((this.source & 0xF0) === 0x10) { // * Source uses DO stream type
+			throw new Error(`Source stream type is DO. Source ${this.source}`);
+		}
+
+		if ((this.source & 0xF0) === 0x50) { // * Source uses NAT stream type
+			throw new Error(`Source stream type is NAT. Source ${this.source}`);
+		}
+
+		if ((this.destination & 0xF0) === 0x10) { // * Destination uses DO stream type
+			throw new Error(`Destination stream type is DO. Destination ${this.destination}`);
+		}
+
+		if ((this.destination & 0xF0) === 0x50) { // * Destination uses NAT stream type
+			throw new Error(`Destination stream type is DO. Destination ${this.destination}`);
+		}
+
 		const typeAndFlags = this.stream.readUInt16LE();
 
 		this.flags = typeAndFlags >> 4;

@@ -18,6 +18,7 @@ class RankingLegacy {
 		UploadCommonData: 0x05,
 		UnknownMethod0xE: 0x0e,
 		UnknownMethod0xF: 0x0f,
+		GetTotal: 0x10,
 		UploadScoreWithLimit: 0x11,
 		UploadSpecificPeriodScore: 0x14,
 		GetSpecificPeriodDataList: 0x16,
@@ -34,6 +35,7 @@ class RankingLegacy {
 		0x05: RankingLegacy.UploadCommonData,
 		0x0e: RankingLegacy.UnknownMethod0xE,
 		0x0f: RankingLegacy.UnknownMethod0xF,
+		0x10: RankingLegacy.GetTotal,
 		0x11: RankingLegacy.UploadScoreWithLimit,
 		0x14: RankingLegacy.UploadSpecificPeriodScore,
 		0x16: RankingLegacy.GetSpecificPeriodDataList,
@@ -103,6 +105,20 @@ class RankingLegacy {
 			return new Requests.UnknownMethod0xFRequest(stream);
 		} else {
 			return new Responses.UnknownMethod0xFResponse(stream);
+		}
+	}
+
+	/**
+	 *
+	 * @param {RMCMessage} rmcMessage NEX RMC message
+	 * @param {Stream} stream NEX data stream
+	 * @returns {object} Parsed RMC body
+	 */
+	static GetTotal(rmcMessage, stream) {
+		if (rmcMessage.isRequest()) {
+			return new Requests.GetTotalRequest(stream);
+		} else {
+			return new Responses.GetTotalResponse(stream);
 		}
 	}
 
