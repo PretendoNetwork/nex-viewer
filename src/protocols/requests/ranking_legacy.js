@@ -154,6 +154,44 @@ class UnknownMethod0xFRequest {
 	}
 }
 
+class GetTotalRequest {
+	/**
+	 * @param {Stream} stream NEX data stream
+	 */
+	constructor(stream) {
+		this.category = stream.readUInt32LE();
+		this.unknown1 = stream.readUInt8();
+		this.unknown2 = stream.readUInt8();
+		this.unknown3 = stream.readUInt8();
+		this.unknown4 = stream.readUInt32LE();
+	}
+
+	toJSON() {
+		return {
+			category: {
+				__typeName: 'uint32',
+				__typeValue: this.category
+			},
+			unknown1: {
+				__typeName: 'uint8',
+				__typeValue: this.unknown1
+			},
+			unknown2: {
+				__typeName: 'uint8',
+				__typeValue: this.unknown2
+			},
+			unknown3: {
+				__typeName: 'uint8',
+				__typeValue: this.unknown3
+			},
+			unknown4: {
+				__typeName: 'uint32',
+				__typeValue: this.unknown4
+			}
+		};
+	}
+}
+
 class UploadScoreWithLimitRequest {
 	/**
 	 * @param {Stream} stream NEX data stream
@@ -310,6 +348,7 @@ module.exports = {
 	UploadCommonDataRequest,
 	UnknownMethod0xERequest,
 	UnknownMethod0xFRequest,
+	GetTotalRequest,
 	UploadScoreWithLimitRequest,
 	UploadSpecificPeriodScoreRequest,
 	GetSpecificPeriodDataListRequest,
