@@ -175,10 +175,6 @@ class Connection {
 			return;
 		}
 
-		if (packet.isToServer() && packet.isSyn() && this.isSecureServer === false) {
-			this.reset();
-		}
-
 		if (packet.isToServer() && !this.accessKey) {
 			// * Find access key
 			for (const title of titles) {

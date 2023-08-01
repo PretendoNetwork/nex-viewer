@@ -91,6 +91,15 @@ class PacketV0 extends Packet {
 
 		this.checksum = this.stream.readUInt8();
 
+		if (this.isSyn() && this.isToServer()) {
+			if (!this.connection.isSecureServer) {
+				this.connection.reset();
+			} else {
+				this.connection.serverConnectionSignature = Buffer.alloc(0);
+				this.connection.clientConnectionSignature = Buffer.alloc(0);
+			}
+		}
+
 		if (this.connection.accessKey) {
 			// * Found access key, can now check packet checksum
 			const calculatedChecksum = this.calculateChecksum();

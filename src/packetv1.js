@@ -79,6 +79,15 @@ class PacketV1 extends Packet {
 
 		this.payload = this.stream.readBytes(payloadSize);
 
+		if (this.isSyn() && this.isToServer()) {
+			if (!this.connection.isSecureServer) {
+				this.connection.reset();
+			} else {
+				this.connection.serverConnectionSignature = Buffer.alloc(0);
+				this.connection.clientConnectionSignature = Buffer.alloc(0);
+			}
+		}
+
 		if (this.connection.accessKey) {
 			// * Found access key, can now check packet signature
 			const calculatedSignature = this.calculateSignature();
