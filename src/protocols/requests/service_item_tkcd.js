@@ -1,5 +1,5 @@
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
-const ServiceItemTypes = require('../types/service_item');
+const ServiceItemTKCDTypes = require('../types/service_item_tkcd');
 
 class GetEnvironmentRequest {
 	/**
@@ -29,7 +29,7 @@ class HttpGetRequestRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.url = stream.readNEXStructure(ServiceItemTypes.ServiceItemHttpGetParam);
+		this.url = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemHttpGetParam);
 	}
 
 	toJSON() {
@@ -65,7 +65,7 @@ class PurchaseServiceItemRequestRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.purchaseServiceItemParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemPurchaseServiceItemParam);
+		this.purchaseServiceItemParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemPurchaseServiceItemParam);
 	}
 
 	toJSON() {
@@ -101,7 +101,7 @@ class ListServiceItemRequestRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.listServiceItemParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemListServiceItemParam);
+		this.listServiceItemParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemListServiceItemParam);
 	}
 
 	toJSON() {
@@ -137,7 +137,7 @@ class GetBalanceRequestRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getBalanceParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetBalanceParam);
+		this.getBalanceParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetBalanceParam);
 	}
 
 	toJSON() {
@@ -173,7 +173,7 @@ class GetPrepurchaseInfoRequestRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getPrepurchaseInfoParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetPrepurchaseInfoParam);
+		this.getPrepurchaseInfoParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetPrepurchaseInfoParam);
 	}
 
 	toJSON() {
@@ -209,7 +209,7 @@ class GetServiceItemRightRequestRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getServiceItemRightParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetServiceItemRightParam);
+		this.getServiceItemRightParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetServiceItemRightParam);
 		this.withoutRightBinary = stream.readBoolean();
 	}
 
@@ -250,7 +250,7 @@ class GetPurchaseHistoryRequestRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getPurchaseHistoryParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetPurchaseHistoryParam);
+		this.getPurchaseHistoryParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetPurchaseHistoryParam);
 	}
 
 	toJSON() {
@@ -286,7 +286,7 @@ class PostRightBinaryByAccountRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.postRightBinaryByAccountParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemPostRightBinaryByAccountParam);
+		this.postRightBinaryByAccountParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemPostRightBinaryByAccountParam);
 	}
 
 	toJSON() {
@@ -304,7 +304,7 @@ class UseServiceItemByAccountRequestRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.useServiceItemByAccountParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemUseServiceItemByAccountParam);
+		this.useServiceItemByAccountParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemUseServiceItemByAccountParam);
 	}
 
 	toJSON() {
@@ -340,7 +340,7 @@ class AcquireServiceItemByAccountRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.acquireServiceItemByAccountParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemAcquireServiceItemByAccountParam);
+		this.acquireServiceItemByAccountParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemAcquireServiceItemByAccountParam);
 	}
 
 	toJSON() {
@@ -358,7 +358,7 @@ class GetSupportIdRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getSuppordIdParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetSupportIdParam);
+		this.getSuppordIdParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetSupportIdParam);
 	}
 
 	toJSON() {
@@ -376,7 +376,7 @@ class GetLawMessageRequestRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getLawMessageParam = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetLawMessageParam);
+		this.getLawMessageParam = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetLawMessageParam);
 	}
 
 	toJSON() {

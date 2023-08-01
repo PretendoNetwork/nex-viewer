@@ -1,6 +1,6 @@
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 
-const ServiceItemTypes = require('../types/service_item');
+const ServiceItemTKCDTypes = require('../types/service_item_tkcd');
 
 class GetEnvironmentResponse {
 	/**
@@ -43,7 +43,7 @@ class HttpGetResponseResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.response = stream.readNEXStructure(ServiceItemTypes.ServiceItemHttpGetResponse);
+		this.response = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemHttpGetResponse);
 	}
 
 	toJSON() {
@@ -79,7 +79,7 @@ class PurchaseServiceItemResponseResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.purchaseServiceItemResponse = stream.readNEXStructure(ServiceItemTypes.ServiceItemPurchaseServiceItemResponse);
+		this.purchaseServiceItemResponse = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemPurchaseServiceItemResponse);
 	}
 
 	toJSON() {
@@ -115,7 +115,7 @@ class ListServiceItemResponseResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.listServiceItemResponse = stream.readNEXStructure(ServiceItemTypes.ServiceItemListServiceItemResponse);
+		this.listServiceItemResponse = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemListServiceItemResponse);
 	}
 
 	toJSON() {
@@ -151,7 +151,7 @@ class GetBalanceResponseResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getBalanceResponse = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetBalanceResponse);
+		this.getBalanceResponse = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetBalanceResponse);
 	}
 
 	toJSON() {
@@ -187,7 +187,7 @@ class GetPrepurchaseInfoResponseResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getPrepurchaseInfoResponse = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetPrepurchaseInfoResponse);
+		this.getPrepurchaseInfoResponse = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetPrepurchaseInfoResponse);
 	}
 
 	toJSON() {
@@ -223,7 +223,7 @@ class GetServiceItemRightResponseResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getServiceItemRightResponse = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetServiceItemRightResponse);
+		this.getServiceItemRightResponse = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetServiceItemRightResponse);
 	}
 
 	toJSON() {
@@ -259,7 +259,7 @@ class GetPurchaseHistoryResponseResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getPurchaseHistoryResponse = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetPurchaseHistoryResponse);
+		this.getPurchaseHistoryResponse = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetPurchaseHistoryResponse);
 	}
 
 	toJSON() {
@@ -277,7 +277,7 @@ class PostRightBinaryByAccountResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.postRightBinaryResponse = stream.readNEXStructure(ServiceItemTypes.ServiceItemPostRightBinaryResponse);
+		this.postRightBinaryResponse = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemPostRightBinaryResponse);
 	}
 
 	toJSON() {
@@ -313,7 +313,7 @@ class UseServiceItemByAccountResponseResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.useServiceItemResponse = stream.readNEXStructure(ServiceItemTypes.ServiceItemUseServiceItemResponse);
+		this.useServiceItemResponse = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemUseServiceItemResponse);
 	}
 
 	toJSON() {
@@ -331,7 +331,7 @@ class AcquireServiceItemByAccountResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.acquireServiceItemResponse = stream.readNEXStructure(ServiceItemTypes.ServiceItemAcquireServiceItemResponse);
+		this.acquireServiceItemResponse = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemAcquireServiceItemResponse);
 	}
 
 	toJSON() {
@@ -385,7 +385,7 @@ class GetLawMessageResponseResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.getLawMessageResponse = stream.readNEXStructure(ServiceItemTypes.ServiceItemGetLawMessageResponse);
+		this.getLawMessageResponse = stream.readNEXStructure(ServiceItemTKCDTypes.ServiceItemGetLawMessageResponse);
 	}
 
 	toJSON() {
