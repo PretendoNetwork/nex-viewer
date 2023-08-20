@@ -4,6 +4,8 @@ const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
 const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
+const MatchmakeExtensionMK8 = require('./patches/matchmake_extension_mk8');
+
 const Requests = require('./requests/matchmake_extension');
 const Responses = require('./responses/matchmake_extension');
 
@@ -137,6 +139,12 @@ class MatchmakeExtension {
 	 */
 	static handlePacket(packet) {
 		const methodId = packet.rmcMessage.methodId;
+
+		// Check if method is a Pokémon Bank patched method
+		if (packet.connection.accessKey === '25dbf96a' && methodId >= 36 && methodId <= 41) {
+			MatchmakeExtensionMK8.handlePacket(packet);
+			return;
+		}
 
 		const handler = MatchmakeExtension.Handlers[methodId];
 
@@ -706,6 +714,7 @@ class MatchmakeExtension {
 	 */
 	static AutoMatchmakeWithParam_Postpone(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
+			console.log(rmcMessage);
 			return new Requests.AutoMatchmakeWithParam_PostponeRequest(stream);
 		} else {
 			return new Responses.AutoMatchmakeWithParam_PostponeResponse(stream);

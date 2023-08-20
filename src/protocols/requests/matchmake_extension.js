@@ -868,6 +868,7 @@ class AutoMatchmakeWithParam_PostponeRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
+		console.log(stream.readRest().toString('hex'));
 		this.autoMatchmakeParam = stream.readNEXStructure(MatchMakingTypes.AutoMatchmakeParam);
 	}
 
