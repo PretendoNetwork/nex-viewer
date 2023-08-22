@@ -1,27 +1,10 @@
-/*
-
-Port of
-https://github.com/Stary2001/nex-dissector/blob/master/nex-dissector-plugin/fragmentation.lua
-modified to fit my needs
-
-*/
-
 const Packet = require('./packet'); // eslint-disable-line no-unused-vars
 const PacketV0 = require('./packetv0'); // eslint-disable-line no-unused-vars
 const PacketV1 = require('./packetv1'); // eslint-disable-line no-unused-vars
 
 class FragmentationManager {
-	constructor(baseId) {
-		this.baseId = baseId;
-		this.fragments = {};
-		this.seenIds = [];
-		this.startSequenceIds = {};
-		this.deferredFragments = {};
-		this.currentPacket;
-	}
-
-	makeUniqueId(sequenceId) {
-		return `${this.baseId}+${this.currentPacket.source}-${this.currentPacket.destination}-${this.currentPacket.sessionId}-${sequenceId}`;
+	constructor() {
+		this.fragments = [];
 	}
 
 	/**
@@ -30,115 +13,57 @@ class FragmentationManager {
 	 * @returns {Array} fragments
 	 */
 	update(packet) {
-		this.currentPacket = packet;
-
-		if (this.startSequenceIds[this.baseId] === undefined) {
-			this.startSequenceIds[this.baseId] = packet.sequenceId;
+		// * Some extra fragment
+		if (packet.fragmentId !== 0) {
+			this.fragments.push({
+				sequenceId: packet.sequenceId,
+				fragmentId: packet.fragmentId,
+				nextedExpectedSequenceId: packet.sequenceId+1,
+				payload: packet.payload
+			});
 		}
 
-		const payload = packet.payload;
-		const uninqueSequenceAndConnectionId = this.makeUniqueId(packet.sequenceId);
+		// * End of fragmentation. Start rebuilding
+		if (packet.fragmentId === 0) {
+			const fragments = [];
+			const secondToLastFragment = this.fragments.find(fragment => fragment.nextedExpectedSequenceId === packet.sequenceId);
 
-		this.seenIds.push(uninqueSequenceAndConnectionId);
-
-		if (!this.fragments[uninqueSequenceAndConnectionId]) {
-			this.fragments[uninqueSequenceAndConnectionId] = {
-				id: packet.fragmentId,
-				payload: payload
-			};
-		}
-
-		let { defragmented } = this.fragments[uninqueSequenceAndConnectionId];
-
-		if (!defragmented) {
-			defragmented = [];
-
-			if (packet.fragmentId === 0) {
+			if (secondToLastFragment) {
+				// * Payload was fragmented
 				const missingFragments = [];
-				for (let i = packet.sequenceId - 1; i >= Math.max(packet.sequenceId - 50, this.startSequenceIds[this.baseId]); i--) {
-					const id = this.makeUniqueId(i);
-					if (!this.seenIds.includes(id)) {
-						missingFragments.push(id);
-						//console.log('Missing packet', id, 'in stream, deferrring fragment restoration');
-					}
-				}
+				const firstFragment = this.fragments.find(fragment => fragment.sequenceId === secondToLastFragment.sequenceId-secondToLastFragment.fragmentId+1);
 
-				for (const id of missingFragments) {
-					this.deferredFragments[id] = {
-						missingFragments: missingFragments,
-						sequenceId: packet.sequenceId
-					};
-				}
+				fragments.push(firstFragment);
 
-				if (missingFragments.length === 0) { // nothing missing, restore the fragments
-					let previousFragment = this.fragments[this.makeUniqueId(packet.sequenceId - 1)];
-					if (previousFragment && previousFragment.id > packet.fragmentId) {
-						console.log('Restoring', previousFragment.id, 'fragments');
-						for (let i = packet.sequenceId; i >= this.startSequenceIds[this.baseId] - 1; i--) {
-							let fragment = this.fragments[this.makeUniqueId(i)];
-							if (!fragment) {
-								console.error('Cannot find fragment', i, 'in the past for packet', uninqueSequenceAndConnectionId);
-								break;
-							}
+				let currentFragment = firstFragment;
 
-							defragmented.push(fragment.payload);
+				for (let i = 0; i < secondToLastFragment.fragmentId-1; i++) {
+					const nextFragment = this.fragments.find(fragment => fragment.sequenceId === currentFragment.nextedExpectedSequenceId);
+					if (!nextFragment) {
+						console.log('MISSING FRAGMENT', currentFragment.nextedExpectedSequenceId);
+						missingFragments.push(currentFragment.nextedExpectedSequenceId);
 
-							if (fragment.id == 1) {
-								break;
-							}
-						}
+						// TODO - Handle and defer this. I don't have any dumps which have missing packets to test!
+
+						// * Fake next fragment, just to keep the loop going
+						currentFragment = {
+							nextedExpectedSequenceId: currentFragment.nextedExpectedSequenceId+1
+						};
 					} else {
-						// no additional fragments detected
-						defragmented.push(payload);
-					}
-				}
-			} else { // missing fragments, attempt to defer defragmentation until a later stage
-				const deferredFragment = this.deferredFragments[uninqueSequenceAndConnectionId];
-				if (deferredFragment) {
-					console.log('Found missing packet', uninqueSequenceAndConnectionId, ' fragment: ', packet.fragmentId, ')');
-					const { missingFragments } = deferredFragment;
-
-					for (const id of missingFragments) {
-						if (id === uninqueSequenceAndConnectionId) {
-							const index = missingFragments.indexOf(id);
-							delete missingFragments[index];
-						}
-					}
-
-					if (missingFragments.length === 0) {
-						const deferredSequenceId = deferredFragment.sequenceId;
-						console.log('Found all missing packets, defragmenting from', this.makeUniqueId(deferredSequenceId));
-
-						for (let i = deferredSequenceId; i >= this.startSequenceIds[this.baseId] - 1; i--) {
-							const fragment = this.fragments[this.makeUniqueId(i)];
-							if (!fragment) {
-								console.error('Cannot find fragment', i, 'in the past for packet', deferredSequenceId);
-								break;
-							}
-
-							defragmented.push(fragment.payload);
-
-							if (fragment.id == 1) {
-								break;
-							}
-						}
+						currentFragment = nextFragment;
+						fragments.push(currentFragment);
 					}
 				}
 			}
 
-			this.fragments[uninqueSequenceAndConnectionId].defragmented = defragmented;
-		} else {
-			// * Already seen these packets
-			return {
-				fragments: [...defragmented].reverse(),
-				seen: true,
-			};
+			// * Reorder the packets from 1-X and add fragment 0 to the end
+			const sortedFragments = fragments.sort((a, b) => a.fragmentId - b.fragmentId);
+			sortedFragments.push(packet);
+
+			return sortedFragments;
 		}
 
-		return {
-			fragments: [...defragmented].reverse(),
-			seen: false,
-		};
+		return [];
 	}
 }
 

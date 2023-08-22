@@ -114,8 +114,10 @@ class Connection {
 			}
 		};
 
-		this.fragmentationManager = new FragmentationManager(this.discriminator);
-		this.decryptedPayloads = {};
+		this.clientFragmentationManager = new FragmentationManager();
+		this.serverFragmentationManager = new FragmentationManager();
+		this.decryptedClientPayloads = {};
+		this.decryptedServerPayloads = {};
 
 		this.clientAddress;
 		this.serverAddress;
@@ -221,13 +223,23 @@ class Connection {
 		}
 
 		if (packet.isData()) {
-			const { fragments, seen } = this.fragmentationManager.update(packet);
+			let fragments;
 
-			if (fragments.length > 0) {
-				let decryptedPayload = Buffer.alloc(0);
+			if (packet.isToServer()) {
+				fragments = this.clientFragmentationManager.update(packet);
+			} else {
+				fragments = this.serverFragmentationManager.update(packet);
+			}
 
-				if (!seen) {
-					for (const fragment of fragments) {
+			if (packet.fragmentId === 0) {
+				const payloads = [];
+
+				for (const fragment of fragments) {
+					if (packet.isToServer() && this.decryptedClientPayloads[fragment.sequenceId]) {
+						payloads.push(this.decryptedClientPayloads[fragment.sequenceId]);
+					} else if (packet.isToClient() && this.decryptedServerPayloads[fragment.sequenceId]) {
+						payloads.push(this.decryptedServerPayloads[fragment.sequenceId]);
+					} else {
 						let cipher;
 
 						if (packet.isToServer()) {
@@ -238,13 +250,19 @@ class Connection {
 							cipher = this.rc4CipherToClient;
 						}
 
-						decryptedPayload = Buffer.concat([decryptedPayload, cipher.update(fragment)]);
-					}
+						const decrypted = cipher.update(fragment.payload);
 
-					this.decryptedPayloads[packet.sequenceId] = decryptedPayload;
-				} else {
-					decryptedPayload = this.decryptedPayloads[packet.sequenceId];
+						if (packet.isToServer()) {
+							this.decryptedClientPayloads[fragment.sequenceId] = decrypted;
+						} else {
+							this.decryptedServerPayloads[fragment.sequenceId] = decrypted;
+						}
+
+						payloads.push(decrypted);
+					}
 				}
+
+				const decryptedPayload = Buffer.concat(payloads);
 
 				packet.rmcMessage = new RMCMessage(decryptedPayload);
 
