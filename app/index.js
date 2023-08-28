@@ -6,6 +6,7 @@ const NEXParser = require(__dirname + '/../');
 BigInt.prototype.toJSON = function () { return this.toString(); };
 
 app.setName('NEX Viewer');
+
 const appUserDataPath = app.getPath('userData');
 const settingsRootPath = path.join(appUserDataPath, 'settings.json');
 
@@ -48,6 +49,8 @@ const menuTemplate = [
 					browserWindow.webContents.send('clear-sections');
 
 					const filePath = result.filePaths[0];
+
+					browserWindow.setTitle(`NEX Viewer - ${filePath}`);
 
 					const parser = new NEXParser();
 
