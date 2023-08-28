@@ -140,7 +140,7 @@ class MatchmakeExtension {
 	static handlePacket(packet) {
 		const methodId = packet.rmcMessage.methodId;
 
-		// Check if method is a Pokémon Bank patched method
+		// Check if method is a Mario Kart 8 patched method
 		if (packet.connection.accessKey === '25dbf96a' && methodId >= 36 && methodId <= 41) {
 			MatchmakeExtensionMK8.handlePacket(packet);
 			return;
