@@ -334,14 +334,13 @@ function updatePacketDetails(packet) {
 		const stackTrace = document.createElement('code');
 
 		stackTrace.appendChild(document.createTextNode(packet.stackTrace));
-
 		stackTraceRootDetailsRoot.appendChild(stackTrace);
 		stackTraceRootSummary.appendChild(document.createTextNode('Stack trace'));
 		stackTraceRootDetails.appendChild(stackTraceRootSummary);
 		stackTraceRootDetails.appendChild(stackTraceRootDetailsRoot);
 		stackTraceRoot.appendChild(stackTraceRootDetails);
 		rootDiv.appendChild(stackTraceRoot);
-	} else if (packet.type === 'DATA' && !packet.flags.includes('ACK') && !packet.flags.includes('MULIT_ACK')) {
+	} else if (packet.type === 'DATA' && !packet.flags.includes('ACK') && !packet.flags.includes('MULTI_ACK')) {
 		const rmcRoot = document.createElement('div');
 		const rmcRootDetails = document.createElement('details');
 		const rmcRootSummary = document.createElement('summary');
