@@ -27,3 +27,9 @@
 #packet-details span.name {
 	margin-right: 3px;
 }
+
+/* Used in packet stack traces */
+#packet-details code {
+	display: block;
+	white-space: pre-wrap;
+}

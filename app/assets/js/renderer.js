@@ -154,6 +154,10 @@ export function addPacketToList(packet) {
 		isAck = true;
 	}
 
+	if (packet.stackTrace) {
+		tr.classList.add('error');
+	}
+
 	if (packet.type === 'DATA' && packet.fragmentId === 0 && !isAck) {
 		infoString += `, ${packet.rmc.protocolName}->${packet.rmc.methodName}`;
 
@@ -322,7 +326,22 @@ function updatePacketDetails(packet) {
 		rootDiv.appendChild(rootElementChecksumDiv);
 	}
 
-	if (packet.type === 'DATA' && !packet.flags.includes('ACK') && !packet.flags.includes('MULIT_ACK')) {
+	if (packet.stackTrace) {
+		const stackTraceRoot = document.createElement('div');
+		const stackTraceRootDetails = document.createElement('details');
+		const stackTraceRootSummary = document.createElement('summary');
+		const stackTraceRootDetailsRoot = document.createElement('div');
+		const stackTrace = document.createElement('code');
+
+		stackTrace.appendChild(document.createTextNode(packet.stackTrace));
+
+		stackTraceRootDetailsRoot.appendChild(stackTrace);
+		stackTraceRootSummary.appendChild(document.createTextNode('Stack trace'));
+		stackTraceRootDetails.appendChild(stackTraceRootSummary);
+		stackTraceRootDetails.appendChild(stackTraceRootDetailsRoot);
+		stackTraceRoot.appendChild(stackTraceRootDetails);
+		rootDiv.appendChild(stackTraceRoot);
+	} else if (packet.type === 'DATA' && !packet.flags.includes('ACK') && !packet.flags.includes('MULIT_ACK')) {
 		const rmcRoot = document.createElement('div');
 		const rmcRootDetails = document.createElement('details');
 		const rmcRootSummary = document.createElement('summary');

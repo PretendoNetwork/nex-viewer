@@ -282,7 +282,11 @@ class Connection {
 					return;
 				}
 
-				protocol.handlePacket(packet);
+				try {
+					protocol.handlePacket(packet);
+				} catch (error) {
+					packet.stackTrace = error.stack;
+				}
 
 				if (!packet.rmcData.protocolName) {
 					packet.rmcData.protocolName = protocol.ProtocolName;

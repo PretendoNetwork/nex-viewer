@@ -46,6 +46,20 @@ Height is set by the JS to account for overflow
 	color: white;
 }
 
+#packet-list tbody tr.error {
+	background: #ffa4a4;
+}
+
+#packet-list tbody tr.error:hover {
+	background: #ff5858 !important;
+	color: black !important;
+}
+
+#packet-list tbody tr.error.selected {
+	background: #DD1717;
+	color: white;
+}
+
 #packet-list tbody tr.hidden {
 	display: none;
 }

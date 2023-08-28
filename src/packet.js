@@ -48,6 +48,7 @@ class Packet {
 			}
 		};
 		this.rmcData = {}; // * Decoded RMC body
+		this.stackTrace; // * Contains possible decoding errors
 
 		this.decode();
 	}
@@ -75,7 +76,8 @@ class Packet {
 				callId: this.rmcMessage.callId,
 				errorCode: this.rmcMessage.errorCode,
 				body: this.rmcData.body
-			}
+			},
+			stackTrace: this.stackTrace
 		};
 
 		if (this.isToClient()) {
