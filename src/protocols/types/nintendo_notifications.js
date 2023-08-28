@@ -24,6 +24,7 @@ class NintendoNotificationEvent extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_uiType: {
 				__typeName: 'uint32',
 				__typeValue: this.m_uiType
@@ -64,6 +65,7 @@ class NintendoNotificationEventGeneral extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_u32Param: {
 				__typeName: 'uint32',
 				__typeValue: this.m_u32Param
@@ -110,6 +112,7 @@ class NintendoNotificationEventProfile extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_region: {
 				__typeName: 'uint8',
 				__typeValue: this.m_region

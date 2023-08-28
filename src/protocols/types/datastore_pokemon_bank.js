@@ -13,6 +13,7 @@ class GlobalTradeStationRecordKey extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -40,6 +41,7 @@ class GlobalTradeStationUploadPokemonParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			prepareUploadKey: {
 				__typeName: 'GlobalTradeStationRecordKey',
 				__typeValue: this.prepareUploadKey
@@ -81,6 +83,7 @@ class GlobalTradeStationSearchPokemonParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			prepareUploadKey: {
 				__typeName: 'GlobalTradeStationRecordKey',
 				__typeValue: this.prepareUploadKey
@@ -125,6 +128,7 @@ class GlobalTradeStationTradeKey extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -152,6 +156,7 @@ class GlobalTradeStationData extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -189,6 +194,7 @@ class GlobalTradeStationSearchPokemonResult extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			totalCount: {
 				__typeName: 'uint32',
 				__typeValue: this.totalCount
@@ -223,6 +229,7 @@ class GlobalTradeStationTradePokemonParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			tradeKey: {
 				__typeName: 'GlobalTradeStationTradeKey',
 				__typeValue: this.tradeKey
@@ -270,6 +277,7 @@ class GlobalTradeStationDownloadOtherPokemonParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			prepareUploadKey: {
 				__typeName: 'GlobalTradeStationRecordKey',
 				__typeValue: this.prepareUploadKey
@@ -289,6 +297,7 @@ class GlobalTradeStationDownloadMyPokemonParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			prepareUploadKey: {
 				__typeName: 'GlobalTradeStationRecordKey',
 				__typeValue: this.prepareUploadKey
@@ -309,6 +318,7 @@ class GlobalTradeStationTradePokemonResult extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			result: {
 				__typeName: 'GlobalTradeStationDownloadPokemonResult',
 				__typeValue: this.result
@@ -333,6 +343,7 @@ class GlobalTradeStationDownloadMyPokemonResult extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			result: {
 				__typeName: 'GlobalTradeStationDownloadPokemonResult',
 				__typeValue: this.result
@@ -357,6 +368,7 @@ class GlobalTradeStationPrepareTradePokemonParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			tradeKey: {
 				__typeName: 'GlobalTradeStationTradeKey',
 				__typeValue: this.tradeKey
@@ -381,6 +393,7 @@ class GlobalTradeStationPrepareTradePokemonResult extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			result: {
 				__typeName: 'GlobalTradeStationDownloadPokemonResult',
 				__typeValue: this.result
@@ -405,6 +418,7 @@ class GlobalTradeStationDeletePokemonParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			prepareUploadKey: {
 				__typeName: 'GlobalTradeStationRecordKey',
 				__typeValue: this.prepareUploadKey
@@ -430,6 +444,7 @@ class GlobalTradeStationDownloadPokemonResult extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -461,6 +476,7 @@ class BankTransactionParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -497,6 +513,7 @@ class BankMigrationInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			migrationStatus: {
 				__typeName: 'uint32',
 				__typeValue: this.migrationStatus

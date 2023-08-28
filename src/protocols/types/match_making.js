@@ -21,6 +21,7 @@ class Gathering extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_idMyself: {
 				__typeName: 'uint32',
 				__typeValue: this.m_idMyself
@@ -94,6 +95,7 @@ class PersistentGathering extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_CommunityType: {
 				__typeName: 'uint32',
 				__typeValue: this.m_CommunityType
@@ -194,6 +196,7 @@ class MatchmakeSession extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_GameMode: {
 				__typeName: 'uint32',
 				__typeValue: this.m_GameMode
@@ -350,6 +353,7 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_Attribs: {
 				__typeName: 'List<String>',
 				__typeValue: this.m_Attribs
@@ -460,6 +464,7 @@ class CreateMatchmakeSessionParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			sourceMatchmakeSession: {
 				__typeName: 'MatchmakeSession',
 				__typeValue: this.sourceMatchmakeSession
@@ -513,6 +518,7 @@ class JoinMatchmakeSessionParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			gid: {
 				__typeName: 'uint32',
 				__typeValue: this.gid
@@ -588,6 +594,7 @@ class UpdateMatchmakeSessionParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			gid: {
 				__typeName: 'uint32',
 				__typeValue: this.gid
@@ -671,6 +678,7 @@ class MatchmakeBlockListParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			optionFlag: {
 				__typeName: 'uint32',
 				__typeValue: this.optionFlag
@@ -690,6 +698,7 @@ class MatchmakeParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_Params: {
 				__typeName: 'Map<String, Variant>',
 				__typeValue: this.m_Params
@@ -727,6 +736,7 @@ class AutoMatchmakeParam extends NEXTypes.Structure {
 
 	toJSON() {
 		const data = {
+			__structureVersion: this._structureHeader.version,
 			sourceMatchmakeSession: {
 				__typeName: 'MatchmakeSession',
 				__typeValue: this.sourceMatchmakeSession
@@ -785,6 +795,7 @@ class FindMatchmakeSessionByParticipantParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_principalIdList: {
 				__typeName: 'List<PID>',
 				__typeValue: this.m_principalIdList
@@ -813,6 +824,7 @@ class FindMatchmakeSessionByParticipantResult extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_principalId: {
 				__typeName: 'PID',
 				__typeValue: this.m_principalId
@@ -837,6 +849,7 @@ class GatheringURLs extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_gid: {
 				__typeName: 'uint32',
 				__typeValue: this.m_gid
@@ -862,6 +875,7 @@ class GatheringStats extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_pidParticipant: {
 				__typeName: 'PID',
 				__typeValue: this.m_pidParticipant
@@ -891,6 +905,7 @@ class Invitation extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_idGathering: {
 				__typeName: 'uint32',
 				__typeValue: this.m_idGathering
@@ -921,6 +936,7 @@ class ParticipantDetails extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_idParticipant: {
 				__typeName: 'PID',
 				__typeValue: this.m_idGathering
@@ -954,6 +970,7 @@ class DeletionEntry extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_idGathering: {
 				__typeName: 'uint32',
 				__typeValue: this.m_idGathering
@@ -982,6 +999,7 @@ class PlayingSession extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_PrincipalId: {
 				__typeName: 'PID',
 				__typeValue: this.m_PrincipalId
@@ -1008,6 +1026,7 @@ class SimplePlayingSession extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_PrincipalID: {
 				__typeName: 'PID',
 				__typeValue: this.m_PrincipalID
@@ -1040,6 +1059,7 @@ class SimpleCommunity extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_GatheringID: {
 				__typeName: 'uint32',
 				__typeValue: this.m_GatheringID

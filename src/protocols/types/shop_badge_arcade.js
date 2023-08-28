@@ -14,6 +14,7 @@ class ShopPostPlayLogParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			unknown1: {
 				__typeName: 'List<uint32>',
 				__typeValue: this.unknown1

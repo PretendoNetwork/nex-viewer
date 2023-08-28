@@ -12,6 +12,7 @@ class AccountExtraInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			token: {
 				__typeName: 'String',
 				__typeValue: this.token
@@ -32,6 +33,7 @@ class NintendoLoginData extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			token: {
 				__typeName: 'String',
 				__typeValue: this.token

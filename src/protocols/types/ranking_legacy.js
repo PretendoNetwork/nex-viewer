@@ -19,6 +19,7 @@ class RankingData extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			uniqueId: {
 				__typeName: 'uint32',
 				__typeValue: this.uniqueId

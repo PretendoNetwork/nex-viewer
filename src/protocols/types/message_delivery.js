@@ -14,6 +14,7 @@ class MessageRecipient extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_uiRecipientType: {
 				__typeName: 'uint32',
 				__typeValue: this.m_uiRecipientType
@@ -59,6 +60,7 @@ class UserMessage extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_uiID: {
 				__typeName: 'uint32',
 				__typeValue: this.m_uiID
@@ -120,6 +122,7 @@ class TextMessage extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_strTextBody: {
 				__typeName: 'String',
 				__typeValue: this.m_strTextBody
@@ -149,6 +152,7 @@ class BinaryMessage extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_binaryBody: {
 				__typeName: 'qBuffer',
 				__typeValue: this.m_binaryBody

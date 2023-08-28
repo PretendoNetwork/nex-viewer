@@ -12,6 +12,7 @@ class ServiceItemHttpGetParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			url: {
 				__typeName: 'String',
 				__typeValue: this.url
@@ -31,6 +32,7 @@ class ServiceItemHttpGetResponse extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			response: {
 				__typeName: 'qBuffer',
 				__typeValue: this.response
@@ -52,6 +54,7 @@ class ServiceItemEShopResponse extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			httpStatus: {
 				__typeName: 'uint32',
 				__typeValue: this.httpStatus
@@ -81,6 +84,7 @@ class ServiceItemAmount extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			formattedAmount: {
 				__typeName: 'String',
 				__typeValue: this.formattedAmount
@@ -115,6 +119,7 @@ class ServiceItemPurchaseServiceItemParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			itemCode: {
 				__typeName: 'String',
 				__typeValue: this.itemCode
@@ -165,6 +170,7 @@ class ServiceItemPurchaseInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			transactionId: {
 				__typeName: 'String',
 				__typeValue: this.transactionId
@@ -206,6 +212,7 @@ class ServiceItemPurchaseServiceItemResponse extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			nullablePurchaseInfo: {
 				__typeName: 'List<ServiceItemPurchaseInfo>',
 				__typeValue: this.nullablePurchaseInfo
@@ -228,6 +235,7 @@ class ServiceItemListServiceItemParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			language: {
 				__typeName: 'String',
 				__typeValue: this.language
@@ -260,6 +268,7 @@ class ServiceItemLimitation extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			limitationType: {
 				__typeName: 'uint32',
 				__typeValue: this.limitationType
@@ -284,6 +293,7 @@ class ServiceItemAttribute extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			name: {
 				__typeName: 'String',
 				__typeValue: this.name
@@ -312,6 +322,7 @@ class ServiceItemListItem extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			itemCode: {
 				__typeName: 'String',
 				__typeValue: this.itemCode
@@ -354,6 +365,7 @@ class ServiceItemCatalog extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			totalSize: {
 				__typeName: 'uint32',
 				__typeValue: this.totalSize
@@ -391,6 +403,7 @@ class ServiceItemListServiceItemResponse extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			nullableCatalog: {
 				__typeName: 'List<ServiceItemCatalog>',
 				__typeValue: this.nullableCatalog
@@ -411,6 +424,7 @@ class ServiceItemGetBalanceParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			language: {
 				__typeName: 'String',
 				__typeValue: this.language
@@ -444,6 +458,7 @@ class ServiceItemGetBalanceResponse extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			nullableBalance: {
 				__typeName: 'List<ServiceItemAmount>',
 				__typeValue: this.nullableBalance
@@ -465,6 +480,7 @@ class ServiceItemGetPrepurchaseInfoParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			itemCode: {
 				__typeName: 'String',
 				__typeValue: this.itemCode
@@ -499,6 +515,7 @@ class ServiceItemPrepurchaseInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			itemCode: {
 				__typeName: 'String',
 				__typeValue: this.itemCode
@@ -556,6 +573,7 @@ class ServiceItemGetPrepurchaseInfoResponse extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			nullablePrepurchaseInfo: {
 				__typeName: 'List<ServiceItemPrepurchaseInfo>',
 				__typeValue: this.nullablePrepurchaseInfo
@@ -576,6 +594,7 @@ class ServiceItemGetServiceItemRightParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			referenceId: {
 				__typeName: 'String',
 				__typeValue: this.referenceId
@@ -600,6 +619,7 @@ class ServiceItemAccountRight extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			pid: {
 				__typeName: 'PID',
 				__typeValue: this.pid
@@ -624,6 +644,7 @@ class ServiceItemRightInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			referenceId: {
 				__typeName: 'String',
 				__typeValue: this.referenceId
@@ -647,6 +668,7 @@ class ServiceItemRightInfos extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			rightInfos: {
 				__typeName: 'List<ServiceItemRightInfo>',
 				__typeValue: this.rightInfos
@@ -676,6 +698,7 @@ class ServiceItemGetServiceItemRightResponse extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			nullableRightInfos: {
 				__typeName: 'List<ServiceItemRightInfos>',
 				__typeValue: this.nullableRightInfos
@@ -698,6 +721,7 @@ class ServiceItemGetPurchaseHistoryParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			language: {
 				__typeName: 'String',
 				__typeValue: this.language
@@ -737,6 +761,7 @@ class ServiceItemTransaction extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			transactionId: {
 				__typeName: 'String',
 				__typeValue: this.transactionId
@@ -791,6 +816,7 @@ class ServiceItemPurchaseHistory extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			supportId: {
 				__typeName: 'String',
 				__typeValue: this.supportId
@@ -824,6 +850,7 @@ class ServiceItemGetPurchaseHistoryResponse extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			nullablePurchaseHistory: {
 				__typeName: 'List<ServiceItemPurchaseHistory>',
 				__typeValue: this.nullablePurchaseHistory
@@ -843,6 +870,7 @@ class ServiceItemGetNoticeParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			noticeType: {
 				__typeName: 'uint32',
 				__typeValue: this.noticeType
@@ -868,6 +896,7 @@ class ServiceItemNotice extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			scheduleId: {
 				__typeName: 'uint64',
 				__typeValue: this.scheduleId
@@ -918,6 +947,7 @@ class ServiceItemEvent extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			eventId: {
 				__typeName: 'uint64',
 				__typeValue: this.eventId
@@ -966,6 +996,7 @@ class ServiceItemTicketInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			ticketType: {
 				__typeName: 'uint32',
 				__typeValue: this.ticketType
@@ -990,6 +1021,7 @@ class ServiceItemUserInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			numTotalEntryTicket: {
 				__typeName: 'uint32',
 				__typeValue: this.numTotalEntryTicket
@@ -1015,6 +1047,7 @@ class ServiceItemStartChallengeParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			challengeScheduleId: {
 				__typeName: 'uint32',
 				__typeValue: this.challengeScheduleId
@@ -1043,6 +1076,7 @@ class ServiceItemEndChallengeParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			challengeScheduleId: {
 				__typeName: 'uint32',
 				__typeValue: this.challengeScheduleId
@@ -1067,6 +1101,7 @@ class ServiceItemRequestTicketRestorationParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			ticketType: {
 				__typeName: 'uint32',
 				__typeValue: this.ticketType

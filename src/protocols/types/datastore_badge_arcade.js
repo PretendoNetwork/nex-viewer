@@ -15,6 +15,7 @@ class DataStoreGetMetaByOwnerIdParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			ownerIds: {
 				__typeName: 'List<uint32>',
 				__typeValue: this.ownerIds

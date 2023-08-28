@@ -28,6 +28,7 @@ class AuthenticationInfo extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_authToken: {
 				__typeName: 'String',
 				__typeValue: this.m_authToken

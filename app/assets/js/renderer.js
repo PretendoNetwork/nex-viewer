@@ -489,6 +489,20 @@ function serializeRMCBody(rmcData) {
 
 					serializedRMCDataDiv.appendChild(serializedRMCDataDetails);
 				}
+			} else if (key === '__structureVersion') {
+				const rmcValueElementDiv = document.createElement('div');
+				const rmcValueElementName = document.createElement('span');
+				const rmcValueElementValue = document.createElement('span');
+				rmcValueElementName.classList.add('name');
+				rmcValueElementValue.classList.add('value');
+
+				rmcValueElementName.appendChild(document.createTextNode('Structure Version:'));
+				rmcValueElementValue.appendChild(document.createTextNode(value));
+
+				rmcValueElementDiv.appendChild(rmcValueElementName);
+				rmcValueElementDiv.appendChild(rmcValueElementValue);
+
+				serializedRMCDataDiv.appendChild(rmcValueElementDiv);
 			} else {
 				if (isObject(typeValue)) {
 					const serializedRMCDataDetails = document.createElement('details');

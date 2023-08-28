@@ -17,6 +17,7 @@ class DataStoreKeyValue extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			key: {
 				__typeName: 'String',
 				__typeValue: this.key
@@ -41,6 +42,7 @@ class DataStorePermission extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			permission: {
 				__typeName: 'uint8',
 				__typeValue: this.permission
@@ -65,6 +67,7 @@ class DataStorePrepareGetParamV1 extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint32',
 				__typeValue: this.dataId
@@ -89,6 +92,7 @@ class DataStoreRatingInitParamWithSlot extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			slot: {
 				__typeName: 'sint8',
 				__typeValue: this.slot
@@ -119,6 +123,7 @@ class DataStoreRatingInitParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			flag: {
 				__typeName: 'uint8',
 				__typeValue: this.flag
@@ -167,6 +172,7 @@ class DataStorePersistenceTarget extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			ownerId: {
 				__typeName: 'PID',
 				__typeValue: this.ownerId
@@ -197,6 +203,7 @@ class DataStoreReqGetInfoV1 extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			url: {
 				__typeName: 'String',
 				__typeValue: this.url
@@ -242,6 +249,7 @@ class DataStoreReqGetInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		const data = {
+			__structureVersion: this._structureHeader.version,
 			url: {
 				__typeName: 'String',
 				__typeValue: this.url
@@ -292,6 +300,7 @@ class DataStorePreparePostParamV1 extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			size: {
 				__typeName: 'uint32',
 				__typeValue: this.size
@@ -356,6 +365,7 @@ class DataStoreReqPostInfoV1 extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint32',
 				__typeValue: this.dataId
@@ -392,6 +402,7 @@ class DataStoreCompletePostParamV1 extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint32',
 				__typeValue: this.dataId
@@ -416,6 +427,7 @@ class DataStoreDeleteParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -447,6 +459,7 @@ class DataStoreChangeMetaParamV1 extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -514,6 +527,7 @@ class DataStoreChangeMetaParam extends NEXTypes.Structure {
 
 	toJSON() {
 		const data = {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -593,6 +607,7 @@ class DataStoreGetMetaParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -642,6 +657,7 @@ class DataStoreMetaInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -734,6 +750,7 @@ class DataStoreRatingInfoWithSlot extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			slot: {
 				__typeName: 'sint8',
 				__typeValue: this.slot
@@ -759,6 +776,7 @@ class DataStoreRatingInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			totalValue: {
 				__typeName: 'sint64',
 				__typeValue: this.totalValue
@@ -813,6 +831,7 @@ class DataStorePrepareUpdateParam extends NEXTypes.Structure {
 
 	toJSON() {
 		const data = {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: this.#dataIdType,
 				__typeValue: this.dataId
@@ -874,6 +893,7 @@ class DataStoreReqUpdateInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			version: {
 				__typeName: this.#versionType,
 				__typeValue: this.version
@@ -937,6 +957,7 @@ class DataStoreCompleteUpdateParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: this.#dataIdType,
 				__typeValue: this.dataId
@@ -991,6 +1012,7 @@ class DataStoreSearchParam extends NEXTypes.Structure {
 
 	toJSON() {
 		const data = {
+			__structureVersion: this._structureHeader.version,
 			searchTarget: {
 				__typeName: 'uint8',
 				__typeValue: this.searchTarget
@@ -1095,6 +1117,7 @@ class DataStoreSearchResult extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			totalCount: {
 				__typeName: 'uint32',
 				__typeValue: this.totalCount
@@ -1122,6 +1145,7 @@ class DataStoreGetNotificationUrlParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			previousUrl: {
 				__typeName: 'String',
 				__typeValue: this.previousUrl
@@ -1144,6 +1168,7 @@ class DataStoreReqGetNotificationUrlInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			url: {
 				__typeName: 'String',
 				__typeValue: this.url
@@ -1176,6 +1201,7 @@ class DataStoreGetNewArrivedNotificationsParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			lastNotificationId: {
 				__typeName: 'uint64',
 				__typeValue: this.lastNotificationId
@@ -1200,6 +1226,7 @@ class DataStoreNotificationV1 extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			notificationId: {
 				__typeName: 'uint64',
 				__typeValue: this.notificationId
@@ -1224,6 +1251,7 @@ class DataStoreRatingTarget extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -1248,6 +1276,7 @@ class DataStoreRateObjectParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			ratingValue: {
 				__typeName: 'sint32',
 				__typeValue: this.ratingValue
@@ -1272,6 +1301,7 @@ class DataStoreGetSpecificMetaParamV1 extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataIds: {
 				__typeName: 'List<uint32>',
 				__typeValue: this.dataIds
@@ -1295,6 +1325,7 @@ class DataStoreSpecificMetaInfoV1 extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint32',
 				__typeValue: this.dataId
@@ -1332,6 +1363,7 @@ class DataStoreTouchObjectParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -1362,6 +1394,7 @@ class DataStoreRatingLog extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			isRated: {
 				__typeName: 'boolean',
 				__typeValue: this.isRated
@@ -1395,6 +1428,7 @@ class DataStorePersistenceInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			ownerId: {
 				__typeName: 'PID',
 				__typeValue: this.ownerId
@@ -1425,6 +1459,7 @@ class DataStoreReqGetAdditionalMeta extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			ownerId: {
 				__typeName: 'PID',
 				__typeValue: this.ownerId
@@ -1458,6 +1493,7 @@ class DataStorePasswordInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -1499,6 +1535,7 @@ class DataStorePrepareGetParam extends NEXTypes.Structure {
 
 	toJSON() {
 		const data = {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -1561,6 +1598,7 @@ class DataStorePreparePostParam extends NEXTypes.Structure {
 
 	toJSON() {
 		const data = {
+			__structureVersion: this._structureHeader.version,
 			size: {
 				__typeName: 'uint32',
 				__typeValue: this.size
@@ -1634,6 +1672,7 @@ class DataStorePersistenceInitParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			persistenceSlotId: {
 				__typeName: 'uint16',
 				__typeValue: this.persistenceSlotId
@@ -1661,6 +1700,7 @@ class DataStoreReqPostInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -1697,6 +1737,7 @@ class DataStoreCompletePostParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -1729,6 +1770,7 @@ class DataStoreChangeMetaCompareParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			comparisonFlag: {
 				__typeName: 'uint32',
 				__typeValue: this.comparisonFlag

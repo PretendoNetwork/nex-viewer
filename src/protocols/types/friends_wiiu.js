@@ -24,6 +24,7 @@ class NNAInfo extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			principalBasicInfo: {
 				__typeName: 'PrincipalBasicInfo',
 				__typeValue: this.principalBasicInfo
@@ -65,6 +66,7 @@ class PrincipalBasicInfo extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			pid: {
 				__typeName: 'PID',
 				__typeValue: this.pid
@@ -110,6 +112,7 @@ class MiiV2 extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			name: {
 				__typeName: 'String',
 				__typeValue: this.name
@@ -169,6 +172,7 @@ class NintendoPresenceV2 extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			changedFlags: {
 				__typeName: 'uint32',
 				__typeValue: this.changedFlags
@@ -256,6 +260,7 @@ class GameKey extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			titleId: {
 				__typeName: 'uint64',
 				__typeValue: this.titleId
@@ -291,6 +296,7 @@ class PrincipalPreference extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			showOnlinePresence: {
 				__typeName: 'boolean',
 				__typeValue: this.showOnlinePresence
@@ -331,6 +337,7 @@ class Comment extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			unknown: {
 				__typeName: 'uint8',
 				__typeValue: this.unknown
@@ -373,6 +380,7 @@ class FriendInfo extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			NNAInfo: {
 				__typeName: 'NNAInfo',
 				__typeValue: this.NNAInfo
@@ -425,6 +433,7 @@ class FriendRequest extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			principalBasicInfo: {
 				__typeName: 'PrincipalBasicInfo',
 				__typeValue: this.principalBasicInfo
@@ -471,6 +480,7 @@ class FriendRequestMessage extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			friendRequestId: {
 				__typeName: 'uint64',
 				__typeValue: this.friendRequestId
@@ -534,6 +544,7 @@ class BlacklistedPrincipal extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			principalBasicInfo: {
 				__typeName: 'PrincipalBasicInfo',
 				__typeValue: this.principalBasicInfo
@@ -575,6 +586,7 @@ class PersistentNotification extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			unknown1: {
 				__typeName: 'uint64',
 				__typeValue: this.unknown1
@@ -620,6 +632,7 @@ class PersistentNotificationList extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			notifications: {
 				__typeName: 'List<PersistentNotification>',
 				__typeValue: this.notifications

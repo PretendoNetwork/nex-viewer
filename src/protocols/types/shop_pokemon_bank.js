@@ -15,6 +15,7 @@ class ShopItem extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			itemId: {
 				__typeName: 'uint32',
 				__typeValue: this.itemId
@@ -48,6 +49,7 @@ class ShopItemRights extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			referenceId: {
 				__typeName: 'qBuffer',
 				__typeValue: this.referenceId

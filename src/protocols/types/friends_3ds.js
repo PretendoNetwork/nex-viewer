@@ -23,6 +23,7 @@ class GameKey extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			titleId: {
 				__typeName: 'uint64',
 				__typeValue: this.titleId
@@ -66,6 +67,7 @@ class NintendoPresence extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_changedBitFlag: {
 				__typeName: 'uint32',
 				__typeValue: this.m_changedBitFlag
@@ -133,6 +135,7 @@ class FriendPresence extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			m_ownerPrincipalID: {
 				__typeName: 'PID',
 				__typeValue: this.pid
@@ -168,6 +171,7 @@ class FriendRelationship extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			pid: {
 				__typeName: 'PID',
 				__typeValue: this.pid
@@ -215,6 +219,7 @@ class FriendPersistentInfo extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			pid: {
 				__typeName: 'uint32',
 				__typeValue: this.pid

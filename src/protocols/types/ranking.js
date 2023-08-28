@@ -17,6 +17,7 @@ class RankingOrderParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			orderCalculation: {
 				__typeName: 'uint8',
 				__typeValue: this.orderCalculation
@@ -74,6 +75,7 @@ class RankingRankData extends NEXTypes.Structure {
 
 	toJSON() {
 		const data = {
+			__structureVersion: this._structureHeader.version,
 			principalId: {
 				__typeName: 'PID',
 				__typeValue: this.principalId
@@ -132,6 +134,7 @@ class RankingResult extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			rankDataList: {
 				__typeName: 'List<RankingRankData>',
 				__typeValue: this.rankDataList
@@ -171,6 +174,7 @@ class RankingCachedResult extends NEXTypes.Structure {
 				__typeName: value.constructor.name,
 				__typeValue: value
 			})),
+			__structureVersion: this._structureHeader.version,
 			createdTime: {
 				__typeName: 'DateTime',
 				__typeValue: this.createdTime
@@ -198,6 +202,7 @@ class RankingStats extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			statsList: {
 				__typeName: 'List<Double>',
 				__typeValue: this.statsList
@@ -222,6 +227,7 @@ class RankingScoreData extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			category: {
 				__typeName: 'uint32',
 				__typeValue: this.category
@@ -263,6 +269,7 @@ class RankingChangeAttributesParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			modificationFlag: {
 				__typeName: 'uint8',
 				__typeValue: this.modificationFlag

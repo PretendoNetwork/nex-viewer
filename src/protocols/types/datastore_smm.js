@@ -15,6 +15,7 @@ class DataStoreFileServerObjectInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -41,6 +42,7 @@ class DataStoreGetMetaByOwnerIdParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			ownerIds: {
 				__typeName: 'List<uint32>',
 				__typeValue: this.ownerIds
@@ -75,6 +77,7 @@ class DataStoreRateCustomRankingParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -109,6 +112,7 @@ class DataStoreGetCustomRankingParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			applicationId: {
 				__typeName: 'uint32',
 				__typeValue: this.applicationId
@@ -142,6 +146,7 @@ class DataStoreCustomRankingRatingCondition extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			slot: {
 				__typeName: 'sint8',
 				__typeValue: this.slot
@@ -171,6 +176,7 @@ class DataStoreCustomRankingResult extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			order: {
 				__typeName: 'uint32',
 				__typeValue: this.order
@@ -200,6 +206,7 @@ class DataStoreGetCustomRankingByDataIdParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			applicationId: {
 				__typeName: 'uint32',
 				__typeValue: this.applicationId
@@ -228,6 +235,7 @@ class BufferQueueParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -253,6 +261,7 @@ class DataStoreAttachFileParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			postParam: {
 				__typeName: 'DataStorePreparePostParam',
 				__typeValue: this.postParam
@@ -282,6 +291,7 @@ class DataStoreUploadCourseRecordParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -310,6 +320,7 @@ class DataStoreGetCourseRecordParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -339,6 +350,7 @@ class DataStoreGetCourseRecordResult extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -383,6 +395,7 @@ class DataStoreChangePlayablePlatformParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId
@@ -409,6 +422,7 @@ class DataStoreReportCourseParam extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			dataId: {
 				__typeName: 'uint64',
 				__typeValue: this.dataId

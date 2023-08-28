@@ -12,7 +12,8 @@ class Structure {
 
 	toJSON() {
 		const json = {
-			__structureTypeName: this.constructor.name
+			__structureTypeName: this.constructor.name,
+			__structureVersion: this._structureHeader.version
 		};
 
 		for (const key in this) {
@@ -52,7 +53,9 @@ class Data extends Structure {
 	parse() { }
 
 	toJSON() {
-		return {};
+		return {
+			__structureVersion: this._structureHeader.version
+		};
 	}
 }
 
@@ -139,6 +142,7 @@ class RVConnectionData extends Structure {
 
 	toJSON() {
 		const data = {
+			__structureVersion: this._structureHeader.version,
 			m_urlRegularProtocols: {
 				__typeName: 'StationURL',
 				__typeValue: this.stationUrl
@@ -281,6 +285,7 @@ class ResultRange extends Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			m_uiOffset: {
 				__typeName: 'uint32',
 				__typeValue: this.m_uiOffset

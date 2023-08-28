@@ -26,6 +26,7 @@ class NotificationEvent extends NEXTypes.Structure {
 
 	toJSON() {
 		const data = {
+			__structureVersion: this._structureHeader.version,
 			m_pidSource: {
 				__typeName: 'PID',
 				__typeValue: this.m_pidSource

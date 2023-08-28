@@ -13,6 +13,7 @@ class UniqueIdInfo extends NEXTypes.Structure {
 
 	toJSON() {
 		return {
+			__structureVersion: this._structureHeader.version,
 			nexUniqueId: {
 				__typeName: 'uint64',
 				__typeValue: this.nexUniqueId
