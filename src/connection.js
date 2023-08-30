@@ -107,11 +107,13 @@ class Connection {
 
 		this.title = {
 			name: '',
-			nex_version: {
-				major: 0,
-				minor: 0,
-				patch: 0
-			}
+			access_key: '',
+			nex_version: '0.0.0',
+			nex_ranking_version: '0.0.0',
+			nex_datastore_version: '0.0.0',
+			nex_match_making_version: '0.0.0',
+			nex_messaging_version: '0.0.0',
+			nex_utility_version: '0.0.0'
 		};
 
 		this.clientFragmentationManager = new FragmentationManager();

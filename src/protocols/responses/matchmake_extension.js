@@ -1,3 +1,4 @@
+const semver = require('semver');
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const MatchMakingTypes = require('../types/match_making');
 const NotificationsTypes = require('../types/notifications');
@@ -80,16 +81,11 @@ class CreateMatchmakeSessionResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_match_making_version) {
-			nexVersion = stream.connection.title.nex_match_making_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_match_making_version || stream.connection.title.nex_version;
 
 		this.gid = stream.readUInt32LE();
 
-		if (nexVersion.major >= 3) {
+		if (semver.gte(nexVersion, '3.0.0')) {
 			this.sessionKey = stream.readNEXBuffer();
 		}
 	}
@@ -118,14 +114,9 @@ class JoinMatchmakeSessionResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_match_making_version) {
-			nexVersion = stream.connection.title.nex_match_making_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_match_making_version || stream.connection.title.nex_version;
 
-		if (nexVersion.major >= 3) {
+		if (semver.gte(nexVersion, '3.0.0')) {
 			this.sessionKey = stream.readNEXBuffer();
 		}
 	}

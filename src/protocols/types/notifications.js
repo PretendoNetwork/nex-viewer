@@ -1,3 +1,4 @@
+const semver = require('semver');
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
@@ -19,7 +20,7 @@ class NotificationEvent extends NEXTypes.Structure {
 		this.m_uiParam2 = stream.readUInt32LE();
 		this.m_strParam = stream.readNEXString();
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 4) {
+		if (semver.gte(nexVersion, '3.4.0')) {
 			this.m_uiParam3 = stream.readUInt32LE();
 		}
 	}

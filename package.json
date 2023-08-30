@@ -19,7 +19,8 @@
   "dependencies": {
     "pcap-ng-parser": "^1.0.0",
     "pcap-parser": "^0.2.1",
-    "private-ip": "^2.3.4"
+    "private-ip": "^2.3.4",
+    "semver": "^7.5.4"
   },
   "devDependencies": {
     "electron": "^21.2.0",

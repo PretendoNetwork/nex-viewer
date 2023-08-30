@@ -1,3 +1,4 @@
+const semver = require('semver');
 const Stream = require('./stream'); // eslint-disable-line no-unused-vars
 
 class Structure {
@@ -36,7 +37,7 @@ class Structure {
 			this._parentTypes.push(stream.readNEXStructure(parentTypeClass));
 		}
 
-		if (stream.connection.title.nex_version.major >= 3 && stream.connection.title.nex_version.minor >= 5) {
+		if (semver.gte(stream.connection.title.nex_version.major, '3.5.0')) {
 			this._structureHeader = {
 				version: stream.readUInt8(),
 				contentLength: stream.readUInt32LE()

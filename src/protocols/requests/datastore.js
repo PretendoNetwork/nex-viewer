@@ -1,3 +1,4 @@
+const semver = require('semver');
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const DataStoreTypes = require('../types/datastore');
 
@@ -278,17 +279,12 @@ class RateObjectRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_datastore_version) {
-			nexVersion = stream.connection.title.nex_datastore_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_datastore_version || stream.connection.title.nex_version;
 
 		this.target = stream.readNEXStructure(DataStoreTypes.DataStoreRatingTarget);
 		this.param = stream.readNEXStructure(DataStoreTypes.DataStoreRateObjectParam);
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (semver.gte(nexVersion, '3.5.0')) {
 			this.fetchRatings = stream.readBoolean();
 		}
 	}

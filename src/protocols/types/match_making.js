@@ -1,3 +1,4 @@
+const semver = require('semver');
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
@@ -144,12 +145,7 @@ class MatchmakeSession extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_match_making_version) {
-			nexVersion = stream.connection.title.nex_match_making_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_match_making_version || stream.connection.title.nex_version;
 
 		this.m_GameMode = stream.readUInt32LE();
 		this.m_Attribs = stream.readNEXList(stream.readUInt32LE);
@@ -158,34 +154,34 @@ class MatchmakeSession extends NEXTypes.Structure {
 		this.m_ApplicationBuffer = stream.readNEXBuffer();
 		this.m_ParticipationCount = stream.readUInt32LE();
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 4) {
+		if (semver.gte(nexVersion, '3.4.0')) {
 			this.m_ProgressScore = stream.readUInt8();
 		}
 
-		if (nexVersion.major >= 3) {
+		if (semver.gte(nexVersion, '3.0.0')) {
 			this.m_SessionKey = stream.readNEXBuffer();
 		}
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (semver.gte(nexVersion, '3.5.0')) {
 			this.m_Option0 = stream.readUInt32LE();
 		}
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 6) {
+		if (semver.gte(nexVersion, '3.6.0')) {
 			this.m_MatchmakeParam = stream.readNEXStructure(MatchmakeParam);
 			this.m_StartedTime = stream.readNEXDateTime();
 		}
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 7) {
+		if (semver.gte(nexVersion, '3.7.0')) {
 			this.m_UserPassword = stream.readNEXString();
 		}
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 8) {
+		if (semver.gte(nexVersion, '3.8.0')) {
 			this.m_ReferGid = stream.readUInt32LE();
 			this.m_UserPasswordEnabled = stream.readBoolean();
 			this.m_SystemPasswordEnabled = stream.readBoolean();
 		}
 
-		if (nexVersion.major >= 4) {
+		if (semver.gte(nexVersion, '4.0.0')) {
 			this.m_Codeword = stream.readNEXString();
 		}
 	}
@@ -304,12 +300,7 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_match_making_version) {
-			nexVersion = stream.connection.title.nex_match_making_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_match_making_version || stream.connection.title.nex_version;
 
 		this.m_Attribs = stream.readNEXList(stream.readNEXString);
 		this.m_GameMode = stream.readNEXString();
@@ -320,28 +311,28 @@ class MatchmakeSessionSearchCriteria extends NEXTypes.Structure {
 		this.m_ExcludeLocked = stream.readBoolean();
 		this.m_ExcludeNonHostPid = stream.readBoolean();
 
-		if (nexVersion.major >= 3) {
+		if (semver.gte(nexVersion, '3.0.0')) {
 			this.m_SelectionMethod = stream.readUInt32LE();
 		}
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 4) {
+		if (semver.gte(nexVersion, '3.4.0')) {
 			this.m_VacantParticipants = stream.readUInt16LE();
 		}
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 6) {
+		if (semver.gte(nexVersion, '3.6.0')) {
 			this.m_MatchmakeParam = stream.readNEXStructure(MatchmakeParam);
 		}
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 7) {
+		if (semver.gte(nexVersion, '3.7.0')) {
 			this.m_ExcludeUserPasswordSet = stream.readBoolean();
 			this.m_ExcludeSystemPasswordSet = stream.readBoolean();
 		}
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 8) {
+		if (semver.gte(nexVersion, '3.8.0')) {
 			this.m_ReferGid = stream.readUInt32LE();
 		}
 
-		if (nexVersion.major >= 4) {
+		if (semver.gte(nexVersion, '4.0.0')) {
 			this.m_Codeword = stream.readNEXString();
 			this.m_ResultRange = stream.readNEXStructure(NEXTypes.ResultRange);
 		}
@@ -713,12 +704,7 @@ class AutoMatchmakeParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_match_making_version) {
-			nexVersion = stream.connection.title.nex_match_making_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_match_making_version || stream.connection.title.nex_version;
 
 		this.sourceMatchmakeSession = stream.readNEXStructure(MatchmakeSession);
 		this.additionalParticipants = stream.readNEXList(stream.readPID);
@@ -729,7 +715,7 @@ class AutoMatchmakeParam extends NEXTypes.Structure {
 		this.lstSearchCriteria = stream.readNEXList(MatchmakeSessionSearchCriteria);
 		this.targetGids = stream.readNEXList(stream.readUInt32LE);
 
-		if (nexVersion.major >= 4) {
+		if (semver.gte(nexVersion, '4.0.0')) {
 			this.blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
 		}
 	}
