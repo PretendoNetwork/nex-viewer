@@ -75,7 +75,7 @@ class Ranking {
 
 		// Check if game uses legacy Ranking. Since there aren't many games that use it,
 		// assume games not listed on title list to use modern Ranking
-		if (semver.lt(nexVersion, '3.0.0')) {
+		if (semver.lt(nexVersion, '3.0.0') && semver.gt(nexVersion, '0.0.0')) {
 			RankingLegacy.handlePacket(packet);
 			return;
 		}

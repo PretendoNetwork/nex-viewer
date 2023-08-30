@@ -54,7 +54,7 @@ class Utility {
 
 		// Check if game uses Storage Manager instead of Utility. Since there aren't many games that use it,
 		// assume games not listed on title list to use Utility
-		if (semver.lt(nexVersion, '3.0.0')) {
+		if (semver.lt(nexVersion, '3.0.0') && semver.gt(nexVersion, '0.0.0')) {
 			StorageManager.handlePacket(packet);
 			return;
 		}
