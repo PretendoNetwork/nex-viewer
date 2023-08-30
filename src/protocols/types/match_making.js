@@ -502,6 +502,11 @@ class JoinMatchmakeSessionParam extends NEXTypes.Structure {
 		this.joinMessage = stream.readNEXString();
 		this.participationCount = stream.readUInt16LE();
 
+		// * From Dani:
+		// * - "Just for future reference, Minecraft has structure version 1 on JoinMatchmakeSessionParam"
+		// * These fields COULD be different structure versions, not related to NEX updates.
+		// * Need to do more research
+
 		// * Assuming this to be 3.10.0
 		// * Not seen in Terraria, which is 3.8.3
 		if (semver.gte(nexVersion, '3.10.0')) {
