@@ -490,6 +490,8 @@ class JoinMatchmakeSessionParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		const nexVersion = stream.connection.title.nex_match_making_version || stream.connection.title.nex_version;
+
 		this.gid = stream.readUInt32LE();
 		this.additionalParticipants = stream.readNEXList(stream.readPID);
 		this.gidForParticipationCheck = stream.readUInt32LE();
@@ -499,16 +501,22 @@ class JoinMatchmakeSessionParam extends NEXTypes.Structure {
 		this.strSystemPassword = stream.readNEXString();
 		this.joinMessage = stream.readNEXString();
 		this.participationCount = stream.readUInt16LE();
-		this.extraParticipants = stream.readUInt16LE();
 
-		// TODO - Make this better. Dirty hack to skip this check on Minecraft: Wii U Edition
-		if (stream.connection.title.access_key !== 'f1b61c8e') {
+		// * Assuming this to be 3.10.0
+		// * Not seen in Terraria, which is 3.8.3
+		if (semver.gte(nexVersion, '3.10.0')) {
+			this.extraParticipants = stream.readUInt16LE();
+		}
+
+		// * Assuming this to be 4.0.0
+		// * Not seen in Minecraft, which is 3.10.0
+		if (semver.gte(nexVersion, '4.0.0')) {
 			this.blockListParam = stream.readNEXStructure(MatchmakeBlockListParam);
 		}
 	}
 
 	toJSON() {
-		return {
+		const data = {
 			__structureVersion: this._structureHeader.version,
 			gid: {
 				__typeName: 'uint32',
@@ -545,16 +553,24 @@ class JoinMatchmakeSessionParam extends NEXTypes.Structure {
 			participationCount: {
 				__typeName: 'uint16',
 				__typeValue: this.participationCount
-			},
-			extraParticipants: {
-				__typeName: 'uint16',
-				__typeValue: this.extraParticipants
-			},
-			blockListParam: {
-				__typeName: 'MatchmakeBlockListParam',
-				__typeValue: this.blockListParam
 			}
 		};
+
+		if (this.extraParticipants !== undefined) {
+			data.extraParticipants = {
+				__typeName: 'uint16',
+				__typeValue: this.extraParticipants
+			};
+		}
+
+		if (this.blockListParam !== undefined) {
+			data.blockListParam = {
+				__typeName: 'MatchmakeBlockListParam',
+				__typeValue: this.blockListParam
+			};
+		}
+
+		return data;
 	}
 }
 
