@@ -37,7 +37,7 @@ class Structure {
 			this._parentTypes.push(stream.readNEXStructure(parentTypeClass));
 		}
 
-		if (semver.gte(stream.connection.title.nex_version.major, '3.5.0')) {
+		if (semver.gte(stream.connection.title.nex_version, '3.5.0')) {
 			this._structureHeader = {
 				version: stream.readUInt8(),
 				contentLength: stream.readUInt32LE()
