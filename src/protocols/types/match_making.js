@@ -946,11 +946,11 @@ class ParticipantDetails extends NEXTypes.Structure {
 			__structureVersion: this._structureHeader.version,
 			m_idParticipant: {
 				__typeName: 'PID',
-				__typeValue: this.m_idGathering
+				__typeValue: this.m_idParticipant
 			},
 			m_strName: {
 				__typeName: 'String',
-				__typeValue: this.m_idGuest
+				__typeValue: this.m_strName
 			},
 			m_strMessage: {
 				__typeName: 'String',
@@ -958,7 +958,7 @@ class ParticipantDetails extends NEXTypes.Structure {
 			},
 			m_uiParticipants: {
 				__typeName: 'uint16',
-				__typeValue: this.m_strMessage
+				__typeValue: this.m_uiParticipants
 			}
 		};
 	}
