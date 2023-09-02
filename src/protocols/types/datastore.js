@@ -1,3 +1,4 @@
+const semver = require('semver');
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
@@ -230,19 +231,14 @@ class DataStoreReqGetInfo extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_datastore_version) {
-			nexVersion = stream.connection.title.nex_datastore_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_datastore_version || stream.connection.title.nex_version;
 
 		this.url = stream.readNEXString();
 		this.requestHeaders = stream.readNEXList(DataStoreKeyValue);
 		this.size = stream.readUInt32LE();
 		this.rootCaCert = stream.readNEXBuffer();
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (semver.gte(nexVersion, '3.5.0')) {
 			this.dataId = stream.readUInt64LE();
 		}
 	}
@@ -801,14 +797,9 @@ class DataStorePrepareUpdateParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_datastore_version) {
-			nexVersion = stream.connection.title.nex_datastore_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_datastore_version || stream.connection.title.nex_version;
 
-		if (nexVersion.major >= 3) {
+		if (semver.gte(nexVersion, '3.0.0')) {
 			this.dataId = stream.readUInt64LE();
 
 			// * Hack to get the proper type when encoding to JSON
@@ -820,11 +811,11 @@ class DataStorePrepareUpdateParam extends NEXTypes.Structure {
 
 		this.size = stream.readUInt32LE();
 
-		if (nexVersion.major >= 3) {
+		if (semver.gte(nexVersion, '3.0.0')) {
 			this.updatePassword = stream.readUInt64LE();
 		}
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (semver.gte(nexVersion, '3.5.0')) {
 			this.extraData = stream.readNEXList(stream.readNEXString);
 		}
 	}
@@ -868,14 +859,9 @@ class DataStoreReqUpdateInfo extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_datastore_version) {
-			nexVersion = stream.connection.title.nex_datastore_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_datastore_version || stream.connection.title.nex_version;
 
-		if (nexVersion.major >= 3) {
+		if (semver.gte(nexVersion, '3.5.0')) {
 			this.version = stream.readUInt32LE();
 
 			// * Hack to get the proper type when encoding to JSON
@@ -927,14 +913,9 @@ class DataStoreCompleteUpdateParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_datastore_version) {
-			nexVersion = stream.connection.title.nex_datastore_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_datastore_version || stream.connection.title.nex_version;
 
-		if (nexVersion.major >= 3) {
+		if (semver.gte(nexVersion, '3.5.0')) {
 			this.dataId = stream.readUInt64LE();
 
 			// * Hack to get the proper type when encoding to JSON
@@ -944,7 +925,7 @@ class DataStoreCompleteUpdateParam extends NEXTypes.Structure {
 			this.#dataIdType = 'uint32';
 		}
 
-		if (nexVersion.major >= 3) {
+		if (semver.gte(nexVersion, '3.5.0')) {
 			this.version = stream.readUInt32LE();
 			this.#versionType = 'uint32';
 		} else {
@@ -1516,19 +1497,14 @@ class DataStorePrepareGetParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_datastore_version) {
-			nexVersion = stream.connection.title.nex_datastore_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_datastore_version || stream.connection.title.nex_version;
 
 		this.dataId = stream.readUInt64LE();
 		this.lockId = stream.readUInt32LE();
 		this.persistenceTarget = stream.readNEXStructure(DataStorePersistenceTarget);
 		this.accessPassword = stream.readUInt64LE();
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (semver.gte(nexVersion, '3.5.0')) {
 			this.extraData = stream.readNEXList(stream.readNEXString);
 		}
 	}
@@ -1571,12 +1547,7 @@ class DataStorePreparePostParam extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_datastore_version) {
-			nexVersion = stream.connection.title.nex_datastore_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_datastore_version || stream.connection.title.nex_version;
 
 		this.size = stream.readUInt32LE();
 		this.name = stream.readNEXString();
@@ -1591,7 +1562,7 @@ class DataStorePreparePostParam extends NEXTypes.Structure {
 		this.ratingInitParams = stream.readNEXList(DataStoreRatingInitParamWithSlot);
 		this.persistenceInitParam = stream.readNEXStructure(DataStorePersistenceInitParam);
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (semver.gte(nexVersion, '3.5.0')) {
 			this.extraData = stream.readNEXList(stream.readNEXString);
 		}
 	}

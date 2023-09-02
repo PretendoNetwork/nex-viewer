@@ -1,3 +1,4 @@
+const semver = require('semver');
 const Packet = require('../packet'); // eslint-disable-line no-unused-vars
 const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
 const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
@@ -70,16 +71,11 @@ class Ranking {
 			return;
 		}
 
-		let nexVersion;
-		if (packet.connection.title.nex_ranking_version) {
-			nexVersion = packet.connection.title.nex_ranking_version;
-		} else {
-			nexVersion = packet.connection.title.nex_version;
-		}
+		const nexVersion = packet.connection.title.nex_ranking_version || packet.connection.title.nex_version;
 
 		// Check if game uses legacy Ranking. Since there aren't many games that use it,
 		// assume games not listed on title list to use modern Ranking
-		if (nexVersion.major < 3 && nexVersion.major > 0) {
+		if (semver.lt(nexVersion, '3.0.0') && semver.gt(nexVersion, '0.0.0')) {
 			RankingLegacy.handlePacket(packet);
 			return;
 		}

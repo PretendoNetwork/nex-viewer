@@ -1,3 +1,4 @@
+const semver = require('semver');
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 const MatchMakingTypes = require('../types/match_making');
@@ -112,17 +113,12 @@ class CreateMatchmakeSessionRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_match_making_version) {
-			nexVersion = stream.connection.title.nex_match_making_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_match_making_version || stream.connection.title.nex_version;
 
 		this.anyGathering = stream.readNEXAnyDataHolder();
 		this.strMessage = stream.readNEXString();
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 5) {
+		if (semver.gte(nexVersion, '3.5.0')) {
 			this.participationCount = stream.readUInt16LE();
 		}
 	}

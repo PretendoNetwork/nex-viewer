@@ -24,11 +24,7 @@ const titles = [
 	{
 		name: 'Friends',
 		access_key: 'ridfebb9',
-		nex_version: { // NEX version doesn't matter here
-			major: 0,
-			minor: 0,
-			patch: 0
-		}
+		nex_version: '1.0.0'
 	}
 ];
 
@@ -43,11 +39,7 @@ for (const line of nexLines) {
 	titles.push({
 		name: name.trim(),
 		access_key: '',
-		nex_version: {
-			major: Number(major),
-			minor: Number(minor),
-			patch: Number(patch)
-		}
+		nex_version: `${major}.${minor}.${patch}`
 	});
 }
 
@@ -62,25 +54,13 @@ for (const line of nexRankingLines) {
 	const game = titles.find(game => game.name === name.trim());
 
 	if (game) {
-		game.nex_ranking_version = {
-			major: Number(major),
-			minor: Number(minor),
-			patch: Number(patch)
-		};
+		game.nex_ranking_version = `${major}.${minor}.${patch}`;
 	} else {
 		titles.push({
 			name: name.trim(),
 			access_key: '',
-			nex_version: {
-				major: 0,
-				minor: 0,
-				patch: 0
-			},
-			nex_ranking_version: {
-				major: Number(major),
-				minor: Number(minor),
-				patch: Number(patch)
-			}
+			nex_version: '0.0.0',
+			nex_ranking_version: `${major}.${minor}.${patch}`
 		});
 	}
 }
@@ -96,25 +76,13 @@ for (const line of nexDataStoreLines) {
 	const game = titles.find(game => game.name === name.trim());
 
 	if (game) {
-		game.nex_datastore_version = {
-			major: Number(major),
-			minor: Number(minor),
-			patch: Number(patch)
-		};
+		game.nex_datastore_version = `${major}.${minor}.${patch}`;
 	} else {
 		titles.push({
 			name: name.trim(),
 			access_key: '',
-			nex_version: {
-				major: 0,
-				minor: 0,
-				patch: 0
-			},
-			nex_datastore_version: {
-				major: Number(major),
-				minor: Number(minor),
-				patch: Number(patch)
-			}
+			nex_version: '0.0.0',
+			nex_datastore_version: `${major}.${minor}.${patch}`
 		});
 	}
 }
@@ -130,25 +98,13 @@ for (const line of nexMatchMakingLines) {
 	const game = titles.find(game => game.name === name.trim());
 
 	if (game) {
-		game.nex_match_making_version = {
-			major: Number(major),
-			minor: Number(minor),
-			patch: Number(patch)
-		};
+		game.nex_match_making_version = `${major}.${minor}.${patch}`;
 	} else {
 		titles.push({
 			name: name.trim(),
 			access_key: '',
-			nex_version: {
-				major: 0,
-				minor: 0,
-				patch: 0
-			},
-			nex_match_making_version: {
-				major: Number(major),
-				minor: Number(minor),
-				patch: Number(patch)
-			}
+			nex_version: '0.0.0',
+			nex_match_making_version: `${major}.${minor}.${patch}`
 		});
 	}
 }
@@ -164,25 +120,13 @@ for (const line of nexMessagingLines) {
 	const game = titles.find(game => game.name === name.trim());
 
 	if (game) {
-		game.nex_messaging_version = {
-			major: Number(major),
-			minor: Number(minor),
-			patch: Number(patch)
-		};
+		game.nex_messaging_version = `${major}.${minor}.${patch}`;
 	} else {
 		titles.push({
 			name: name.trim(),
 			access_key: '',
-			nex_version: {
-				major: 0,
-				minor: 0,
-				patch: 0
-			},
-			nex_messaging_version: {
-				major: Number(major),
-				minor: Number(minor),
-				patch: Number(patch)
-			}
+			nex_version: '0.0.0',
+			nex_messaging_version: `${major}.${minor}.${patch}`
 		});
 	}
 }
@@ -198,25 +142,13 @@ for (const line of nexUtilityLines) {
 	const game = titles.find(game => game.name === name.trim());
 
 	if (game) {
-		game.nex_utility_version = {
-			major: Number(major),
-			minor: Number(minor),
-			patch: Number(patch)
-		};
+		game.nex_utility_version = `${major}.${minor}.${patch}`;
 	} else {
 		titles.push({
 			name: name.trim(),
 			access_key: '',
-			nex_version: {
-				major: 0,
-				minor: 0,
-				patch: 0
-			},
-			nex_utility_version: {
-				major: Number(major),
-				minor: Number(minor),
-				patch: Number(patch)
-			}
+			nex_version: '0.0.0',
+			nex_utility_version: `${major}.${minor}.${patch}`
 		});
 	}
 }
@@ -236,11 +168,7 @@ for (const line of accessLines) {
 		titles.push({
 			name: name.trim(),
 			access_key: accessKey.trim(),
-			nex_version: {
-				major: 0,
-				minor: 0,
-				patch: 0
-			}
+			nex_version: '0.0.0'
 		});
 	}
 }

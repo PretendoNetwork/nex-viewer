@@ -1,3 +1,4 @@
+const semver = require('semver');
 const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 
@@ -52,12 +53,7 @@ class RankingRankData extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
-		let nexVersion;
-		if (stream.connection.title.nex_ranking_version) {
-			nexVersion = stream.connection.title.nex_ranking_version;
-		} else {
-			nexVersion = stream.connection.title.nex_version;
-		}
+		const nexVersion = stream.connection.title.nex_ranking_version || stream.connection.title.nex_version;
 
 		this.principalId = stream.readPID();
 		this.uniqueId = stream.readUInt64LE();
@@ -68,7 +64,7 @@ class RankingRankData extends NEXTypes.Structure {
 		this.param = stream.readUInt64LE();
 		this.commonData = stream.readNEXBuffer();
 
-		if (nexVersion.major >= 3 && nexVersion.minor >= 6) {
+		if (semver.gte(nexVersion, '3.6.0')) {
 			this.updateTime = stream.readNEXDateTime();
 		}
 	}
