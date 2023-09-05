@@ -714,7 +714,6 @@ class MatchmakeExtension {
 	 */
 	static AutoMatchmakeWithParam_Postpone(rmcMessage, stream) {
 		if (rmcMessage.isRequest()) {
-			console.log(rmcMessage);
 			return new Requests.AutoMatchmakeWithParam_PostponeRequest(stream);
 		} else {
 			return new Responses.AutoMatchmakeWithParam_PostponeResponse(stream);
