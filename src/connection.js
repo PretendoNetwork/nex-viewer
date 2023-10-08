@@ -284,10 +284,26 @@ class Connection {
 					return;
 				}
 
-				try {
-					protocol.handlePacket(packet);
-				} catch (error) {
-					packet.stackTrace = error.stack;
+				if (!packet.rmcMessage.isSuccess()) {
+					const requestPacket = this.packets.find(p => {
+						if (
+							p.rmcMessage.isRequest() &&
+							p.rmcMessage.protocolId === packet.rmcMessage.protocolId &&
+							p.rmcMessage.callId === packet.rmcMessage.callId
+						) {
+							return true;
+						}
+					});
+
+					if (requestPacket) {
+						packet.rmcMessage.methodId = requestPacket.rmcMessage.methodId;
+					}
+				} else {
+					try {
+						protocol.handlePacket(packet);
+					} catch (error) {
+						packet.stackTrace = error.stack;
+					}
 				}
 
 				if (!packet.rmcData.protocolName) {
