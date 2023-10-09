@@ -132,6 +132,7 @@ export function addPacketToList(packet) {
 
 	const tr = document.createElement('tr');
 
+	const time = document.createElement('td');
 	const source = document.createElement('td');
 	const destination = document.createElement('td');
 	const version = document.createElement('td');
@@ -178,11 +179,14 @@ export function addPacketToList(packet) {
 		}
 	}
 
+	time.appendChild(document.createTextNode(packet.date));
 	source.appendChild(document.createTextNode(packet.sourceAddress));
 	destination.appendChild(document.createTextNode(packet.destinationAddress));
 	version.appendChild(document.createTextNode(`v${packet.version}`));
 	info.appendChild(document.createTextNode(infoString));
+	
 
+	tr.appendChild(time);
 	tr.appendChild(source);
 	tr.appendChild(destination);
 	tr.appendChild(version);

@@ -208,6 +208,10 @@ class NEXParser extends EventEmitter {
 
 				connection.checkForSecureServer = false;
 			}
+			let date;
+			const timestamp = raw.header.timestampSeconds;
+			date = new Date(timestamp * 1000);
+			packet.date = date;
 
 			this.emit('packet', packet);
 		}
