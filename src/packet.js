@@ -27,7 +27,7 @@ class Packet {
 	constructor(connection, stream) {
 		this.connection = connection;
 		this.stream = stream;
-
+		
 		this.version;
 		this.source;
 		this.destination;
@@ -49,7 +49,7 @@ class Packet {
 		};
 		this.rmcData = {}; // * Decoded RMC body
 		this.stackTrace; // * Contains possible decoding errors
-
+		this.date = 0;
 		this.decode();
 	}
 
@@ -77,7 +77,8 @@ class Packet {
 				errorCode: this.rmcMessage.errorCode,
 				body: this.rmcData.body
 			},
-			stackTrace: this.stackTrace
+			stackTrace: this.stackTrace,
+			date: this.date
 		};
 
 		if (this.isToClient()) {

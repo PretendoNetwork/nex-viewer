@@ -59,10 +59,19 @@ class NEXParser extends EventEmitter {
 	 */
 	handlePacket(raw) {
 		const { data: frame } = raw;
+		const { header: head } = raw;
 		const udpPacket = this.parseUDPPacket(frame);
-
+		let timestamp = 0;
+		
 		if (!udpPacket) {
 			return;
+		}
+		
+		if (!head){ //Checks if header is present. There isn't one on .pcapng files
+			timestamp = (Number(BigInt(raw.timestampHigh) << 32n | BigInt(raw.timestampLow))/1000000);
+		}
+		else{
+			timestamp = raw.header.timestampSeconds;
 		}
 
 		// TODO - ON RARE OCCASIONS UDP PACKETS WHICH ARE NOT NEX BUT HAVE THE SAME HEADERS GET THROUGH
@@ -208,7 +217,7 @@ class NEXParser extends EventEmitter {
 
 				connection.checkForSecureServer = false;
 			}
-
+			packet.date = new Date(timestamp * 1000);
 			this.emit('packet', packet);
 		}
 	}
