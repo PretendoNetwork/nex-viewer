@@ -27,7 +27,7 @@ function resizePacketsSection() {
 	const gridTemplateRows = getComputedStyle(mainElement).getPropertyValue('grid-template-rows');
 	const height = gridTemplateRows.split(' ')[0];
 
-	// Sometimes doesn't visually update?
+	// * Sometimes doesn't visually update?
 	packetsSection.style.height = height;
 	packetDetailsSection.style.height = height;
 	connectionsListSection.style.height = height;
@@ -47,7 +47,14 @@ export function populateConnectionsList(connections) {
 		const connectionElementDiv = document.createElement('div');
 		connectionElementDiv.classList.add('connection');
 
-		const title = `${connection.discriminator} ${connection.title.name || 'Unknown'} (${connection.secure ? 'Secure' : 'Authentication'})`;
+		let title;
+
+		// * Hack to detect raw RMC connections
+		if (connection.discriminator !== 'authentication' && connection.discriminator !== 'secure') {
+			title = `${connection.discriminator} ${connection.title.name || 'Unknown'} (${connection.secure ? 'Secure' : 'Authentication'})`;
+		} else {
+			title = `${connection.title.name || 'Unknown'} (${connection.secure ? 'Secure' : 'Authentication'})`;
+		}
 
 		const connectionTitle = document.createElement('span');
 		connectionTitle.appendChild(document.createTextNode(title));
@@ -115,8 +122,14 @@ function filterPacketsByDiscriminator(discriminator) {
 
 		const packetData = JSON.parse(packet.dataset.serialized);
 
-		if (packetData.sourceAddress !== discriminator && packetData.destinationAddress !== discriminator) {
-			packet.classList.add('hidden');
+		if (packetData.rawRMC) {
+			if (packetData.server !== discriminator) {
+				packet.classList.add('hidden');
+			}
+		} else {
+			if (packetData.sourceAddress !== discriminator && packetData.destinationAddress !== discriminator) {
+				packet.classList.add('hidden');
+			}
 		}
 
 		if (displayPingPackets && packet.dataset.packetType === 'PING') {
@@ -138,20 +151,24 @@ export function addPacketToList(packet) {
 	const version = document.createElement('td');
 	const info = document.createElement('td');
 
-	let infoString = packet.type;
+	let infoData = [];
 	let isAck = false;
 
-	if (packet.type === 'DATA') {
-		infoString += `, FRAGMENT=${packet.fragmentId}`;
+	if (!packet.rawRMC) {
+		infoData.push(packet.type);
 	}
 
-	if (packet.flags.includes('ACK')) {
-		infoString += ', ACK';
+	if (!packet.rawRMC && packet.type === 'DATA') {
+		infoData.push(`FRAGMENT=${packet.fragmentId}`);
+	}
+
+	if (!packet.rawRMC && packet.flags.includes('ACK')) {
+		infoData.push('ACK');
 		isAck = true;
 	}
 
-	if (packet.flags.includes('MULTI_ACK')) {
-		infoString += ', MULTI_ACK';
+	if (!packet.rawRMC && packet.flags.includes('MULTI_ACK')) {
+		infoData.push('MULTI_ACK');
 		isAck = true;
 	}
 
@@ -160,31 +177,36 @@ export function addPacketToList(packet) {
 	}
 
 	if (packet.type === 'DATA' && packet.fragmentId === 0 && !isAck) {
-		infoString += `, ${packet.rmc.protocolName}->${packet.rmc.methodName}`;
+		infoData.push(`${packet.rmc.protocolName}->${packet.rmc.methodName}`);
 
 		if (packet.rmc.isRequest === true) {
-			infoString += ', REQUEST';
+			infoData.push('REQUEST');
 		} else if (packet.rmc.isRequest === false) {
-			infoString += ', RESPONSE';
+			infoData.push('RESPONSE');
 
 			if (packet.rmc.isSuccess === true) {
-				infoString += ', SUCCESS';
+				infoData.push('SUCCESS');
 			} else if (packet.rmc.isSuccess === false) {
-				infoString += ', FAILURE';
+				infoData.push('FAILURE');
 
 				if (packet.rmc.errorCode) {
-					infoString += `, ERROR CODE=0x${packet.rmc.errorCode.toString(16)}`;
+					infoData.push(`ERROR CODE=0x${packet.rmc.errorCode.toString(16)}`);
 				}
 			}
 		}
 	}
 
-	time.appendChild(document.createTextNode(packet.date));
-	source.appendChild(document.createTextNode(packet.sourceAddress));
-	destination.appendChild(document.createTextNode(packet.destinationAddress));
-	version.appendChild(document.createTextNode(`v${packet.version}`));
+	const timeString = packet.rawRMC ? '' : packet.date;
+	const sourceString = packet.rawRMC ? '' : packet.sourceAddress;
+	const destinationString = packet.rawRMC ? '' : packet.destinationAddress;
+	const versionString = packet.rawRMC ? 'Raw RMC' : `v${packet.version}`;
+	const infoString = infoData.join(', ');
+
+	time.appendChild(document.createTextNode(timeString));
+	source.appendChild(document.createTextNode(sourceString));
+	destination.appendChild(document.createTextNode(destinationString));
+	version.appendChild(document.createTextNode(versionString));
 	info.appendChild(document.createTextNode(infoString));
-	
 
 	tr.appendChild(time);
 	tr.appendChild(source);

@@ -1,5 +1,7 @@
-const Connection = require('./connection'); // eslint-disable-line no-unused-vars
-const Stream = require('./stream'); // eslint-disable-line no-unused-vars
+/**
+ * @typedef {import('./connection')} Connection
+ * @typedef {import('./stream')} Stream
+ */
 
 class Packet {
 	static FLAGS = {
@@ -27,7 +29,8 @@ class Packet {
 	constructor(connection, stream) {
 		this.connection = connection;
 		this.stream = stream;
-		
+		this.isRawRMC = false;
+
 		this.version;
 		this.source;
 		this.destination;
@@ -50,13 +53,114 @@ class Packet {
 		this.rmcData = {}; // * Decoded RMC body
 		this.stackTrace; // * Contains possible decoding errors
 		this.date = 0;
-		this.decode();
+
+		if (this.decode && this.stream) {
+			this.decode();
+		}
 	}
 
 	/**
 	 * @returns {object} JSON serialized data
 	 */
 	toJSON() {
+		const serialized = {
+			rawRMC: this.isRawRMC,
+			flags: [],
+			rmc: {
+				protocolName: this.rmcData.protocolName,
+				methodName: this.rmcData.methodName,
+				protocolId: this.rmcMessage.protocolId,
+				customId: this.rmcMessage.customId,
+				methodId: this.rmcMessage.methodId,
+				callId: this.rmcMessage.callId,
+				errorCode: this.rmcMessage.errorCode,
+				body: this.rmcData.body
+			},
+			stackTrace: this.stackTrace
+		};
+
+		if (this.isRawRMC) {
+			serialized.server = this.connection.isSecureServer ? 'secure' : 'authentication';
+			serialized.type = 'DATA';
+			serialized.fragmentId = 0;
+
+			serialized.rmc.isRequest = this.rmcMessage.isRequest();
+
+			if (serialized.rmc.isRequest === false) {
+				serialized.rmc.isSuccess = this.rmcMessage.isSuccess();
+			}
+		} else {
+			serialized.version = this.version;
+			serialized.source = this.source;
+			serialized.destination = this.destination;
+			serialized.sessionId = this.sessionId;
+			serialized.signature = this.signature.toString('hex');
+			serialized.sequenceId = this.sequenceId;
+			serialized.fragmentId = this.fragmentId;
+			serialized.checksum = this.checksum;
+			serialized.date = this.date;
+
+			if (this.isToClient()) {
+				serialized.sourceAddress = this.connection.serverAddress;
+				serialized.destinationAddress = this.connection.clientAddress;
+			} else {
+				serialized.sourceAddress = this.connection.clientAddress;
+				serialized.destinationAddress = this.connection.serverAddress;
+			}
+
+			if (this.isSyn()) {
+				serialized.type = 'SYN';
+			}
+
+			if (this.isConnect()) {
+				serialized.type = 'CONNECT';
+			}
+
+			if (this.isData()) {
+				serialized.type = 'DATA';
+				serialized.fragmentId = this.fragmentId;
+
+				serialized.rmc.isRequest = this.rmcMessage.isRequest();
+
+				if (serialized.fragmentId === 0 && serialized.rmc.isRequest === false) {
+					serialized.rmc.isSuccess = this.rmcMessage.isSuccess();
+				}
+			}
+
+			if (this.isDisconnect()) {
+				serialized.type = 'DISCONNECT';
+			}
+
+			if (this.isPing()) {
+				serialized.type = 'PING';
+			}
+
+			if (this.isUser()) {
+				serialized.type = 'USER';
+			}
+
+			if (this.hasFlagAck()) {
+				serialized.flags.push('ACK');
+			}
+
+			if (this.hasFlagReliable()) {
+				serialized.flags.push('RELIABLE');
+			}
+
+			if (this.hasFlagNeedAck()) {
+				serialized.flags.push('NEED_ACK');
+			}
+
+			if (this.hasFlagHasSize()) {
+				serialized.flags.push('HAS_SIZE');
+			}
+
+			if (this.hasFlagMultiAck()) {
+				serialized.flags.push('MULTI_ACK');
+			}
+		}
+
+		/*
 		const serialized = {
 			version: this.version,
 			source: this.source,
@@ -140,6 +244,7 @@ class Packet {
 		if (this.hasFlagMultiAck()) {
 			serialized.flags.push('MULTI_ACK');
 		}
+		*/
 
 		return serialized;
 	}
