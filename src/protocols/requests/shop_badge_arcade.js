@@ -1,4 +1,6 @@
-const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
+/**
+ * @typedef {import('../../stream')} Stream
+ */
 
 const ShopBadgeArcadeTypes = require('../types/shop_badge_arcade');
 

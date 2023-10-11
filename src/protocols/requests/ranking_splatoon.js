@@ -1,4 +1,6 @@
-const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
+/**
+ * @typedef {import('../../stream')} Stream
+ */
 
 class GetCompetitionRankingScoreRequest {
 	/**

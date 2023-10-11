@@ -1,5 +1,8 @@
+/**
+ * @typedef {import('../../stream')} Stream
+ */
+
 const semver = require('semver');
-const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const DataStoreTypes = require('../types/datastore');
 
 class PrepareGetObjectV1Request {

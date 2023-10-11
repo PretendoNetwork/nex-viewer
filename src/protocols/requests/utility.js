@@ -1,4 +1,6 @@
-const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
+/**
+ * @typedef {import('../../stream')} Stream
+ */
 const UtilityTypes = require('../types/utility');
 
 class AcquireNexUniqueIdRequest {
