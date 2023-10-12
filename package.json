@@ -17,6 +17,8 @@
   },
   "license": "ISC",
   "dependencies": {
+    "events": "^3.3.0",
+    "package.json": "^2.0.1",
     "pcap-ng-parser": "github:PretendoNetwork/pcap-ng-parser",
     "pcap-parser": "^0.2.1",
     "private-ip": "^2.3.4",
