@@ -187,11 +187,11 @@ for (const line of titleIdLines) {
 	const titleIdList = titleIdData.trim().split(', ');
 
 	if (game) {
-		game.titleIds = titleIdList;
+		game.title_ids = titleIdList;
 	} else {
 		titles.push({
 			name: name.trim(),
-			titleIds: titleIdList,
+			title_ids: titleIdList,
 			nex_version: '0.0.0'
 		});
 	}

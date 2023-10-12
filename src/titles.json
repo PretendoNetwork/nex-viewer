@@ -13,7 +13,7 @@
         "nex_match_making_version": "3.2.1",
         "nex_messaging_version": "3.2.1",
         "nex_utility_version": "3.2.1",
-        "titleIds": [
+        "title_ids": [
             "00040000000F2200",
             "00040000000F7A00"
         ]
@@ -27,7 +27,7 @@
         "nex_match_making_version": "2.7.2",
         "nex_messaging_version": "2.7.2",
         "nex_utility_version": "2.7.2",
-        "titleIds": [
+        "title_ids": [
             "00040000000AE200",
             "00040000000AF400"
         ]
@@ -41,7 +41,7 @@
         "nex_match_making_version": "3.10.1",
         "nex_messaging_version": "3.10.1",
         "nex_utility_version": "3.10.1",
-        "titleIds": [
+        "title_ids": [
             "0004000000086300",
             "0004000000086400",
             "0004000000198E00",
@@ -58,7 +58,7 @@
         "nex_match_making_version": "3.5.1",
         "nex_messaging_version": "3.5.1",
         "nex_utility_version": "3.5.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010145600"
         ]
     },
@@ -71,7 +71,7 @@
         "nex_match_making_version": "3.10.0",
         "nex_messaging_version": "3.10.0",
         "nex_utility_version": "3.10.0",
-        "titleIds": [
+        "title_ids": [
             "00050000101F7900",
             "0005000E101F7900",
             "0005000010200800",
@@ -87,7 +87,7 @@
         "nex_match_making_version": "3.7.3",
         "nex_messaging_version": "3.7.3",
         "nex_utility_version": "3.7.3",
-        "titleIds": [
+        "title_ids": [
             "0004000000153500",
             "0004000000153600"
         ]
@@ -101,7 +101,7 @@
         "nex_match_making_version": "3.2.1",
         "nex_messaging_version": "3.2.1",
         "nex_utility_version": "3.2.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010113100",
             "0005000C10113100",
             "0005000E10113100"
@@ -116,7 +116,7 @@
         "nex_match_making_version": "3.6.1",
         "nex_messaging_version": "3.6.1",
         "nex_utility_version": "3.6.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010138F00",
             "0005000010177600",
             "0005000010177700",
@@ -132,7 +132,7 @@
         "nex_match_making_version": "3.5.2",
         "nex_messaging_version": "3.5.2",
         "nex_utility_version": "3.5.2",
-        "titleIds": [
+        "title_ids": [
             "0005000010132900",
             "0005000010136F00",
             "0005000010137000",
@@ -148,7 +148,7 @@
         "nex_match_making_version": "3.5.2",
         "nex_messaging_version": "3.5.2",
         "nex_utility_version": "3.5.2",
-        "titleIds": [
+        "title_ids": [
             "000500001016DC00",
             "0005000010188C00",
             "0005000010188D00"
@@ -163,7 +163,7 @@
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
         "nex_utility_version": "3.9.1",
-        "titleIds": [
+        "title_ids": [
             "00050000101AC900",
             "00050000101B3D00",
             "00050000101B3E00",
@@ -179,7 +179,7 @@
         "nex_match_making_version": "3.4.0",
         "nex_messaging_version": "3.4.0",
         "nex_utility_version": "3.4.0",
-        "titleIds": [
+        "title_ids": [
             "0005000010137F00",
             "0005000E10137F00",
             "0005000010138300",
@@ -197,7 +197,7 @@
         "nex_match_making_version": "3.3.0",
         "nex_messaging_version": "3.3.0",
         "nex_utility_version": "3.3.0",
-        "titleIds": [
+        "title_ids": [
             "0005000010129000",
             "0005000010129200",
             "0005000E10129000",
@@ -213,7 +213,7 @@
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
         "nex_utility_version": "3.9.1",
-        "titleIds": [
+        "title_ids": [
             "000500001012F000",
             "00050000101D6000",
             "00050000101E4100",
@@ -229,7 +229,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010116600",
             "000500001012B800",
             "000500001012B900"
@@ -244,7 +244,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "000500001010E400",
             "000500001010FF00"
         ]
@@ -258,7 +258,7 @@
         "nex_match_making_version": "3.8.0",
         "nex_messaging_version": "3.8.0",
         "nex_utility_version": "3.8.0",
-        "titleIds": [
+        "title_ids": [
             "000500001017CD00",
             "000500001017D800",
             "000500001017D900"
@@ -273,7 +273,7 @@
         "nex_match_making_version": "3.2.1",
         "nex_messaging_version": "3.2.1",
         "nex_utility_version": "3.2.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010111700",
             "0005000010111A00",
             "0005000010140700"
@@ -288,7 +288,7 @@
         "nex_match_making_version": "3.7.1",
         "nex_messaging_version": "3.7.1",
         "nex_utility_version": "3.7.1",
-        "titleIds": [
+        "title_ids": [
             "000400000015B100",
             "000400000015D800",
             "000400000017BF00",
@@ -304,7 +304,7 @@
         "nex_match_making_version": "3.8.3",
         "nex_messaging_version": "3.8.3",
         "nex_utility_version": "3.8.3",
-        "titleIds": [
+        "title_ids": [
             "0005000010193300",
             "0005000010193400"
         ]
@@ -318,7 +318,7 @@
         "nex_match_making_version": "3.10.0",
         "nex_messaging_version": "3.10.0",
         "nex_utility_version": "3.10.0",
-        "titleIds": [
+        "title_ids": [
             "000500001018D900",
             "00050000101A4800",
             "00050000101B9900"
@@ -333,7 +333,7 @@
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
         "nex_utility_version": "3.9.1",
-        "titleIds": [
+        "title_ids": [
             "000400000014A400",
             "000400000017E200",
             "000400000017E300",
@@ -351,7 +351,7 @@
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
         "nex_utility_version": "3.9.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010190300",
             "00050000101E5300",
             "00050000101E5400"
@@ -366,7 +366,7 @@
         "nex_match_making_version": "3.4.0",
         "nex_messaging_version": "3.4.0",
         "nex_utility_version": "3.4.0",
-        "titleIds": [
+        "title_ids": [
             "0005000010106900",
             "000500001010C700",
             "000500001010C800"
@@ -381,11 +381,12 @@
         "nex_match_making_version": "2.4.3",
         "nex_messaging_version": "2.4.3",
         "nex_utility_version": "2.4.3",
-        "titleIds": [
+        "title_ids": [
             "0004000000030600",
             "0004000000030700",
             "0004000000030800",
-            "0004000000030A00"
+            "0004000000030A00",
+            "000400000008B400"
         ]
     },
     {
@@ -397,7 +398,7 @@
         "nex_match_making_version": "3.5.4",
         "nex_messaging_version": "3.5.4",
         "nex_utility_version": "3.5.4",
-        "titleIds": [
+        "title_ids": [
             "000500001010EB00",
             "000500001010EC00",
             "000500001010ED00"
@@ -412,7 +413,7 @@
         "nex_match_making_version": "2.6.1",
         "nex_messaging_version": "2.6.1",
         "nex_utility_version": "2.6.1",
-        "titleIds": [
+        "title_ids": [
             "0004000000064D00",
             "000400000007C700",
             "000400000007C800",
@@ -429,7 +430,7 @@
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
         "nex_utility_version": "3.9.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010199000",
             "00050000101A3500",
             "00050000101A3600"
@@ -444,7 +445,7 @@
         "nex_match_making_version": "3.7.1",
         "nex_messaging_version": "3.7.1",
         "nex_utility_version": "3.7.1",
-        "titleIds": [
+        "title_ids": [
             "000400000012C800",
             "000400000012CA00",
             "0005000010149300",
@@ -461,7 +462,7 @@
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
         "nex_utility_version": "3.9.1",
-        "titleIds": [
+        "title_ids": [
             "000400000016CE00",
             "000400000016E300",
             "0004000000175200"
@@ -476,7 +477,7 @@
         "nex_match_making_version": "3.0.5",
         "nex_messaging_version": "3.0.5",
         "nex_utility_version": "3.0.5",
-        "titleIds": [
+        "title_ids": [
             "0004000000048100",
             "0005000010104D00"
         ]
@@ -490,7 +491,7 @@
         "nex_match_making_version": "3.0.5",
         "nex_messaging_version": "3.0.5",
         "nex_utility_version": "3.0.5",
-        "titleIds": [
+        "title_ids": [
             "00040000000AE400",
             "00040000000B1D00",
             "00040000000D2E00",
@@ -507,7 +508,7 @@
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
         "nex_utility_version": "3.9.1",
-        "titleIds": [
+        "title_ids": [
             "00050000101C5A00",
             "00050000101C9600",
             "00050000101DD900"
@@ -522,7 +523,7 @@
         "nex_match_making_version": "3.10.0",
         "nex_messaging_version": "3.10.0",
         "nex_utility_version": "3.10.0",
-        "titleIds": [
+        "title_ids": [
             "00050000101D7500",
             "00050000101D9D00",
             "00050000101DBE00"
@@ -537,7 +538,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010110100",
             "0005000010110600",
             "0005000010136400"
@@ -552,7 +553,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010110900",
             "0005000010110A00",
             "0005000010110B00",
@@ -568,7 +569,7 @@
         "nex_match_making_version": "3.8.3",
         "nex_messaging_version": "3.8.3",
         "nex_utility_version": "3.8.3",
-        "titleIds": [
+        "title_ids": [
             "00050000101C0700",
             "00050000101C0A00"
         ]
@@ -582,7 +583,7 @@
         "nex_match_making_version": "3.6.1",
         "nex_messaging_version": "3.6.1",
         "nex_utility_version": "3.6.1",
-        "titleIds": [
+        "title_ids": [
             "000400000015A200",
             "000400000015A400",
             "00050000101A5E00",
@@ -598,7 +599,7 @@
         "nex_match_making_version": "3.3.0",
         "nex_messaging_version": "3.3.0",
         "nex_utility_version": "3.3.0",
-        "titleIds": [
+        "title_ids": [
             "000500001012BC00",
             "000500001012BD00",
             "000500001012BE00",
@@ -614,7 +615,7 @@
         "nex_match_making_version": "3.4.12",
         "nex_messaging_version": "3.4.12",
         "nex_utility_version": "3.4.12",
-        "titleIds": [
+        "title_ids": [
             "00040000000C9B00"
         ]
     },
@@ -627,7 +628,7 @@
         "nex_match_making_version": "3.8.2",
         "nex_messaging_version": "3.8.2",
         "nex_utility_version": "3.8.2",
-        "titleIds": [
+        "title_ids": [
             "0004000000164600"
         ]
     },
@@ -640,7 +641,7 @@
         "nex_match_making_version": "3.10.0",
         "nex_messaging_version": "3.10.0",
         "nex_utility_version": "3.10.0",
-        "titleIds": [
+        "title_ids": [
             "00050000101C5800",
             "00050000101DF400",
             "00050000101DF500"
@@ -655,7 +656,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "000500001010FB00",
             "0005000010110500",
             "00050000101A2700"
@@ -670,7 +671,7 @@
         "nex_match_making_version": "3.5.2",
         "nex_messaging_version": "3.5.2",
         "nex_utility_version": "3.5.2",
-        "titleIds": [
+        "title_ids": [
             "0004000000101200",
             "000500001014D900"
         ]
@@ -684,7 +685,7 @@
         "nex_match_making_version": "3.2.1",
         "nex_messaging_version": "3.2.1",
         "nex_utility_version": "3.2.1",
-        "titleIds": [
+        "title_ids": [
             "0004000000053B00",
             "000400000005EE00",
             "000500001012B400",
@@ -700,7 +701,7 @@
         "nex_match_making_version": "3.4.0",
         "nex_messaging_version": "3.4.0",
         "nex_utility_version": "3.4.0",
-        "titleIds": [
+        "title_ids": [
             "0005000010111C00",
             "0005000010149000"
         ]
@@ -714,7 +715,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "000500001011AF00",
             "0005000010136300",
             "00050000101DD600"
@@ -729,7 +730,7 @@
         "nex_match_making_version": "3.6.1",
         "nex_messaging_version": "3.6.1",
         "nex_utility_version": "3.6.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010173300",
             "0005000010176500"
         ]
@@ -743,7 +744,7 @@
         "nex_match_making_version": "3.3.0",
         "nex_messaging_version": "3.3.0",
         "nex_utility_version": "3.3.0",
-        "titleIds": [
+        "title_ids": [
             "00040000000C5400",
             "00040000000C8C00",
             "00040000000CB400",
@@ -762,7 +763,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "000400000008FC00",
             "00040000000B3500",
             "000500001010B300",
@@ -779,7 +780,7 @@
         "nex_match_making_version": "3.8.3",
         "nex_messaging_version": "3.8.3",
         "nex_utility_version": "3.8.3",
-        "titleIds": [
+        "title_ids": [
             "0005000010162B00",
             "0005000010176900",
             "0005000010176A00",
@@ -802,7 +803,7 @@
         "nex_match_making_version": "3.8.2",
         "nex_messaging_version": "3.8.2",
         "nex_utility_version": "3.8.2",
-        "titleIds": [
+        "title_ids": [
             "00050000101BEB00",
             "00050000101BEC00",
             "00050000101BED00"
@@ -817,7 +818,7 @@
         "nex_match_making_version": "3.8.2",
         "nex_messaging_version": "3.8.2",
         "nex_utility_version": "3.8.2",
-        "titleIds": [
+        "title_ids": [
             "00050000101DCC00",
             "00050000101DCD00",
             "00050000101DCE00"
@@ -832,7 +833,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "00040000000D4A00",
             "00040000000E6800",
             "0005000010132A00",
@@ -848,7 +849,7 @@
         "nex_match_making_version": "3.7.0",
         "nex_messaging_version": "3.7.0",
         "nex_utility_version": "3.7.0",
-        "titleIds": [
+        "title_ids": [
             "00040000000D7D00",
             "00040000000D7E00"
         ]
@@ -862,7 +863,7 @@
         "nex_match_making_version": "3.8.12",
         "nex_messaging_version": "3.8.12",
         "nex_utility_version": "3.8.12",
-        "titleIds": [
+        "title_ids": [
             "00040000001A0300",
             "00040000001A0400",
             "00040000001A0500",
@@ -881,7 +882,7 @@
         "nex_match_making_version": "3.6.27",
         "nex_messaging_version": "3.6.27",
         "nex_utility_version": "3.6.27",
-        "titleIds": [
+        "title_ids": [
             "00040000000B8B00",
             "00040000000EDF00",
             "00040000000EE000",
@@ -900,7 +901,7 @@
         "nex_match_making_version": "3.10.1",
         "nex_messaging_version": "3.10.1",
         "nex_utility_version": "3.10.1",
-        "titleIds": [
+        "title_ids": [
             "00040000001A8B00",
             "00040000001AB800",
             "00040000001AB900",
@@ -918,7 +919,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010100600",
             "000500001010F800",
             "0005000010110000"
@@ -933,7 +934,7 @@
         "nex_match_making_version": "3.8.3",
         "nex_messaging_version": "3.8.3",
         "nex_utility_version": "3.8.3",
-        "titleIds": [
+        "title_ids": [
             "000400000016A600",
             "000400000016A900",
             "00040000001B3200",
@@ -951,7 +952,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010112200",
             "0005000010128A00",
             "000500001014D600"
@@ -966,7 +967,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "000500001010EA00",
             "0005000010110200",
             "0005000010112B00"
@@ -981,7 +982,7 @@
         "nex_match_making_version": "3.4.0",
         "nex_messaging_version": "3.4.0",
         "nex_utility_version": "3.4.0",
-        "titleIds": [
+        "title_ids": [
             "0005000010100D00",
             "0005000010102500",
             "0005000010149600"
@@ -996,7 +997,7 @@
         "nex_match_making_version": "3.3.0",
         "nex_messaging_version": "3.3.0",
         "nex_utility_version": "3.3.0",
-        "titleIds": [
+        "title_ids": [
             "000500001011A800",
             "0005000010137D00",
             "0005000010137E00"
@@ -1011,7 +1012,7 @@
         "nex_match_making_version": "3.4.7",
         "nex_messaging_version": "3.4.7",
         "nex_utility_version": "3.4.7",
-        "titleIds": [
+        "title_ids": [
             "000500001012F100",
             "0005000010144D00",
             "0005000010144E00",
@@ -1027,7 +1028,7 @@
         "nex_match_making_version": "3.5.5",
         "nex_messaging_version": "3.5.5",
         "nex_utility_version": "3.5.5",
-        "titleIds": [
+        "title_ids": [
             "0005000010116100",
             "00050000101C4C00",
             "00050000101C4D00"
@@ -1042,7 +1043,7 @@
         "nex_match_making_version": "3.6.1",
         "nex_messaging_version": "3.6.1",
         "nex_utility_version": "3.6.1",
-        "titleIds": [
+        "title_ids": [
             "000400000012F800",
             "000400000012F900",
             "0004000000155100",
@@ -1065,7 +1066,7 @@
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
         "nex_utility_version": "3.0.1",
-        "titleIds": [
+        "title_ids": [
             "0005000010113800",
             "0005000010115F00"
         ]
@@ -1079,7 +1080,7 @@
         "nex_match_making_version": "3.6.14",
         "nex_messaging_version": "3.6.14",
         "nex_utility_version": "3.6.14",
-        "titleIds": [
+        "title_ids": [
             "0005000010149700",
             "0005000E10149700"
         ]
@@ -1088,7 +1089,7 @@
         "name": "Kid Icarus Uprising",
         "access_key": "58a7e494",
         "nex_version": "0.0.0",
-        "titleIds": [
+        "title_ids": [
             "0004000000030000",
             "0004000000030100",
             "0004000000030200"
@@ -1098,7 +1099,7 @@
         "name": "Luigi's Mansion 2",
         "access_key": "3861a9f8",
         "nex_version": "0.0.0",
-        "titleIds": [
+        "title_ids": [
             "0004000000055F00",
             "0004000000076400",
             "0004000000076500"
@@ -1108,7 +1109,7 @@
         "name": "Pokémon X/Y",
         "access_key": "876138df",
         "nex_version": "0.0.0",
-        "titleIds": [
+        "title_ids": [
             "0004000000055D00"
         ]
     },
@@ -1116,7 +1117,7 @@
         "name": "TLoZ: Tri Force Heroes",
         "access_key": "c1621b84",
         "nex_version": "0.0.0",
-        "titleIds": [
+        "title_ids": [
             "0004000000176E00",
             "0004000000176F00",
             "0004000000177000",
