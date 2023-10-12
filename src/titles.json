@@ -12,7 +12,11 @@
         "nex_datastore_version": "3.2.1",
         "nex_match_making_version": "3.2.1",
         "nex_messaging_version": "3.2.1",
-        "nex_utility_version": "3.2.1"
+        "nex_utility_version": "3.2.1",
+        "title_ids": [
+            "00040000000F2200",
+            "00040000000F7A00"
+        ]
     },
     {
         "name": "Angry Birds Trilogy 3DS",
@@ -22,7 +26,11 @@
         "nex_datastore_version": "2.7.2",
         "nex_match_making_version": "2.7.2",
         "nex_messaging_version": "2.7.2",
-        "nex_utility_version": "2.7.2"
+        "nex_utility_version": "2.7.2",
+        "title_ids": [
+            "00040000000AE200",
+            "00040000000AF400"
+        ]
     },
     {
         "name": "Animal Crossing: New Leaf",
@@ -32,7 +40,14 @@
         "nex_datastore_version": "3.10.1",
         "nex_match_making_version": "3.10.1",
         "nex_messaging_version": "3.10.1",
-        "nex_utility_version": "3.10.1"
+        "nex_utility_version": "3.10.1",
+        "title_ids": [
+            "0004000000086300",
+            "0004000000086400",
+            "0004000000198E00",
+            "0004000000198F00",
+            "0004000000199000"
+        ]
     },
     {
         "name": "Animal Crossing Plaza",
@@ -42,7 +57,10 @@
         "nex_datastore_version": "3.5.1",
         "nex_match_making_version": "3.5.1",
         "nex_messaging_version": "3.5.1",
-        "nex_utility_version": "3.5.1"
+        "nex_utility_version": "3.5.1",
+        "title_ids": [
+            "0005000010145600"
+        ]
     },
     {
         "name": "Axiom Verge",
@@ -52,7 +70,11 @@
         "nex_datastore_version": "3.10.0",
         "nex_match_making_version": "3.10.0",
         "nex_messaging_version": "3.10.0",
-        "nex_utility_version": "3.10.0"
+        "nex_utility_version": "3.10.0",
+        "title_ids": [
+            "00050000101F7900",
+            "0005000010200800"
+        ]
     },
     {
         "name": "Badge Arcade",
@@ -62,7 +84,11 @@
         "nex_datastore_version": "3.7.3",
         "nex_match_making_version": "3.7.3",
         "nex_messaging_version": "3.7.3",
-        "nex_utility_version": "3.7.3"
+        "nex_utility_version": "3.7.3",
+        "title_ids": [
+            "0004000000153500",
+            "0004000000153600"
+        ]
     },
     {
         "name": "BIOHAZARD REVELATIONS UE",
@@ -72,7 +98,10 @@
         "nex_datastore_version": "3.2.1",
         "nex_match_making_version": "3.2.1",
         "nex_messaging_version": "3.2.1",
-        "nex_utility_version": "3.2.1"
+        "nex_utility_version": "3.2.1",
+        "title_ids": [
+            "0005000010113100"
+        ]
     },
     {
         "name": "Devil's Third",
@@ -82,7 +111,13 @@
         "nex_datastore_version": "3.6.1",
         "nex_match_making_version": "3.6.1",
         "nex_messaging_version": "3.6.1",
-        "nex_utility_version": "3.6.1"
+        "nex_utility_version": "3.6.1",
+        "title_ids": [
+            "0005000010138F00",
+            "0005000010177600",
+            "0005000010177700",
+            "0005000010197D00"
+        ]
     },
     {
         "name": "Disney INFINITY",
@@ -92,7 +127,13 @@
         "nex_datastore_version": "3.5.2",
         "nex_match_making_version": "3.5.2",
         "nex_messaging_version": "3.5.2",
-        "nex_utility_version": "3.5.2"
+        "nex_utility_version": "3.5.2",
+        "title_ids": [
+            "0005000010132900",
+            "0005000010136F00",
+            "0005000010137000",
+            "000500001015A300"
+        ]
     },
     {
         "name": "Disney Infinity [2.0]",
@@ -102,7 +143,12 @@
         "nex_datastore_version": "3.5.2",
         "nex_match_making_version": "3.5.2",
         "nex_messaging_version": "3.5.2",
-        "nex_utility_version": "3.5.2"
+        "nex_utility_version": "3.5.2",
+        "title_ids": [
+            "000500001016DC00",
+            "0005000010188C00",
+            "0005000010188D00"
+        ]
     },
     {
         "name": "DISNEY INFINITY 3.0",
@@ -112,7 +158,13 @@
         "nex_datastore_version": "3.9.1",
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
-        "nex_utility_version": "3.9.1"
+        "nex_utility_version": "3.9.1",
+        "title_ids": [
+            "00050000101AC900",
+            "00050000101B3D00",
+            "00050000101B3E00",
+            "00050000101DDC00"
+        ]
     },
     {
         "name": "DKC: Tropical Freeze",
@@ -122,7 +174,12 @@
         "nex_datastore_version": "3.4.0",
         "nex_match_making_version": "3.4.0",
         "nex_messaging_version": "3.4.0",
-        "nex_utility_version": "3.4.0"
+        "nex_utility_version": "3.4.0",
+        "title_ids": [
+            "0005000010137F00",
+            "0005000010138300",
+            "0005000010144800"
+        ]
     },
     {
         "name": "DuckTales: Remastered",
@@ -132,7 +189,11 @@
         "nex_datastore_version": "3.3.0",
         "nex_match_making_version": "3.3.0",
         "nex_messaging_version": "3.3.0",
-        "nex_utility_version": "3.3.0"
+        "nex_utility_version": "3.3.0",
+        "title_ids": [
+            "0005000010129000",
+            "0005000010129200"
+        ]
     },
     {
         "name": "FAST Racing NEO",
@@ -142,7 +203,13 @@
         "nex_datastore_version": "3.9.1",
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
-        "nex_utility_version": "3.9.1"
+        "nex_utility_version": "3.9.1",
+        "title_ids": [
+            "000500001012F000",
+            "00050000101D6000",
+            "00050000101E4100",
+            "00050000101FED00"
+        ]
     },
     {
         "name": "FotNS: Ken's Rage 2",
@@ -152,7 +219,12 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "0005000010116600",
+            "000500001012B800",
+            "000500001012B900"
+        ]
     },
     {
         "name": "Game Party",
@@ -162,7 +234,11 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "000500001010E400",
+            "000500001010FF00"
+        ]
     },
     {
         "name": "Hyrule Warriors",
@@ -172,7 +248,12 @@
         "nex_datastore_version": "3.8.0",
         "nex_match_making_version": "3.8.0",
         "nex_messaging_version": "3.8.0",
-        "nex_utility_version": "3.8.0"
+        "nex_utility_version": "3.8.0",
+        "title_ids": [
+            "000500001017CD00",
+            "000500001017D800",
+            "000500001017D900"
+        ]
     },
     {
         "name": "Injustice: Gods Among Us",
@@ -182,7 +263,12 @@
         "nex_datastore_version": "3.2.1",
         "nex_match_making_version": "3.2.1",
         "nex_messaging_version": "3.2.1",
-        "nex_utility_version": "3.2.1"
+        "nex_utility_version": "3.2.1",
+        "title_ids": [
+            "0005000010111700",
+            "0005000010111A00",
+            "0005000010140700"
+        ]
     },
     {
         "name": "IRONFALL Invasion",
@@ -192,7 +278,13 @@
         "nex_datastore_version": "3.7.1",
         "nex_match_making_version": "3.7.1",
         "nex_messaging_version": "3.7.1",
-        "nex_utility_version": "3.7.1"
+        "nex_utility_version": "3.7.1",
+        "title_ids": [
+            "000400000015B100",
+            "000400000015D800",
+            "000400000017BF00",
+            "000400000017D000"
+        ]
     },
     {
         "name": "Legend of Kay",
@@ -202,7 +294,11 @@
         "nex_datastore_version": "3.8.3",
         "nex_match_making_version": "3.8.3",
         "nex_messaging_version": "3.8.3",
-        "nex_utility_version": "3.8.3"
+        "nex_utility_version": "3.8.3",
+        "title_ids": [
+            "0005000010193300",
+            "0005000010193400"
+        ]
     },
     {
         "name": "LOST REAVERS",
@@ -212,7 +308,12 @@
         "nex_datastore_version": "3.10.0",
         "nex_match_making_version": "3.10.0",
         "nex_messaging_version": "3.10.0",
-        "nex_utility_version": "3.10.0"
+        "nex_utility_version": "3.10.0",
+        "title_ids": [
+            "000500001018D900",
+            "00050000101A4800",
+            "00050000101B9900"
+        ]
     },
     {
         "name": "Mario & Sonic Rio 2016 3DS",
@@ -222,7 +323,15 @@
         "nex_datastore_version": "3.9.1",
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
-        "nex_utility_version": "3.9.1"
+        "nex_utility_version": "3.9.1",
+        "title_ids": [
+            "000400000014A400",
+            "000400000017E200",
+            "000400000017E300",
+            "0004000000191C00",
+            "0004000000191D00",
+            "0004000000192400"
+        ]
     },
     {
         "name": "Mario & Sonic Rio 2016 Wii U",
@@ -232,7 +341,12 @@
         "nex_datastore_version": "3.9.1",
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
-        "nex_utility_version": "3.9.1"
+        "nex_utility_version": "3.9.1",
+        "title_ids": [
+            "0005000010190300",
+            "00050000101E5300",
+            "00050000101E5400"
+        ]
     },
     {
         "name": "MARIO & SONIC SOCHI 2014",
@@ -242,7 +356,12 @@
         "nex_datastore_version": "3.4.0",
         "nex_match_making_version": "3.4.0",
         "nex_messaging_version": "3.4.0",
-        "nex_utility_version": "3.4.0"
+        "nex_utility_version": "3.4.0",
+        "title_ids": [
+            "0005000010106900",
+            "000500001010C700",
+            "000500001010C800"
+        ]
     },
     {
         "name": "MARIO KART 7",
@@ -258,7 +377,14 @@
         "nex_datastore_version": "2.4.3",
         "nex_match_making_version": "2.4.3",
         "nex_messaging_version": "2.4.3",
-        "nex_utility_version": "2.4.3"
+        "nex_utility_version": "2.4.3",
+        "title_ids": [
+            "0004000000030600",
+            "0004000000030700",
+            "0004000000030800",
+            "0004000000030A00",
+            "000400000008B400"
+        ]
     },
     {
         "name": "MARIO KART 8",
@@ -268,7 +394,12 @@
         "nex_datastore_version": "3.5.4",
         "nex_match_making_version": "3.5.4",
         "nex_messaging_version": "3.5.4",
-        "nex_utility_version": "3.5.4"
+        "nex_utility_version": "3.5.4",
+        "title_ids": [
+            "000500001010EB00",
+            "000500001010EC00",
+            "000500001010ED00"
+        ]
     },
     {
         "name": "Mario Tennis Open",
@@ -278,7 +409,14 @@
         "nex_datastore_version": "2.6.1",
         "nex_match_making_version": "2.6.1",
         "nex_messaging_version": "2.6.1",
-        "nex_utility_version": "2.6.1"
+        "nex_utility_version": "2.6.1",
+        "title_ids": [
+            "0004000000064D00",
+            "000400000007C700",
+            "000400000007C800",
+            "00040000000B8800",
+            "00040000000B9100"
+        ]
     },
     {
         "name": "Mario Tennis: Ultra Smash",
@@ -288,7 +426,12 @@
         "nex_datastore_version": "3.9.1",
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
-        "nex_utility_version": "3.9.1"
+        "nex_utility_version": "3.9.1",
+        "title_ids": [
+            "0005000010199000",
+            "00050000101A3500",
+            "00050000101A3600"
+        ]
     },
     {
         "name": "Mario vs. DK: Tipping Stars",
@@ -298,7 +441,14 @@
         "nex_datastore_version": "3.7.1",
         "nex_match_making_version": "3.7.1",
         "nex_messaging_version": "3.7.1",
-        "nex_utility_version": "3.7.1"
+        "nex_utility_version": "3.7.1",
+        "title_ids": [
+            "000400000012C800",
+            "000400000012CA00",
+            "0005000010149300",
+            "0005000010178E00",
+            "0005000010179200"
+        ]
     },
     {
         "name": "Metroid Prime: FF",
@@ -308,7 +458,12 @@
         "nex_datastore_version": "3.9.1",
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
-        "nex_utility_version": "3.9.1"
+        "nex_utility_version": "3.9.1",
+        "title_ids": [
+            "000400000016CE00",
+            "000400000016E300",
+            "0004000000175200"
+        ]
     },
     {
         "name": "MH3G HD Ver.",
@@ -318,7 +473,11 @@
         "nex_datastore_version": "3.0.5",
         "nex_match_making_version": "3.0.5",
         "nex_messaging_version": "3.0.5",
-        "nex_utility_version": "3.0.5"
+        "nex_utility_version": "3.0.5",
+        "title_ids": [
+            "0004000000048100",
+            "0005000010104D00"
+        ]
     },
     {
         "name": "MH3U",
@@ -328,7 +487,14 @@
         "nex_datastore_version": "3.0.5",
         "nex_match_making_version": "3.0.5",
         "nex_messaging_version": "3.0.5",
-        "nex_utility_version": "3.0.5"
+        "nex_utility_version": "3.0.5",
+        "title_ids": [
+            "00040000000AE400",
+            "00040000000B1D00",
+            "00040000000D2E00",
+            "0005000010117200",
+            "0005000010118300"
+        ]
     },
     {
         "name": "Mighty No. 9",
@@ -338,7 +504,12 @@
         "nex_datastore_version": "3.9.1",
         "nex_match_making_version": "3.9.1",
         "nex_messaging_version": "3.9.1",
-        "nex_utility_version": "3.9.1"
+        "nex_utility_version": "3.9.1",
+        "title_ids": [
+            "00050000101C5A00",
+            "00050000101C9600",
+            "00050000101DD900"
+        ]
     },
     {
         "name": "Minecraft: Wii U Edition",
@@ -348,7 +519,12 @@
         "nex_datastore_version": "3.10.0",
         "nex_match_making_version": "3.10.0",
         "nex_messaging_version": "3.10.0",
-        "nex_utility_version": "3.10.0"
+        "nex_utility_version": "3.10.0",
+        "title_ids": [
+            "00050000101D7500",
+            "00050000101D9D00",
+            "00050000101DBE00"
+        ]
     },
     {
         "name": "Nano Assault Neo",
@@ -358,7 +534,12 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "0005000010110100",
+            "0005000010110600",
+            "0005000010136400"
+        ]
     },
     {
         "name": "NINJA GAIDEN 3: Razor's Edge",
@@ -368,7 +549,13 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "0005000010110900",
+            "0005000010110A00",
+            "0005000010110B00",
+            "0005000010139B00"
+        ]
     },
     {
         "name": "Nova-111",
@@ -378,7 +565,11 @@
         "nex_datastore_version": "3.8.3",
         "nex_match_making_version": "3.8.3",
         "nex_messaging_version": "3.8.3",
-        "nex_utility_version": "3.8.3"
+        "nex_utility_version": "3.8.3",
+        "title_ids": [
+            "00050000101C0700",
+            "00050000101C0A00"
+        ]
     },
     {
         "name": "OlliOlli",
@@ -388,7 +579,13 @@
         "nex_datastore_version": "3.6.1",
         "nex_match_making_version": "3.6.1",
         "nex_messaging_version": "3.6.1",
-        "nex_utility_version": "3.6.1"
+        "nex_utility_version": "3.6.1",
+        "title_ids": [
+            "000400000015A200",
+            "000400000015A400",
+            "00050000101A5E00",
+            "00050000101A6900"
+        ]
     },
     {
         "name": "PIKMIN 3",
@@ -398,7 +595,13 @@
         "nex_datastore_version": "3.3.0",
         "nex_match_making_version": "3.3.0",
         "nex_messaging_version": "3.3.0",
-        "nex_utility_version": "3.3.0"
+        "nex_utility_version": "3.3.0",
+        "title_ids": [
+            "000500001012BC00",
+            "000500001012BD00",
+            "000500001012BE00",
+            "0005000010185300"
+        ]
     },
     {
         "name": "Pokémon Bank",
@@ -408,7 +611,10 @@
         "nex_datastore_version": "3.4.12",
         "nex_match_making_version": "3.4.12",
         "nex_messaging_version": "3.4.12",
-        "nex_utility_version": "3.4.12"
+        "nex_utility_version": "3.4.12",
+        "title_ids": [
+            "00040000000C9B00"
+        ]
     },
     {
         "name": "Pokémon Rumble World",
@@ -418,7 +624,11 @@
         "nex_datastore_version": "3.8.2",
         "nex_match_making_version": "3.8.2",
         "nex_messaging_version": "3.8.2",
-        "nex_utility_version": "3.8.2"
+        "nex_utility_version": "3.8.2",
+        "title_ids": [
+            "0004000000164600",
+            "0004000000185A00"
+        ]
     },
     {
         "name": "POKKÉN TOURNAMENT",
@@ -428,7 +638,12 @@
         "nex_datastore_version": "3.10.0",
         "nex_match_making_version": "3.10.0",
         "nex_messaging_version": "3.10.0",
-        "nex_utility_version": "3.10.0"
+        "nex_utility_version": "3.10.0",
+        "title_ids": [
+            "00050000101C5800",
+            "00050000101DF400",
+            "00050000101DF500"
+        ]
     },
     {
         "name": "Puddle",
@@ -438,7 +653,12 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "000500001010FB00",
+            "0005000010110500",
+            "00050000101A2700"
+        ]
     },
     {
         "name": "PUYOPUYOTETRIS",
@@ -448,7 +668,11 @@
         "nex_datastore_version": "3.5.2",
         "nex_match_making_version": "3.5.2",
         "nex_messaging_version": "3.5.2",
-        "nex_utility_version": "3.5.2"
+        "nex_utility_version": "3.5.2",
+        "title_ids": [
+            "0004000000101200",
+            "000500001014D900"
+        ]
     },
     {
         "name": "RESIDENT EVIL REVELATIONS",
@@ -458,7 +682,13 @@
         "nex_datastore_version": "3.2.1",
         "nex_match_making_version": "3.2.1",
         "nex_messaging_version": "3.2.1",
-        "nex_utility_version": "3.2.1"
+        "nex_utility_version": "3.2.1",
+        "title_ids": [
+            "0004000000053B00",
+            "000400000005EE00",
+            "000500001012B400",
+            "000500001012CF00"
+        ]
     },
     {
         "name": "RTK 12",
@@ -468,7 +698,11 @@
         "nex_datastore_version": "3.4.0",
         "nex_match_making_version": "3.4.0",
         "nex_messaging_version": "3.4.0",
-        "nex_utility_version": "3.4.0"
+        "nex_utility_version": "3.4.0",
+        "title_ids": [
+            "0005000010111C00",
+            "0005000010149000"
+        ]
     },
     {
         "name": "Runner2",
@@ -478,7 +712,12 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "000500001011AF00",
+            "0005000010136300",
+            "00050000101DD600"
+        ]
     },
     {
         "name": "SI2",
@@ -488,7 +727,11 @@
         "nex_datastore_version": "3.6.1",
         "nex_match_making_version": "3.6.1",
         "nex_messaging_version": "3.6.1",
-        "nex_utility_version": "3.6.1"
+        "nex_utility_version": "3.6.1",
+        "title_ids": [
+            "0005000010173300",
+            "0005000010176500"
+        ]
     },
     {
         "name": "SONIC LOST WORLD",
@@ -498,7 +741,16 @@
         "nex_datastore_version": "3.3.0",
         "nex_match_making_version": "3.3.0",
         "nex_messaging_version": "3.3.0",
-        "nex_utility_version": "3.3.0"
+        "nex_utility_version": "3.3.0",
+        "title_ids": [
+            "00040000000C5400",
+            "00040000000C8C00",
+            "00040000000CB400",
+            "000400000010CF00",
+            "0005000010128F00",
+            "000500001012B100",
+            "0005000010135700"
+        ]
     },
     {
         "name": "Sonic Transformed",
@@ -508,7 +760,14 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "000400000008FC00",
+            "00040000000B3500",
+            "000500001010B300",
+            "0005000010111F00",
+            "000500001015B400"
+        ]
     },
     {
         "name": "Splatoon",
@@ -518,7 +777,20 @@
         "nex_datastore_version": "3.8.3",
         "nex_match_making_version": "3.8.3",
         "nex_messaging_version": "3.8.3",
-        "nex_utility_version": "3.8.3"
+        "nex_utility_version": "3.8.3",
+        "title_ids": [
+            "0005000010162B00",
+            "0005000010176900",
+            "0005000010176A00",
+            "000500001017E300",
+            "00050000101CDB00",
+            "00050000101CDC00",
+            "00050000101CDD00",
+            "00050000101CDE00",
+            "00050000101D6A00",
+            "00050000101D6B00",
+            "00050000101D6C00"
+        ]
     },
     {
         "name": "Star Fox Guard",
@@ -528,7 +800,12 @@
         "nex_datastore_version": "3.8.2",
         "nex_match_making_version": "3.8.2",
         "nex_messaging_version": "3.8.2",
-        "nex_utility_version": "3.8.2"
+        "nex_utility_version": "3.8.2",
+        "title_ids": [
+            "00050000101BEB00",
+            "00050000101BEC00",
+            "00050000101BED00"
+        ]
     },
     {
         "name": "Star Fox Guard (Demo)",
@@ -538,7 +815,12 @@
         "nex_datastore_version": "3.8.2",
         "nex_match_making_version": "3.8.2",
         "nex_messaging_version": "3.8.2",
-        "nex_utility_version": "3.8.2"
+        "nex_utility_version": "3.8.2",
+        "title_ids": [
+            "00050000101DCC00",
+            "00050000101DCD00",
+            "00050000101DCE00"
+        ]
     },
     {
         "name": "Star Wars Pinball",
@@ -548,7 +830,13 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "00040000000D4A00",
+            "00040000000E6800",
+            "0005000010132A00",
+            "0005000010135200"
+        ]
     },
     {
         "name": "Steel Diver: Sub Wars",
@@ -558,7 +846,11 @@
         "nex_datastore_version": "3.7.0",
         "nex_match_making_version": "3.7.0",
         "nex_messaging_version": "3.7.0",
-        "nex_utility_version": "3.7.0"
+        "nex_utility_version": "3.7.0",
+        "title_ids": [
+            "00040000000D7D00",
+            "00040000000D7E00"
+        ]
     },
     {
         "name": "Super Mario Maker",
@@ -568,7 +860,16 @@
         "nex_datastore_version": "3.8.12",
         "nex_match_making_version": "3.8.12",
         "nex_messaging_version": "3.8.12",
-        "nex_utility_version": "3.8.12"
+        "nex_utility_version": "3.8.12",
+        "title_ids": [
+            "00040000001A0300",
+            "00040000001A0400",
+            "00040000001A0500",
+            "00040000001BB800",
+            "000500001018DB00",
+            "000500001018DC00",
+            "000500001018DD00"
+        ]
     },
     {
         "name": "Super Smash Bros.",
@@ -578,7 +879,16 @@
         "nex_datastore_version": "3.6.27",
         "nex_match_making_version": "3.6.27",
         "nex_messaging_version": "3.6.27",
-        "nex_utility_version": "3.6.27"
+        "nex_utility_version": "3.6.27",
+        "title_ids": [
+            "00040000000B8B00",
+            "00040000000EDF00",
+            "00040000000EE000",
+            "0004000000167C00",
+            "0005000010110E00",
+            "0005000010144F00",
+            "0005000010145000"
+        ]
     },
     {
         "name": "Team Kirby Clash Deluxe",
@@ -588,7 +898,15 @@
         "nex_datastore_version": "3.10.1",
         "nex_match_making_version": "3.10.1",
         "nex_messaging_version": "3.10.1",
-        "nex_utility_version": "3.10.1"
+        "nex_utility_version": "3.10.1",
+        "title_ids": [
+            "00040000001A8B00",
+            "00040000001AB800",
+            "00040000001AB900",
+            "00040000001C2200",
+            "00040000001CAA00",
+            "00040000001CAD00"
+        ]
     },
     {
         "name": "TEKKEN TAG 2 Wii U EDITION",
@@ -598,7 +916,12 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "0005000010100600",
+            "000500001010F800",
+            "0005000010110000"
+        ]
     },
     {
         "name": "Terraria",
@@ -608,7 +931,15 @@
         "nex_datastore_version": "3.8.3",
         "nex_match_making_version": "3.8.3",
         "nex_messaging_version": "3.8.3",
-        "nex_utility_version": "3.8.3"
+        "nex_utility_version": "3.8.3",
+        "title_ids": [
+            "000400000016A600",
+            "000400000016A900",
+            "00040000001B3200",
+            "0005000010198F00",
+            "000500001019C300",
+            "00050000101F3A00"
+        ]
     },
     {
         "name": "Trine 2",
@@ -618,7 +949,12 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "0005000010112200",
+            "0005000010128A00",
+            "000500001014D600"
+        ]
     },
     {
         "name": "WARRIORS OROCHI 3 Hyper",
@@ -628,7 +964,12 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "000500001010EA00",
+            "0005000010110200",
+            "0005000010112B00"
+        ]
     },
     {
         "name": "Wii Karaoke U",
@@ -638,7 +979,12 @@
         "nex_datastore_version": "3.4.0",
         "nex_match_making_version": "3.4.0",
         "nex_messaging_version": "3.4.0",
-        "nex_utility_version": "3.4.0"
+        "nex_utility_version": "3.4.0",
+        "title_ids": [
+            "0005000010100D00",
+            "0005000010102500",
+            "0005000010149600"
+        ]
     },
     {
         "name": "Wii Party U",
@@ -648,7 +994,12 @@
         "nex_datastore_version": "3.3.0",
         "nex_match_making_version": "3.3.0",
         "nex_messaging_version": "3.3.0",
-        "nex_utility_version": "3.3.0"
+        "nex_utility_version": "3.3.0",
+        "title_ids": [
+            "000500001011A800",
+            "0005000010137D00",
+            "0005000010137E00"
+        ]
     },
     {
         "name": "Wii Sports Club",
@@ -658,27 +1009,28 @@
         "nex_datastore_version": "3.4.7",
         "nex_match_making_version": "3.4.7",
         "nex_messaging_version": "3.4.7",
-        "nex_utility_version": "3.4.7"
+        "nex_utility_version": "3.4.7",
+        "title_ids": [
+            "000500001012F100",
+            "0005000010144D00",
+            "0005000010144E00",
+            "0005000010171E00"
+        ]
     },
     {
         "name": "Xenoblade Chronicles X",
-        "access_key": "",
-        "nex_version": "3.5.5",
-        "nex_ranking_version": "3.5.5",
-        "nex_datastore_version": "3.5.5",
-        "nex_match_making_version": "3.5.5",
-        "nex_messaging_version": "3.5.5",
-        "nex_utility_version": "3.5.5"
-    },
-    {
-        "name": "XenobladeX",
         "access_key": "59d7be84",
         "nex_version": "3.5.5",
         "nex_ranking_version": "3.5.5",
         "nex_datastore_version": "3.5.5",
         "nex_match_making_version": "3.5.5",
         "nex_messaging_version": "3.5.5",
-        "nex_utility_version": "3.5.5"
+        "nex_utility_version": "3.5.5",
+        "title_ids": [
+            "0005000010116100",
+            "00050000101C4C00",
+            "00050000101C4D00"
+        ]
     },
     {
         "name": "Yo-kai Watch 2",
@@ -688,7 +1040,20 @@
         "nex_datastore_version": "3.6.1",
         "nex_match_making_version": "3.6.1",
         "nex_messaging_version": "3.6.1",
-        "nex_utility_version": "3.6.1"
+        "nex_utility_version": "3.6.1",
+        "title_ids": [
+            "000400000012F800",
+            "000400000012F900",
+            "0004000000155100",
+            "000400000019A900",
+            "000400000019AA00",
+            "000400000019AE00",
+            "000400000019AF00",
+            "00040000001B2700",
+            "00040000001B2A00",
+            "00040000001B7100",
+            "00040000001BB500"
+        ]
     },
     {
         "name": "Zen Pinball 2",
@@ -698,7 +1063,11 @@
         "nex_datastore_version": "3.0.1",
         "nex_match_making_version": "3.0.1",
         "nex_messaging_version": "3.0.1",
-        "nex_utility_version": "3.0.1"
+        "nex_utility_version": "3.0.1",
+        "title_ids": [
+            "0005000010113800",
+            "0005000010115F00"
+        ]
     },
     {
         "name": "役満 鳳凰",
@@ -708,26 +1077,49 @@
         "nex_datastore_version": "3.6.14",
         "nex_match_making_version": "3.6.14",
         "nex_messaging_version": "3.6.14",
-        "nex_utility_version": "3.6.14"
+        "nex_utility_version": "3.6.14",
+        "title_ids": [
+            "0005000010149700"
+        ]
     },
     {
         "name": "Kid Icarus Uprising",
         "access_key": "58a7e494",
-        "nex_version": "0.0.0"
+        "nex_version": "0.0.0",
+        "title_ids": [
+            "0004000000030000",
+            "0004000000030100",
+            "0004000000030200"
+        ]
     },
     {
         "name": "Luigi's Mansion 2",
         "access_key": "3861a9f8",
-        "nex_version": "0.0.0"
+        "nex_version": "0.0.0",
+        "title_ids": [
+            "0004000000055F00",
+            "0004000000076400",
+            "0004000000076500"
+        ]
     },
     {
         "name": "Pokémon X/Y",
         "access_key": "876138df",
-        "nex_version": "0.0.0"
+        "nex_version": "0.0.0",
+        "title_ids": [
+            "0004000000055D00"
+        ]
     },
     {
         "name": "TLoZ: Tri Force Heroes",
         "access_key": "c1621b84",
-        "nex_version": "0.0.0"
+        "nex_version": "0.0.0",
+        "title_ids": [
+            "0004000000176E00",
+            "0004000000176F00",
+            "0004000000177000",
+            "0004000000182200",
+            "0004000000182300"
+        ]
     }
 ]

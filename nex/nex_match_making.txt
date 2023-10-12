@@ -64,7 +64,6 @@ Wii Karaoke U                | 3.4.0
 Wii Party U                  | 3.3.0
 Wii Sports Club              | 3.4.7
 Xenoblade Chronicles X       | 3.5.5
-XenobladeX                   | 3.5.5
 Yo-kai Watch 2               | 3.6.1
 Zen Pinball 2                | 3.0.1
 役満 鳳凰                    | 3.6.14
