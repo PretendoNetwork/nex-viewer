@@ -1,4 +1,7 @@
-const Connection = require('./connection'); // eslint-disable-line no-unused-vars
+/**
+ * @typedef {import('./connection')} Connection
+ */
+
 const Packet = require('./packet');
 const Stream = require('./stream');
 

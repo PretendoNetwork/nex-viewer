@@ -7,6 +7,7 @@ const isPrivateIP = require('private-ip');
 const PacketV0 = require('./packetv0');
 const PacketV1 = require('./packetv1');
 const Connection = require('./connection');
+const Authentication = require('./protocols/authentication');
 const Stream = require('./stream');
 
 // ! NOTE -
@@ -23,6 +24,18 @@ class NEXParser extends EventEmitter {
 		super();
 
 		this.connections = [];
+		this.rawRMCMode = false;
+		this.rawRMCPackets = [];
+		this.rawRMCDummyConnection = new Connection(); // * Used for creating fake packets
+		this.rawRMCAuthenticationConnection = new Connection(); // * Used to store packets to the authentication server
+		this.rawRMCAuthenticationConnection.discriminator = 'authentication';
+		this.rawRMCSecureConnection = new Connection(); // * Used to store packets to the secure server
+		this.rawRMCSecureConnection.isSecureServer = true;
+		this.rawRMCSecureConnection.discriminator = 'secure';
+	}
+
+	setRawRMCMode(enabled) {
+		this.rawRMCMode = enabled;
 	}
 
 	/**
@@ -41,16 +54,26 @@ class NEXParser extends EventEmitter {
 			fs.createReadStream(capturePath)
 				.pipe(pcapNgParser)
 				.on('data', this.handlePacket.bind(this))
-				.on('close', () => {
-					this.emit('connections', this.connections);
-				});
+				.on('close', this.parserEnd.bind(this));
 		} else {
 			const parser = pcapp.parse(capturePath);
 			parser.on('packet', this.handlePacket.bind(this));
-			parser.on('end', () => {
-				this.emit('connections', this.connections);
-			});
+			parser.on('end', this.parserEnd.bind(this));
 		}
+	}
+
+	/**
+	 * Ran when the pcap(ng) parser is finished
+	 */
+	parserEnd() {
+		if (this.rawRMCMode) {
+			this.connections = [
+				this.rawRMCAuthenticationConnection,
+				this.rawRMCSecureConnection,
+			];
+		}
+
+		this.emit('connections', this.connections);
 	}
 
 	/**
@@ -58,20 +81,25 @@ class NEXParser extends EventEmitter {
 	 * @param {object} raw Raw WireShark packet as parsed by `pcap-ng-parser`
 	 */
 	handlePacket(raw) {
-		const { data: frame } = raw;
-		const { header: head } = raw;
+		if (this.rawRMCMode) {
+			this.handleRawRMC(raw.data);
+			return;
+		}
+
+		const { header, data: frame } = raw;
+
 		const udpPacket = this.parseUDPPacket(frame);
 		let timestamp = 0;
-		
+
 		if (!udpPacket) {
 			return;
 		}
-		
-		if (!head){ //Checks if header is present. There isn't one on .pcapng files
+
+		// * pcap-ng-parser and pcap-parser encode the timestamp data differently
+		if (!header) {
 			timestamp = (Number(BigInt(raw.timestampHigh) << 32n | BigInt(raw.timestampLow))/1000000);
-		}
-		else{
-			timestamp = raw.header.timestampSeconds;
+		} else {
+			timestamp = header.timestampSeconds;
 		}
 
 		// TODO - ON RARE OCCASIONS UDP PACKETS WHICH ARE NOT NEX BUT HAVE THE SAME HEADERS GET THROUGH
@@ -217,9 +245,40 @@ class NEXParser extends EventEmitter {
 
 				connection.checkForSecureServer = false;
 			}
+
 			packet.date = new Date(timestamp * 1000);
+
 			this.emit('packet', packet);
 		}
+	}
+
+	/**
+	 *
+	 * @param {Buffer} data Raw RMC payload data from HokakuCTR
+	 */
+	handleRawRMC(data) {
+		// * Gonna use some shitty heuristics here
+
+		// * Handle the data once in the dummy connection
+		this.rawRMCDummyConnection.handleRawRMC(data);
+
+		let dummyPacket = this.rawRMCDummyConnection.packets[this.rawRMCDummyConnection.packets.length-1];
+		let connection;
+
+		// * Put the packet back into the right connection.
+		// * The authentication server ONLY provides the Authentication
+		// * and Account Management protocols. We don't support the
+		// * Account Management protocol at the moment though
+		if (dummyPacket.rmcMessage.protocolId === Authentication.ProtocolID) {
+			connection = this.rawRMCAuthenticationConnection;
+		} else {
+			connection = this.rawRMCSecureConnection;
+		}
+
+		connection.handleRawRMC(data);
+		const packet = connection.packets[connection.packets.length-1];
+
+		this.emit('packet', packet);
 	}
 
 	/**

@@ -1,5 +1,8 @@
+/**
+ * @typedef {import('./stream')} Stream
+ */
+
 const semver = require('semver');
-const Stream = require('./stream'); // eslint-disable-line no-unused-vars
 
 class Structure {
 	constructor() {
