@@ -191,6 +191,7 @@ for (const line of titleIdLines) {
 	} else {
 		titles.push({
 			name: name.trim(),
+			access_key: '',
 			title_ids: titleIdList,
 			nex_version: '0.0.0'
 		});

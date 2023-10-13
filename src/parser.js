@@ -266,9 +266,8 @@ class NEXParser extends EventEmitter {
 		let connection;
 
 		// * Put the packet back into the right connection.
-		// * The authentication server ONLY provides the Authentication
-		// * and Account Management protocols. We don't support the
-		// * Account Management protocol at the moment though
+		// * The authentication server ONLY provides the
+		// * Authentication protocol
 		if (dummyPacket.rmcMessage.protocolId === Authentication.ProtocolID) {
 			connection = this.rawRMCAuthenticationConnection;
 		} else {
