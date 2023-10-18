@@ -367,8 +367,10 @@ class Connection {
 		}
 
 		const titleID = stream.readUInt64LE().toString(16).padStart(16, '0').toUpperCase();
-		const isResponseRMCMessage = stream.readBoolean();
+		const flags = stream.readUInt8();
 		const message = new RMCMessage(stream.readRest());
+
+		const isResponseRMCMessage = (flags & 0b00000001) !== 0;
 
 		if (!this.title.name) {
 			for (const title of titles) {
