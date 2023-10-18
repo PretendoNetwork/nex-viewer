@@ -360,6 +360,12 @@ class Connection {
 	handleRawRMC(data) {
 		// TODO - Refactor handlePacket to also use this function? To reduce duplicate code?
 		const stream = new Stream(data, this);
+		const revision = stream.readUInt8();
+
+		if (revision !== 1) {
+			throw new Error(`Found packet with unsupported HokakuCTR version. Expected 1, got ${revision}`);
+		}
+
 		const titleID = stream.readUInt64LE().toString(16).padStart(16, '0').toUpperCase();
 		const isResponseRMCMessage = stream.readBoolean();
 		const message = new RMCMessage(stream.readRest());
