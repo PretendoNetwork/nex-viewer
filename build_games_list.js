@@ -26,7 +26,13 @@ const titles = [
 	{
 		name: 'Friends',
 		access_key: 'ridfebb9',
-		nex_version: '1.0.0'
+		nex_version: '1.0.0',
+		title_ids: [
+			'0004013000003202',
+			'000500301001500A',
+			'000500301001510A',
+			'000500301001520A'
+		]
 	}
 ];
 
