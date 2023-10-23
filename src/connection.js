@@ -376,6 +376,7 @@ class Connection {
 			for (const title of titles) {
 				if (title.title_ids?.includes(titleID)) {
 					this.title = title;
+					this.accessKey = title.access_key;
 					break;
 				}
 			}
