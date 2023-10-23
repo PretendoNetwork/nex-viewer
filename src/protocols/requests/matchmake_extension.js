@@ -1,5 +1,8 @@
+/**
+ * @typedef {import('../../stream')} Stream
+ */
+
 const semver = require('semver');
-const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
 const NEXTypes = require('../../types');
 const MatchMakingTypes = require('../types/match_making');
 

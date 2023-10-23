@@ -1,6 +1,8 @@
-const Packet = require('../packet'); // eslint-disable-line no-unused-vars
-const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
-const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
+/**
+ * @typedef {import('../packet')} Packet
+ * @typedef {import('../packetv0')} PacketV0
+ * @typedef {import('../packetv1')} PacketV1
+ */
 
 const ServiceItemTKCD = require('./patches/service_item_tkcd');
 const ServiceItemWiiSportsClub = require('./patches/service_item_wii_sports_club');

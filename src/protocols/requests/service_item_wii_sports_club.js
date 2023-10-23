@@ -1,4 +1,6 @@
-const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
+/**
+ * @typedef {import('../../stream')} Stream
+ */
 const ServiceItemWiiSportsClubTypes = require('../types/service_item_wii_sports_club');
 
 class HelloRequest {

@@ -1,4 +1,6 @@
-const Stream = require('../../stream'); // eslint-disable-line no-unused-vars
+/**
+ * @typedef {import('../../stream')} Stream
+ */
 const NintendoNotificationsTypes = require('../types/nintendo_notifications');
 
 class ProcessNintendoNotificationEvent1Request {

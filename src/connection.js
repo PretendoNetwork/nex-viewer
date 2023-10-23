@@ -1,10 +1,13 @@
+/**
+ * @typedef {import('./packetv0')} PacketV0
+ * @typedef {import('./packetv1')} PacketV1
+ */
+
 const fs = require('fs');
 const os = require('os');
 const crypto = require('crypto');
 const titles = require('./titles.json');
-const Packet = require('./packet'); // eslint-disable-line no-unused-vars
-const PacketV0 = require('./packetv0'); // eslint-disable-line no-unused-vars
-const PacketV1 = require('./packetv1'); // eslint-disable-line no-unused-vars
+const Packet = require('./packet');
 const RMCMessage = require('./rmc');
 const Protocols = require('./protocols');
 const kerberos = require('./kerberos');
@@ -107,6 +110,7 @@ class Connection {
 
 		this.title = {
 			name: '',
+			title_ids: [],
 			access_key: '',
 			nex_version: '0.0.0',
 			nex_ranking_version: '0.0.0',
@@ -284,7 +288,7 @@ class Connection {
 					return;
 				}
 
-				if (!packet.rmcMessage.isSuccess()) {
+				if (!packet.rmcMessage.isRequest() && !packet.rmcMessage.isSuccess()) {
 					const requestPacket = this.packets.find(p => {
 						if (
 							p.rmcMessage.isRequest() &&
@@ -344,6 +348,103 @@ class Connection {
 					}
 				}
 			}
+		}
+
+		this.packets.push(packet);
+	}
+
+	/**
+	 *
+	 * @param {Buffer} data Raw RMC payload data from HokakuCTR
+	 */
+	handleRawRMC(data) {
+		// TODO - Refactor handlePacket to also use this function? To reduce duplicate code?
+		const stream = new Stream(data, this);
+		const revision = stream.readUInt8();
+
+		if (revision !== 1) {
+			throw new Error(`Found packet with unsupported HokakuCTR version. Expected 1, got ${revision}`);
+		}
+
+		const titleID = stream.readUInt64LE().toString(16).padStart(16, '0').toUpperCase();
+		const flags = stream.readUInt8();
+		const message = new RMCMessage(stream.readRest());
+
+		const isResponseRMCMessage = (flags & 0b00000001) !== 0;
+
+		if (!this.title.name) {
+			for (const title of titles) {
+				if (title.title_ids?.includes(titleID)) {
+					this.title = title;
+					this.accessKey = title.access_key;
+					break;
+				}
+			}
+		}
+
+		// * Couldn't find a title
+		if (!this.title.name) {
+			throw new Error(`Failed to find title data for ${titleID} in titles.json`);
+		}
+
+		// * Construct a fake packet for the RMC data
+		const packet = new Packet(this);
+
+		packet.isRawRMC = true;
+		packet.rmcMessage = message;
+
+		if (isResponseRMCMessage) {
+			packet.source = 0xAF;
+			packet.destination = 0xA1;
+		} else {
+			packet.source = 0xA1;
+			packet.destination = 0xAF;
+		}
+
+		// * If the packet has a custom ID, check the protocol list with it
+		let protocolId;
+		if (packet.rmcMessage.protocolId === 0x7F) {
+			protocolId = packet.rmcMessage.customId;
+		} else {
+			protocolId = packet.rmcMessage.protocolId;
+		}
+
+		const protocol = Protocols[protocolId];
+
+		if (!protocol) {
+			console.log(`Unknown protocol ID ${protocolId} (0x${protocolId.toString(16)})`);
+			this.packets.push(packet);
+			return;
+		}
+
+		if (isResponseRMCMessage && !packet.rmcMessage.isSuccess()) {
+			const requestPacket = this.packets.find(p => {
+				if (
+					p.rmcMessage.isRequest() &&
+					p.rmcMessage.protocolId === packet.rmcMessage.protocolId &&
+					p.rmcMessage.callId === packet.rmcMessage.callId
+				) {
+					return true;
+				}
+			});
+
+			if (requestPacket) {
+				packet.rmcMessage.methodId = requestPacket.rmcMessage.methodId;
+			}
+		} else {
+			try {
+				protocol.handlePacket(packet);
+			} catch (error) {
+				packet.stackTrace = error.stack;
+			}
+		}
+
+		if (!packet.rmcData.protocolName) {
+			packet.rmcData.protocolName = protocol.ProtocolName;
+		}
+
+		if (!packet.rmcData.methodName) {
+			packet.rmcData.methodName = protocol.MethodNames[packet.rmcMessage.methodId];
 		}
 
 		this.packets.push(packet);

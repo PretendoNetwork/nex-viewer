@@ -15,6 +15,7 @@ const defaultSettings = {
 };
 
 let settings = defaultSettings;
+let rawRMC = false;
 
 if (!fs.existsSync(settingsRootPath)) {
 	fs.writeFileSync(settingsRootPath, JSON.stringify(defaultSettings));
@@ -53,6 +54,7 @@ const menuTemplate = [
 					browserWindow.setTitle(`NEX Viewer - ${filePath}`);
 
 					const parser = new NEXParser();
+					parser.setRawRMCMode(rawRMC);
 
 					parser.on('packet', packet => {
 						const serialized = JSON.stringify(packet);
@@ -87,12 +89,20 @@ const menuTemplate = [
 				label: 'Hide PING packets',
 				type: 'checkbox',
 				checked: false,
-				async click(menuItem, browserWindow) {
+				click(menuItem, browserWindow) {
 					if (menuItem.checked) {
 						browserWindow.webContents.send('hide-ping-packets');
 					} else {
 						browserWindow.webContents.send('show-ping-packets');
 					}
+				}
+			},
+			{
+				label: 'Raw RMC Mode',
+				type: 'checkbox',
+				checked: rawRMC,
+				click(menuItem) {
+					rawRMC = menuItem.checked;
 				}
 			}
 		]
@@ -101,6 +111,9 @@ const menuTemplate = [
 
 const menu = Menu.buildFromTemplate(menuTemplate);
 
+/**
+ * Creates the main view window
+ */
 function createWindow() {
 	const window = new BrowserWindow({
 		width: 800,

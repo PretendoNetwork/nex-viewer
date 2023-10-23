@@ -1,5 +1,8 @@
+/**
+ * @typedef {import('./connection')} Connection
+ */
+
 const crypto = require('crypto');
-const Connection = require('./connection'); // eslint-disable-line no-unused-vars
 const Packet = require('./packet');
 const Stream = require('./stream');
 const { md5 } = require('./util');

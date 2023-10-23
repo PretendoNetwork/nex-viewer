@@ -1,5 +1,7 @@
-const Connection = require('./connection'); // eslint-disable-line no-unused-vars
-const Stream = require('./stream'); // eslint-disable-line no-unused-vars
+/**
+ * @typedef {import('./connection')} Connection
+ * @typedef {import('./stream')} Stream
+ */
 
 class Packet {
 	static FLAGS = {
@@ -27,7 +29,8 @@ class Packet {
 	constructor(connection, stream) {
 		this.connection = connection;
 		this.stream = stream;
-		
+		this.isRawRMC = false;
+
 		this.version;
 		this.source;
 		this.destination;
@@ -50,7 +53,10 @@ class Packet {
 		this.rmcData = {}; // * Decoded RMC body
 		this.stackTrace; // * Contains possible decoding errors
 		this.date = 0;
-		this.decode();
+
+		if (this.decode && this.stream) {
+			this.decode();
+		}
 	}
 
 	/**
@@ -58,15 +64,8 @@ class Packet {
 	 */
 	toJSON() {
 		const serialized = {
-			version: this.version,
-			source: this.source,
-			destination: this.destination,
+			rawRMC: this.isRawRMC,
 			flags: [],
-			sessionId: this.sessionId,
-			signature: this.signature.toString('hex'),
-			sequenceId: this.sequenceId,
-			fragmentId: this.fragmentId,
-			checksum: this.checksum,
 			rmc: {
 				protocolName: this.rmcData.protocolName,
 				methodName: this.rmcData.methodName,
@@ -77,68 +76,88 @@ class Packet {
 				errorCode: this.rmcMessage.errorCode,
 				body: this.rmcData.body
 			},
-			stackTrace: this.stackTrace,
-			date: this.date
+			stackTrace: this.stackTrace
 		};
 
-		if (this.isToClient()) {
-			serialized.sourceAddress = this.connection.serverAddress;
-			serialized.destinationAddress = this.connection.clientAddress;
-		} else {
-			serialized.sourceAddress = this.connection.clientAddress;
-			serialized.destinationAddress = this.connection.serverAddress;
-		}
-
-		if (this.isSyn()) {
-			serialized.type = 'SYN';
-		}
-
-		if (this.isConnect()) {
-			serialized.type = 'CONNECT';
-		}
-
-		if (this.isData()) {
+		if (this.isRawRMC) {
+			serialized.server = this.connection.isSecureServer ? 'secure' : 'authentication';
 			serialized.type = 'DATA';
-			serialized.fragmentId = this.fragmentId;
+			serialized.fragmentId = 0;
 
 			serialized.rmc.isRequest = this.rmcMessage.isRequest();
 
-			if (serialized.fragmentId === 0 && serialized.rmc.isRequest === false) {
+			if (serialized.rmc.isRequest === false) {
 				serialized.rmc.isSuccess = this.rmcMessage.isSuccess();
 			}
-		}
+		} else {
+			serialized.version = this.version;
+			serialized.source = this.source;
+			serialized.destination = this.destination;
+			serialized.sessionId = this.sessionId;
+			serialized.signature = this.signature.toString('hex');
+			serialized.sequenceId = this.sequenceId;
+			serialized.fragmentId = this.fragmentId;
+			serialized.checksum = this.checksum;
+			serialized.date = this.date;
 
-		if (this.isDisconnect()) {
-			serialized.type = 'DISCONNECT';
-		}
+			if (this.isToClient()) {
+				serialized.sourceAddress = this.connection.serverAddress;
+				serialized.destinationAddress = this.connection.clientAddress;
+			} else {
+				serialized.sourceAddress = this.connection.clientAddress;
+				serialized.destinationAddress = this.connection.serverAddress;
+			}
 
-		if (this.isPing()) {
-			serialized.type = 'PING';
-		}
+			if (this.isSyn()) {
+				serialized.type = 'SYN';
+			}
 
-		if (this.isUser()) {
-			serialized.type = 'USER';
-		}
+			if (this.isConnect()) {
+				serialized.type = 'CONNECT';
+			}
 
+			if (this.isData()) {
+				serialized.type = 'DATA';
+				serialized.fragmentId = this.fragmentId;
 
-		if (this.hasFlagAck()) {
-			serialized.flags.push('ACK');
-		}
+				serialized.rmc.isRequest = this.rmcMessage.isRequest();
 
-		if (this.hasFlagReliable()) {
-			serialized.flags.push('RELIABLE');
-		}
+				if (serialized.fragmentId === 0 && serialized.rmc.isRequest === false) {
+					serialized.rmc.isSuccess = this.rmcMessage.isSuccess();
+				}
+			}
 
-		if (this.hasFlagNeedAck()) {
-			serialized.flags.push('NEED_ACK');
-		}
+			if (this.isDisconnect()) {
+				serialized.type = 'DISCONNECT';
+			}
 
-		if (this.hasFlagHasSize()) {
-			serialized.flags.push('HAS_SIZE');
-		}
+			if (this.isPing()) {
+				serialized.type = 'PING';
+			}
 
-		if (this.hasFlagMultiAck()) {
-			serialized.flags.push('MULTI_ACK');
+			if (this.isUser()) {
+				serialized.type = 'USER';
+			}
+
+			if (this.hasFlagAck()) {
+				serialized.flags.push('ACK');
+			}
+
+			if (this.hasFlagReliable()) {
+				serialized.flags.push('RELIABLE');
+			}
+
+			if (this.hasFlagNeedAck()) {
+				serialized.flags.push('NEED_ACK');
+			}
+
+			if (this.hasFlagHasSize()) {
+				serialized.flags.push('HAS_SIZE');
+			}
+
+			if (this.hasFlagMultiAck()) {
+				serialized.flags.push('MULTI_ACK');
+			}
 		}
 
 		return serialized;

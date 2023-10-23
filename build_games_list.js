@@ -8,6 +8,7 @@ const nexMatchMaking = fs.readFileSync('nex/nex_match_making.txt').toString();
 const nexMessaging = fs.readFileSync('nex/nex_messaging.txt').toString();
 const nexUtility = fs.readFileSync('nex/nex_utility.txt').toString();
 const access = fs.readFileSync('./access.txt').toString();
+const titleids = fs.readFileSync('./titleids.txt').toString();
 
 const nexLines = nex.split('\n');
 const nexRankingLines = nexRanking.split('\n');
@@ -16,6 +17,7 @@ const nexMatchMakingLines = nexMatchMaking.split('\n');
 const nexMessagingLines = nexMessaging.split('\n');
 const nexUtilityLines = nexUtility.split('\n');
 const accessLines = access.split('\n');
+const titleIdLines = titleids.split('\n');
 
 // * Start the list with the Friends server
 // * This is because the Smash 4 access key
@@ -24,7 +26,13 @@ const titles = [
 	{
 		name: 'Friends',
 		access_key: 'ridfebb9',
-		nex_version: '1.0.0'
+		nex_version: '1.0.0',
+		title_ids: [
+			'0004013000003202',
+			'000500301001500A',
+			'000500301001510A',
+			'000500301001520A'
+		]
 	}
 ];
 
@@ -168,6 +176,29 @@ for (const line of accessLines) {
 		titles.push({
 			name: name.trim(),
 			access_key: accessKey.trim(),
+			nex_version: '0.0.0'
+		});
+	}
+}
+
+// Match the title ids
+for (const line of titleIdLines) {
+	// Discard empty lines
+	if (!line) continue;
+
+	const [name, titleIdData] = line.split('|');
+
+	const game = titles.find(game => game.name === name.trim());
+
+	const titleIdList = titleIdData.trim().split(', ');
+
+	if (game) {
+		game.title_ids = titleIdList;
+	} else {
+		titles.push({
+			name: name.trim(),
+			access_key: '',
+			title_ids: titleIdList,
 			nex_version: '0.0.0'
 		});
 	}

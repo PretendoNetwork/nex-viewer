@@ -1,8 +1,11 @@
+/**
+ * @typedef {import('../packet')} Packet
+ * @typedef {import('../packetv0')} PacketV0
+ * @typedef {import('../packetv1')} PacketV1
+ * @typedef {import('../rmc')} RMCMessage
+ */
+
 const semver = require('semver');
-const Packet = require('../packet'); // eslint-disable-line no-unused-vars
-const PacketV0 = require('../packetv0'); // eslint-disable-line no-unused-vars
-const PacketV1 = require('../packetv1'); // eslint-disable-line no-unused-vars
-const RMCMessage = require('../rmc'); // eslint-disable-line no-unused-vars
 const Stream = require('../stream');
 
 const StorageManager = require('./storage_manager');
