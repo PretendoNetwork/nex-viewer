@@ -12,10 +12,31 @@ const packetsSection = document.getElementById('packets');
 export const packetDetailsSection = document.getElementById('packet-details');
 export const connectionsListSection = document.getElementById('connections-list');
 export const packetsTableBodySection = packetsSection.querySelector('tbody');
+let selectedPacket;
 let displayPingPackets = false;
 
 const LIST_TYPE_REGEX = /List<(.*)>/;
 const MAP_TYPE_REGEX = /Map<(.*)>/;
+
+document.querySelector('#header-search').addEventListener('keyup', event => {
+	const filter = event.target.value;
+
+	const packets = packetsTableBodySection.querySelectorAll('tr[data-serialized]');
+
+	for (const packet of packets) {
+		if (packet.outerHTML.toLowerCase().includes(filter.toLowerCase())) {
+			packet.classList.remove('search-hidden');
+		} else {
+			packet.classList.add('search-hidden');
+		}
+	}
+
+	if (filter.trim() === '') {
+		if (selectedPacket) {
+			selectedPacket.scrollIntoView({block: 'nearest', inline: 'nearest'});
+		}
+	}
+});
 
 /**
  * @returns {void}
@@ -230,6 +251,8 @@ export function addPacketToList(packet) {
 function setSelectedPacketRow(tr) {
 	document.querySelector('tr.selected')?.classList.toggle('selected');
 	tr.classList.toggle('selected');
+
+	selectedPacket = tr;
 
 	updatePacketDetails(JSON.parse(tr.dataset.serialized));
 }
