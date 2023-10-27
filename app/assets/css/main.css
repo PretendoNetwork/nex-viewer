@@ -20,6 +20,17 @@ body {
 	color: white;
 	padding: 5px;
 	font-family: system-ui;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+#header-search {
+	flex: 1;
+}
+
+.search-hidden {
+	display: none;
 }
 
 main {
