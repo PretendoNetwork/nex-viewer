@@ -1,9 +1,9 @@
 const EventEmitter = require('node:events');
 const path = require('node:path');
-const fs = require('fs');
-const PCAPNGParser = require('pcap-ng-parser');
-const pcapp = require('pcap-parser');
+const fs = require('node:fs');
 const isPrivateIP = require('private-ip');
+const PCAPParser = require('./pcap-parser');
+const PCAPNGParser = require('./pcapng-parser');
 const PacketV0 = require('./packetv0');
 const PacketV1 = require('./packetv1');
 const Connection = require('./connection');
@@ -17,7 +17,7 @@ const Stream = require('./stream');
 const PRUDP_V1_MAGIC = Buffer.from([0xEA, 0xD0]);
 
 // * Magics to check for when parsing UDP packets
-const XID_MAGIC = Buffer.from([0x81, 0x01, 0x0]);
+//const XID_MAGIC = Buffer.from([0x81, 0x01, 0x0]);
 
 class NEXParser extends EventEmitter {
 	constructor() {
@@ -49,17 +49,24 @@ class NEXParser extends EventEmitter {
 			throw new Error(`Invalid file type. Got ${extension}, expected .pcapng or .pcap`);
 		}
 
-		if (extension === '.pcapng') {
-			const pcapNgParser = new PCAPNGParser();
-			fs.createReadStream(capturePath)
-				.pipe(pcapNgParser)
-				.on('data', this.handlePacket.bind(this))
-				.on('close', this.parserEnd.bind(this));
+		const captureData = fs.readFileSync(capturePath);
+		let parser;
+
+		const magic = captureData.readUInt32LE();
+
+		if (magic === 0xA1B2C3D4 || magic === 0xD4C3B2A1) {
+			parser = new PCAPParser(captureData);
+		} else if (magic === 0x0A0D0D0A) {
+			parser = new PCAPNGParser(captureData);
 		} else {
-			const parser = pcapp.parse(capturePath);
-			parser.on('packet', this.handlePacket.bind(this));
-			parser.on('end', this.parserEnd.bind(this));
+			throw new Error('Invalid capture');
 		}
+
+		for (const packet of parser.packets()) {
+			this.handlePacket(packet);
+		}
+
+		this.parserEnd();
 	}
 
 	/**
@@ -86,7 +93,7 @@ class NEXParser extends EventEmitter {
 			return;
 		}
 
-		const { header, data: frame } = raw;
+		const { data: frame } = raw;
 
 		const udpPacket = this.parseUDPPacket(frame);
 		let timestamp = 0;
@@ -96,10 +103,10 @@ class NEXParser extends EventEmitter {
 		}
 
 		// * pcap-ng-parser and pcap-parser encode the timestamp data differently
-		if (!header) {
+		if (!raw.timestamp) {
 			timestamp = (Number(BigInt(raw.timestampHigh) << 32n | BigInt(raw.timestampLow))/1000000);
 		} else {
-			timestamp = header.timestampSeconds;
+			timestamp = raw.timestamp.seconds;
 		}
 
 		// TODO - ON RARE OCCASIONS UDP PACKETS WHICH ARE NOT NEX BUT HAVE THE SAME HEADERS GET THROUGH
@@ -116,6 +123,7 @@ class NEXParser extends EventEmitter {
 		let discriminator;
 		let clientAddress;
 		let serverAddress;
+
 		if (isPrivateIP(udpPacket.source)) {
 			// * client->server packet
 			discriminator = `${udpPacket.destination}:${udpPacket.destinationPort}`;
@@ -131,8 +139,8 @@ class NEXParser extends EventEmitter {
 		// * Find the latest connection to avoid broken packets
 		// * when disconnecting and reconnecting to the same server.
 		let connection = this.connections.findLast(connection => connection.discriminator === discriminator);
-
 		let newConnection = false;
+
 		if (!connection) {
 			connection = new Connection(discriminator);
 			connection.clientAddress = clientAddress;
@@ -286,39 +294,52 @@ class NEXParser extends EventEmitter {
 	 * @returns {object} Carved out packet data or null if not valid UDP packet
 	 */
 	parseUDPPacket(frame) {
-		if (frame.subarray(17, 20).equals(XID_MAGIC)) {
-			return;
-		}
-
 		const stream = new Stream(frame);
-		stream.skip(0xE);  // Skip the ethernet header
 
-		// Parse IPv4 header
-		// Assuming always IPv4
+		const versionAndHeaderLength = stream.readUInt8();
+		const version = (versionAndHeaderLength >> 4) & 0x0F;
+		const headerLength = (versionAndHeaderLength & 0x0F) * 4;
 
-		stream.skip(0x9); // skip until protocol
-
-		const protocol = stream.readUInt8();
-
-		// Not a UDP packet
-		if (protocol !== 0x11) {
-			return;
+		if (version !== 4) {
+			console.log(frame);
+			throw new Error(`Unsupproted IP version ${version}`);
 		}
 
-		stream.skip(0x2); // Skip header checksum
+		stream.skip(1); // * Service type
+		const totalLength = stream.readUInt16BE();
+		stream.skip(2); // * Identification
+		stream.skip(2); // * Flags and fragment offset. Fragment offset is the last 13 bits (& 0x1FFF)
+		stream.skip(1); // * Time to live
+		const protocol = stream.readUInt8();
+		stream.skip(2); // * Checksum
 
 		const source = this.int2ip(stream.readUInt32BE());
 		const destination = this.int2ip(stream.readUInt32BE());
 
-		// Parse UDP header
+		// TODO - Add this back with the new offsets
+		//if (frame.subarray(17, 20).equals(XID_MAGIC)) {
+		//	return;
+		//}
 
-		const sourcePort = stream.readUInt16BE();
-		const destinationPort = stream.readUInt16BE();
-		const udpPacketLength = stream.readUInt16BE();
+		if (protocol !== 0x11) {
+			return;
+		}
 
-		stream.skip(0x2); // skip header checksum
+		const udpLength = totalLength - headerLength;
+		const udpStream = new Stream(stream.readBytes(udpLength));
 
-		const payload = stream.readBytes(udpPacketLength - 0x8); // UDP payload is length-8 long everytime
+		// * Parse UDP header
+		const sourcePort = udpStream.readUInt16BE();
+		const destinationPort = udpStream.readUInt16BE();
+		const udpPacketLength = udpStream.readUInt16BE();
+
+		if (udpPacketLength !== udpLength) {
+			throw new Error(`Got bad UDP packet length. Expected ${udpLength}, got ${udpPacketLength}`);
+		}
+
+		udpStream.skip(0x2); // * Checksum
+
+		const payload = udpStream.readBytes(udpLength - 0x8);
 
 		return {
 			source,

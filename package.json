@@ -17,14 +17,12 @@
   },
   "license": "ISC",
   "dependencies": {
-    "pcap-ng-parser": "github:PretendoNetwork/pcap-ng-parser",
-    "pcap-parser": "^0.2.1",
     "private-ip": "^2.3.4",
     "semver": "^7.5.4"
   },
   "devDependencies": {
-    "electron": "^21.4.4",
-    "electron-builder": "^23.6.0",
+    "electron": "^27.0.3",
+    "electron-builder": "^24.6.4",
     "eslint": "^8.24.0",
     "eslint-plugin-jsdoc": "^39.3.6"
   },
