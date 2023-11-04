@@ -16,11 +16,27 @@ class PCAPNGParser {
 		this.#stream = new Stream(this.#buffer);
 	}
 
+	#readUInt16() {
+		if (!this.#currentSection || !this.#currentSection.be) {
+			return this.#stream.readUInt16LE();
+		} else {
+			return this.#stream.readUInt16BE();
+		}
+	}
+
+	#readUInt32() {
+		if (!this.#currentSection || !this.#currentSection.be) {
+			return this.#stream.readUInt32LE();
+		} else {
+			return this.#stream.readUInt32BE();
+		}
+	}
+
 	// * BLOCK PARSERS
 
 	#parseSectionHeaderBlock() {
 		const blockStart = this.#stream.pos();
-		const magic = this.#stream.readUInt32LE();
+		const magic = this.#readUInt32();
 
 		if (magic !== BLOCK_TYPE_SECTION_HEADER) {
 			const expected = BLOCK_TYPE_SECTION_HEADER.toString(16).toLocaleUpperCase();
@@ -28,8 +44,8 @@ class PCAPNGParser {
 			throw new Error(`Invalid PCAP magic. Expected 0x${expected}, got 0x${magicHex}`);
 		}
 
-		const blockLength = this.#stream.readUInt32LE();
-		const bom = this.#stream.readUInt32LE();
+		const blockLength = this.#readUInt32();
+		const bom = this.#readUInt32();
 
 		if (bom !== 0x1A2B3C4D && bom !== 0x4D3C2B1A) {
 			const bomHex = magic.toString(16).toLocaleUpperCase();
@@ -39,31 +55,15 @@ class PCAPNGParser {
 		const section = {
 			be: bom === 0x4D3C2B1A,
 			opt: [], // * Optional data. Unused at the moment
-			interfaces: []
+			interfaces: [],
+			versionMajor: this.#readUInt16(),
+			versionMinor: this.#readUInt16()
 		};
-
-		if (section.be) {
-			section.versionMajor = this.#stream.readUInt16BE();
-		} else {
-			section.versionMajor = this.#stream.readUInt16LE();
-		}
-
-		if (section.be) {
-			section.versionMinor = this.#stream.readUInt16BE();
-		} else {
-			section.versionMinor = this.#stream.readUInt16LE();
-		}
 
 		this.#stream.skip(8); // * Length of all the data (blocks) in this section, for skipping. We never skip
 		this.#stream.seek((blockStart + blockLength) - 4); // * Skip optional data
 
-		let blockLength2 = 0;
-
-		if (section.be) {
-			blockLength2 = this.#stream.readUInt32BE();
-		} else {
-			blockLength2 = this.#stream.readUInt32LE();
-		}
+		const blockLength2 = this.#readUInt32();
 
 		if (blockLength !== blockLength2) {
 			throw new Error(`Invalid trailing block length. Expected ${blockLength}, got ${blockLength2}`);
@@ -74,14 +74,7 @@ class PCAPNGParser {
 
 	#parseInterfaceDescriptionBlock() {
 		const blockStart = this.#stream.pos();
-		let magic = 0;
-		let blockLength = 0;
-
-		if (this.#currentSection.be) {
-			magic = this.#stream.readUInt32BE();
-		} else {
-			magic = this.#stream.readUInt32LE();
-		}
+		const magic = this.#readUInt32();
 
 		if (magic !== BLOCK_TYPE_INTERFACE_DESCRIPTION) {
 			const expected = BLOCK_TYPE_INTERFACE_DESCRIPTION.toString(16).toLocaleUpperCase();
@@ -89,37 +82,17 @@ class PCAPNGParser {
 			throw new Error(`Invalid PCAP magic. Expected 0x${expected}, got 0x${magicHex}`);
 		}
 
-		if (this.#currentSection.be) {
-			blockLength = this.#stream.readUInt32BE();
-		} else {
-			blockLength = this.#stream.readUInt32LE();
-		}
+		const blockLength = this.#readUInt32();
 
-		const interfaceDescription = {};
-
-		if (this.#currentSection.be) {
-			interfaceDescription.linkLayerType = this.#stream.readUInt16BE();
-		} else {
-			interfaceDescription.linkLayerType = this.#stream.readUInt16LE();
-		}
-
-		this.#stream.skip(2); // * Reserved. Docs say MUST skip when reading
-
-		if (this.#currentSection.be) {
-			interfaceDescription.maxPacketLength = this.#stream.readUInt32BE();
-		} else {
-			interfaceDescription.maxPacketLength = this.#stream.readUInt32LE();
-		}
+		const interfaceDescription = {
+			linkLayerType: this.#readUInt16(),
+			reserved: this.#readUInt16(), // * Unused
+			maxPacketLength: this.#readUInt32()
+		};
 
 		this.#stream.seek((blockStart + blockLength) - 4); // * Skip optional data
 
-		let blockLength2 = 0;
-
-		if (this.#currentSection.be) {
-			blockLength2 = this.#stream.readUInt32BE();
-		} else {
-			blockLength2 = this.#stream.readUInt32LE();
-		}
+		const blockLength2 = this.#readUInt32();
 
 		if (blockLength !== blockLength2) {
 			throw new Error(`Invalid trailing block length. Expected ${blockLength}, got ${blockLength2}`);
@@ -130,14 +103,7 @@ class PCAPNGParser {
 
 	#parseEnhancedPacketBlock() {
 		const blockStart = this.#stream.pos();
-		let magic = 0;
-		let blockLength = 0;
-
-		if (this.#currentSection.be) {
-			magic = this.#stream.readUInt32BE();
-		} else {
-			magic = this.#stream.readUInt32LE();
-		}
+		const magic = this.#readUInt32();
 
 		if (magic !== BLOCK_TYPE_ENHANCED_PACKET) {
 			const expected = BLOCK_TYPE_ENHANCED_PACKET.toString(16).toLocaleUpperCase();
@@ -145,43 +111,15 @@ class PCAPNGParser {
 			throw new Error(`Invalid PCAP magic. Expected 0x${expected}, got 0x${magicHex}`);
 		}
 
-		if (this.#currentSection.be) {
-			blockLength = this.#stream.readUInt32BE();
-		} else {
-			blockLength = this.#stream.readUInt32LE();
-		}
+		const blockLength = this.#readUInt32();
 
-		const enhancedPacket = {};
-
-		if (this.#currentSection.be) {
-			enhancedPacket.interfaceID = this.#stream.readUInt32BE();
-		} else {
-			enhancedPacket.interfaceID = this.#stream.readUInt32LE();
-		}
-
-		if (this.#currentSection.be) {
-			enhancedPacket.timestampHigh = this.#stream.readUInt32BE();
-		} else {
-			enhancedPacket.timestampHigh = this.#stream.readUInt32LE();
-		}
-
-		if (this.#currentSection.be) {
-			enhancedPacket.timestampLow = this.#stream.readUInt32BE();
-		} else {
-			enhancedPacket.timestampLow = this.#stream.readUInt32LE();
-		}
-
-		if (this.#currentSection.be) {
-			enhancedPacket.storedLength = this.#stream.readUInt32BE();
-		} else {
-			enhancedPacket.storedLength = this.#stream.readUInt32LE();
-		}
-
-		if (this.#currentSection.be) {
-			enhancedPacket.realLength = this.#stream.readUInt32BE();
-		} else {
-			enhancedPacket.realLength = this.#stream.readUInt32LE();
-		}
+		const enhancedPacket = {
+			interfaceID: this.#readUInt32(),
+			timestampHigh: this.#readUInt32(),
+			timestampLow: this.#readUInt32(),
+			storedLength: this.#readUInt32(),
+			realLength: this.#readUInt32()
+		};
 
 		const interfaceDescription = this.#currentSection.interfaces[enhancedPacket.interfaceID];
 		let interfaceDataLength = 0;
@@ -205,13 +143,7 @@ class PCAPNGParser {
 
 		this.#stream.seek((blockStart + blockLength) - 4); // * Skip optional data
 
-		let blockLength2 = 0;
-
-		if (this.#currentSection.be) {
-			blockLength2 = this.#stream.readUInt32BE();
-		} else {
-			blockLength2 = this.#stream.readUInt32LE();
-		}
+		const blockLength2 = this.#readUInt32();
 
 		if (blockLength !== blockLength2) {
 			throw new Error(`Invalid trailing block length. Expected ${blockLength}, got ${blockLength2}`);
@@ -237,13 +169,7 @@ class PCAPNGParser {
 		this.#stream.seek(0); // * Make sure we're always at the start
 
 		while (this.#stream.hasDataLeft()) {
-			let magic = 0;
-
-			if (!this.#currentSection || !this.#currentSection.be) {
-				magic = this.#stream.readUInt32LE();
-			} else {
-				magic = this.#stream.readUInt32BE();
-			}
+			const magic = this.#readUInt32();
 
 			// * Skip back so the block parsers can have the right start position.
 			// * Makes the block parsers follow the docs layout better rather than

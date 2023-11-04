@@ -20,8 +20,32 @@ class PCAPParser {
 		this.#parseHeader();
 	}
 
+	#readUInt16() {
+		if (!this.#be) {
+			return this.#stream.readUInt16LE();
+		} else {
+			return this.#stream.readUInt16BE();
+		}
+	}
+
+	#readUInt32() {
+		if (!this.#be) {
+			return this.#stream.readUInt32LE();
+		} else {
+			return this.#stream.readUInt32BE();
+		}
+	}
+
+	#readInt32() {
+		if (!this.#be) {
+			return this.#stream.readInt32LE();
+		} else {
+			return this.#stream.readInt32BE();
+		}
+	}
+
 	#parseHeader() {
-		const magic = this.#stream.readUInt32LE();
+		const magic = this.#readUInt32();
 
 		if (magic !== 0xA1B2C3D4 && magic !== 0xD4C3B2A1) {
 			const magicHex = magic.toString(16).toLocaleUpperCase();
@@ -32,41 +56,12 @@ class PCAPParser {
 			this.#be = true;
 		}
 
-		if (this.#be) {
-			this.versionMajor = this.#stream.readUInt16BE();
-		} else {
-			this.versionMajor = this.#stream.readUInt16LE();
-		}
-
-		if (this.#be) {
-			this.versionMinor = this.#stream.readUInt16BE();
-		} else {
-			this.versionMinor = this.#stream.readUInt16LE();
-		}
-
-		if (this.#be) {
-			this.thisZone = this.#stream.readInt32BE();
-		} else {
-			this.thisZone = this.#stream.readInt32LE();
-		}
-
-		if (this.#be) {
-			this.sigfigs = this.#stream.readUInt32BE();
-		} else {
-			this.sigfigs = this.#stream.readUInt32LE();
-		}
-
-		if (this.#be) {
-			this.maxPacketLength = this.#stream.readUInt32BE();
-		} else {
-			this.maxPacketLength = this.#stream.readUInt32LE();
-		}
-
-		if (this.#be) {
-			this.linkLayerType = this.#stream.readUInt32BE();
-		} else {
-			this.linkLayerType = this.#stream.readUInt32LE();
-		}
+		this.versionMajor = this.#readUInt16();
+		this.versionMinor = this.#readUInt16();
+		this.thisZone = this.#readInt32();
+		this.sigfigs = this.#readUInt32();
+		this.maxPacketLength = this.#readUInt32();
+		this.linkLayerType = this.#readUInt32();
 
 		this.#packetStartOffset = this.#stream.pos();
 	}
@@ -76,32 +71,13 @@ class PCAPParser {
 
 		while (this.#stream.hasDataLeft()) {
 			const packet = {
-				timestamp: {}
+				timestamp: {
+					seconds: this.#readUInt32(),
+					microseconds: this.#readUInt32()
+				},
+				storedLength: this.#readUInt32(),
+				realLength: this.#readUInt32()
 			};
-
-			if (this.#be) {
-				packet.timestamp.seconds = this.#stream.readUInt32BE();
-			} else {
-				packet.timestamp.seconds = this.#stream.readUInt32LE();
-			}
-
-			if (this.#be) {
-				packet.timestamp.microseconds = this.#stream.readUInt32BE();
-			} else {
-				packet.timestamp.microseconds = this.#stream.readUInt32LE();
-			}
-
-			if (this.#be) {
-				packet.storedLength = this.#stream.readUInt32BE();
-			} else {
-				packet.storedLength = this.#stream.readUInt32LE();
-			}
-
-			if (this.#be) {
-				packet.realLength = this.#stream.readUInt32BE();
-			} else {
-				packet.realLength = this.#stream.readUInt32LE();
-			}
 
 			packet.data = this.#stream.readBytes(packet.storedLength);
 
