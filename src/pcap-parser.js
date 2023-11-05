@@ -1,10 +1,13 @@
 const Stream = require('./stream');
 
+const LINKTYPE_ETHERNET = 0x0001;
+const LINKTYPE_RAW = 0x0065;
 class PCAPParser {
 	#buffer;
 	#stream;
 	#be = false;
 	#packetStartOffset;
+	#linkLayerSize;
 
 	versionMajor;
 	versionMinor;
@@ -64,6 +67,21 @@ class PCAPParser {
 		this.linkLayerType = this.#readUInt32();
 
 		this.#packetStartOffset = this.#stream.pos();
+		this.#linkLayerSize = this.#checkLinkLayerSize();
+	}
+
+	#checkLinkLayerSize() {
+		switch (this.linkLayerType) {
+		case LINKTYPE_ETHERNET:
+			return 14;
+
+		case LINKTYPE_RAW:
+			return 0;
+
+		default:
+			console.log(`Unsupported link layer type ${this.linkLayerType}`);
+			return 0;
+		}
 	}
 
 	*packets() {
@@ -79,7 +97,9 @@ class PCAPParser {
 				realLength: this.#readUInt32()
 			};
 
-			packet.data = this.#stream.readBytes(packet.storedLength);
+			this.#stream.skip(this.#linkLayerSize);
+
+			packet.data = this.#stream.readBytes(packet.storedLength - this.#linkLayerSize);
 
 			yield packet;
 		}
