@@ -89,8 +89,6 @@ class PCAPNGParser {
 
 		section.options = this.#parseOptionalData(optionsLength);
 
-		this.#stream.seek((blockStart + blockLength) - 4); // * Skip optional data
-
 		const blockLength2 = this.#readUInt32();
 
 		if (blockLength !== blockLength2) {
