@@ -4,6 +4,10 @@ const BLOCK_TYPE_SECTION_HEADER = 0x0A0D0D0A;
 const BLOCK_TYPE_INTERFACE_DESCRIPTION = 0x00000001;
 const BLOCK_TYPE_ENHANCED_PACKET = 0x00000006;
 const BLOCK_TYPE_SIMPLE_PACKET = 0x00000003;
+const BLOCK_TYPE_NAME_RESOLUTION = 0x00000004;
+const BLOCK_TYPE_INTERFACE_STATISTICS = 0x00000005;
+const BLOCK_TYPE_CUSTOM_1 = 0x00000BAD;
+const BLOCK_TYPE_CUSTOM_2 = 0x40000BAD;
 
 const LINKTYPE_ETHERNET = 0x0001;
 
@@ -203,6 +207,79 @@ class PCAPNGParser {
 		return simplePacket;
 	}
 
+	#parseNameResolutionBlock() {
+		const blockStart = this.#stream.pos();
+		const magic = this.#readUInt32();
+
+		if (magic !== BLOCK_TYPE_NAME_RESOLUTION) {
+			const expected = BLOCK_TYPE_NAME_RESOLUTION.toString(16).toLocaleUpperCase();
+			const magicHex = magic.toString(16).toLocaleUpperCase();
+			throw new Error(`Invalid PCAP magic. Expected 0x${expected}, got 0x${magicHex}`);
+		}
+
+		const blockLength = this.#readUInt32();
+
+		// * Skip this whole block. We don't need this data
+		// * Only implemented to prevent a crash
+
+		this.#stream.seek((blockStart + blockLength) - 4);
+
+		const blockLength2 = this.#readUInt32();
+
+		if (blockLength !== blockLength2) {
+			throw new Error(`Invalid trailing block length. Expected ${blockLength}, got ${blockLength2}`);
+		}
+	}
+
+	#parseInterfaceStatisticsBlock() {
+		const blockStart = this.#stream.pos();
+		const magic = this.#readUInt32();
+
+		if (magic !== BLOCK_TYPE_INTERFACE_STATISTICS) {
+			const expected = BLOCK_TYPE_INTERFACE_STATISTICS.toString(16).toLocaleUpperCase();
+			const magicHex = magic.toString(16).toLocaleUpperCase();
+			throw new Error(`Invalid PCAP magic. Expected 0x${expected}, got 0x${magicHex}`);
+		}
+
+		const blockLength = this.#readUInt32();
+
+		// * Skip this whole block. We don't need this data
+		// * Only implemented to prevent a crash
+
+		this.#stream.seek((blockStart + blockLength) - 4);
+
+		const blockLength2 = this.#readUInt32();
+
+		if (blockLength !== blockLength2) {
+			throw new Error(`Invalid trailing block length. Expected ${blockLength}, got ${blockLength2}`);
+		}
+	}
+
+	#parseCustomBlock() {
+		const blockStart = this.#stream.pos();
+		const magic = this.#readUInt32();
+
+		if (magic !== BLOCK_TYPE_CUSTOM_1 && magic !== BLOCK_TYPE_CUSTOM_2) {
+			const expected1 = BLOCK_TYPE_CUSTOM_1.toString(16).toLocaleUpperCase();
+			const expected2 = BLOCK_TYPE_CUSTOM_2.toString(16).toLocaleUpperCase();
+			const magicHex = magic.toString(16).toLocaleUpperCase();
+			throw new Error(`Invalid PCAP magic. Expected either 0x${expected1} or 0x${expected2}, got 0x${magicHex}`);
+		}
+
+		const blockLength = this.#readUInt32();
+
+		// * Skip this whole block. We don't need this data
+		// * Only implemented to prevent a crash
+
+		this.#stream.seek((blockStart + blockLength) - 4);
+
+		const blockLength2 = this.#readUInt32();
+
+		if (blockLength !== blockLength2) {
+			throw new Error(`Invalid trailing block length. Expected ${blockLength}, got ${blockLength2}`);
+		}
+	}
+
 	// * INTERFACE PARSERS
 
 	#parseInterfaceEthernet() {
@@ -242,6 +319,19 @@ class PCAPNGParser {
 
 			case BLOCK_TYPE_SIMPLE_PACKET:
 				yield this.#parseSimplePacketBlock();
+				break;
+
+			case BLOCK_TYPE_NAME_RESOLUTION:
+				this.#parseNameResolutionBlock();
+				break;
+
+			case BLOCK_TYPE_INTERFACE_STATISTICS:
+				this.#parseInterfaceStatisticsBlock();
+				break;
+
+			case BLOCK_TYPE_CUSTOM_1:
+			case BLOCK_TYPE_CUSTOM_2:
+				this.#parseCustomBlock();
 				break;
 
 			default:
