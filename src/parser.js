@@ -103,17 +103,9 @@ class NEXParser extends EventEmitter {
 		}
 
 		const udpPacket = this.parsePacketFrame(raw.data);
-		let timestamp = 0;
 
 		if (!udpPacket) {
 			return;
-		}
-
-		// * pcapngs and pcaps encode the timestamp data differently
-		if (!raw.timestamp) {
-			timestamp = (Number(BigInt(raw.timestampHigh) << 32n | BigInt(raw.timestampLow))/1000000);
-		} else {
-			timestamp = raw.timestamp.seconds;
 		}
 
 		// TODO - ON RARE OCCASIONS UDP PACKETS WHICH ARE NOT NEX BUT HAVE THE SAME HEADERS GET THROUGH
@@ -261,7 +253,7 @@ class NEXParser extends EventEmitter {
 				connection.checkForSecureServer = false;
 			}
 
-			packet.date = new Date(timestamp * 1000);
+			packet.date = new Date(raw.timestamp.seconds * 1000);
 
 			this.emit('packet', packet);
 		}

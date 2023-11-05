@@ -37,6 +37,24 @@ class PCAPNGParser {
 		}
 	}
 
+	#parseOptionalData(optionsLength) {
+		const options = new Map();
+		const optionsEnd = this.#stream.pos() + optionsLength;
+
+		while (this.#stream.pos() != optionsEnd) {
+			const optionCode = this.#readUInt16();
+			const optionLength = this.#readUInt16();
+			const padding = (4 - (optionLength % 4)) % 4;
+			const optionData = this.#stream.readBytes(optionLength);
+
+			this.#stream.skip(padding);
+
+			options.set(optionCode, optionData);
+		}
+
+		return options;
+	}
+
 	// * BLOCK PARSERS
 
 	#parseSectionHeaderBlock() {
@@ -65,7 +83,12 @@ class PCAPNGParser {
 			versionMinor: this.#readUInt16()
 		};
 
-		this.#stream.skip(8); // * Length of all the data (blocks) in this section, for skipping. We never skip
+		this.#stream.skip(8); // * Length of all the data (blocks) in this section, for skipping. We never skip whole sections
+
+		const optionsLength = (blockStart + blockLength - 4) - this.#stream.pos();
+
+		section.options = this.#parseOptionalData(optionsLength);
+
 		this.#stream.seek((blockStart + blockLength) - 4); // * Skip optional data
 
 		const blockLength2 = this.#readUInt32();
@@ -95,7 +118,9 @@ class PCAPNGParser {
 			maxPacketLength: this.#readUInt32()
 		};
 
-		this.#stream.seek((blockStart + blockLength) - 4); // * Skip optional data
+		const optionsLength = (blockStart + blockLength - 4) - this.#stream.pos();
+
+		interfaceDescription.options = this.#parseOptionalData(optionsLength);
 
 		const blockLength2 = this.#readUInt32();
 
@@ -120,8 +145,10 @@ class PCAPNGParser {
 
 		const enhancedPacket = {
 			interfaceID: this.#readUInt32(),
-			timestampHigh: this.#readUInt32(),
-			timestampLow: this.#readUInt32(),
+			timestamp: {
+				high: this.#readUInt32(),
+				low: this.#readUInt32()
+			},
 			storedLength: this.#readUInt32(),
 			realLength: this.#readUInt32()
 		};
@@ -141,12 +168,27 @@ class PCAPNGParser {
 
 		enhancedPacket.data = this.#stream.readBytes(enhancedPacket.storedLength - interfaceDataLength);
 
-		// * There's padding here to align the data to a
-		// * 32-bit boundary. However due to the way this
-		// * skips the optional data, the padding doesn't
-		// * need to be handled
+		const timestampResolutionData = interfaceDescription.options.get(0x9);
+		let timestampResolution = 6; // * Default if no if_tsresol option set in the interface
 
-		this.#stream.seek((blockStart + blockLength) - 4); // * Skip optional data
+		if (timestampResolutionData) {
+			timestampResolution = timestampResolutionData.readUInt8();
+		}
+
+		const timestamp = (BigInt(enhancedPacket.timestamp.high) << 32n) | BigInt(enhancedPacket.timestamp.low);
+		const isMSBSet = (timestampResolution & 0x80) !== 0;
+		const resolutionBits = timestampResolution & 0x7F;
+
+		enhancedPacket.timestamp.seconds = isMSBSet
+			? Number(timestamp) * Math.pow(2, -resolutionBits)
+			: Number(timestamp) * Math.pow(10, -resolutionBits);
+
+		const padding = (4 - (enhancedPacket.storedLength % 4)) % 4;
+
+		this.#stream.skip(padding);
+
+		const optionsLength = (blockStart + blockLength - 4) - this.#stream.pos();
+		enhancedPacket.options = this.#parseOptionalData(optionsLength);
 
 		const blockLength2 = this.#readUInt32();
 
