@@ -50,6 +50,14 @@ class Stream {
 
 	/**
 	 *
+	 * @param {number} offset Manually set the streams buffer offset
+	 */
+	seek(offset) {
+		this._offset = offset;
+	}
+
+	/**
+	 *
 	 * @param {number} len Bytes to read
 	 * @returns {Buffer} Read bytes
 	 */
