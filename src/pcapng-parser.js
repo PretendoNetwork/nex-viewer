@@ -3,6 +3,7 @@ const Stream = require('./stream');
 const BLOCK_TYPE_SECTION_HEADER = 0x0A0D0D0A;
 const BLOCK_TYPE_INTERFACE_DESCRIPTION = 0x00000001;
 const BLOCK_TYPE_ENHANCED_PACKET = 0x00000006;
+const BLOCK_TYPE_SIMPLE_PACKET = 0x00000003;
 
 const LINKTYPE_ETHERNET = 0x0001;
 
@@ -152,6 +153,56 @@ class PCAPNGParser {
 		return enhancedPacket;
 	}
 
+	#parseSimplePacketBlock() {
+		const magic = this.#readUInt32();
+
+		if (magic !== BLOCK_TYPE_SIMPLE_PACKET) {
+			const expected = BLOCK_TYPE_SIMPLE_PACKET.toString(16).toLocaleUpperCase();
+			const magicHex = magic.toString(16).toLocaleUpperCase();
+			throw new Error(`Invalid PCAP magic. Expected 0x${expected}, got 0x${magicHex}`);
+		}
+
+		const blockLength = this.#readUInt32();
+
+		const simplePacket = {
+			timestampHigh: 0, // * Not present in SPBs
+			timestampLow: 0,  // * Not present in SPBs
+			storedLength: blockLength - 16, // * Derive from the block length minus the 4 u32 sections
+			realLength: this.#readUInt32()
+		};
+
+		// * From the docs:
+		// *
+		// * The Simple Packet Block does not contain the Interface ID field.
+		// * Therefore, it MUST be assumed that all the Simple Packet Blocks
+		// * have been captured on the interface previously specified in the
+		// * first Interface Description Block.
+		const interfaceDescription = this.#currentSection.interfaces[0];
+		let interfaceDataLength = 0;
+
+		switch (interfaceDescription.linkLayerType) {
+		case LINKTYPE_ETHERNET:
+			simplePacket.interface = this.#parseInterfaceEthernet();
+			interfaceDataLength = 14;
+			break;
+
+		default:
+			throw new Error(`Unsupported interface type 0x${interfaceDescription.linkLayerType.toString(16).toLocaleUpperCase()}`);
+		}
+
+		simplePacket.data = this.#stream.readBytes(simplePacket.storedLength - interfaceDataLength);
+
+		// * Block has no optional data
+
+		const blockLength2 = this.#readUInt32();
+
+		if (blockLength !== blockLength2) {
+			throw new Error(`Invalid trailing block length. Expected ${blockLength}, got ${blockLength2}`);
+		}
+
+		return simplePacket;
+	}
+
 	// * INTERFACE PARSERS
 
 	#parseInterfaceEthernet() {
@@ -187,6 +238,10 @@ class PCAPNGParser {
 
 			case BLOCK_TYPE_ENHANCED_PACKET:
 				yield this.#parseEnhancedPacketBlock();
+				break;
+
+			case BLOCK_TYPE_SIMPLE_PACKET:
+				yield this.#parseSimplePacketBlock();
 				break;
 
 			default:
