@@ -2,6 +2,7 @@ const Stream = require('./stream');
 
 const LINKTYPE_ETHERNET = 0x0001;
 const LINKTYPE_RAW = 0x0065;
+
 class PCAPParser {
 	#buffer;
 	#stream;
