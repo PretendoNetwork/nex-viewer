@@ -109,7 +109,7 @@ class NEXParser extends EventEmitter {
 			return;
 		}
 
-		// * pcap-ng-parser and pcap-parser encode the timestamp data differently
+		// * pcapngs and pcaps encode the timestamp data differently
 		if (!raw.timestamp) {
 			timestamp = (Number(BigInt(raw.timestampHigh) << 32n | BigInt(raw.timestampLow))/1000000);
 		} else {
