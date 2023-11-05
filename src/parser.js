@@ -85,17 +85,24 @@ class NEXParser extends EventEmitter {
 
 	/**
 	 *
-	 * @param {object} raw Raw WireShark packet as parsed by `pcap-ng-parser`
+	 * @param {object} raw Raw network packet
 	 */
 	handlePacket(raw) {
-		if (this.rawRMCMode) {
+		// * HokakuCTR produces dumps whose payloads are:
+		// * - u8  Revision (1)
+		// * - u64 Title ID
+		// * By checking if the first byte is a supported
+		// * revision and that the following u64 is a 3DS
+		// * title we can be reasonably sure the dump is
+		// * a HokakuCTR dump.
+		// * We only need the first 3 bytes of the u64
+		if (raw.data[0] === 1 && (raw.data.readBigUInt64LE(1) & 0xFFFFFF0000000000n) === 0x0004000000000000n) {
+			this.setRawRMCMode(true);
 			this.handleRawRMC(raw.data);
 			return;
 		}
 
-		const { data: frame } = raw;
-
-		const udpPacket = this.parseUDPPacket(frame);
+		const udpPacket = this.parsePacketFrame(raw.data);
 		let timestamp = 0;
 
 		if (!udpPacket) {
@@ -293,7 +300,7 @@ class NEXParser extends EventEmitter {
 	 * @param {Buffer} frame Raw packet bytes
 	 * @returns {object} Carved out packet data or null if not valid UDP packet
 	 */
-	parseUDPPacket(frame) {
+	parsePacketFrame(frame) {
 		const stream = new Stream(frame);
 
 		const versionAndHeaderLength = stream.readUInt8();
