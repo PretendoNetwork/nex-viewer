@@ -305,12 +305,14 @@ class NEXParser extends EventEmitter {
 
 		const versionAndHeaderLength = stream.readUInt8();
 		const version = (versionAndHeaderLength >> 4) & 0x0F;
-		const headerLength = (versionAndHeaderLength & 0x0F) * 4;
 
+		// * All packets we care about are
+		// * assumed to be IPv4
 		if (version !== 4) {
-			console.log(frame);
-			throw new Error(`Unsupproted IP version ${version}`);
+			return;
 		}
+
+		const headerLength = (versionAndHeaderLength & 0x0F) * 4;
 
 		stream.skip(1); // * Service type
 		const totalLength = stream.readUInt16BE();
