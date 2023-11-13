@@ -58,6 +58,124 @@ class AuthenticationInfo extends NEXTypes.Structure {
 }
 NEXTypes.AnyDataHolder.addType('AuthenticationInfo', AuthenticationInfo);
 
+class ValidateAndRequestTicketParam extends NEXTypes.Structure {
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.platformType = stream.readUInt32LE();
+		this.userName = stream.readNEXString();
+		this.extraData = stream.readNEXAnyDataHolder();
+		this.ignoreApiVersionCheck = stream.readBoolean();
+		this.apiVersionGeneral = stream.readUInt32LE();
+		this.apiVersionCustom = stream.readUInt32LE();
+
+		if (stream.hasDataLeft()) {
+			this.platformTypeForPlatformPid = stream.readUInt8();
+		}
+	}
+
+	toJSON() {
+		const data = {
+			__structureVersion: this._structureHeader.version,
+			platformType: {
+				__typeName: 'uint32',
+				__typeValue: this.platformType
+			},
+			userName: {
+				__typeName: 'String',
+				__typeValue: this.userName
+			},
+			extraData: {
+				__typeName: 'AnyDataHolder',
+				__typeValue: this.extraData
+			},
+			ignoreApiVersionCheck: {
+				__typeName: 'boolean',
+				__typeValue: this.ignoreApiVersionCheck
+			},
+			apiVersionGeneral: {
+				__typeName: 'uint32',
+				__typeValue: this.apiVersionGeneral
+			},
+			apiVersionCustom: {
+				__typeName: 'uint32',
+				__typeValue: this.apiVersionCustom
+			}
+		};
+
+		if (this.platformTypeForPlatformPid !== undefined) {
+			data.platformTypeForPlatformPid = {
+				__typeName: 'uint8',
+				__typeValue: this.platformTypeForPlatformPid
+			};
+		}
+
+		return data;
+	}
+}
+
+class ValidateAndRequestTicketResult extends NEXTypes.Structure {
+	/**
+	 *
+	 * @param {Stream} stream NEX data stream
+	 */
+	parse(stream) {
+		this.sourcePid = stream.readPID();
+		this.bufResponse = stream.readNEXBuffer();
+		this.serviceNodeUrl = stream.readNEXStationURL();
+		this.currentUtcTime = stream.readNEXDateTime();
+		this.returnMsg = stream.readNEXString();
+		this.sourceKey = stream.readNEXString();
+
+		if (stream.hasDataLeft()) {
+			this.platformPid = stream.readPID();
+		}
+	}
+
+	toJSON() {
+		const data = {
+			__structureVersion: this._structureHeader.version,
+			sourcePid: {
+				__typeName: 'PID',
+				__typeValue: this.sourcePid
+			},
+			bufResponse: {
+				__typeName: 'Buffer',
+				__typeValue: this.bufResponse
+			},
+			serviceNodeUrl: {
+				__typeName: 'StationURL',
+				__typeValue: this.serviceNodeUrl
+			},
+			currentUtcTime: {
+				__typeName: 'DateTime',
+				__typeValue: this.currentUtcTime
+			},
+			returnMsg: {
+				__typeName: 'String',
+				__typeValue: this.returnMsg
+			},
+			sourceKey: {
+				__typeName: 'String',
+				__typeValue: this.sourceKey
+			}
+		};
+
+		if (this.platformPid !== undefined) {
+			data.platformPid = {
+				__typeName: 'PID',
+				__typeValue: this.platformPid
+			};
+		}
+
+		return data;
+	}
+}
+
 module.exports = {
-	AuthenticationInfo
+	AuthenticationInfo,
+	ValidateAndRequestTicketParam,
+	ValidateAndRequestTicketResult
 };

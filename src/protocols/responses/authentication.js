@@ -2,6 +2,7 @@
  * @typedef {import('../../stream')} Stream
  */
 const NEXTypes = require('../../types');
+const AuthenticationTypes = require('../types/authentication');
 
 class LoginResponse {
 	/**
@@ -172,11 +173,30 @@ class LoginWithContextResponse {
 	}
 }
 
+class ValidateAndRequestTicketWithParamResponse {
+	/**
+	 * @param {Stream} stream NEX data stream
+	 */
+	constructor(stream) {
+		this.result = stream.readNEXStructure(AuthenticationTypes.ValidateAndRequestTicketResult);
+	}
+
+	toJSON() {
+		return {
+			result: {
+				__typeName: 'ValidateAndRequestTicketResult',
+				__typeValue: this.result
+			}
+		};
+	}
+}
+
 module.exports = {
 	LoginResponse,
 	LoginExResponse,
 	RequestTicketResponse,
 	GetPIDResponse,
 	GetNameResponse,
-	LoginWithContextResponse
+	LoginWithContextResponse,
+	ValidateAndRequestTicketWithParamResponse
 };
