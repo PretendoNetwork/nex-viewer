@@ -2,13 +2,14 @@
  * @typedef {import('../../stream')} Stream
  */
 const NEXTypes = require('../../types');
+const AuthenticationTypes = require('../types/authentication');
 
 class LoginResponse {
 	/**
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.retval = stream.readUInt32LE();
+		this.retval = stream.readNEXResult();
 		this.pidPrincipal = stream.readPID();
 		this.pbufResponse = stream.readNEXBuffer();
 		this.pConnectionData = stream.readNEXStructure(NEXTypes.RVConnectionData);
@@ -46,7 +47,7 @@ class LoginExResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.retval = stream.readUInt32LE();
+		this.retval = stream.readNEXResult();
 		this.pidPrincipal = stream.readPID();
 		this.pbufResponse = stream.readNEXBuffer();
 		this.pConnectionData = stream.readNEXStructure(NEXTypes.RVConnectionData);
@@ -84,7 +85,7 @@ class RequestTicketResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.retval = stream.readUInt32LE();
+		this.retval = stream.readNEXResult();
 		this.bufResponse = stream.readNEXBuffer();
 	}
 
@@ -143,7 +144,7 @@ class LoginWithContextResponse {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
-		this.retval = stream.readUInt32LE();
+		this.retval = stream.readNEXResult();
 		this.pidPrincipal = stream.readPID();
 		this.pbufResponse = stream.readNEXBuffer();
 		this.pConnectionData = stream.readNEXStructure(NEXTypes.RVConnectionData);
@@ -172,11 +173,30 @@ class LoginWithContextResponse {
 	}
 }
 
+class ValidateAndRequestTicketWithParamResponse {
+	/**
+	 * @param {Stream} stream NEX data stream
+	 */
+	constructor(stream) {
+		this.result = stream.readNEXStructure(AuthenticationTypes.ValidateAndRequestTicketResult);
+	}
+
+	toJSON() {
+		return {
+			result: {
+				__typeName: 'ValidateAndRequestTicketResult',
+				__typeValue: this.result
+			}
+		};
+	}
+}
+
 module.exports = {
 	LoginResponse,
 	LoginExResponse,
 	RequestTicketResponse,
 	GetPIDResponse,
 	GetNameResponse,
-	LoginWithContextResponse
+	LoginWithContextResponse,
+	ValidateAndRequestTicketWithParamResponse
 };

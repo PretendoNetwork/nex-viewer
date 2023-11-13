@@ -311,6 +311,14 @@ class Result {
 		this.resultCode = resultCode;
 	}
 
+	isSuccess() {
+		return (this.resultCode & (1 << 31)) === 0;
+	}
+
+	isError() {
+		return (this.resultCode & (1 << 31)) !== 0;
+	}
+
 	toJSON() {
 		return {
 			resultCode: {

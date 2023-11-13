@@ -318,9 +318,13 @@ class Connection {
 					packet.rmcData.methodName = protocol.MethodNames[packet.rmcMessage.methodId];
 				}
 
-				if (packet.rmcMessage.isResponse()) {
+				if (packet.rmcMessage.isResponse() & packet.rmcMessage.isSuccess()) {
 					if (packet.rmcMessage.protocolId === Authentication.ProtocolID) {
 						if (packet.rmcMessage.methodId === Authentication.Methods.Login || packet.rmcMessage.methodId === Authentication.Methods.LoginEx) {
+							if (packet.rmcData.body.retval.isError()) {
+								return;
+							}
+
 							this.clientPID = packet.rmcData.body.pidPrincipal;
 							this.clientNEXPassword = NEX_KEYS[this.clientPID];
 							this.secureServerStationURL = packet.rmcData.body.pConnectionData.stationUrl;
@@ -339,6 +343,10 @@ class Connection {
 						}
 
 						if (packet.rmcMessage.methodId === Authentication.Methods.RequestTicket) {
+							if (packet.rmcData.body.retval.isError()) {
+								return;
+							}
+
 							const ticketStream = new Stream(packet.rmcData.body.bufResponse, this);
 							const ticket = new kerberos.KerberosTicket(ticketStream);
 

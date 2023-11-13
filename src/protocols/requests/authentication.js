@@ -2,6 +2,8 @@
  * @typedef {import('../../stream')} Stream
  */
 
+const AuthenticationTypes = require('../types/authentication');
+
 class LoginRequest {
 	/**
 	 * @param {Stream} stream NEX data stream
@@ -120,11 +122,30 @@ class LoginWithContextRequest {
 	}
 }
 
+class ValidateAndRequestTicketWithParamRequest {
+	/**
+	 * @param {Stream} stream NEX data stream
+	 */
+	constructor(stream) {
+		this.param = stream.readNEXStructure(AuthenticationTypes.ValidateAndRequestTicketParam);
+	}
+
+	toJSON() {
+		return {
+			param: {
+				__typeName: 'ValidateAndRequestTicketParam',
+				__typeValue: this.param
+			}
+		};
+	}
+}
+
 module.exports = {
 	LoginRequest,
 	LoginExRequest,
 	RequestTicketRequest,
 	GetPIDRequest,
 	GetNameRequest,
-	LoginWithContextRequest
+	LoginWithContextRequest,
+	ValidateAndRequestTicketWithParamRequest
 };

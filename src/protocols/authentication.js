@@ -5,6 +5,7 @@
  * @typedef {import('../rmc')} RMCMessage
  */
 
+const semver = require('semver');
 const Stream = require('../stream');
 
 require('./types/authentication');
@@ -35,7 +36,10 @@ class Authentication {
 	static Handlers = {
 		0x1: Authentication.Login,
 		0x2: Authentication.LoginEx,
-		0x3: Authentication.RequestTicket
+		0x3: Authentication.RequestTicket,
+		0x4: Authentication.GetPID,
+		0x5: Authentication.GetName,
+		0x6: Authentication.LoginWithContext
 	};
 
 	/**
@@ -137,10 +141,19 @@ class Authentication {
 	 * @returns {object} Parsed RMC body
 	 */
 	static LoginWithContext(rmcMessage, stream) {
-		if (rmcMessage.isRequest()) {
-			return new Requests.LoginWithContextRequest(stream);
+		// TODO - Move this check somewhere else and use proper method name
+		if (semver.gte(stream.connection.title.nex_version, '4.4.0')) {
+			if (rmcMessage.isRequest()) {
+				return new Requests.ValidateAndRequestTicketWithParamRequest(stream);
+			} else {
+				return new Responses.ValidateAndRequestTicketWithParamResponse(stream);
+			}
 		} else {
-			return new Responses.LoginWithContextResponse(stream);
+			if (rmcMessage.isRequest()) {
+				return new Requests.LoginWithContextRequest(stream);
+			} else {
+				return new Responses.LoginWithContextResponse(stream);
+			}
 		}
 	}
 }

@@ -2,6 +2,7 @@
  * @typedef {import('./connection')} Connection
  */
 
+const semver = require('semver');
 const NEXTypes = require('./types');
 
 class Stream {
@@ -242,8 +243,11 @@ class Stream {
 	 * @returns {number} User PID
 	 */
 	readPID() {
-		// TODO - Check if this is a Switch connection, and if so read uint64
-		return this.readUInt32LE();
+		if (semver.gte(this.connection.title.nex_version, '4.0.0')) {
+			return this.readUInt64LE();
+		} else {
+			return this.readUInt32LE();
+		}
 	}
 
 	/**
