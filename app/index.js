@@ -1,5 +1,5 @@
-const fs = require('node:fs');
 const path = require('node:path');
+const fs = require('fs-extra');
 const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const NEXParser = require(__dirname + '/../');
 
@@ -34,40 +34,77 @@ const menuTemplate = [
 		id: 'file',
 		submenu: [
 			{
-				label: 'Open File',
-				async click(menuItem, browserWindow) {
-					const result = await dialog.showOpenDialog({
-						properties: ['openFile'],
-						filters: [
-							{ name: 'Packet Capture', extensions: ['pcapng', 'pcap'] }
-						]
-					});
+				label: 'Open Dump',
+				submenu: [
+					{
+						label: 'WireShark (.pcap, .pcapng)',
+						async click(menuItem, browserWindow) {
+							const result = await dialog.showOpenDialog({
+								properties: ['openFile'],
+								filters: [
+									{ name: 'Packet Capture', extensions: ['pcapng', 'pcap'] }
+								]
+							});
 
-					if (result.canceled) {
-						return;
+							if (result.canceled) {
+								return;
+							}
+
+							browserWindow.webContents.send('clear-sections');
+
+							const filePath = result.filePaths[0];
+
+							browserWindow.setTitle(`NEX Viewer - ${filePath}`);
+
+							const parser = new NEXParser();
+							parser.setRawRMCMode(rawRMC);
+
+							parser.on('packet', packet => {
+								const serialized = JSON.stringify(packet);
+								browserWindow.webContents.send('packet', serialized);
+							});
+
+							parser.on('connections', connections => {
+								const serialized = JSON.stringify(connections);
+								browserWindow.webContents.send('connections', serialized);
+							});
+
+							parser.parse(filePath);
+						}
+					},
+					{
+						label: 'WebSocket (Charles Folder BINs)',
+						async click(menuItem, browserWindow) {
+							const result = await dialog.showOpenDialog({
+								properties: ['openDirectory']
+							});
+
+							if (result.canceled) {
+								return;
+							}
+
+							browserWindow.webContents.send('clear-sections');
+
+							const filePath = result.filePaths[0];
+
+							browserWindow.setTitle(`NEX Viewer - ${filePath}`);
+
+							const parser = new NEXParser();
+
+							parser.on('packet', packet => {
+								const serialized = JSON.stringify(packet);
+								browserWindow.webContents.send('packet', serialized);
+							});
+
+							parser.on('connections', connections => {
+								const serialized = JSON.stringify(connections);
+								browserWindow.webContents.send('connections', serialized);
+							});
+
+							parser.parseCharlesWebSocket(filePath);
+						}
 					}
-
-					browserWindow.webContents.send('clear-sections');
-
-					const filePath = result.filePaths[0];
-
-					browserWindow.setTitle(`NEX Viewer - ${filePath}`);
-
-					const parser = new NEXParser();
-					parser.setRawRMCMode(rawRMC);
-
-					parser.on('packet', packet => {
-						const serialized = JSON.stringify(packet);
-						browserWindow.webContents.send('packet', serialized);
-					});
-
-					parser.on('connections', connections => {
-						const serialized = JSON.stringify(connections);
-						browserWindow.webContents.send('connections', serialized);
-					});
-
-					parser.parse(filePath);
-				}
+				]
 			},
 			{
 				label: 'Open Recent',
