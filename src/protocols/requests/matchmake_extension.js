@@ -121,7 +121,7 @@ class CreateMatchmakeSessionRequest {
 		this.anyGathering = stream.readNEXAnyDataHolder();
 		this.strMessage = stream.readNEXString();
 
-		if (semver.gte(nexVersion, '3.5.0')) {
+		if (semver.gte(nexVersion, '3.4.0')) {
 			this.participationCount = stream.readUInt16LE();
 		}
 	}
@@ -627,14 +627,19 @@ class JoinMatchmakeSessionExRequest {
 	 * @param {Stream} stream NEX data stream
 	 */
 	constructor(stream) {
+		const nexVersion = stream.connection.title.nex_match_making_version || stream.connection.title.nex_version;
+
 		this.gid = stream.readUInt32LE();
 		this.strMessage = stream.readNEXString();
 		this.dontCareMyBlockList = stream.readBoolean();
-		this.participationCount = stream.readUInt16LE();
+
+		if (semver.gte(nexVersion, '3.4.0')) {
+			this.participationCount = stream.readUInt16LE();
+		}
 	}
 
 	toJSON() {
-		return {
+		const data =  {
 			gid: {
 				__typeName: 'uint32',
 				__typeValue: this.gid
@@ -646,12 +651,17 @@ class JoinMatchmakeSessionExRequest {
 			dontCareMyBlockList: {
 				__typeName: 'boolean',
 				__typeValue: this.dontCareMyBlockList
-			},
-			participationCount: {
-				__typeName: 'uint16',
-				__typeValue: this.participationCount
 			}
 		};
+
+		if (this.participationCount !== undefined) {
+			data.participationCount = {
+				__typeName: 'uint16',
+				__typeValue: this.participationCount
+			};
+		}
+
+		return data;
 	}
 }
 
@@ -767,7 +777,7 @@ class DebugNotifyEventRequest {
 				__typeValue: this.pid
 			},
 			mainType: {
-				__typeName: 'uui9nt32int8',
+				__typeName: 'uint32',
 				__typeValue: this.mainType
 			},
 			subType: {

@@ -739,7 +739,7 @@ class MigrateGatheringOwnershipV1Request {
 	 */
 	constructor(stream) {
 		this.gid = stream.readUInt32LE();
-		this.lstPotentialNewOwnersID = stream.readNEXStructure(stream.readPID);
+		this.lstPotentialNewOwnersID = stream.readNEXList(stream.readPID);
 	}
 
 	toJSON() {

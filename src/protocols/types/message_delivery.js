@@ -45,7 +45,11 @@ class UserMessage extends NEXTypes.Structure {
 	 * @param {Stream} stream NEX data stream
 	 */
 	parse(stream) {
+		// TODO - Support NEX 4.0+ messages
+
 		this.m_uiID = stream.readUInt32LE();
+		this.m_idRecipient = stream.readUInt32LE();
+		this.m_uiRecipientType = stream.readUInt32LE();
 		this.m_uiParentID = stream.readUInt32LE();
 		this.m_pidSender = stream.readPID();
 		this.m_receptiontime = stream.readNEXDateTime();
@@ -53,7 +57,6 @@ class UserMessage extends NEXTypes.Structure {
 		this.m_uiFlags = stream.readUInt32LE();
 		this.m_strSubject = stream.readNEXString();
 		this.m_strSender = stream.readNEXString();
-		this.m_messageRecipient = stream.readNEXStructure(MessageRecipient);
 	}
 
 	toJSON() {
@@ -66,6 +69,14 @@ class UserMessage extends NEXTypes.Structure {
 			m_uiID: {
 				__typeName: 'uint32',
 				__typeValue: this.m_uiID
+			},
+			m_idRecipient: {
+				__typeName: 'uint32',
+				__typeValue: this.m_idRecipient
+			},
+			m_uiRecipientType: {
+				__typeName: 'uint32',
+				__typeValue: this.m_uiRecipientType
 			},
 			m_uiParentID: {
 				__typeName: 'uint32',
@@ -94,10 +105,6 @@ class UserMessage extends NEXTypes.Structure {
 			m_strSender: {
 				__typeName: 'String',
 				__typeValue: this.m_strSender
-			},
-			m_messageRecipient: {
-				__typeName: 'MessageRecipient',
-				__typeValue: this.m_messageRecipient
 			}
 		};
 	}

@@ -274,7 +274,7 @@ class Packet {
 	 * @returns {boolean} True if has flag
 	 */
 	isToClient() {
-		return this.source === 0xA1;
+		return (this.source & 0xF) === 0x1;
 	}
 
 	/**
@@ -282,7 +282,7 @@ class Packet {
 	 * @returns {boolean} True if has flag
 	 */
 	isToServer() {
-		return this.source === 0xAF;
+		return (this.source & 0xF) === 0xF;
 	}
 
 	/**
