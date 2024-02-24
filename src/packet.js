@@ -94,7 +94,7 @@ class Packet {
 			serialized.source = this.source;
 			serialized.destination = this.destination;
 			serialized.sessionId = this.sessionId;
-			serialized.signature = this.signature.toString('hex');
+			serialized.signature = this.signature?.toString('hex') || '';
 			serialized.sequenceId = this.sequenceId;
 			serialized.fragmentId = this.fragmentId;
 			serialized.checksum = this.checksum;

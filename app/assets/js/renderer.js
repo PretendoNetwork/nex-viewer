@@ -70,8 +70,10 @@ export function populateConnectionsList(connections) {
 
 		let title;
 
-		// * Hack to detect raw RMC connections
-		if (connection.discriminator !== 'authentication' && connection.discriminator !== 'secure') {
+		// * Hack to detect raw RMC and WSS connections
+		if (connection.type === 'wss') {
+			title = `${connection.discriminator} ${connection.title.name || 'Unknown'}`;
+		} else if (connection.discriminator !== 'authentication' && connection.discriminator !== 'secure') {
 			title = `${connection.discriminator} ${connection.title.name || 'Unknown'} (${connection.secure ? 'Secure' : 'Authentication'})`;
 		} else {
 			title = `${connection.title.name || 'Unknown'} (${connection.secure ? 'Secure' : 'Authentication'})`;
@@ -218,9 +220,36 @@ export function addPacketToList(packet) {
 	}
 
 	const timeString = packet.rawRMC ? '' : packet.date;
-	const sourceString = packet.rawRMC ? '' : packet.sourceAddress;
-	const destinationString = packet.rawRMC ? '' : packet.destinationAddress;
-	const versionString = packet.rawRMC ? 'Raw RMC' : `v${packet.version}`;
+	let sourceString = '';
+
+	if (packet.rawRMC) {
+		sourceString = '';
+	} else if (packet.version === 'lite') {
+		sourceString = packet.source;
+	} else {
+		sourceString = packet.sourceAddress;
+	}
+
+	let destinationString = '';
+
+	if (packet.rawRMC) {
+		destinationString = '';
+	} else if (packet.version === 'lite') {
+		destinationString = packet.destination;
+	} else {
+		destinationString = packet.destinationAddress;
+	}
+
+	let versionString = '';
+
+	if (packet.rawRMC) {
+		versionString = 'Raw RMC';
+	} else if (packet.version === 'lite') {
+		versionString = 'Lite';
+	} else {
+		versionString = `v${packet.version}`;
+	}
+
 	const infoString = infoData.join(', ');
 
 	time.appendChild(document.createTextNode(timeString));

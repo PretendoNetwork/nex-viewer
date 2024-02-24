@@ -1,14 +1,20 @@
 const EventEmitter = require('node:events');
 const path = require('node:path');
-const fs = require('node:fs');
+const fs = require('fs-extra');
 const isPrivateIP = require('private-ip');
 const PCAPParser = require('./pcap-parser');
 const PCAPNGParser = require('./pcapng-parser');
 const PacketV0 = require('./packetv0');
 const PacketV1 = require('./packetv1');
+const PacketLite = require('./packet-lite');
 const Connection = require('./connection');
+const WebSocketConnection = require('./websocket-connection');
 const Authentication = require('./protocols/authentication');
 const Stream = require('./stream');
+
+const SWITCH_DISCRIMINATOR_REGEX = /(g.*-lp1\.s\.n\.srv\.nintendo\.net)_\d*_(?:client|server)\.bin/;
+const SWITCH_GAME_SERVER_ID_REGEX = /g(.*)-lp1\.s\.n\.srv\.nintendo\.net_\d*_(?:client|server)\.bin/;
+const SWITCH_PACKET_SOURCE_REGEX = /g.*-lp1\.s\.n\.srv\.nintendo\.net_\d*_(client|server)\.bin/;
 
 // ! NOTE -
 // ! PRUDPv0 does not have magics
@@ -32,6 +38,7 @@ class NEXParser extends EventEmitter {
 		this.rawRMCSecureConnection = new Connection(); // * Used to store packets to the secure server
 		this.rawRMCSecureConnection.isSecureServer = true;
 		this.rawRMCSecureConnection.discriminator = 'secure';
+		this.webSocketConnection = new WebSocketConnection();
 	}
 
 	setRawRMCMode(enabled) {
@@ -66,6 +73,39 @@ class NEXParser extends EventEmitter {
 			this.handlePacket(packet);
 		}
 
+		this.parserEnd();
+	}
+
+	/**
+	 *
+	 * @param {string} capturePath Path to the Charles WebSocket BIN folder
+	 */
+	parseCharlesWebSocket(capturePath) {
+		const files = fs.readdirSync(capturePath);
+		const discriminator = files[0].match(SWITCH_DISCRIMINATOR_REGEX)[1];
+		const gameServerID = files[0].match(SWITCH_GAME_SERVER_ID_REGEX)[1];
+
+		this.webSocketConnection = new WebSocketConnection(discriminator);
+		this.webSocketConnection.configure(gameServerID);
+
+		for (const file of files) {
+			const source = file.match(SWITCH_PACKET_SOURCE_REGEX)[1];
+			const packetData = fs.readFileSync(`${capturePath}/${file}`);
+			const stream = new Stream(packetData);
+			const packet = new PacketLite(this.webSocketConnection, stream);
+			packet.source = source;
+
+			if (source === 'client') {
+				packet.destination = 'server';
+			} else {
+				packet.destination = 'client';
+			}
+
+			this.webSocketConnection.handlePacket(packet);
+			this.emit('packet', packet);
+		}
+
+		this.connections = [this.webSocketConnection];
 		this.parserEnd();
 	}
 

@@ -1121,5 +1121,33 @@
             "0004000000182200",
             "0004000000182300"
         ]
+    },
+    {
+        "name": "Mario Kart 8 Deluxe",
+        "game_server_id": "2b309e01",
+        "access_key": "09c1c475",
+        "nex_version": "4.3.2",
+        "nex_ranking_version": "4.3.2",
+        "nex_datastore_version": "4.3.2",
+        "nex_match_making_version": "4.3.2",
+        "nex_messaging_version": "4.3.2",
+        "nex_utility_version": "4.3.2",
+        "title_ids": [
+            "0100152000022000"
+        ]
+    },
+    {
+        "name": "Super Mario Maker 2",
+        "game_server_id": "22306d00",
+        "access_key": "fdf6617f",
+        "nex_version": "4.6.25",
+        "nex_ranking_version": "4.6.25",
+        "nex_datastore_version": "4.6.25",
+        "nex_match_making_version": "4.6.25",
+        "nex_messaging_version": "4.6.25",
+        "nex_utility_version": "4.6.25",
+        "title_ids": [
+            "01009B90006DC000"
+        ]
     }
 ]
