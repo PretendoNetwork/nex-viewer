@@ -425,7 +425,7 @@ class Connection {
 			return;
 		}
 
-		if (isResponseRMCMessage && !packet.rmcMessage.isSuccess()) {
+		if (packet.rmcMessage.isResponse() && !packet.rmcMessage.isSuccess()) {
 			const requestPacket = this.packets.find(p => {
 				if (
 					p.rmcMessage.isRequest() &&
