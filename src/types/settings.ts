@@ -7,6 +7,7 @@ export type Account = {
 }
 
 export type SettingsJSON = {
+	fallback_tid: string;
 	recent_files: string[];
 	accounts: Account[];
 }

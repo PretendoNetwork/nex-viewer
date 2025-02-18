@@ -1,15 +1,6 @@
 import type { EnhancedPacketBlock, SimplePacketBlock } from '@/types/pcapng-parser';
+import type { Packet } from '@/types/pcap-parser';
 
-type SimpleFrame = {
-	timestamp: {
-		seconds: number;
-		microseconds: number;
-	};
-	storedLength: number;
-	realLength: number;
-	data: Buffer;
-};
-
-type Frame = EnhancedPacketBlock | SimplePacketBlock | SimpleFrame;
+type Frame = EnhancedPacketBlock | SimplePacketBlock | Packet;
 
 export default Frame;

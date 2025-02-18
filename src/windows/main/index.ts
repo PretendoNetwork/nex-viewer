@@ -2,10 +2,8 @@
 
 import path from 'node:path';
 import sourceMapSupport from 'source-map-support';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { Menu, app, BrowserWindow } from 'electron';
 import createMenu from '@/windows/main/menu';
-import settings from '@/settings';
-import type State from '@/types/state';
 
 // * Required for getting source maps to work in Electron apps
 // * See https://github.com/electron/electron/issues/38875
@@ -20,12 +18,6 @@ global.Object.defineProperty(global.BigInt.prototype, 'toJSON', {
 
 app.setName('NEX Viewer');
 
-// TODO - Should all of this just be combined into the Settings class and remove State?
-const state: State = {
-	raw_rmc: false,
-	settings: settings
-};
-
 function createWindow(): void {
 	const window = new BrowserWindow({
 		webPreferences: {
@@ -35,9 +27,7 @@ function createWindow(): void {
 
 	window.webContents.openDevTools();
 
-	ipcMain.on('renderer-ready', () => {
-		window.setMenu(createMenu(state));
-	});
+	Menu.setApplicationMenu(createMenu());
 
 	window.maximize();
 	window.loadFile(path.join(__dirname, '../../renderers/main/index.html'));

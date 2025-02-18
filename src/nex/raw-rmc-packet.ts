@@ -7,21 +7,37 @@ export default class RawRMCPacket extends PRUDPPacket {
 
 	public titleID: string;
 
-	constructor(stream: ByteStream) {
+	private ctrFlags: number;
+
+	constructor(stream: ByteStream, isNewPacket: boolean, oldPacketTID: string) {
 		super(stream);
 
-		this.parse();
+		if (!isNewPacket && oldPacketTID === '') {
+			throw new Error('Old Packet Title ID has to be set');
+		}
+
+		this.parse(isNewPacket, oldPacketTID);
 	}
 
-	private parse(): void {
-		const version = this.stream.readUInt8();
+	private parse(isNewPacket: boolean, oldPacketTID: string): void {
+		// default version to 1 because thats what an old packet (lowest common denominator) is closest to
+		let version = 1;
+		if (isNewPacket) {
+			version = this.stream.readUInt8();
+		}
 
 		if (version !== 1) {
 			throw new Error('Bad HokakuCTR version');
 		}
 
-		this.titleID = this.stream.readUInt64LE().toString(16).toUpperCase().padStart(16, '0');
-		this.flags = this.stream.readUInt8();
+		if (isNewPacket) {
+			this.titleID = this.stream.readUInt64LE().toString(16).toUpperCase().padStart(16, '0');
+		}
+		else {
+			this.titleID = oldPacketTID;	
+		}
+
+		this.ctrFlags = this.stream.readUInt8();
 		this.payload = this.stream.readRest();
 
 		if (this.payload[0x4] === 0) {
@@ -33,7 +49,7 @@ export default class RawRMCPacket extends PRUDPPacket {
 		this.fragmentID = 0; // TODO - Is this a good assumption?
 		this.substreamID = 0; // TODO - Is this a good assumption?
 
-		this.fromServerToClient = (this.flags & 0b00000001) !== 0;
+		this.fromServerToClient = (this.ctrFlags & 0b00000001) !== 0;
 		this.fromClientToServer = !this.fromServerToClient;
 
 		this.sourceAddress = this.fromServerToClient ? 'server' : 'client';

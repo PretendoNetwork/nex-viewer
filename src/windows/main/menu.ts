@@ -1,9 +1,9 @@
 import { Menu, dialog, BrowserWindow } from 'electron';
 import Session from '@/nex/session';
 import type { MenuItemConstructorOptions } from 'electron';
-import type State from '@/types/state';
+import settings from '@/settings';
 
-function openSession(path: string, browserWindow: BrowserWindow, state: State): void {
+function openSession(path: string, browserWindow: BrowserWindow): void {
 	browserWindow.webContents.send('clear-sections');
 	browserWindow.setTitle(`NEX Viewer - ${path}`);
 
@@ -19,19 +19,20 @@ function openSession(path: string, browserWindow: BrowserWindow, state: State): 
 
 	session.parse(path);
 
-	state.settings.addRecentFile(path);
+	settings.addRecentFile(path);
 
-	browserWindow.setMenu(createMenu(state));
+	Menu.setApplicationMenu(createMenu());
 }
 
-export default function createMenu(state: State): Menu {
-	let recentFiles: MenuItemConstructorOptions[] = state.settings.recentFiles().map(path => ({
+export default function createMenu(): Menu {
+	let recentFiles: MenuItemConstructorOptions[] = settings.recentFiles().map(path => ({
 		label: path,
-		click: (): void => {
-			// TODO - Track the current window and pass it to openSession
-			dialog.showMessageBox({
-				message: 'Recent files not yet implemented'
-			});
+		click: async (menuItem, browserWindow): Promise<void> => {
+			if (!browserWindow) {
+				return;
+			}
+
+			openSession(menuItem.label, browserWindow);
 		}
 	}));
 
@@ -43,7 +44,7 @@ export default function createMenu(state: State): Menu {
 			},
 			{
 				label: 'Clear Menu',
-				click: (): void => state.settings.clearRecentFiles()
+				click: (): void => settings.clearRecentFiles()
 			}
 		];
 	} else {
@@ -74,7 +75,7 @@ export default function createMenu(state: State): Menu {
 							return;
 						}
 
-						openSession(result.filePaths[0], browserWindow, state);
+						openSession(result.filePaths[0], browserWindow);
 					}
 				},
 				{
@@ -89,7 +90,35 @@ export default function createMenu(state: State): Menu {
 					role: 'quit'
 				}
 			]
+		},
+		{
+			label: 'Options',
+			id: 'options',
+			submenu: [
+				{
+					label: 'Hide PING packets',
+					type: 'checkbox',
+					checked: false,
+					click(menuItem, browserWindow): void {
+						if (!browserWindow)
+							return;
+					 
+						if (menuItem.checked) {
+							browserWindow.webContents.send('hide-ping-packets');
+						} else {
+							browserWindow.webContents.send('show-ping-packets');
+						}
+					}
+				}
+				// {
+				// 	label: 'Assume Raw RMC Mode',
+				// 	type: 'checkbox',
+				// 	checked: settings.raw_rmc,
+				// 	click(menuItem): void {
+				// 		settings.raw_rmc = menuItem.checked;
+				// 	}
+				// }
+			]
 		}
-		// TODO - Add back in the PING packet and maybe RawRMC settings?
 	]);
 }

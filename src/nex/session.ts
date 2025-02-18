@@ -10,11 +10,14 @@ import PRUDPPacketV0 from '@/nex/prudp-packetv0';
 import PRUDPPacketV1 from '@/nex/prudp-packetv1';
 import PRUDPPacketLite from '@/nex/prudp-packetLite';
 import RawRMCPacket from '@/nex/raw-rmc-packet';
+import settings from '@/settings';
 import type Frame from '@/types/frame';
 import type Packet from '@/types/nex/packet';
 import type UDPPacket from '@/types/nex/udp-packet';
 
 const PIA_MAGIC = Buffer.from([ 0x32, 0xAB, 0x98, 0x64 ]);
+
+const LINKTYPE_HOKAKUCTR = 0x0093;
 
 function int2ip(int: number): string {
 	return `${int >>> 24}.${int >> 16 & 255}.${int >> 8 & 255}.${int & 255}`;
@@ -23,7 +26,9 @@ function int2ip(int: number): string {
 // * Parses network dumps for NEX/Rendez-Vous connections
 export default class Session extends EventEmitter {
 	private connections: Connection[] = [];
-	private rawRMCMode = false;
+	private rawRMCMode: boolean = false;
+	private isNewPacket: boolean = false; // default to false because new packets are consistently detectable
+	private oldPacketTID: string = '0004000000030800';
 	private lastPacketTime = 0;
 	private elapsedTime = 0;
 
@@ -32,6 +37,7 @@ export default class Session extends EventEmitter {
 	}
 
 	public parse(capturePath: string): void {
+		this.oldPacketTID = settings.fallbackTid();
 		const extension = path.extname(capturePath);
 
 		if (extension === '.pcapng' || extension === '.pcap') {
@@ -55,6 +61,11 @@ export default class Session extends EventEmitter {
 			parser = new PCAPNGParser(captureData);
 		} else {
 			throw new Error('Invalid capture');
+		}
+
+		// if its a PCAP and linkLayerType is 0x93, it **has** to be a rawRMC capture
+		if (parser instanceof PCAPParser && parser.linkLayerType === LINKTYPE_HOKAKUCTR) {
+			this.rawRMCMode = true;
 		}
 
 		for (const packet of parser.packets()) {
@@ -110,10 +121,10 @@ export default class Session extends EventEmitter {
 		// * By checking if the first byte is a supported
 		// * revision and that the following u64 is a 3DS
 		// * title we can be reasonably sure the dump is
-		// * a HokakuCTR dump.
+		// * a (newer) HokakuCTR dump.
 		// * We only need the first 3 bytes of the u64
-		if (!this.rawRMCMode && frame.data[0] === 1 && (frame.data.readBigUInt64LE(1) & 0xFFFFFF0000000000n) === 0x0004000000000000n) {
-			this.rawRMCMode = true;
+		if (this.rawRMCMode && frame.data[0] === 1 && (frame.data.readBigUInt64LE(1) & 0xFFFFFF0000000000n) === 0x0004000000000000n) {
+			this.isNewPacket = true;
 		}
 
 		const packets = this.filterValidPackets(frame);
@@ -137,8 +148,9 @@ export default class Session extends EventEmitter {
 			if (this.rawRMCMode) {
 				// * Raw RMC packets only include one packet per frame
 				// TODO - Can this contain PIA/Net-Z data as well?
-				packets.push(new RawRMCPacket(new ByteStream(frame.data)));
-			} else {
+				packets.push(new RawRMCPacket(new ByteStream(frame.data), this.isNewPacket, this.oldPacketTID));
+			} 
+			else {
 				const udpPacket = this.parseUDPPacket(frame.data);
 
 				if (!udpPacket) {

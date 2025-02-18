@@ -30,6 +30,7 @@ class SizedArray<T> {
 
 export class Settings {
 	private path = path.join(app.getPath('userData'), 'settings.json');
+	private _fallbackTid: string = '';
 	private _recentFiles = new SizedArray<string>(10);
 	private _accounts: Account[] = [];
 
@@ -44,12 +45,14 @@ export class Settings {
 
 		const settings: SettingsJSON = fs.readJSONSync(this.path);
 
+		this._fallbackTid = settings.fallback_tid;
 		this._recentFiles.fromData(settings.recent_files);
 		this._accounts = settings.accounts;
 	}
 
 	public save(): void {
 		const settings = {
+			fallback_tid: this._fallbackTid,
 			recent_files: this.recentFiles(),
 			accounts: this.accounts()
 		};
@@ -77,6 +80,10 @@ export class Settings {
 
 	public accounts(): Account[] {
 		return this._accounts;
+	}
+
+	public fallbackTid(): string {
+		return this._fallbackTid;
 	}
 }
 
