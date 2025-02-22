@@ -1,0 +1,1 @@
+export * as ProcessNotificationEvent from '@/nex/protocols/nintendo-notification-events/methods/process-notification-event';

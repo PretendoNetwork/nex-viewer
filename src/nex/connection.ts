@@ -4,6 +4,7 @@ import Substream from '@/nex/substream';
 import RMCMessage from '@/nex/rmc-message';
 import { keyDerivationOld, keyDerivationNew, Ticket } from '@/nex/kerberos';
 import TicketGrantingProtocol from '@/nex/protocols/ticket-granting';
+import getProtocol from '@/nex/protocols/manager';
 import type Packet from '@/types/nex/packet';
 import type StationURL from '@/nex/types/station-url';
 import type { SerializedConnection, Title } from '@/types/nex/serialized-connection';
@@ -207,7 +208,8 @@ export default class Connection {
 			}
 		}
 
-		const protocol = this.title.getProtocolHandler(packet.message);
+		let protocol = this.title.getProtocolHandler(packet.message);
+		if (!protocol) protocol = getProtocol(packet.message);
 
 		if (protocol) {
 			packet.message.protocolName = protocol.Name;
