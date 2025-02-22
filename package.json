@@ -4,45 +4,35 @@
   "description": "Utility for parsing and viewing NEX connections from packet captures",
   "main": "dist/windows/main",
   "scripts": {
-
-  "lint": "npx eslint ./src",
-  "clean": "npx rimraf ./dist",
-
-  "test:unix": "npm run build:unix && npm run start",
-  "build:unix": "npm run lint && npm run clean && npm run compile:unix && npm run browserify",
-  "compile:unix": "npx tsc && npx tsc-alias && npm run copy-static:unix",
-  "copy-static:unix": "npm run copy-html:unix && npm run copy-css:unix",
-  "copy-html:unix": "mkdir -p ./dist/renderers/main && cp ./src/renderers/main/index.html ./dist/renderers/main/index.html",
-  "copy-css:unix": "mkdir -p ./dist/renderers/main/assets/css && cp ./src/renderers/main/assets/css/* ./dist/renderers/main/assets/css/",
-
-  "test:win": "npm run build:win && npm run start",
-  "build:win": "npm run lint && npm run clean && npm run compile:win && npm run browserify",
-  "compile:win": "npx tsc && npx tsc-alias && npm run copy-static:win",
-  "copy-static:win": "npm run copy-html:win && npm run copy-css:win",
-  "copy-html:win": "copy .\\src\\renderers\\main\\index.html .\\dist\\renderers\\main\\index.html",
-  "copy-css:win": "mkdir .\\dist\\renderers\\main\\assets\\css && copy .\\src\\renderers\\main\\assets\\css\\* .\\dist\\renderers\\main\\assets\\css\\",
-
-  "browserify": "npx browserify ./dist/renderers/main/assets/js/main.js ./dist/renderers/main/assets/js/electron.js ./dist/renderers/main/assets/js/resize.js -o ./dist/renderers/main/assets/js/bundle.js",
-  "start": "electron ."
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "clean": "rimraf ./dist",
+    "copy-static": "npm run copy-html && npm run copy-css",
+    "copy-html": "copyfiles ./src/renderers/main/index.html ./dist/renderers/main/index.html",
+    "copy-css": "copyfiles ./src/renderers/main/assets/css/* ./dist/renderers/main/assets/css/",
+    "build": "npm run lint && npm run clean && npm run compile && npm run browserify",
+    "compile": "npx tsc && npx tsc-alias && npm run copy-static",
+    "browserify": "glob-exec ./dist/renderers/main/assets/js/*.js -- \"browserify {{files.join(' ')}} -o ./dist/renderers/main/assets/js/bundle.js\"",
+    "start": "electron ."
   },
   "keywords": [],
   "author": "Pretendo Network",
   "license": "AGPL-3.0",
   "devDependencies": {
-    "@eslint/js": "^9.1.1",
+    "@pretendonetwork/eslint-config": "^0.0.8",
     "@types/fs-extra": "^11.0.4",
     "@types/react": "^18.3.3",
     "@types/semver": "^7.5.8",
     "@types/source-map-support": "^0.5.10",
     "browserify": "^17.0.0",
+    "copyfiles": "^2.4.1",
     "electron": "^30.0.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.2",
+    "eslint": "^9.21.0",
+    "glob-exec": "^0.1.1",
     "rimraf": "^5.0.5",
     "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^7.7.1"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@pretendonetwork/java.io": "^1.0.0",
