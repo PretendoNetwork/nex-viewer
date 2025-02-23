@@ -12,6 +12,7 @@ export default class WiiSportsClub extends Title {
 		messaging: '3.4.7',
 		utility: '3.4.7'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,11 +23,13 @@ export default class WiiSportsClub extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'000500001012F100',
 		'0005000010144D00',
 		'0005000010144E00',
 		'0005000010171E00'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

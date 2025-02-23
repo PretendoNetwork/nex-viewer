@@ -1,5 +1,5 @@
-import ByteStream from '@/byte-stream';
 import PRUDPPacket from '@/nex/prudp-packet';
+import type ByteStream from '@/byte-stream';
 import type { SerializedPRUDPV0Packet } from '@/types/nex/serialized-packet';
 
 export default class PRUDPPacketV0 extends PRUDPPacket {
@@ -64,7 +64,7 @@ export default class PRUDPPacketV0 extends PRUDPPacket {
 		const end = this.stream.pos();
 
 		this.stream.seek(start);
-		this.packetData = this.stream.read(end-start);
+		this.packetData = this.stream.read(end - start);
 
 		// TODO - Quazal encoding? How do we tell the decoder the size BEFORE decoding?
 		// TODO - Validate this

@@ -12,6 +12,7 @@ export default class DevilsThird extends Title {
 		messaging: '3.6.1',
 		utility: '3.6.1'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,11 +23,13 @@ export default class DevilsThird extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0005000010138F00',
 		'0005000010177600',
 		'0005000010177700',
 		'0005000010197D00'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

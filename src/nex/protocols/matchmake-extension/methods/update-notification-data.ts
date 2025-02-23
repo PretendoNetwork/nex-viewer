@@ -1,4 +1,4 @@
-import semver from 'compare-versions';
+import * as semver from 'compare-versions';
 import NEXByteStream from '@/nex/byte-stream';
 import UInt32 from '@/nex/types/uint32';
 import UInt64 from '@/nex/types/uint64';

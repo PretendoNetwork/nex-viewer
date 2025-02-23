@@ -14,7 +14,7 @@ export default class PRUDPPacketV1 extends PRUDPPacket {
 	private initialUnreliableSequenceID?: number;
 	private maximumSubstreamID?: number;
 
-	static Magic = Buffer.from([ 0xEA, 0xD0 ]);
+	static Magic = Buffer.from([0xEA, 0xD0]);
 
 	constructor(stream: ByteStream) {
 		super(stream);

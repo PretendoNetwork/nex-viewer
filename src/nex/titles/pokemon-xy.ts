@@ -12,6 +12,7 @@ export default class PokemonXY extends Title {
 		messaging: '0.0.0',
 		utility: '0.0.0'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,8 +23,10 @@ export default class PokemonXY extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0004000000055D00'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

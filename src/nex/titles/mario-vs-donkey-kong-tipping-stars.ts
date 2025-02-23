@@ -12,6 +12,7 @@ export default class MariovsDonkeyKongTippingStars extends Title {
 		messaging: '3.7.1',
 		utility: '3.7.1'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,6 +23,7 @@ export default class MariovsDonkeyKongTippingStars extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'000400000012C800',
 		'000400000012CA00',
@@ -29,5 +31,6 @@ export default class MariovsDonkeyKongTippingStars extends Title {
 		'0005000010178E00',
 		'0005000010179200'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

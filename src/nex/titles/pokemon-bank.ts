@@ -12,6 +12,7 @@ export default class PokemonBank extends Title {
 		messaging: '3.4.12',
 		utility: '3.4.12'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,8 +23,10 @@ export default class PokemonBank extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'00040000000C9B00'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

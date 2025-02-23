@@ -261,7 +261,7 @@ export default class PCAPNGParser {
 		return {
 			realLength,
 			interface: networkInterface,
-			data: data,
+			data: data
 		};
 	}
 

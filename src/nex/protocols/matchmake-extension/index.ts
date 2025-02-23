@@ -147,7 +147,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static OpenParticipation(message: RMCMessage): typeof Methods.OpenParticipation.Request | typeof Methods.OpenParticipation.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.OpenParticipation.Request;
@@ -155,7 +154,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.OpenParticipation.Response;
 		}
 	}
-
 
 	private static AutoMatchmake_Postpone(message: RMCMessage): typeof Methods.AutoMatchmake_Postpone.Request | typeof Methods.AutoMatchmake_Postpone.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -165,7 +163,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static BrowseMatchmakeSession(message: RMCMessage): typeof Methods.BrowseMatchmakeSession.Request | typeof Methods.BrowseMatchmakeSession.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.BrowseMatchmakeSession.Request;
@@ -173,7 +170,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.BrowseMatchmakeSession.Response;
 		}
 	}
-
 
 	private static BrowseMatchmakeSessionWithHostUrls(message: RMCMessage): typeof Methods.BrowseMatchmakeSessionWithHostUrls.Request | typeof Methods.BrowseMatchmakeSessionWithHostUrls.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -183,7 +179,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static CreateMatchmakeSession(message: RMCMessage): typeof Methods.CreateMatchmakeSession.Request | typeof Methods.CreateMatchmakeSession.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.CreateMatchmakeSession.Request;
@@ -191,7 +186,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.CreateMatchmakeSession.Response;
 		}
 	}
-
 
 	private static JoinMatchmakeSession(message: RMCMessage): typeof Methods.JoinMatchmakeSession.Request | typeof Methods.JoinMatchmakeSession.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -201,7 +195,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static ModifyCurrentGameAttribute(message: RMCMessage): typeof Methods.ModifyCurrentGameAttribute.Request | typeof Methods.ModifyCurrentGameAttribute.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.ModifyCurrentGameAttribute.Request;
@@ -209,7 +202,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.ModifyCurrentGameAttribute.Response;
 		}
 	}
-
 
 	private static UpdateNotificationData(message: RMCMessage): typeof Methods.UpdateNotificationData.Request | typeof Methods.UpdateNotificationData.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -219,7 +211,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static GetFriendNotificationData(message: RMCMessage): typeof Methods.GetFriendNotificationData.Request | typeof Methods.GetFriendNotificationData.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetFriendNotificationData.Request;
@@ -227,7 +218,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.GetFriendNotificationData.Response;
 		}
 	}
-
 
 	private static UpdateApplicationBuffer(message: RMCMessage): typeof Methods.UpdateApplicationBuffer.Request | typeof Methods.UpdateApplicationBuffer.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -237,7 +227,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static UpdateMatchmakeSessionAttribute(message: RMCMessage): typeof Methods.UpdateMatchmakeSessionAttribute.Request | typeof Methods.UpdateMatchmakeSessionAttribute.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.UpdateMatchmakeSessionAttribute.Request;
@@ -245,7 +234,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.UpdateMatchmakeSessionAttribute.Response;
 		}
 	}
-
 
 	private static GetlstFriendNotificationData(message: RMCMessage): typeof Methods.GetlstFriendNotificationData.Request | typeof Methods.GetlstFriendNotificationData.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -255,7 +243,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static UpdateMatchmakeSession(message: RMCMessage): typeof Methods.UpdateMatchmakeSession.Request | typeof Methods.UpdateMatchmakeSession.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.UpdateMatchmakeSession.Request;
@@ -263,7 +250,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.UpdateMatchmakeSession.Response;
 		}
 	}
-
 
 	private static AutoMatchmakeWithSearchCriteria_Postpone(message: RMCMessage): typeof Methods.AutoMatchmakeWithSearchCriteria_Postpone.Request | typeof Methods.AutoMatchmakeWithSearchCriteria_Postpone.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -273,7 +259,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static GetPlayingSession(message: RMCMessage): typeof Methods.GetPlayingSession.Request | typeof Methods.GetPlayingSession.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetPlayingSession.Request;
@@ -281,7 +266,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.GetPlayingSession.Response;
 		}
 	}
-
 
 	private static CreateCommunity(message: RMCMessage): typeof Methods.CreateCommunity.Request | typeof Methods.CreateCommunity.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -291,7 +275,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static UpdateCommunity(message: RMCMessage): typeof Methods.UpdateCommunity.Request | typeof Methods.UpdateCommunity.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.UpdateCommunity.Request;
@@ -299,7 +282,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.UpdateCommunity.Response;
 		}
 	}
-
 
 	private static JoinCommunity(message: RMCMessage): typeof Methods.JoinCommunity.Request | typeof Methods.JoinCommunity.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -309,7 +291,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static FindCommunityByGatheringId(message: RMCMessage): typeof Methods.FindCommunityByGatheringId.Request | typeof Methods.FindCommunityByGatheringId.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.FindCommunityByGatheringId.Request;
@@ -317,7 +298,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.FindCommunityByGatheringId.Response;
 		}
 	}
-
 
 	private static FindOfficialCommunity(message: RMCMessage): typeof Methods.FindOfficialCommunity.Request | typeof Methods.FindOfficialCommunity.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -327,7 +307,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static FindCommunityByParticipant(message: RMCMessage): typeof Methods.FindCommunityByParticipant.Request | typeof Methods.FindCommunityByParticipant.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.FindCommunityByParticipant.Request;
@@ -335,7 +314,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.FindCommunityByParticipant.Response;
 		}
 	}
-
 
 	private static UpdatePrivacySetting(message: RMCMessage): typeof Methods.UpdatePrivacySetting.Request | typeof Methods.UpdatePrivacySetting.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -345,7 +323,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static GetMyBlackList(message: RMCMessage): typeof Methods.GetMyBlackList.Request | typeof Methods.GetMyBlackList.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetMyBlackList.Request;
@@ -353,7 +330,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.GetMyBlackList.Response;
 		}
 	}
-
 
 	private static AddToBlackList(message: RMCMessage): typeof Methods.AddToBlackList.Request | typeof Methods.AddToBlackList.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -363,7 +339,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static RemoveFromBlackList(message: RMCMessage): typeof Methods.RemoveFromBlackList.Request | typeof Methods.RemoveFromBlackList.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.RemoveFromBlackList.Request;
@@ -371,7 +346,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.RemoveFromBlackList.Response;
 		}
 	}
-
 
 	private static ClearMyBlackList(message: RMCMessage): typeof Methods.ClearMyBlackList.Request | typeof Methods.ClearMyBlackList.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -381,7 +355,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static ReportViolation(message: RMCMessage): typeof Methods.ReportViolation.Request | typeof Methods.ReportViolation.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.ReportViolation.Request;
@@ -389,7 +362,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.ReportViolation.Response;
 		}
 	}
-
 
 	private static IsViolationUser(message: RMCMessage): typeof Methods.IsViolationUser.Request | typeof Methods.IsViolationUser.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -399,7 +371,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static JoinMatchmakeSessionEx(message: RMCMessage): typeof Methods.JoinMatchmakeSessionEx.Request | typeof Methods.JoinMatchmakeSessionEx.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.JoinMatchmakeSessionEx.Request;
@@ -407,7 +378,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.JoinMatchmakeSessionEx.Response;
 		}
 	}
-
 
 	private static GetSimplePlayingSession(message: RMCMessage): typeof Methods.GetSimplePlayingSession.Request | typeof Methods.GetSimplePlayingSession.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -417,7 +387,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static GetSimpleCommunity(message: RMCMessage): typeof Methods.GetSimpleCommunity.Request | typeof Methods.GetSimpleCommunity.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetSimpleCommunity.Request;
@@ -425,7 +394,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.GetSimpleCommunity.Response;
 		}
 	}
-
 
 	private static AutoMatchmakeWithGatheringId_Postpone(message: RMCMessage): typeof Methods.AutoMatchmakeWithGatheringId_Postpone.Request | typeof Methods.AutoMatchmakeWithGatheringId_Postpone.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -435,7 +403,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static UpdateProgressScore(message: RMCMessage): typeof Methods.UpdateProgressScore.Request | typeof Methods.UpdateProgressScore.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.UpdateProgressScore.Request;
@@ -443,7 +410,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.UpdateProgressScore.Response;
 		}
 	}
-
 
 	private static DebugNotifyEvent(message: RMCMessage): typeof Methods.DebugNotifyEvent.Request | typeof Methods.DebugNotifyEvent.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -453,7 +419,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static GenerateMatchmakeSessionSystemPassword(message: RMCMessage): typeof Methods.GenerateMatchmakeSessionSystemPassword.Request | typeof Methods.GenerateMatchmakeSessionSystemPassword.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GenerateMatchmakeSessionSystemPassword.Request;
@@ -461,7 +426,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.GenerateMatchmakeSessionSystemPassword.Response;
 		}
 	}
-
 
 	private static ClearMatchmakeSessionSystemPassword(message: RMCMessage): typeof Methods.ClearMatchmakeSessionSystemPassword.Request | typeof Methods.ClearMatchmakeSessionSystemPassword.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -471,7 +435,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static CreateMatchmakeSessionWithParam(message: RMCMessage): typeof Methods.CreateMatchmakeSessionWithParam.Request | typeof Methods.CreateMatchmakeSessionWithParam.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.CreateMatchmakeSessionWithParam.Request;
@@ -479,7 +442,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.CreateMatchmakeSessionWithParam.Response;
 		}
 	}
-
 
 	private static JoinMatchmakeSessionWithParam(message: RMCMessage): typeof Methods.JoinMatchmakeSessionWithParam.Request | typeof Methods.JoinMatchmakeSessionWithParam.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -489,7 +451,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static AutoMatchmakeWithParam_Postpone(message: RMCMessage): typeof Methods.AutoMatchmakeWithParam_Postpone.Request | typeof Methods.AutoMatchmakeWithParam_Postpone.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.AutoMatchmakeWithParam_Postpone.Request;
@@ -497,7 +458,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.AutoMatchmakeWithParam_Postpone.Response;
 		}
 	}
-
 
 	private static FindMatchmakeSessionByGatheringIdDetail(message: RMCMessage): typeof Methods.FindMatchmakeSessionByGatheringIdDetail.Request | typeof Methods.FindMatchmakeSessionByGatheringIdDetail.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -507,7 +467,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static BrowseMatchmakeSessionNoHolder(message: RMCMessage): typeof Methods.BrowseMatchmakeSessionNoHolder.Request | typeof Methods.BrowseMatchmakeSessionNoHolder.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.BrowseMatchmakeSessionNoHolder.Request;
@@ -515,7 +474,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.BrowseMatchmakeSessionNoHolder.Response;
 		}
 	}
-
 
 	private static BrowseMatchmakeSessionWithHostUrlsNoHolder(message: RMCMessage): typeof Methods.BrowseMatchmakeSessionWithHostUrlsNoHolder.Request | typeof Methods.BrowseMatchmakeSessionWithHostUrlsNoHolder.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -525,7 +483,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static UpdateMatchmakeSessionPart(message: RMCMessage): typeof Methods.UpdateMatchmakeSessionPart.Request | typeof Methods.UpdateMatchmakeSessionPart.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.UpdateMatchmakeSessionPart.Request;
@@ -533,7 +490,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.UpdateMatchmakeSessionPart.Response;
 		}
 	}
-
 
 	private static RequestMatchmaking(message: RMCMessage): typeof Methods.RequestMatchmaking.Request | typeof Methods.RequestMatchmaking.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -543,7 +499,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static WithdrawMatchmaking(message: RMCMessage): typeof Methods.WithdrawMatchmaking.Request | typeof Methods.WithdrawMatchmaking.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.WithdrawMatchmaking.Request;
@@ -551,7 +506,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.WithdrawMatchmaking.Response;
 		}
 	}
-
 
 	private static WithdrawMatchmakingAll(message: RMCMessage): typeof Methods.WithdrawMatchmakingAll.Request | typeof Methods.WithdrawMatchmakingAll.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -561,7 +515,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static FindMatchmakeSessionByGatheringId(message: RMCMessage): typeof Methods.FindMatchmakeSessionByGatheringId.Request | typeof Methods.FindMatchmakeSessionByGatheringId.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.FindMatchmakeSessionByGatheringId.Request;
@@ -569,7 +522,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.FindMatchmakeSessionByGatheringId.Response;
 		}
 	}
-
 
 	private static FindMatchmakeSessionBySingleGatheringId(message: RMCMessage): typeof Methods.FindMatchmakeSessionBySingleGatheringId.Request | typeof Methods.FindMatchmakeSessionBySingleGatheringId.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -579,7 +531,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static FindMatchmakeSessionByOwner(message: RMCMessage): typeof Methods.FindMatchmakeSessionByOwner.Request | typeof Methods.FindMatchmakeSessionByOwner.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.FindMatchmakeSessionByOwner.Request;
@@ -587,7 +538,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.FindMatchmakeSessionByOwner.Response;
 		}
 	}
-
 
 	private static FindMatchmakeSessionByParticipant(message: RMCMessage): typeof Methods.FindMatchmakeSessionByParticipant.Request | typeof Methods.FindMatchmakeSessionByParticipant.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -597,7 +547,6 @@ export default class MatchmakeExtensionProtocol {
 		}
 	}
 
-
 	private static BrowseMatchmakeSessionNoHolderNoResultRange(message: RMCMessage): typeof Methods.BrowseMatchmakeSessionNoHolderNoResultRange.Request | typeof Methods.BrowseMatchmakeSessionNoHolderNoResultRange.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.BrowseMatchmakeSessionNoHolderNoResultRange.Request;
@@ -605,7 +554,6 @@ export default class MatchmakeExtensionProtocol {
 			return Methods.BrowseMatchmakeSessionNoHolderNoResultRange.Response;
 		}
 	}
-
 
 	private static BrowseMatchmakeSessionWithHostUrlsNoHolderNoResultRange(message: RMCMessage): typeof Methods.BrowseMatchmakeSessionWithHostUrlsNoHolderNoResultRange.Request | typeof Methods.BrowseMatchmakeSessionWithHostUrlsNoHolderNoResultRange.Response {
 		if (message.type === RMCMessage.REQUEST) {

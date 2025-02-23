@@ -1,4 +1,4 @@
-import semver from 'compare-versions';
+import * as semver from 'compare-versions';
 import NEXByteStream from '@/nex/byte-stream';
 import AnyDataHolder from '@/nex/types/any-data-holder';
 import RVString from '@/nex/types/string';

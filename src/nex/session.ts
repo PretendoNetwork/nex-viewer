@@ -15,7 +15,7 @@ import type Frame from '@/types/frame';
 import type Packet from '@/types/nex/packet';
 import type UDPPacket from '@/types/nex/udp-packet';
 
-const PIA_MAGIC = Buffer.from([ 0x32, 0xAB, 0x98, 0x64 ]);
+const PIA_MAGIC = Buffer.from([0x32, 0xAB, 0x98, 0x64]);
 
 const LINKTYPE_HOKAKUCTR = 0x0093;
 
@@ -282,9 +282,9 @@ export default class Session extends EventEmitter {
 		const destination = int2ip(stream.readUInt32BE());
 
 		// TODO - Add this back with the new offsets
-		//if (frame.subarray(17, 20).equals(XID_MAGIC)) {
+		// if (frame.subarray(17, 20).equals(XID_MAGIC)) {
 		//	return;
-		//}
+		// }
 
 		// * UDP protocol
 		if (protocol !== 0x11) {
@@ -400,7 +400,7 @@ export default class Session extends EventEmitter {
 	}
 
 	private findConnection(packet: Packet): Connection | undefined {
-		return this.connections.find(connection => {
+		return this.connections.find((connection) => {
 			if (
 				connection.clientAddress === packet.sourceAddress &&
 				connection.clientPort === packet.sourcePort &&

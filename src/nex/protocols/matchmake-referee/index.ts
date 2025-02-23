@@ -66,7 +66,6 @@ export default class MatchmakeRefereeProtocol {
 		}
 	}
 
-
 	private static GetStartRoundParam(message: RMCMessage): typeof Methods.GetStartRoundParam.Request | typeof Methods.GetStartRoundParam.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetStartRoundParam.Request;
@@ -74,7 +73,6 @@ export default class MatchmakeRefereeProtocol {
 			return Methods.GetStartRoundParam.Response;
 		}
 	}
-
 
 	private static EndRound(message: RMCMessage): typeof Methods.EndRound.Request | typeof Methods.EndRound.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -84,7 +82,6 @@ export default class MatchmakeRefereeProtocol {
 		}
 	}
 
-
 	private static EndRoundWithoutReport(message: RMCMessage): typeof Methods.EndRoundWithoutReport.Request | typeof Methods.EndRoundWithoutReport.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.EndRoundWithoutReport.Request;
@@ -92,7 +89,6 @@ export default class MatchmakeRefereeProtocol {
 			return Methods.EndRoundWithoutReport.Response;
 		}
 	}
-
 
 	private static GetRoundParticipants(message: RMCMessage): typeof Methods.GetRoundParticipants.Request | typeof Methods.GetRoundParticipants.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -102,7 +98,6 @@ export default class MatchmakeRefereeProtocol {
 		}
 	}
 
-
 	private static GetNotSummarizedRound(message: RMCMessage): typeof Methods.GetNotSummarizedRound.Request | typeof Methods.GetNotSummarizedRound.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetNotSummarizedRound.Request;
@@ -110,7 +105,6 @@ export default class MatchmakeRefereeProtocol {
 			return Methods.GetNotSummarizedRound.Response;
 		}
 	}
-
 
 	private static GetRound(message: RMCMessage): typeof Methods.GetRound.Request | typeof Methods.GetRound.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -120,7 +114,6 @@ export default class MatchmakeRefereeProtocol {
 		}
 	}
 
-
 	private static GetStatsPrimary(message: RMCMessage): typeof Methods.GetStatsPrimary.Request | typeof Methods.GetStatsPrimary.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetStatsPrimary.Request;
@@ -128,7 +121,6 @@ export default class MatchmakeRefereeProtocol {
 			return Methods.GetStatsPrimary.Response;
 		}
 	}
-
 
 	private static GetStatsPrimaries(message: RMCMessage): typeof Methods.GetStatsPrimaries.Request | typeof Methods.GetStatsPrimaries.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -138,7 +130,6 @@ export default class MatchmakeRefereeProtocol {
 		}
 	}
 
-
 	private static GetStatsAll(message: RMCMessage): typeof Methods.GetStatsAll.Request | typeof Methods.GetStatsAll.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetStatsAll.Request;
@@ -146,7 +137,6 @@ export default class MatchmakeRefereeProtocol {
 			return Methods.GetStatsAll.Response;
 		}
 	}
-
 
 	private static CreateStats(message: RMCMessage): typeof Methods.CreateStats.Request | typeof Methods.CreateStats.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -156,7 +146,6 @@ export default class MatchmakeRefereeProtocol {
 		}
 	}
 
-
 	private static GetOrCreateStats(message: RMCMessage): typeof Methods.GetOrCreateStats.Request | typeof Methods.GetOrCreateStats.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetOrCreateStats.Request;
@@ -164,7 +153,6 @@ export default class MatchmakeRefereeProtocol {
 			return Methods.GetOrCreateStats.Response;
 		}
 	}
-
 
 	private static ResetStats(message: RMCMessage): typeof Methods.ResetStats.Request | typeof Methods.ResetStats.Response {
 		if (message.type === RMCMessage.REQUEST) {

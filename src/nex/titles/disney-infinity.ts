@@ -12,6 +12,7 @@ export default class DisneyINFINITY extends Title {
 		messaging: '3.5.2',
 		utility: '3.5.2'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,11 +23,13 @@ export default class DisneyINFINITY extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0005000010132900',
 		'0005000010136F00',
 		'0005000010137000',
 		'000500001015A300'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

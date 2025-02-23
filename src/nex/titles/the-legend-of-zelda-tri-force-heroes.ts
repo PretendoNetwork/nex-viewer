@@ -12,6 +12,7 @@ export default class TheLegendofZeldaTriForceHeroes extends Title {
 		messaging: '0.0.0',
 		utility: '0.0.0'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,6 +23,7 @@ export default class TheLegendofZeldaTriForceHeroes extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0004000000176E00',
 		'0004000000176F00',
@@ -29,5 +31,6 @@ export default class TheLegendofZeldaTriForceHeroes extends Title {
 		'0004000000182200',
 		'0004000000182300'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

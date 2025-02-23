@@ -65,7 +65,7 @@ export default class Substream {
 
 		payload = Buffer.concat([
 			fragmentedPayload,
-			payload || Buffer.alloc(0),
+			payload || Buffer.alloc(0)
 		]);
 
 		seenPackets.push(packet);

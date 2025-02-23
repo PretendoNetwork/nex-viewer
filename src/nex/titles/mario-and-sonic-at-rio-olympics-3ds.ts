@@ -12,6 +12,7 @@ export default class MarioSonicatRioOlympics3DS extends Title {
 		messaging: '3.9.1',
 		utility: '3.9.1'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,6 +23,7 @@ export default class MarioSonicatRioOlympics3DS extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'000400000014A400',
 		'000400000017E200',
@@ -30,5 +32,6 @@ export default class MarioSonicatRioOlympics3DS extends Title {
 		'0004000000191D00',
 		'0004000000192400'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

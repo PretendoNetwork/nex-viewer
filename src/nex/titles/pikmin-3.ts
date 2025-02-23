@@ -12,6 +12,7 @@ export default class PIKMIN3 extends Title {
 		messaging: '3.3.0',
 		utility: '3.3.0'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,11 +23,13 @@ export default class PIKMIN3 extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'000500001012BC00',
 		'000500001012BD00',
 		'000500001012BE00',
 		'0005000010185300'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

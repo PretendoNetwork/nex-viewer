@@ -8,6 +8,6 @@ declare global {
 			onClearSections: (callback: () => void) => void;
 			onPacket: (callback: (packet: SerializedPacket) => void) => void;
 			onConnections: (callback: (connections: Connection[]) => void) => void;
-		}
+		};
 	}
 }

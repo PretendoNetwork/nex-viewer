@@ -1,5 +1,5 @@
-import ByteStream from '@/byte-stream';
 import PRUDPPacket from '@/nex/prudp-packet';
+import type ByteStream from '@/byte-stream';
 import type SerializedPacket from '@/types/nex/serialized-packet';
 
 export default class RawRMCPacket extends PRUDPPacket {

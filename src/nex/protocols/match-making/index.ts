@@ -128,7 +128,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static UnregisterGathering(message: RMCMessage): typeof Methods.UnregisterGathering.Request | typeof Methods.UnregisterGathering.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.UnregisterGathering.Request;
@@ -136,7 +135,6 @@ export default class MatchMakingProtocol {
 			return Methods.UnregisterGathering.Response;
 		}
 	}
-
 
 	private static UnregisterGatherings(message: RMCMessage): typeof Methods.UnregisterGatherings.Request | typeof Methods.UnregisterGatherings.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -146,7 +144,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static UpdateGathering(message: RMCMessage): typeof Methods.UpdateGathering.Request | typeof Methods.UpdateGathering.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.UpdateGathering.Request;
@@ -154,7 +151,6 @@ export default class MatchMakingProtocol {
 			return Methods.UpdateGathering.Response;
 		}
 	}
-
 
 	private static Invite(message: RMCMessage): typeof Methods.Invite.Request | typeof Methods.Invite.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -164,7 +160,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static AcceptInvitation(message: RMCMessage): typeof Methods.AcceptInvitation.Request | typeof Methods.AcceptInvitation.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.AcceptInvitation.Request;
@@ -172,7 +167,6 @@ export default class MatchMakingProtocol {
 			return Methods.AcceptInvitation.Response;
 		}
 	}
-
 
 	private static DeclineInvitation(message: RMCMessage): typeof Methods.DeclineInvitation.Request | typeof Methods.DeclineInvitation.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -182,7 +176,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static CancelInvitation(message: RMCMessage): typeof Methods.CancelInvitation.Request | typeof Methods.CancelInvitation.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.CancelInvitation.Request;
@@ -190,7 +183,6 @@ export default class MatchMakingProtocol {
 			return Methods.CancelInvitation.Response;
 		}
 	}
-
 
 	private static GetInvitationsSent(message: RMCMessage): typeof Methods.GetInvitationsSent.Request | typeof Methods.GetInvitationsSent.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -200,7 +192,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static GetInvitationsReceived(message: RMCMessage): typeof Methods.GetInvitationsReceived.Request | typeof Methods.GetInvitationsReceived.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetInvitationsReceived.Request;
@@ -208,7 +199,6 @@ export default class MatchMakingProtocol {
 			return Methods.GetInvitationsReceived.Response;
 		}
 	}
-
 
 	private static Participate(message: RMCMessage): typeof Methods.Participate.Request | typeof Methods.Participate.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -218,7 +208,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static CancelParticipation(message: RMCMessage): typeof Methods.CancelParticipation.Request | typeof Methods.CancelParticipation.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.CancelParticipation.Request;
@@ -226,7 +215,6 @@ export default class MatchMakingProtocol {
 			return Methods.CancelParticipation.Response;
 		}
 	}
-
 
 	private static GetParticipants(message: RMCMessage): typeof Methods.GetParticipants.Request | typeof Methods.GetParticipants.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -236,7 +224,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static AddParticipants(message: RMCMessage): typeof Methods.AddParticipants.Request | typeof Methods.AddParticipants.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.AddParticipants.Request;
@@ -244,7 +231,6 @@ export default class MatchMakingProtocol {
 			return Methods.AddParticipants.Response;
 		}
 	}
-
 
 	private static GetDetailedParticipants(message: RMCMessage): typeof Methods.GetDetailedParticipants.Request | typeof Methods.GetDetailedParticipants.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -254,7 +240,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static GetParticipantsURLs(message: RMCMessage): typeof Methods.GetParticipantsURLs.Request | typeof Methods.GetParticipantsURLs.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetParticipantsURLs.Request;
@@ -262,7 +247,6 @@ export default class MatchMakingProtocol {
 			return Methods.GetParticipantsURLs.Response;
 		}
 	}
-
 
 	private static FindByType(message: RMCMessage): typeof Methods.FindByType.Request | typeof Methods.FindByType.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -272,7 +256,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static FindByDescription(message: RMCMessage): typeof Methods.FindByDescription.Request | typeof Methods.FindByDescription.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.FindByDescription.Request;
@@ -280,7 +263,6 @@ export default class MatchMakingProtocol {
 			return Methods.FindByDescription.Response;
 		}
 	}
-
 
 	private static FindByDescriptionRegex(message: RMCMessage): typeof Methods.FindByDescriptionRegex.Request | typeof Methods.FindByDescriptionRegex.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -290,7 +272,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static FindByID(message: RMCMessage): typeof Methods.FindByID.Request | typeof Methods.FindByID.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.FindByID.Request;
@@ -298,7 +279,6 @@ export default class MatchMakingProtocol {
 			return Methods.FindByID.Response;
 		}
 	}
-
 
 	private static FindBySingleID(message: RMCMessage): typeof Methods.FindBySingleID.Request | typeof Methods.FindBySingleID.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -308,7 +288,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static FindByOwner(message: RMCMessage): typeof Methods.FindByOwner.Request | typeof Methods.FindByOwner.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.FindByOwner.Request;
@@ -316,7 +295,6 @@ export default class MatchMakingProtocol {
 			return Methods.FindByOwner.Response;
 		}
 	}
-
 
 	private static FindByParticipants(message: RMCMessage): typeof Methods.FindByParticipants.Request | typeof Methods.FindByParticipants.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -326,7 +304,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static FindInvitations(message: RMCMessage): typeof Methods.FindInvitations.Request | typeof Methods.FindInvitations.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.FindInvitations.Request;
@@ -334,7 +311,6 @@ export default class MatchMakingProtocol {
 			return Methods.FindInvitations.Response;
 		}
 	}
-
 
 	private static FindBySQLQuery(message: RMCMessage): typeof Methods.FindBySQLQuery.Request | typeof Methods.FindBySQLQuery.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -344,7 +320,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static LaunchSession(message: RMCMessage): typeof Methods.LaunchSession.Request | typeof Methods.LaunchSession.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.LaunchSession.Request;
@@ -352,7 +327,6 @@ export default class MatchMakingProtocol {
 			return Methods.LaunchSession.Response;
 		}
 	}
-
 
 	private static UpdateSessionURL(message: RMCMessage): typeof Methods.UpdateSessionURL.Request | typeof Methods.UpdateSessionURL.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -362,7 +336,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static GetSessionURL(message: RMCMessage): typeof Methods.GetSessionURL.Request | typeof Methods.GetSessionURL.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetSessionURL.Request;
@@ -370,7 +343,6 @@ export default class MatchMakingProtocol {
 			return Methods.GetSessionURL.Response;
 		}
 	}
-
 
 	private static GetState(message: RMCMessage): typeof Methods.GetState.Request | typeof Methods.GetState.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -380,7 +352,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static SetState(message: RMCMessage): typeof Methods.SetState.Request | typeof Methods.SetState.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.SetState.Request;
@@ -388,7 +359,6 @@ export default class MatchMakingProtocol {
 			return Methods.SetState.Response;
 		}
 	}
-
 
 	private static ReportStats(message: RMCMessage): typeof Methods.ReportStats.Request | typeof Methods.ReportStats.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -398,7 +368,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static GetStats(message: RMCMessage): typeof Methods.GetStats.Request | typeof Methods.GetStats.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetStats.Request;
@@ -406,7 +375,6 @@ export default class MatchMakingProtocol {
 			return Methods.GetStats.Response;
 		}
 	}
-
 
 	private static DeleteGathering(message: RMCMessage): typeof Methods.DeleteGathering.Request | typeof Methods.DeleteGathering.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -416,7 +384,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static GetPendingDeletions(message: RMCMessage): typeof Methods.GetPendingDeletions.Request | typeof Methods.GetPendingDeletions.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.GetPendingDeletions.Request;
@@ -424,7 +391,6 @@ export default class MatchMakingProtocol {
 			return Methods.GetPendingDeletions.Response;
 		}
 	}
-
 
 	private static DeleteFromDeletions(message: RMCMessage): typeof Methods.DeleteFromDeletions.Request | typeof Methods.DeleteFromDeletions.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -434,7 +400,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static MigrateGatheringOwnershipV1(message: RMCMessage): typeof Methods.MigrateGatheringOwnershipV1.Request | typeof Methods.MigrateGatheringOwnershipV1.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.MigrateGatheringOwnershipV1.Request;
@@ -442,7 +407,6 @@ export default class MatchMakingProtocol {
 			return Methods.MigrateGatheringOwnershipV1.Response;
 		}
 	}
-
 
 	private static FindByDescriptionLike(message: RMCMessage): typeof Methods.FindByDescriptionLike.Request | typeof Methods.FindByDescriptionLike.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -452,7 +416,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static RegisterLocalURL(message: RMCMessage): typeof Methods.RegisterLocalURL.Request | typeof Methods.RegisterLocalURL.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.RegisterLocalURL.Request;
@@ -460,7 +423,6 @@ export default class MatchMakingProtocol {
 			return Methods.RegisterLocalURL.Response;
 		}
 	}
-
 
 	private static RegisterLocalURLs(message: RMCMessage): typeof Methods.RegisterLocalURLs.Request | typeof Methods.RegisterLocalURLs.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -470,7 +432,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static UpdateSessionHostV1(message: RMCMessage): typeof Methods.UpdateSessionHostV1.Request | typeof Methods.UpdateSessionHostV1.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.UpdateSessionHostV1.Request;
@@ -478,7 +439,6 @@ export default class MatchMakingProtocol {
 			return Methods.UpdateSessionHostV1.Response;
 		}
 	}
-
 
 	private static GetSessionURLs(message: RMCMessage): typeof Methods.GetSessionURLs.Request | typeof Methods.GetSessionURLs.Response {
 		if (message.type === RMCMessage.REQUEST) {
@@ -488,7 +448,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static UpdateSessionHost(message: RMCMessage): typeof Methods.UpdateSessionHost.Request | typeof Methods.UpdateSessionHost.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.UpdateSessionHost.Request;
@@ -497,7 +456,6 @@ export default class MatchMakingProtocol {
 		}
 	}
 
-
 	private static UpdateGatheringOwnership(message: RMCMessage): typeof Methods.UpdateGatheringOwnership.Request | typeof Methods.UpdateGatheringOwnership.Response {
 		if (message.type === RMCMessage.REQUEST) {
 			return Methods.UpdateGatheringOwnership.Request;
@@ -505,7 +463,6 @@ export default class MatchMakingProtocol {
 			return Methods.UpdateGatheringOwnership.Response;
 		}
 	}
-
 
 	private static MigrateGatheringOwnership(message: RMCMessage): typeof Methods.MigrateGatheringOwnership.Request | typeof Methods.MigrateGatheringOwnership.Response {
 		if (message.type === RMCMessage.REQUEST) {

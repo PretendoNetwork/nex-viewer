@@ -7,7 +7,6 @@ import RVConnectionData from '@/nex/types/rv-connection-data';
 import type RMCMessage from '@/nex/rmc-message';
 import type * as RMCs from '@/types/nex/rmcs/ticket-granting/login-with-context';
 
-
 export class Request {
 	public static Name = 'LoginWithContext';
 

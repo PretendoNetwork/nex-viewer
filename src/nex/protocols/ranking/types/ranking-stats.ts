@@ -4,10 +4,8 @@ import type NEXByteStream from '@/nex/byte-stream';
 export default class RankingStats extends Structure {
 	public readonly typeName = 'RankingStats';
 
-
 	public extractFrom(stream: NEXByteStream): void {
 		this.extractHeaderFrom(stream);
-
 	}
 
 	public new(): this {

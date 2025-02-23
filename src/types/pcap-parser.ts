@@ -6,4 +6,4 @@ export type Packet = {
 	storedLength: number;
 	realLength: number;
 	data: Buffer;
-}
+};

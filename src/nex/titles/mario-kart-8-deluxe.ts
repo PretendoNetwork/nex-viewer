@@ -12,6 +12,7 @@ export default class MarioKart8Deluxe extends Title {
 		messaging: '4.3.2',
 		utility: '4.3.2'
 	};
+
 	public static settings = {
 		pid_size: 8,
 		string_length_size: 2,
@@ -22,8 +23,10 @@ export default class MarioKart8Deluxe extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0100152000022000'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

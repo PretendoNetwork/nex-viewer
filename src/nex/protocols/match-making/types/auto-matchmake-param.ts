@@ -1,4 +1,4 @@
-import semver from 'compare-versions';
+import * as semver from 'compare-versions';
 import Structure from '@/nex/types/structure';
 import List from '@/nex/types/list';
 import PID from '@/nex/types/pid';

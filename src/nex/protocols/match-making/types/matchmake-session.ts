@@ -1,4 +1,4 @@
-import semver from 'compare-versions';
+import * as semver from 'compare-versions';
 import UInt32 from '@/nex/types/uint32';
 import List from '@/nex/types/list';
 import Bool from '@/nex/types/bool';
@@ -22,16 +22,16 @@ export default class MatchmakeSession extends Gathering {
 	private m_MatchmakeSystemType = new UInt32();
 	private m_ApplicationBuffer = new RVBuffer();
 	private m_ParticipationCount = new UInt32();
-	private m_ProgressScore: UInt8;           // * NEX 3.4
-	private m_SessionKey: RVBuffer;           // * NEX 3.0
-	private m_Option0: UInt32;                // * NEX 3.5
+	private m_ProgressScore: UInt8; // * NEX 3.4
+	private m_SessionKey: RVBuffer; // * NEX 3.0
+	private m_Option0: UInt32; // * NEX 3.5
 	private m_MatchmakeParam: MatchmakeParam; // * NEX 3.6 & revision 1
-	private m_StartedTime: DateTime;          // * NEX 3.6 & revision 1
-	private m_UserPassword: RVString;         // * NEX 3.7 & revision 2
-	private m_ReferGid: UInt32;               // * NEX 3.8 & revision 3
-	private m_UserPasswordEnabled: Bool;      // * NEX 3.8 & revision 3
-	private m_SystemPasswordEnabled: Bool;    // * NEX 3.8 & revision 3
-	private m_Codeword: RVString;             // * NEX 4.0
+	private m_StartedTime: DateTime; // * NEX 3.6 & revision 1
+	private m_UserPassword: RVString; // * NEX 3.7 & revision 2
+	private m_ReferGid: UInt32; // * NEX 3.8 & revision 3
+	private m_UserPasswordEnabled: Bool; // * NEX 3.8 & revision 3
+	private m_SystemPasswordEnabled: Bool; // * NEX 3.8 & revision 3
+	private m_Codeword: RVString; // * NEX 4.0
 
 	public extractFrom(stream: NEXByteStream): void {
 		super.extractFrom(stream);

@@ -12,6 +12,7 @@ export default class RESIDENTEVILREVELATIONS extends Title {
 		messaging: '3.2.1',
 		utility: '3.2.1'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,11 +23,13 @@ export default class RESIDENTEVILREVELATIONS extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0004000000053B00',
 		'000400000005EE00',
 		'000500001012B400',
 		'000500001012CF00'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

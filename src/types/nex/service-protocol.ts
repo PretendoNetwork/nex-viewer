@@ -4,7 +4,7 @@ type ServiceProtocol = {
 	ID: number;
 	Name: string;
 
-	handlePacket(packet: Packet): void
-}
+	handlePacket(packet: Packet): void;
+};
 
 export default ServiceProtocol;

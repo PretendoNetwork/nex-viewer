@@ -12,6 +12,7 @@ export default class MarioSonicattheSochi2014OlympicWinterGames extends Title {
 		messaging: '3.4.0',
 		utility: '3.4.0'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,10 +23,12 @@ export default class MarioSonicattheSochi2014OlympicWinterGames extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0005000010106900',
 		'000500001010C700',
 		'000500001010C800'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

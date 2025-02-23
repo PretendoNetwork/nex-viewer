@@ -12,6 +12,7 @@ export default class HyruleWarriors extends Title {
 		messaging: '3.8.0',
 		utility: '3.8.0'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,10 +23,12 @@ export default class HyruleWarriors extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'000500001017CD00',
 		'000500001017D800',
 		'000500001017D900'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

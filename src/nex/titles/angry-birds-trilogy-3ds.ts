@@ -12,6 +12,7 @@ export default class AngryBirdsTrilogy3DS extends Title {
 		messaging: '2.7.2',
 		utility: '2.7.2'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,9 +23,11 @@ export default class AngryBirdsTrilogy3DS extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'00040000000AE200',
 		'00040000000AF400'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

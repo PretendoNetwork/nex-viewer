@@ -12,6 +12,7 @@ export default class BITTRIPPresentsRunner2FutureLegendofRhythmAlien extends Tit
 		messaging: '3.0.1',
 		utility: '3.0.1'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,10 +23,12 @@ export default class BITTRIPPresentsRunner2FutureLegendofRhythmAlien extends Tit
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'000500001011AF00',
 		'0005000010136300',
 		'00050000101DD600'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

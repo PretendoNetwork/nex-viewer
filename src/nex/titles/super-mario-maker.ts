@@ -12,6 +12,7 @@ export default class SuperMarioMaker extends Title {
 		messaging: '3.8.12',
 		utility: '3.8.12'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,6 +23,7 @@ export default class SuperMarioMaker extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'00040000001A0300',
 		'00040000001A0400',
@@ -31,5 +33,6 @@ export default class SuperMarioMaker extends Title {
 		'000500001018DC00',
 		'000500001018DD00'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

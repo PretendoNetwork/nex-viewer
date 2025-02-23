@@ -10,7 +10,9 @@ import createMenu from '@/windows/main/menu';
 sourceMapSupport.install();
 
 global.Object.defineProperty(global.BigInt.prototype, 'toJSON', {
-	value: function() { return this.toString(); },
+	value: function () {
+		return this.toString();
+	},
 	configurable: true,
 	enumerable: false,
 	writable: true

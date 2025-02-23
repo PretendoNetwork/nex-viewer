@@ -12,6 +12,7 @@ export default class FriendsNintendoNetwork extends Title {
 		messaging: '1.0.0',
 		utility: '1.0.0'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,11 +23,13 @@ export default class FriendsNintendoNetwork extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0004013000003202',
 		'000500301001500A',
 		'000500301001510A',
 		'000500301001520A'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

@@ -12,6 +12,7 @@ export default class AxiomVerge extends Title {
 		messaging: '3.10.0',
 		utility: '3.10.0'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,9 +23,11 @@ export default class AxiomVerge extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'00050000101F7900',
 		'0005000010200800'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

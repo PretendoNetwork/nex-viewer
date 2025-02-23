@@ -45,7 +45,7 @@ export default class CharlesParser {
 		// * existing instance is used. This means even if 100 requests were made, but only
 		// * to the same 2 hosts, only 2 "com.xk72.charles.model.Host" objects will exist here.
 		// * This also means request data is stored wildly out of order.
-		for (const host of  hosts) {
+		for (const host of hosts) {
 			const path = host.description.info.superClass; // * "com.xk72.charles.model.Host" extends "com.xk72.charles.model.Path".
 			transactions.push(...this.parsePath(path));
 		}

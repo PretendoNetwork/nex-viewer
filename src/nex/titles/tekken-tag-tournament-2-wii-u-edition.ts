@@ -12,6 +12,7 @@ export default class TEKKENTAGTOURNAMENT2WiiUEDITION extends Title {
 		messaging: '3.0.1',
 		utility: '3.0.1'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,10 +23,12 @@ export default class TEKKENTAGTOURNAMENT2WiiUEDITION extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0005000010100600',
 		'000500001010F800',
 		'0005000010110000'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

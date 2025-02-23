@@ -21,7 +21,7 @@ export type EnhancedPacketBlock = {
 		high: number;
 		low: number;
 		seconds: number;
-	},
+	};
 	storedLength: number;
 	realLength: number;
 	interface: NetworkInterface;
@@ -40,12 +40,12 @@ export type InterfaceStatisticsBlock = object; // * Unused
 export type CustomBlock = object; // * Unused
 
 export type EthernetInterface = {
-	type: 1,
+	type: 1;
 	data: {
 		destinationMAC: string;
 		sourceMAC: string;
 		type: number;
-	}
+	};
 };
 
 export type NetworkInterface = EthernetInterface;

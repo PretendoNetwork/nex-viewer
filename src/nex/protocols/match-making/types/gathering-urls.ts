@@ -8,7 +8,7 @@ export default class GatheringURLs extends Structure {
 	public readonly typeName = 'GatheringURLs';
 
 	private m_gid = new UInt32();
-	private m_lstStationURLs = new List(new StationURL);
+	private m_lstStationURLs = new List(new StationURL());
 
 	public extractFrom(stream: NEXByteStream): void {
 		this.extractHeaderFrom(stream);

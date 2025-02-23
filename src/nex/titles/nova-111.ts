@@ -12,6 +12,7 @@ export default class Nova111 extends Title {
 		messaging: '3.8.3',
 		utility: '3.8.3'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,9 +23,11 @@ export default class Nova111 extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'00050000101C0700',
 		'00050000101C0A00'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

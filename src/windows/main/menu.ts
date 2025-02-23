@@ -1,7 +1,7 @@
-import { Menu, dialog, BrowserWindow } from 'electron';
+import { Menu, dialog } from 'electron';
 import Session from '@/nex/session';
-import type { MenuItemConstructorOptions } from 'electron';
 import settings from '@/settings';
+import type { MenuItemConstructorOptions, BrowserWindow } from 'electron';
 
 function openSession(path: string, browserWindow: BrowserWindow): void {
 	browserWindow.webContents.send('clear-sections');
@@ -9,11 +9,11 @@ function openSession(path: string, browserWindow: BrowserWindow): void {
 
 	const session = new Session();
 
-	session.on('packet', packet => {
+	session.on('packet', (packet) => {
 		browserWindow.webContents.send('packet', JSON.stringify(packet));
 	});
 
-	session.on('finished', connections => {
+	session.on('finished', (connections) => {
 		browserWindow.webContents.send('connections', JSON.stringify(connections));
 	});
 
@@ -112,9 +112,10 @@ export default function createMenu(): Menu {
 					type: 'checkbox',
 					checked: false,
 					click(menuItem, browserWindow): void {
-						if (!browserWindow)
+						if (!browserWindow) {
 							return;
-					 
+						}
+
 						if (menuItem.checked) {
 							browserWindow.webContents.send('hide-ping-packets');
 						} else {

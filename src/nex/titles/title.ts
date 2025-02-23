@@ -22,6 +22,7 @@ export default class Title {
 		messaging: string;
 		utility: string;
 	};
+
 	public static settings: {
 		pid_size: number;
 		string_length_size: number;
@@ -32,6 +33,7 @@ export default class Title {
 		checksum_size: number;
 		flags_and_type_size: number;
 	};
+
 	public static titleIDs: string[];
 	public static protocols: ServiceProtocol[];
 

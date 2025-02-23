@@ -19,7 +19,7 @@ window.electron.onClearSections(() => {
 
 window.electron.onPacket(addPacketToList);
 
-window.electron.onConnections(connections => {
+window.electron.onConnections((connections) => {
 	for (const connection of connections) {
 		addConnectionToList(connection);
 	}

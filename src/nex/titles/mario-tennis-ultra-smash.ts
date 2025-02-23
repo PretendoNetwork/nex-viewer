@@ -12,6 +12,7 @@ export default class MarioTennisUltraSmash extends Title {
 		messaging: '3.9.1',
 		utility: '3.9.1'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,10 +23,12 @@ export default class MarioTennisUltraSmash extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0005000010199000',
 		'00050000101A3500',
 		'00050000101A3600'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

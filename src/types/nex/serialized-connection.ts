@@ -22,7 +22,7 @@ export interface Title {
 }
 
 export type SerializedConnection = {
-	title: Title
+	title: Title;
 };
 
 export default SerializedConnection;

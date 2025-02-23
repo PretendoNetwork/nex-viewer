@@ -1,6 +1,5 @@
-import semver from 'compare-versions';
+import * as semver from 'compare-versions';
 import Structure from '@/nex/types/structure';
-import PID from '@/nex/types/uint32';
 import UInt32 from '@/nex/types/uint32';
 import RVString from '@/nex/types/string';
 import type NEXByteStream from '@/nex/byte-stream';
@@ -10,7 +9,7 @@ import type NEXByteStream from '@/nex/byte-stream';
 export default class NotificationEvent extends Structure {
 	public readonly typeName = 'NotificationEvent';
 
-	private m_pidSource = new PID();
+	private m_pidSource = new UInt32();
 	private m_uiType = new UInt32();
 	private m_uiParam1 = new UInt32();
 	private m_uiParam2 = new UInt32();

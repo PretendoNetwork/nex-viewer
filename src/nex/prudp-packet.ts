@@ -1,6 +1,6 @@
-import ByteStream from '@/byte-stream';
-import RMCMessage from '@/nex/rmc-message';
-import Connection from '@/nex/connection';
+import type ByteStream from '@/byte-stream';
+import type RMCMessage from '@/nex/rmc-message';
+import type Connection from '@/nex/connection';
 import type { SerializedPRUDPPacket } from '@/types/nex/serialized-packet';
 
 export default class PRUDPPacket {
@@ -37,20 +37,20 @@ export default class PRUDPPacket {
 	protected stream: ByteStream;
 
 	static FLAGS = {
-		ACK:       0x001,
-		RELIABLE:  0x002,
-		NEED_ACK:  0x004,
-		HAS_SIZE:  0x008,
-		MULTI_ACK: 0x200,
+		ACK: 0x001,
+		RELIABLE: 0x002,
+		NEED_ACK: 0x004,
+		HAS_SIZE: 0x008,
+		MULTI_ACK: 0x200
 	};
 
 	static TYPES = {
-		SYN:        0,
-		CONNECT:    1,
-		DATA:       2,
+		SYN: 0,
+		CONNECT: 1,
+		DATA: 2,
 		DISCONNECT: 3,
-		PING:       4,
-		USER:       5,
+		PING: 4,
+		USER: 5
 	};
 
 	constructor(stream: ByteStream) {
@@ -165,7 +165,7 @@ export default class PRUDPPacket {
 			return '';
 		}
 
-		switch(streamType) {
+		switch (streamType) {
 			case 1:
 				return 'DO';
 			case 2:
@@ -199,7 +199,7 @@ export default class PRUDPPacket {
 			return '';
 		}
 
-		switch(this.type) {
+		switch (this.type) {
 			case 0:
 				return 'SYN';
 			case 1:

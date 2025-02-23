@@ -11,7 +11,7 @@ export default class PRUDPPacketLite extends PRUDPPacket {
 	private supportedFunctions?: Buffer;
 	private liteSignature?: Buffer;
 
-	static Magic = Buffer.from([ 0x80 ]);
+	static Magic = Buffer.from([0x80]);
 
 	constructor(stream: ByteStream) {
 		super(stream);

@@ -1,4 +1,3 @@
-import NEXByteStream from '@/nex/byte-stream';
 import UInt8 from '@/nex/types/uint8';
 import Int64 from '@/nex/types/int64';
 import Double from '@/nex/types/double';
@@ -6,6 +5,7 @@ import Bool from '@/nex/types/bool';
 import RVString from '@/nex/types/string';
 import DateTime from '@/nex/types/datetime';
 import UInt64 from '@/nex/types/uint64';
+import type NEXByteStream from '@/nex/byte-stream';
 import type RVType from '@/nex/types/rv-type';
 
 export default class Variant {
@@ -15,7 +15,7 @@ export default class Variant {
 		3: Bool,
 		4: RVString,
 		5: DateTime,
-		6: UInt64,
+		6: UInt64
 	};
 
 	public readonly typeName = 'Variant';

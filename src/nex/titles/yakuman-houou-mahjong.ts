@@ -12,6 +12,7 @@ export default class YakumanHououMahjon extends Title {
 		messaging: '3.6.14',
 		utility: '3.6.14'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,8 +23,10 @@ export default class YakumanHououMahjon extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0005000010149700'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

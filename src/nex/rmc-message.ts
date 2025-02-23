@@ -4,7 +4,7 @@ import type Connection from '@/nex/connection';
 import type SerializedRMCMessage from '@/types/nex/serialized-rmc-message';
 
 export default class RMCMessage {
-	static readonly REQUEST  = 0;
+	static readonly REQUEST = 0;
 	static readonly RESPONSE = 1;
 
 	private _type: 0 | 1;

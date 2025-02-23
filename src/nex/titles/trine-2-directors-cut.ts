@@ -12,6 +12,7 @@ export default class Trine2DirectorsCut extends Title {
 		messaging: '3.0.1',
 		utility: '3.0.1'
 	};
+
 	public static settings = {
 		pid_size: 4,
 		string_length_size: 2,
@@ -22,10 +23,12 @@ export default class Trine2DirectorsCut extends Title {
 		checksum_size: 4,
 		flags_and_type_size: 2
 	};
+
 	public static titleIDs = [
 		'0005000010112200',
 		'0005000010128A00',
 		'000500001014D600'
 	];
+
 	public static protocols = []; // * Populate with the protocols this title uses
 }

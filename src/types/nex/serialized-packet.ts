@@ -11,8 +11,8 @@ export type SerializedPRUDPPacket = {
 	source_stream_type: string;
 	destination_stream_id: number;
 	destination_stream_type: string;
-	type: string
-	flags: string[]
+	type: string;
+	flags: string[];
 	session_id: number;
 	signature: number[];
 	sequence_id: number;
