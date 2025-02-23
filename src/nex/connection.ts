@@ -209,7 +209,9 @@ export default class Connection {
 		}
 
 		let protocol = this.title.getProtocolHandler(packet.message);
-		if (!protocol) protocol = getProtocol(packet.message);
+		if (!protocol) {
+			protocol = getProtocol(packet.message);
+		}
 
 		if (protocol) {
 			packet.message.protocolName = protocol.Name;

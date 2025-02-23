@@ -1,11 +1,11 @@
 import Structure from '@/nex/types/structure';
-import type NEXByteStream from '@/nex/byte-stream';
 import AnyDataHolder from '@/nex/types/any-data-holder';
 import UInt64 from '@/nex/types/uint64';
 import DateTime from '@/nex/types/datetime';
 import Comment from './comment';
 import NNAInfo from './nna-info';
 import NintendoPresenceV2 from './nintendo-presence-v2';
+import type NEXByteStream from '@/nex/byte-stream';
 
 export default class FriendInfo extends Structure {
 	public readonly typeName = 'FriendInfo';

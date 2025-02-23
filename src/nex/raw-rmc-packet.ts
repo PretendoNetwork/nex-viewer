@@ -32,9 +32,8 @@ export default class RawRMCPacket extends PRUDPPacket {
 
 		if (isNewPacket) {
 			this.titleID = this.stream.readUInt64LE().toString(16).toUpperCase().padStart(16, '0');
-		}
-		else {
-			this.titleID = oldPacketTID;	
+		} else {
+			this.titleID = oldPacketTID;
 		}
 
 		this.ctrFlags = this.stream.readUInt8();

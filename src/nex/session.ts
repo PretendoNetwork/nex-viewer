@@ -149,8 +149,7 @@ export default class Session extends EventEmitter {
 				// * Raw RMC packets only include one packet per frame
 				// TODO - Can this contain PIA/Net-Z data as well?
 				packets.push(new RawRMCPacket(new ByteStream(frame.data), this.isNewPacket, this.oldPacketTID));
-			} 
-			else {
+			} else {
 				const udpPacket = this.parseUDPPacket(frame.data);
 
 				if (!udpPacket) {

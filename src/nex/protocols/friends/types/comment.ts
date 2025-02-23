@@ -1,9 +1,9 @@
 import Structure from '@/nex/types/structure';
-import type NEXByteStream from '@/nex/byte-stream';
 import AnyDataHolder from '@/nex/types/any-data-holder';
 import RVString from '@/nex/types/string';
 import DateTime from '@/nex/types/datetime';
 import UInt8 from '@/nex/types/uint8';
+import type NEXByteStream from '@/nex/byte-stream';
 
 export default class Comment extends Structure {
 	public readonly typeName = 'Comment';

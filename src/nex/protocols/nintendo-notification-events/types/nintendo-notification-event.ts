@@ -1,14 +1,13 @@
 import Structure from '@/nex/types/structure';
-import PID from '@/nex/types/uint32';
 import UInt32 from '@/nex/types/uint32';
-import type NEXByteStream from '@/nex/byte-stream';
 import AnyDataHolder from '@/nex/types/any-data-holder';
+import type NEXByteStream from '@/nex/byte-stream';
 
 export default class NintendoNotificationEvent extends Structure {
 	public readonly typeName = 'NintendoNotificationEvent';
 
 	private m_uiType = new UInt32();
-	private m_pidSender = new PID();
+	private m_pidSender = new UInt32();
 	private m_dataHolder = new AnyDataHolder();
 
 	public extractFrom(stream: NEXByteStream): void {

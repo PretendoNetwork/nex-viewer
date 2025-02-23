@@ -1,9 +1,9 @@
 import Structure from '@/nex/types/structure';
 import UInt32 from '@/nex/types/uint32';
-import type NEXByteStream from '@/nex/byte-stream';
 import AnyDataHolder from '@/nex/types/any-data-holder';
 import UInt64 from '@/nex/types/uint64';
 import RVString from '@/nex/types/string';
+import type NEXByteStream from '@/nex/byte-stream';
 
 export default class NintendoNotificationEventGeneral extends Structure {
 	public readonly typeName = 'NintendoNotificationEventGeneral';

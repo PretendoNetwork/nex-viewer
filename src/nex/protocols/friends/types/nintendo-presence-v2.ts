@@ -1,5 +1,4 @@
 import Structure from '@/nex/types/structure';
-import type NEXByteStream from '@/nex/byte-stream';
 import AnyDataHolder from '@/nex/types/any-data-holder';
 import UInt32 from '@/nex/types/uint32';
 import Bool from '@/nex/types/bool';
@@ -8,6 +7,7 @@ import RVString from '@/nex/types/string';
 import RVBuffer from '@/nex/types/buffer';
 import PID from '@/nex/types/pid';
 import GameKey from './game-key';
+import type NEXByteStream from '@/nex/byte-stream';
 
 export default class NintendoPresenceV2 extends Structure {
 	public readonly typeName = 'NintendoPresenceV2';

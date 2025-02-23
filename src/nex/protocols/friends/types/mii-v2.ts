@@ -1,10 +1,10 @@
 import Structure from '@/nex/types/structure';
-import type NEXByteStream from '@/nex/byte-stream';
 import AnyDataHolder from '@/nex/types/any-data-holder';
 import UInt8 from '@/nex/types/uint8';
 import RVString from '@/nex/types/string';
 import DateTime from '@/nex/types/datetime';
 import RVBuffer from '@/nex/types/buffer';
+import type NEXByteStream from '@/nex/byte-stream';
 
 export default class MiiV2 extends Structure {
 	public readonly typeName = 'MiiV2';

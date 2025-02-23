@@ -4,10 +4,10 @@ import SecureConnectionProtocol from '@/nex/protocols/secure-connection';
 import NotificationEventsProtocol from '@/nex/protocols/notification-events';
 import MatchMakingProtocol from '@/nex/protocols/match-making';
 import MatchMakingExtProtocol from '@/nex/protocols/match-making-ext';
-import NintendoNotificationEventsProtocol from './nintendo-notification-events';
 import MatchmakeExtensionProtocol from '@/nex/protocols/matchmake-extension';
 import RankingProtocol from '@/nex/protocols/ranking';
 import MatchmakeRefereeProtocol from '@/nex/protocols/matchmake-referee';
+import NintendoNotificationEventsProtocol from './nintendo-notification-events';
 import type RMCMessage from '@/nex/rmc-message';
 import type ServiceProtocol from '@/types/nex/service-protocol';
 

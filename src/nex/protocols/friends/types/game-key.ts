@@ -1,8 +1,8 @@
 import Structure from '@/nex/types/structure';
-import type NEXByteStream from '@/nex/byte-stream';
 import AnyDataHolder from '@/nex/types/any-data-holder';
 import UInt64 from '@/nex/types/uint64';
 import UInt16 from '@/nex/types/uint16';
+import type NEXByteStream from '@/nex/byte-stream';
 
 export default class GameKey extends Structure {
 	public readonly typeName = 'GameKey';
