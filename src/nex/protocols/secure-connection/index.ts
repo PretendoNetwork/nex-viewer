@@ -2,6 +2,8 @@ import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/secure-connection/methods';
 import type Packet from '@/types/nex/packet';
 
+import '@/nex/protocols/secure-connection/types/nintendo-login-data';
+
 export default class SecureConnectionProtocol {
 	static ID = 0xB;
 	static Name = 'SecureConnection';

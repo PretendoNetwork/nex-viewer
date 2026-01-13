@@ -22,6 +22,10 @@ export default class StationURL {
 		return this.parameters[name];
 	}
 
+	public setParam(name: string, data: string): void {
+		this.parameters[name] = data;
+	}
+
 	public new(): StationURL {
 		return new StationURL();
 	}

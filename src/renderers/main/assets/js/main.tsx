@@ -78,7 +78,14 @@ export function addPacketToList(packet: SerializedPacket): void {
 	const timeString = packet.time !== undefined ? packet.time.toFixed(6) : '';
 	const sourceString = packet.source_address;
 	const destinationString = packet.destination_address;
-	const versionString = packet.version === -1 ? 'Raw RMC' : `v${packet.version}`;
+	let versionString;
+	switch (packet.version) {
+		case -1:
+			versionString = 'Raw RMC';
+		default:
+			versionString = `v${packet.version}`;
+	}
+
 	const infoString = infoData.join(', ');
 
 	const row = (

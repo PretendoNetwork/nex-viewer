@@ -102,36 +102,28 @@ export default function createMenu(): Menu {
 				{ label: 'Paste', accelerator: 'CmdOrCtrl+V' },
 				{ label: 'Select All', accelerator: 'CmdOrCtrl+A' }
 			]
-		},
-		{
-			label: 'Options',
-			id: 'options',
-			submenu: [
-				{
-					label: 'Hide PING packets',
-					type: 'checkbox',
-					checked: false,
-					click(menuItem, browserWindow): void {
-						if (!browserWindow) {
-							return;
-						}
-
-						if (menuItem.checked) {
-							browserWindow.webContents.send('hide-ping-packets');
-						} else {
-							browserWindow.webContents.send('show-ping-packets');
-						}
-					}
-				}
-				// {
-				// 	label: 'Assume Raw RMC Mode',
-				// 	type: 'checkbox',
-				// 	checked: settings.raw_rmc,
-				// 	click(menuItem): void {
-				// 		settings.raw_rmc = menuItem.checked;
-				// 	}
-				// }
-			]
 		}
+		// {
+		// 	label: 'Options',
+		// 	id: 'options',
+		// 	submenu: [
+		// 		{
+		// 			label: 'Hide PING packets',
+		// 			type: 'checkbox',
+		// 			checked: false,
+		// 			click(menuItem, browserWindow): void {
+		// 				if (!browserWindow) {
+		// 					return;
+		// 				}
+
+		// 				if (menuItem.checked) {
+		// 					browserWindow.webContents.send('hide-ping-packets');
+		// 				} else {
+		// 					browserWindow.webContents.send('show-ping-packets');
+		// 				}
+		// 			}
+		// 		}
+		// 	]
+		// }
 	]);
 }

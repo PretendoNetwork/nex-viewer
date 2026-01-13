@@ -15,6 +15,7 @@ export default class ValidateAndRequestTicketResult extends Structure {
 	private currentUtcTime = new DateTime();
 	private returnMsg = new RVString();
 	private sourceKey = new RVString();
+	private platformPid = new PID();
 
 	public extractFrom(stream: NEXByteStream): void {
 		this.extractHeaderFrom(stream);
@@ -25,6 +26,10 @@ export default class ValidateAndRequestTicketResult extends Structure {
 		this.currentUtcTime.extractFrom(stream);
 		this.returnMsg.extractFrom(stream);
 		this.sourceKey.extractFrom(stream);
+
+		if (stream.title.settings.use_crossplay) {
+			this.platformPid.extractFrom(stream);
+		}
 	}
 
 	public new(): ValidateAndRequestTicketResult {
@@ -42,7 +47,8 @@ export default class ValidateAndRequestTicketResult extends Structure {
 				serviceNodeUrl: this.serviceNodeUrl,
 				currentUtcTime: this.currentUtcTime,
 				returnMsg: this.returnMsg,
-				sourceKey: this.sourceKey
+				sourceKey: this.sourceKey,
+				platformPid: this.platformPid
 			}
 		};
 	}

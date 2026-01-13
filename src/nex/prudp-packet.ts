@@ -159,7 +159,7 @@ export default class PRUDPPacket {
 		return serialized;
 	}
 
-	private serializeStreamType(streamType: number): string {
+	public serializeStreamType(streamType: number): string {
 		// * Raw RMC packets have no VirtualPorts
 		if (this.version === -1) {
 			return '';

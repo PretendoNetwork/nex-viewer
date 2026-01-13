@@ -21,7 +21,8 @@ export default class TheLegendofZeldaTriForceHeroes extends Title {
 		kerberos_key_version: 0,
 		kerberos_ticket_version: 0,
 		checksum_size: 4,
-		flags_and_type_size: 2
+		flags_and_type_size: 2,
+		use_crossplay: false
 	};
 
 	public static titleIDs = [

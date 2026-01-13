@@ -4,6 +4,7 @@ import RVString from '@/nex/types/string';
 import AnyDataHolder from '@/nex/types/any-data-holder';
 import Bool from '@/nex/types/bool';
 import type NEXByteStream from '@/nex/byte-stream';
+import UInt8 from '@/nex/types/uint8';
 
 export default class ValidateAndRequestTicketParam extends Structure {
 	public readonly typeName = 'ValidateAndRequestTicketParam';
@@ -14,6 +15,7 @@ export default class ValidateAndRequestTicketParam extends Structure {
 	private ignoreApiVersionCheck = new Bool();
 	private apiVersionGeneral = new UInt32();
 	private apiVersionCustom = new UInt32();
+	private platformTypeForPlatformPid = new UInt8();
 
 	public extractFrom(stream: NEXByteStream): void {
 		this.extractHeaderFrom(stream);
@@ -24,6 +26,10 @@ export default class ValidateAndRequestTicketParam extends Structure {
 		this.ignoreApiVersionCheck.extractFrom(stream);
 		this.apiVersionGeneral.extractFrom(stream);
 		this.apiVersionCustom.extractFrom(stream);
+
+		if (stream.title.settings.use_crossplay) {
+			this.platformTypeForPlatformPid.extractFrom(stream);
+		}
 	}
 
 	public new(): ValidateAndRequestTicketParam {
@@ -41,7 +47,8 @@ export default class ValidateAndRequestTicketParam extends Structure {
 				extraData: this.extraData,
 				ignoreApiVersionCheck: this.ignoreApiVersionCheck,
 				apiVersionGeneral: this.apiVersionGeneral,
-				apiVersionCustom: this.apiVersionCustom
+				apiVersionCustom: this.apiVersionCustom,
+				platformTypeForPlatformPid: this.platformTypeForPlatformPid
 			}
 		};
 

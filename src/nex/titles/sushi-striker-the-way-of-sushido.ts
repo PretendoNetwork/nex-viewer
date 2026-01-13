@@ -14,14 +14,15 @@ export default class SushiStrikerTheWayofSushido extends Title {
 	};
 
 	public static settings = {
-		pid_size: 4,
+		pid_size: 8,
 		string_length_size: 2,
 		use_structure_header: true,
 		session_key_size: 32,
 		kerberos_key_version: 0,
 		kerberos_ticket_version: 0,
 		checksum_size: 4,
-		flags_and_type_size: 2
+		flags_and_type_size: 2,
+		use_crossplay: false
 	};
 
 	public static titleIDs = [

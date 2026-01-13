@@ -6,7 +6,7 @@ import { keyDerivationOld, keyDerivationNew, Ticket } from '@/nex/kerberos';
 import TicketGrantingProtocol from '@/nex/protocols/ticket-granting';
 import getProtocol from '@/nex/protocols/manager';
 import type Packet from '@/types/nex/packet';
-import type StationURL from '@/nex/types/station-url';
+import StationURL from '@/nex/types/station-url';
 import type { SerializedConnection, Title } from '@/types/nex/serialized-connection';
 
 // * Represents an individual connection to a specific game server
@@ -103,6 +103,21 @@ export default class Connection {
 			}
 
 			if (!this.title) {
+				if (packet.version === 0) {
+					for (const title of titles) {
+						if (title.titleIDs.includes(settings.fallbackTid())) {
+							console.log('rb2 found');
+							const expectedChecksum = packet.checksum;
+							const calculatedChecksum = packet.calculateChecksum(title.accessKey);
+
+							if (expectedChecksum === calculatedChecksum) {
+								this.title = title;
+								break;
+							}
+						}
+					}
+				}
+
 				for (const title of titles) {
 					if (packet.version === -1) {
 						if (title.titleIDs.includes(packet.titleID)) {
@@ -134,6 +149,9 @@ export default class Connection {
 						if (title.gameServerID === gameServerID) {
 							this.title = title;
 							break;
+						} else if (title.titleIDs.includes(settings.fallbackTid())) {
+							this.title = title;
+							break;
 						}
 					}
 				}
@@ -151,7 +169,7 @@ export default class Connection {
 
 			for (const packet of packets) {
 				if (packet.isTypeData()) {
-					// TODO - This whole section needs to be reworked to support different encryption and compression settings. Currently assumes RC4 and no compression
+					// TODO - This whole section needs to be reworked to support different encryption and compression settings. Currently assumes RC4 and allows zlib compression
 					let defragmentedPayload: Buffer | null = null;
 
 					if (packet.version !== -1) {
@@ -159,6 +177,16 @@ export default class Connection {
 						defragmentedPayload = substream.addFragment(packet);
 					} else if (packet.payload) {
 						defragmentedPayload = packet.payload;
+					}
+
+					if (packet.serializeStreamType(packet.sourceStreamType) == 'OldRVSec' && defragmentedPayload) {
+						// const usesCompression = defragmentedPayload[0] != 0;
+
+						// defragmentedPayload = defragmentedPayload.subarray(1);
+
+						// if (usesCompression) {
+						// 	defragmentedPayload = zlib.inflateRawSync(defragmentedPayload);
+						// }
 					}
 
 					if (packet.fragmentID === 0 && defragmentedPayload) {
@@ -171,7 +199,7 @@ export default class Connection {
 			if (typeof error === 'string') {
 				packet.stackTrace = error;
 			} else if (error instanceof Error) {
-				packet.stackTrace = error.message;
+				packet.stackTrace = `${error.stack} | ${error.message}`;
 			} else {
 				packet.stackTrace = `Unknown error type: ${error}`;
 			}
@@ -208,11 +236,11 @@ export default class Connection {
 			}
 		}
 
-		let protocol = this.title.getProtocolHandler(packet.message);
-		if (!protocol) {
-			protocol = getProtocol(packet.message);
-		}
+		// let protocol = getProtocol(packet.message);
+		// if (this.title.getProtocolHandler) {
 
+		// }
+		const protocol = getProtocol(packet.message);
 		if (protocol) {
 			packet.message.protocolName = protocol.Name;
 
@@ -242,7 +270,7 @@ export default class Connection {
 					this.mainSecureStation = packet.message.parameters.pConnectionData.m_urlRegularProtocols;
 					this.specialSecureStation = packet.message.parameters.pConnectionData.m_urlSpecialProtocols;
 
-					this.processKerberosTicket(ticketData, sourcePID, '');
+					this.processKerberosTicket(ticketData, sourcePID, BigInt(0), '');
 				}
 			}
 
@@ -260,27 +288,49 @@ export default class Connection {
 
 					delete this.ticketRequestPIDs[packet.message.callID];
 
-					this.processKerberosTicket(ticketData, sourcePID, sourceKey);
+					this.processKerberosTicket(ticketData, sourcePID, BigInt(0), sourceKey);
 				}
+			}
+
+			if (methodID === TicketGrantingProtocol.Methods.LoginWithContext && packet.message.type === RMCMessage.RESPONSE) {
+				const ticketData = packet.message.parameters.result.bufResponse.value;
+				const sourcePID = packet.message.parameters.result.sourcePid.value;
+				const platformPID = packet.message.parameters.result.platformPid.value;
+				const sourceKey = packet.message.parameters.result.pSourceKey?.value ? packet.message.parameters.result.pSourceKey.value : '';
+
+				const serviceNodeUrl: StationURL = packet.message.parameters.result.serviceNodeUrl;
+
+				if (serviceNodeUrl.getParam('address') == '0.0.0.1' && serviceNodeUrl.getParam('port') == '1') {
+					// This should be fine even though it doesn't affect the RVString, as everything should only reference getParam
+					serviceNodeUrl.setParam('address', packet.connection.serverAddress);
+					serviceNodeUrl.setParam('port', String(packet.connection.serverPort));
+				}
+
+				this.mainSecureStation = packet.message.parameters.result.serviceNodeUrl;
+				this.specialSecureStation = new StationURL();
+
+				this.processKerberosTicket(ticketData, sourcePID, platformPID, sourceKey);
 			}
 		}
 	}
 
-	private processKerberosTicket(ticketData: Buffer, sourcePID: bigint, sourceKey: string): void {
+	private processKerberosTicket(ticketData: Buffer, sourcePID: bigint, platformPID: bigint, sourceKey: string): void {
 		let key = Buffer.from(sourceKey, 'hex');
 
 		if (key.length === 0) {
-			const account = settings.accounts().find(({ pid }) => BigInt(pid) === sourcePID);
+			const ticketPID = platformPID != BigInt(0) ? platformPID : sourcePID;
+
+			const account = settings.accounts().find(({ pid }) => BigInt(pid) === ticketPID);
 
 			if (!account) {
-				throw new Error(`No account found for PID ${sourcePID}`);
+				throw new Error(`No account found for PID ${ticketPID}`);
 			}
 
 			if (this.title.settings.kerberos_key_version === 0) {
 				if (account.password_hash_old) {
 					key = Buffer.from(account.password_hash_old, 'hex');
 				} else if (account.password) {
-					key = keyDerivationOld(sourcePID, account.password);
+					key = keyDerivationOld(ticketPID, account.password);
 					account.password_hash_old = key.toString('hex').toUpperCase();
 				} else {
 					throw new Error(`Title ${this.title.name} uses old Kerberos key derivation and no password is set for PID ${sourcePID}`);
@@ -289,7 +339,7 @@ export default class Connection {
 				if (account.password_hash_new) {
 					key = Buffer.from(account.password_hash_new, 'hex');
 				} else if (account.password) {
-					key = keyDerivationNew(sourcePID, account.password);
+					key = keyDerivationNew(ticketPID, account.password);
 					account.password_hash_new = key.toString('hex').toUpperCase();
 				} else {
 					throw new Error(`Title ${this.title.name} uses new Kerberos key derivation and no password is set for PID ${sourcePID}`);

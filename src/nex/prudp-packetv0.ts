@@ -30,11 +30,18 @@ export default class PRUDPPacketV0 extends PRUDPPacket {
 		this.destinationStreamType = destination >> 4;
 		this.destinationStreamID = destination & 0xF;
 
-		// TODO - Quazal encoding? How do we tell the decoder the size BEFORE decoding?
-		const typeAndFlags = this.stream.readUInt16LE();
+		if (this.serializeStreamType(this.sourceStreamType) === 'OldRVSec') {
+			const typeAndFlags = this.stream.readUInt8();
 
-		this.flags = typeAndFlags >> 4;
-		this.type = typeAndFlags & 0xF;
+			this.flags = typeAndFlags >> 3;
+			this.type = typeAndFlags & 0x7;
+		} else {
+			const typeAndFlags = this.stream.readUInt16LE();
+
+			this.flags = typeAndFlags >> 4;
+			this.type = typeAndFlags & 0xF;
+		}
+
 		this.sessionID = this.stream.readUInt8();
 		this.signature = this.stream.readBytes(0x4);
 		this.sequenceID = this.stream.readUInt16LE();
@@ -66,9 +73,18 @@ export default class PRUDPPacketV0 extends PRUDPPacket {
 		this.stream.seek(start);
 		this.packetData = this.stream.read(end - start);
 
-		// TODO - Quazal encoding? How do we tell the decoder the size BEFORE decoding?
-		// TODO - Validate this
-		this._checksum = this.stream.readUInt8();
+		const checksumSize = 1;
+
+		// TODO - Is this a good assumption for checksum size?
+		if (this.serializeStreamType(this.sourceStreamType) === 'OldRVSec') {
+			// checksumSize = 4;
+		}
+
+		if (checksumSize == 1) {
+			this._checksum = this.stream.readUInt8();
+		} else if (checksumSize == 4) {
+			this._checksum = this.stream.readUInt32LE();
+		}
 	}
 
 	public calculateChecksum(key: string): number {

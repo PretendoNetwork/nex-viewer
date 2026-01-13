@@ -21,7 +21,8 @@ export default class YokaiWatch2 extends Title {
 		kerberos_key_version: 0,
 		kerberos_ticket_version: 0,
 		checksum_size: 4,
-		flags_and_type_size: 2
+		flags_and_type_size: 2,
+		use_crossplay: false
 	};
 
 	public static titleIDs = [
@@ -30,9 +31,12 @@ export default class YokaiWatch2 extends Title {
 		'0004000000155100',
 		'000400000019A900',
 		'000400000019AA00',
+		'000400000019AB00',
+		'000400000019AC00',
 		'000400000019AE00',
 		'000400000019AF00',
 		'00040000001B2700',
+		'00040000001B2900',
 		'00040000001B2A00',
 		'00040000001B7100',
 		'00040000001BB500'

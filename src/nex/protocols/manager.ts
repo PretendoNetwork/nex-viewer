@@ -8,6 +8,8 @@ import MatchmakeExtensionProtocol from '@/nex/protocols/matchmake-extension';
 import RankingProtocol from '@/nex/protocols/ranking';
 import MatchmakeRefereeProtocol from '@/nex/protocols/matchmake-referee';
 import NintendoNotificationEventsProtocol from './nintendo-notification-events';
+import MessageDelivery from './message-delivery';
+import Subscription from './subscription';
 import type RMCMessage from '@/nex/rmc-message';
 import type ServiceProtocol from '@/types/nex/service-protocol';
 
@@ -23,6 +25,8 @@ export default function getProtocol(message: RMCMessage): ServiceProtocol | unde
 			return SecureConnectionProtocol;
 		case NotificationEventsProtocol.ID:
 			return NotificationEventsProtocol;
+		case MessageDelivery.ID:
+			return MessageDelivery;
 		case MatchMakingProtocol.ID:
 			return MatchMakingProtocol;
 		case MatchMakingExtProtocol.ID:
@@ -35,6 +39,8 @@ export default function getProtocol(message: RMCMessage): ServiceProtocol | unde
 			return RankingProtocol;
 		case MatchmakeRefereeProtocol.ID:
 			return MatchmakeRefereeProtocol;
+		case Subscription.ID:
+			return Subscription;
 	}
 
 	return undefined;

@@ -51,6 +51,9 @@ export class Response {
 			this.pbufResponse.extractFrom(stream);
 			this.pConnectionData.extractFrom(stream);
 			this.strReturnMsg.extractFrom(stream);
+		} else {
+			this.pbufResponse.value = Buffer.from([]);
+			throw new Error('Authentication failed');
 		}
 	}
 

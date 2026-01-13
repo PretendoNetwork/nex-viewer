@@ -18,6 +18,7 @@ import type UDPPacket from '@/types/nex/udp-packet';
 const PIA_MAGIC = Buffer.from([0x32, 0xAB, 0x98, 0x64]);
 
 const LINKTYPE_HOKAKUCTR = 0x0093;
+const LINKTYPE_WSASUDP = 0x0094;
 
 function int2ip(int: number): string {
 	return `${int >>> 24}.${int >> 16 & 255}.${int >> 8 & 255}.${int & 255}`;
@@ -27,6 +28,7 @@ function int2ip(int: number): string {
 export default class Session extends EventEmitter {
 	private connections: Connection[] = [];
 	private rawRMCMode: boolean = false;
+	private linkLayerType: number = 0;
 	private isNewPacket: boolean = false; // default to false because new packets are consistently detectable
 	private oldPacketTID: string = '0004000000030800';
 	private lastPacketTime = 0;
@@ -64,8 +66,11 @@ export default class Session extends EventEmitter {
 		}
 
 		// if its a PCAP and linkLayerType is 0x93, it **has** to be a rawRMC capture
-		if (parser instanceof PCAPParser && parser.linkLayerType === LINKTYPE_HOKAKUCTR) {
-			this.rawRMCMode = true;
+		if (parser instanceof PCAPParser) {
+			this.linkLayerType = parser.linkLayerType;
+			if (parser.linkLayerType === LINKTYPE_HOKAKUCTR) {
+				this.rawRMCMode = true;
+			}
 		}
 
 		for (const packet of parser.packets()) {
@@ -175,6 +180,8 @@ export default class Session extends EventEmitter {
 
 					if (magic.equals(PRUDPPacketV1.Magic)) {
 						packet = new PRUDPPacketV1(stream);
+					} else if (this.linkLayerType == LINKTYPE_WSASUDP) {
+						packet = new PRUDPPacketLite(stream);
 					} else {
 						// * Assume packet is v0 and just Try It
 						// *
@@ -244,7 +251,7 @@ export default class Session extends EventEmitter {
 			return false;
 		}
 
-		if (packet.sourceStreamID !== 1 && packet.destinationStreamID !== 1) {
+		if (packet.sourceStreamID < 1 || packet.sourceStreamID > 0x1F || packet.destinationStreamID < 1 || packet.destinationStreamID > 0x1F) {
 			// * In NEX on the Wii U and 3DS the server stream ID is ALWAYS 1. IF NEITHER are 1, assume invalid
 			// TODO - THIS IS UNTESTED ON QRV, AND PRUDPLITE USES MORE SERVER STREAM IDS THAN JUST 1. TESTED AND UPDATE FOR PRUDPLITE
 			return false;

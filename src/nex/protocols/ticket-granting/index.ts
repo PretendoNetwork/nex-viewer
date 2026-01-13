@@ -1,6 +1,9 @@
+import * as semver from 'compare-versions';
 import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/ticket-granting/methods';
 import type Packet from '@/types/nex/packet';
+
+import '@/nex/protocols/ticket-granting/types/authentication-info';
 
 export default class TicketGrantingProtocol {
 	static ID = 0xA;
@@ -51,7 +54,9 @@ export default class TicketGrantingProtocol {
 		const methodID = packet.message.methodID;
 		let handler;
 
-		if (packet.version === 2) {
+		if (methodID == 0x6 && semver.satisfies(packet.connection.title.libraryVersions.main, '>=4.4.0')) {
+			handler = TicketGrantingProtocol.handlersSwitch[methodID];
+		} else if (methodID != 0x6 && semver.satisfies(packet.connection.title.libraryVersions.main, '>=4.4.0')) {
 			handler = TicketGrantingProtocol.handlersSwitch[methodID];
 		} else {
 			handler = TicketGrantingProtocol.handlers[methodID];

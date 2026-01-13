@@ -10,6 +10,8 @@ export default class Substream {
 	private clientToServerFragmentedPayload = Buffer.alloc(0);
 	private servertoClientFragmentedPayload = Buffer.alloc(0);
 
+	private cipherKey: Buffer | string = '';
+
 	public clientToServerSeenPackets: Packet[] = [];
 	public servertoClientSeenPackets: Packet[] = [];
 
@@ -18,6 +20,8 @@ export default class Substream {
 
 	public setKey(key: Buffer | string): void {
 		// TODO - Support more than just RC4
+		this.cipherKey = key;
+
 		this.clientToServerCipher = new RC4Stream(key);
 		this.servertoClientCipher = new RC4Stream(key);
 	}
@@ -58,6 +62,12 @@ export default class Substream {
 
 		// * Raw RMC packets and PRUDP Lite do not encrypt payloads
 		if ((packet.version === 0 || packet.version === 1) && payload) {
+			// * OldRVSec packets have their stream reset every request
+			if (packet.serializeStreamType(packet.sourceStreamType) === 'OldRVSec') {
+				this.clientToServerCipher = new RC4Stream(this.cipherKey);
+				this.servertoClientCipher = new RC4Stream(this.cipherKey);
+			}
+
 			payload = cipher.update(payload);
 		}
 

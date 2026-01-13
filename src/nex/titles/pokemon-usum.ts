@@ -1,0 +1,35 @@
+import Title from '@/nex/titles/title';
+
+export default class PokemonUSUM extends Title {
+	public static name = 'Pokémon Ultra Sun/Ultra Moon';
+	public static gameServerID = '';
+	public static accessKey = '086f9d28';
+	public static libraryVersions = {
+		main: '3.10.2',
+		ranking: '3.10.2',
+		datastore: '3.10.2',
+		match_making: '3.10.2',
+		messaging: '3.10.2',
+		utility: '3.10.2'
+	};
+
+	public static settings = {
+		pid_size: 4,
+		string_length_size: 2,
+		use_structure_header: true,
+		session_key_size: 32,
+		kerberos_key_version: 0,
+		kerberos_ticket_version: 0,
+		checksum_size: 4,
+		flags_and_type_size: 2,
+		use_crossplay: false
+	};
+
+	public static titleIDs = [
+		'00040000001B5000',
+		'00040000001B5100',
+		'00040000001C6700'
+	];
+
+	public static protocols = []; // * Populate with the protocols this title uses
+}

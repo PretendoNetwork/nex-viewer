@@ -46,6 +46,8 @@ import OlliOlli from '@/nex/titles/olliolli';
 import PIKMIN3 from '@/nex/titles/pikmin-3';
 import PokemonBank from '@/nex/titles/pokemon-bank';
 import PokemonRumbleWorld from '@/nex/titles/pokemon-rumble-world';
+import PokemonSunMoon from '@/nex/titles/pokemon-sunmoon';
+import PokemonUSUM from '@/nex/titles/pokemon-usum';
 import PokemonXY from '@/nex/titles/pokemon-xy';
 import POKKENTOURNAMENT from '@/nex/titles/pokken-tournament';
 import Puddle from '@/nex/titles/puddle';
@@ -77,7 +79,11 @@ import WorcleWorlds from '@/nex/titles/worcle-worlds';
 import XenobladeChroniclesX from '@/nex/titles/xenoblade-chronicles-x';
 import YakumanHououMahjon from '@/nex/titles/yakuman-houou-mahjong';
 import YokaiWatch2 from '@/nex/titles/yo-kai-watch-2';
+import YokaiWatch3 from '@/nex/titles/yo-kai-watch-3';
 import ZenPinball2 from '@/nex/titles/zen-pinball-2';
+import RockBand2 from './rock-band-2';
+import YokaiWatchBusters2 from './yo-kai-watch-busters-2';
+import MonsterHunterXX from './monster-hunter-xx';
 
 export default [
 	AnimalCrossingNewLeaf,
@@ -119,6 +125,7 @@ export default [
 	MightyNo9,
 	MonsterHunter3Ultimate,
 	MonsterHunter3G,
+	MonsterHunterXX,
 	MinecraftWiiUEdition,
 	NanoAssaultNeo,
 	NINJAGAIDEN3RazorsEdge,
@@ -128,11 +135,14 @@ export default [
 	PIKMIN3,
 	PokemonBank,
 	PokemonRumbleWorld,
+	PokemonSunMoon,
+	PokemonUSUM,
 	PokemonXY,
 	POKKENTOURNAMENT,
 	Puddle,
 	PuyoPuyoTetris,
 	RESIDENTEVILREVELATIONS,
+	RockBand2,
 	RomanceoftheThreeKingdoms12,
 	SonicAllStarsRacingTransformed,
 	SONICLOSTWORLD,
@@ -159,5 +169,7 @@ export default [
 	XenobladeChroniclesX,
 	YakumanHououMahjon,
 	YokaiWatch2,
+	YokaiWatch3,
+	YokaiWatchBusters2,
 	ZenPinball2
 ];

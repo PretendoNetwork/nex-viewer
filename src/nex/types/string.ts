@@ -15,7 +15,11 @@ export default class RVString {
 			length = stream.readUInt16LE();
 		}
 
-		this.value = stream.readBytes(length).toString().slice(0, -1);
+		if (length != 0) {
+			this.value = stream.readBytes(length).toString().slice(0, -1);
+		} else {
+			stream.skip(1);
+		}
 	}
 
 	public new(): RVString {

@@ -5,6 +5,7 @@ const LINKTYPE_ETHERNET = 0x0001;
 const LINKTYPE_RAW = 0x0065;
 
 const LINKTYPE_HOKAKUCTR = 0x0093;
+const LINKTYPE_WSASUDP = 0x0094;
 
 export default class PCAPParser {
 	private buffer: Buffer;
@@ -79,6 +80,7 @@ export default class PCAPParser {
 			case LINKTYPE_ETHERNET:
 				return 14;
 
+			case LINKTYPE_WSASUDP:
 			case LINKTYPE_RAW:
 			case LINKTYPE_HOKAKUCTR:
 				return 0;

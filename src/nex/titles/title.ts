@@ -32,6 +32,7 @@ export default class Title {
 		kerberos_ticket_version: number;
 		checksum_size: number;
 		flags_and_type_size: number;
+		use_crossplay: boolean;
 	};
 
 	public static titleIDs: string[];
