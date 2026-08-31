@@ -233,11 +233,12 @@ export class HTTPResponse extends HTTPMessageBase {
 	constructor(data: Buffer) {
 		super(data);
 
-		const [protocol, statusCode, reasonPhrase] = this.startLine.split(' ');
+		// * The reason phrase is optional and may contain spaces, so just assume it's everything after the status code
+		const [protocol, statusCode, ...reasonPhrase] = this.startLine.split(' ');
 
 		this.protocol = protocol;
 		this.statusCode = Number(statusCode);
-		this.reasonPhrase = reasonPhrase;
+		this.reasonPhrase = reasonPhrase.join(' ');
 	}
 }
 
