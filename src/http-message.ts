@@ -213,14 +213,11 @@ export class HTTPRequest extends HTTPMessageBase {
 		this.protocol = protocol;
 		this.hostname = this.header('host');
 
-		if (this.requestTarget.includes('?')) {
-			const [path, query] = this.requestTarget.split('?');
+		// * Only the first "?" separates the path from the query, any others are part of the query itself
+		const [path, ...query] = this.requestTarget.split('?');
 
-			this.path = path;
-			this.query = new URLSearchParams(query);
-		} else {
-			this.path = this.requestTarget;
-		}
+		this.path = path;
+		this.query = new URLSearchParams(query.join('?'));
 	}
 }
 
