@@ -9,6 +9,12 @@ const MAX_HEIGHT = 480;
 
 // * Monaco only ships with formatters for JSON, HTML and CSS. We have to add everything else ourselves
 const FORMATTABLE_LANGUAGES = ['json', 'html', 'css'];
+const LANGUAGES = monaco.languages.getLanguages()
+	.map(language => ({
+		id: language.id,
+		label: language.aliases?.[0] ?? language.id
+	}))
+	.sort((a, b) => a.label.localeCompare(b.label));
 
 monaco.editor.defineTheme('network-viewer', {
 	base: 'vs-dark',
@@ -28,7 +34,9 @@ const container = ref<HTMLElement | null>(null);
 const editor = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 const height = ref(MIN_HEIGHT);
 const formatted = ref(false);
-const canFormat = computed(() => FORMATTABLE_LANGUAGES.includes(props.language));
+
+const activeLanguage = ref(props.language);
+const canFormat = computed(() => FORMATTABLE_LANGUAGES.includes(activeLanguage.value));
 
 async function showFormatted(): Promise<void> {
 	const instance = editor.value;
@@ -96,15 +104,19 @@ onMounted(() => {
 });
 
 watch(() => [props.value, props.language], () => {
+	activeLanguage.value = props.language;
+	showRaw();
+});
+
+watch(activeLanguage, (language) => {
 	const model = editor.value?.getModel();
 
 	if (!model) {
 		return;
 	}
 
-	model.setValue(props.value);
-	monaco.editor.setModelLanguage(model, props.language);
-	formatted.value = false;
+	monaco.editor.setModelLanguage(model, language);
+	showRaw();
 });
 
 onBeforeUnmount(() => {
@@ -115,9 +127,14 @@ onBeforeUnmount(() => {
 
 <template>
 	<div>
-		<div v-if="canFormat" class="flex items-center gap-3 mb-2">
-			<button class="text-xs transition-colors cursor-pointer" :class="formatted ? 'text-[#9a9fa9] hover:text-[#F9FAFC]' : 'text-blue-400'" @click="showRaw">Raw</button>
-			<button class="text-xs transition-colors cursor-pointer" :class="formatted ? 'text-blue-400' : 'text-[#9a9fa9] hover:text-[#F9FAFC]'" @click="showFormatted">Formatted</button>
+		<div class="flex items-center gap-3 mb-2">
+			<select v-model="activeLanguage" class="bg-[#121720] border border-[#2e3238] rounded-md px-2 py-1 text-xs text-[#F9FAFC] focus:outline-none cursor-pointer">
+				<option v-for="option in LANGUAGES" :key="option.id" :value="option.id">{{ option.label }}</option>
+			</select>
+			<template v-if="canFormat">
+				<button class="text-xs transition-colors cursor-pointer" :class="formatted ? 'text-[#9a9fa9] hover:text-[#F9FAFC]' : 'text-blue-400'" @click="showRaw">Raw</button>
+				<button class="text-xs transition-colors cursor-pointer" :class="formatted ? 'text-blue-400' : 'text-[#9a9fa9] hover:text-[#F9FAFC]'" @click="showFormatted">Formatted</button>
+			</template>
 		</div>
 		<div ref="container" class="rounded-md border border-[#2e3238] overflow-hidden" :style="{ height: `${height}px` }" />
 	</div>
