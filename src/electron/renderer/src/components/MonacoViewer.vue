@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { ref, shallowRef, watch, onMounted, onBeforeUnmount } from 'vue';
+import { ref, shallowRef, computed, watch, onMounted, onBeforeUnmount } from 'vue';
 import * as monaco from 'monaco-editor/editor';
 import 'monaco-editor/features/register.all';
 import 'monaco-editor/languages/register.all';
 
 const MIN_HEIGHT = 80;
 const MAX_HEIGHT = 480;
+
+// * Monaco only ships with formatters for JSON, HTML and CSS. We have to add everything else ourselves
+const FORMATTABLE_LANGUAGES = ['json', 'html', 'css'];
 
 monaco.editor.defineTheme('network-viewer', {
 	base: 'vs-dark',
@@ -24,6 +27,30 @@ const props = defineProps<{
 const container = ref<HTMLElement | null>(null);
 const editor = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 const height = ref(MIN_HEIGHT);
+const formatted = ref(false);
+const canFormat = computed(() => FORMATTABLE_LANGUAGES.includes(props.language));
+
+async function showFormatted(): Promise<void> {
+	const instance = editor.value;
+
+	if (!instance) {
+		return;
+	}
+
+	// * Monaco needs the editor to be writeable to format it, so toggle it.
+	// * This DOES create a bit of a race condition where the user COULD modify
+	// * the contents while the formatting is happening, but idrc tbh
+	instance.updateOptions({ readOnly: false });
+	await instance.getAction('editor.action.formatDocument')?.run();
+	instance.updateOptions({ readOnly: true });
+
+	formatted.value = true;
+}
+
+function showRaw(): void {
+	editor.value?.getModel()?.setValue(props.value);
+	formatted.value = false;
+}
 
 onMounted(() => {
 	if (!container.value) {
@@ -77,6 +104,7 @@ watch(() => [props.value, props.language], () => {
 
 	model.setValue(props.value);
 	monaco.editor.setModelLanguage(model, props.language);
+	formatted.value = false;
 });
 
 onBeforeUnmount(() => {
@@ -86,5 +114,11 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-	<div ref="container" class="rounded-md border border-[#2e3238] overflow-hidden" :style="{ height: `${height}px` }" />
+	<div>
+		<div v-if="canFormat" class="flex items-center gap-3 mb-2">
+			<button class="text-xs transition-colors cursor-pointer" :class="formatted ? 'text-[#9a9fa9] hover:text-[#F9FAFC]' : 'text-blue-400'" @click="showRaw">Raw</button>
+			<button class="text-xs transition-colors cursor-pointer" :class="formatted ? 'text-blue-400' : 'text-[#9a9fa9] hover:text-[#F9FAFC]'" @click="showFormatted">Formatted</button>
+		</div>
+		<div ref="container" class="rounded-md border border-[#2e3238] overflow-hidden" :style="{ height: `${height}px` }" />
+	</div>
 </template>
