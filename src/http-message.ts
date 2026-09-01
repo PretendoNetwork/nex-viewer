@@ -36,39 +36,45 @@ abstract class HTTPMessageBase {
 				const encodings = contentEncodingsHeaders.split(',').map(encoding => encoding.trim().toLowerCase()).filter(encoding => encoding).reverse() as ContentEncoding[];
 				let decompressed = this.body;
 
-				for (const encoding of encodings) {
-					switch (encoding) {
-						case 'gzip':
-						case 'x-gzip': // * Legacy name
-							decompressed = zlib.gunzipSync(decompressed);
-							break;
-						case 'compress':
-						case 'x-compress': // * Legacy name
-							// TODO - I couldn't find a web server that gave a sample of this to verify if it worked
-							console.warn('HTTP message using the compress/x-compress content encoding. This encoding format is not yet supported');
-							break;
-						case 'deflate':
-							// TODO - I couldn't find a web server that gave a sample of this to verify if it worked
-							console.warn('HTTP message using the deflate content encoding. This encoding format is not yet supported');
-							break;
-						case 'br':
-							decompressed = zlib.brotliDecompressSync(decompressed);
-							break;
-						case 'zstd':
-							decompressed = zlib.zstdDecompressSync(decompressed);
-							break;
-						case 'dcb':
-							// TODO - This requires knowledge of an external dictionary, and this class is stateless so it doesn't have access to that. Maybe add this later
-							console.warn('HTTP message using the dcb content encoding. This encoding format is not yet supported');
-							break;
-						case 'dcz':
-							// TODO - This requires knowledge of an external dictionary, and this class is stateless so it doesn't have access to that. Maybe add this later
-							console.warn('HTTP message using the dcz content encoding. This encoding format is not yet supported');
-							break;
+				try {
+					for (const encoding of encodings) {
+						switch (encoding) {
+							case 'gzip':
+							case 'x-gzip': // * Legacy name
+								decompressed = zlib.gunzipSync(decompressed);
+								break;
+							case 'compress':
+							case 'x-compress': // * Legacy name
+								// TODO - I couldn't find a web server that gave a sample of this to verify if it worked
+								console.warn('HTTP message using the compress/x-compress content encoding. This encoding format is not yet supported');
+								break;
+							case 'deflate':
+								// TODO - I couldn't find a web server that gave a sample of this to verify if it worked
+								console.warn('HTTP message using the deflate content encoding. This encoding format is not yet supported');
+								break;
+							case 'br':
+								decompressed = zlib.brotliDecompressSync(decompressed);
+								break;
+							case 'zstd':
+								decompressed = zlib.zstdDecompressSync(decompressed);
+								break;
+							case 'dcb':
+								// TODO - This requires knowledge of an external dictionary, and this class is stateless so it doesn't have access to that. Maybe add this later
+								console.warn('HTTP message using the dcb content encoding. This encoding format is not yet supported');
+								break;
+							case 'dcz':
+								// TODO - This requires knowledge of an external dictionary, and this class is stateless so it doesn't have access to that. Maybe add this later
+								console.warn('HTTP message using the dcz content encoding. This encoding format is not yet supported');
+								break;
+						}
 					}
-				}
 
-				this.body = decompressed;
+					this.body = decompressed;
+				} catch {
+					// * Sanity check. Some dump formats like Fiddler modify the request/response bodies
+					// * so fallback to the raw bytes if anything goes wrong
+					this.body = this.bodyRaw;
+				}
 			}
 
 			const contentType = this.header('content-type');
