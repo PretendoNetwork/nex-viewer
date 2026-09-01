@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import SerializedField from '@renderer/components/SerializedField.vue';
+import MonacoViewer from '@renderer/components/MonacoViewer.vue';
 import { useClipboard } from '@renderer/composables/useClipboard';
 import { toHexString } from '@renderer/assets/js/util';
 import type { SerializedMessage } from '@/types/serialized-message';
@@ -108,7 +109,13 @@ watch(() => props.packet, () => {
 						<div v-if="tab.subtitle" class="text-sm text-[#9a9fa9]">{{ tab.subtitle }}</div>
 					</div>
 					<div class="space-y-1">
-						<SerializedField v-for="field in tab.fields" :key="field.name" :field-key="field.name" :field="field.data" :depth="0" />
+						<template v-for="field in tab.fields" :key="field.name">
+							<div v-if="field.language" class="mt-6 mb-2">
+								<div class="text-sm font-medium text-[#F9FAFC] mb-2">{{ field.name }}</div>
+								<MonacoViewer :value="String(field.data.__value)" :language="field.language" />
+							</div>
+							<SerializedField v-else :field-key="field.name" :field="field.data" :depth="0" />
+						</template>
 					</div>
 				</div>
 

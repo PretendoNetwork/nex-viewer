@@ -14,6 +14,25 @@ function buildMessage(startLine: string, headers: { key: string; value: string }
 	]);
 }
 
+// * Picks the language Monaco highlights the body with
+function bodyLanguage(message: HTTPRequest | HTTPResponse): string {
+	const mime = (message.header('content-type') ?? '').split(';')[0].trim().toLowerCase();
+
+	if (mime === 'application/json' || mime.endsWith('+json')) {
+		return 'json';
+	}
+
+	if (mime === 'application/xml' || mime === 'text/xml' || mime.endsWith('+xml')) {
+		return 'xml';
+	}
+
+	if (mime === 'text/html') {
+		return 'html';
+	}
+
+	return 'plaintext';
+}
+
 export default class HTTPTransaction {
 	public id = -1; // * Unique ID for the UI layer
 
@@ -116,7 +135,16 @@ export default class HTTPTransaction {
 									])
 								)
 							}
-						}
+						},
+						...(this.request.body.length !== 0
+							? [{
+									name: 'Body',
+									language: bodyLanguage(this.request),
+									data: {
+										__value: this.request.text()
+									}
+								}]
+							: [])
 					]
 				},
 				...(this.response !== undefined
@@ -137,7 +165,16 @@ export default class HTTPTransaction {
 											])
 										)
 									}
-								}
+								},
+								...(this.response.body.length !== 0
+									? [{
+											name: 'Body',
+											language: bodyLanguage(this.response),
+											data: {
+												__value: this.response.text()
+											}
+										}]
+									: [])
 							]
 						}]
 					: [])

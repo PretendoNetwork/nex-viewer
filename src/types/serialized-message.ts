@@ -41,6 +41,7 @@ export type SerializedMessage = {
 		fields: {
 			name: string;
 			data: SerializedField;
+			language?: string; // * Triggers the UI to render the data in MonacoViewer rather than the normal collapsible system
 		}[];
 	}[];
 	stack_trace?: string;
