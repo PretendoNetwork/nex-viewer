@@ -14,6 +14,14 @@ const props = defineProps<{
 
 const activeTab = ref('overview');
 
+function saveBytes(tabTitle: string, field: { name: string; bytes?: number[] }): void {
+	if (!field.bytes) {
+		return;
+	}
+
+	window.api.saveBytes(`${tabTitle}-${field.name}`.toLowerCase(), new Uint8Array(field.bytes));
+}
+
 const tabs = computed(() => {
 	const t = [
 		{
@@ -111,7 +119,10 @@ watch(() => props.packet, () => {
 					<div class="space-y-1">
 						<template v-for="field in tab.fields" :key="field.name">
 							<div v-if="field.language" class="mt-6 mb-2">
-								<div class="text-sm font-medium text-[#F9FAFC] mb-2">{{ field.name }}</div>
+								<div class="flex items-center gap-2 mb-2">
+									<div class="text-sm font-medium text-[#F9FAFC]">{{ field.name }}</div>
+									<button v-if="field.bytes?.length" class="text-xs text-[#9a9fa9] hover:text-[#F9FAFC] transition-colors cursor-pointer" @click="saveBytes(tab.title, field)">Save to disk</button>
+								</div>
 								<MonacoViewer :value="String(field.data.__value)" :language="field.language" />
 							</div>
 							<SerializedField v-else :field-key="field.name" :field="field.data" :depth="0" />

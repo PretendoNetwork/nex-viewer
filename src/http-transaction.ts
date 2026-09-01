@@ -140,6 +140,7 @@ export default class HTTPTransaction {
 							? [{
 									name: 'Body',
 									language: bodyLanguage(this.request),
+									bytes: [...this.request.body.values()],
 									data: {
 										__value: this.request.text()
 									}
@@ -170,6 +171,7 @@ export default class HTTPTransaction {
 									? [{
 											name: 'Body',
 											language: bodyLanguage(this.response),
+											bytes: [...this.response.body.values()],
 											data: {
 												__value: this.response.text()
 											}

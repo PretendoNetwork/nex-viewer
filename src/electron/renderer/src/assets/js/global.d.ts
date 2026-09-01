@@ -19,6 +19,7 @@ declare global {
 			openSelectSession: () => void;
 			openSession: (path: string) => void;
 			exportSession: (packets: SerializedMessage[]) => void;
+			saveBytes: (name: string, bytes: Uint8Array) => void;
 			getPathForFile: (file: File) => string;
 		};
 	}
