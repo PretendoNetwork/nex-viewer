@@ -28,7 +28,7 @@ export default class HTTPTransaction {
 		const transaction = new HTTPTransaction();
 
 		transaction.uri = charlesTransaction.url.toString();
-		transaction.clientAddress = 'CLIENT';
+		transaction.clientAddress = charlesTransaction.clientAddress;
 		transaction.clientPort = charlesTransaction.clientLocalPort;
 		transaction.request = new HTTPRequest(buildMessage(
 			charlesTransaction.request.startLine,

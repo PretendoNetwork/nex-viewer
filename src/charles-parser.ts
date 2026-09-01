@@ -6,6 +6,11 @@ import type {
 	JavaClassDesc
 } from '@pretendonetwork/java.io';
 
+// TODO - This is duplicated from `@/session`. Move it somewhere shared?
+function int2ip(int: number): string {
+	return `${int >>> 24}.${int >> 16 & 255}.${int >> 8 & 255}.${int & 255}`;
+}
+
 export default class CharlesParser {
 	private buffer: Buffer;
 	private stream: ByteStream;
@@ -254,6 +259,7 @@ export class CharlesHTTPResponse {
 export class CharlesHTTPTransaction {
 	private _url!: URL;
 	private _protocolVersion = 'HTTP/1.1';
+	private _clientAddress = 'unknown';
 	private _clientLocalPort!: number;
 	private _clientProxyPort!: number;
 	private _serverLocalPort!: number;
@@ -269,6 +275,10 @@ export class CharlesHTTPTransaction {
 
 	public get protocolVersion(): string {
 		return this._protocolVersion;
+	}
+
+	public get clientAddress(): string {
+		return this._clientAddress;
 	}
 
 	public get clientLocalPort(): number {
@@ -317,6 +327,11 @@ export class CharlesHTTPTransaction {
 
 		if (transactionJSON.description.classData.values.protocolVersion) {
 			this._protocolVersion = transactionJSON.description.classData.values.protocolVersion.value;
+		}
+
+		// TODO - Probably breaks on IPv6 but I can't be arsed
+		if (transactionJSON.description.classData.values.clientAddress) {
+			this._clientAddress = int2ip(transactionJSON.description.classData.values.clientAddress.description.classData.values.address);
 		}
 
 		this._url = new URL(`${protocol}://${host}${path}`);
