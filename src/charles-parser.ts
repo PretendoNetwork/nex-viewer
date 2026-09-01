@@ -241,6 +241,7 @@ export class CharlesHTTPResponse {
 
 export class CharlesHTTPTransaction {
 	private _url!: URL;
+	private _protocolVersion = 'HTTP/1.1';
 	private _clientLocalPort!: number;
 	private _clientProxyPort!: number;
 	private _serverLocalPort!: number;
@@ -252,6 +253,10 @@ export class CharlesHTTPTransaction {
 	// * Public getters
 	public get url(): URL {
 		return this._url;
+	}
+
+	public get protocolVersion(): string {
+		return this._protocolVersion;
 	}
 
 	public get clientLocalPort(): number {
@@ -296,6 +301,10 @@ export class CharlesHTTPTransaction {
 		if (transactionJSON.description.classData.values.file) {
 			// * `file` contains the query string too
 			path = transactionJSON.description.classData.values.file.value;
+		}
+
+		if (transactionJSON.description.classData.values.protocolVersion) {
+			this._protocolVersion = transactionJSON.description.classData.values.protocolVersion.value;
 		}
 
 		this._url = new URL(`${protocol}://${host}${path}`);
