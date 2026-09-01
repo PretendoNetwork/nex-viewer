@@ -17,6 +17,7 @@ import PRUDPPacketLite from '@/nex/prudp-packetLite';
 import RawRMCPacket from '@/nex/raw-rmc-packet';
 import NPLNTransaction from '@/npln/npln-transaction';
 import PNSJSession from '@/pnsj-session';
+import HTTPTransaction from '@/http-transaction';
 import parseHTTPMessage, { HTTPMessageDirection } from '@/http-message';
 import type { PCAPFrame } from '@/pcap-parser';
 import type { SimplePacketBlock, EnhancedPacketBlock } from '@/pcapng-parser';
@@ -128,6 +129,8 @@ export default class Session extends EventEmitter {
 		let elapsedTime = 0;
 
 		for (const transaction of parser.transactions()) {
+			this.addSerializedMessage(HTTPTransaction.fromCharlesTransaction(transaction).toJSON());
+
 			for (const message of transaction.websocketMessages) {
 				const timestampSeconds = Number(message.startTime) / 1000;
 

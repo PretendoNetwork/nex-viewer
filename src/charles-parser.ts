@@ -164,11 +164,16 @@ export class CharlesWebSocketMessage {
 }
 
 export class CharlesHTTPRequest {
+	private _startLine!: string;
 	private _method!: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE';
 	private _headers: { key: string; value: string }[] = [];
 	private _body?: Buffer;
 
 	// * Public getters
+	public get startLine(): string {
+		return this._startLine;
+	}
+
 	public get method(): 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' {
 		return this._method;
 	}
@@ -186,6 +191,7 @@ export class CharlesHTTPRequest {
 			return; // * This will never happen in this case.
 		}
 
+		this._startLine = transactionJSON.description.classData.values.requestHeader.description.classData.annotation[1].value;
 		this._method = transactionJSON.description.classData.values.scheme.value;
 
 		for (let i = 1; i < transactionJSON.description.classData.values.requestHeader.description.classData.values.firstLine.description.classData.annotation.length; i++) {
@@ -202,11 +208,16 @@ export class CharlesHTTPRequest {
 }
 
 export class CharlesHTTPResponse {
+	private _startLine!: string;
 	private _status!: number;
 	private _headers: { key: string; value: string }[] = [];
 	private _body?: Buffer;
 
 	// * Public getters
+	public get startLine(): string {
+		return this._startLine;
+	}
+
 	public get status(): number {
 		return this._status;
 	}
@@ -224,7 +235,8 @@ export class CharlesHTTPResponse {
 			return; // * This will never happen in this case.
 		}
 
-		this._status = Number(transactionJSON.description.classData.values.responseHeader.description.classData.annotation[1].value.split(' ')[1]);
+		this._startLine = transactionJSON.description.classData.values.responseHeader.description.classData.annotation[1].value;
+		this._status = Number(this._startLine.split(' ')[1]);
 
 		for (let i = 1; i < transactionJSON.description.classData.values.responseHeader.description.classData.values.firstLine.description.classData.annotation.length; i++) {
 			const key = transactionJSON.description.classData.values.responseHeader.description.classData.values.firstLine.description.classData.annotation[i].value;

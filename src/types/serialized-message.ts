@@ -22,7 +22,7 @@ export type SerializedMessage = {
 	service?: string;
 	method?: string;
 	direction?: string;
-	status?: string;
+	status?: string | number; // * HTTP transactions use the numeric status code
 	overview_sections: {
 		title: string;
 		columns: number;
