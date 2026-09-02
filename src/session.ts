@@ -17,6 +17,7 @@ import PRUDPPacketLite from '@/nex/prudp-packetLite';
 import RawRMCPacket from '@/nex/raw-rmc-packet';
 import NPLNTransaction from '@/npln/npln-transaction';
 import PNSJSession from '@/pnsj-session';
+import HARParser from '@/har-parser';
 import HTTPTransaction from '@/http-transaction';
 import parseHTTPMessage, { HTTPMessageDirection } from '@/http-message';
 import type { PCAPFrame } from '@/pcap-parser';
@@ -73,6 +74,9 @@ export default class Session extends EventEmitter {
 				break;
 			case '.bin': // TODO - Replace this with a `parseBin` function that supports other .bin formats
 				this.parseProxideConnection(captureData); // TODO - Always assumes gRPC connections. Make this more generic?
+				break;
+			case '.har':
+				this.parseHAR(captureData);
 				break;
 			case '.pnsj':
 				this.parsePNSJSession(captureData);
@@ -332,6 +336,28 @@ export default class Session extends EventEmitter {
 			if (contentType.startsWith('application/grpc')) {
 				this.addSerializedMessage(NPLNTransaction.parseFromProxideTransaction(transaction).toJSON());
 			}
+		}
+
+		this.emitSerializedMessageList();
+	}
+
+	private parseHAR(captureData: Buffer): void {
+		const parser = new HARParser(captureData);
+		let elapsedTime = 0;
+
+		for (const transaction of parser.transactions()) {
+			const httpTransaction = HTTPTransaction.fromHARTransaction(transaction);
+			const timestampSeconds = transaction.startTime;
+
+			if (this.lastPacketTime !== 0) {
+				this.elapsedTime += timestampSeconds - this.lastPacketTime;
+				elapsedTime = this.elapsedTime;
+			}
+
+			this.lastPacketTime = timestampSeconds;
+			httpTransaction.elapsedTime = elapsedTime;
+
+			this.addSerializedMessage(httpTransaction.toJSON());
 		}
 
 		this.emitSerializedMessageList();

@@ -16,7 +16,7 @@
 ### Dump Formats
 - [x] [PCAP (`.pacp`)](https://www.ietf.org/archive/id/draft-gharris-opsawg-pcap-01.html)
 - [x] [PCAPNG (`.pacpng`)](https://www.ietf.org/archive/id/draft-tuexen-opsawg-pcapng-03.html)
-- [ ] [HAR (`.har`)](https://en.wikipedia.org/wiki/HAR_(file_format))
+- [x] [HAR (`.har`)](https://en.wikipedia.org/wiki/HAR_(file_format))
 - [x] [Charles (`.chls`, `.chlz`)](https://www.charlesproxy.com)
 - [x] [Mitmproxy Flows (`.flow`, `.flows`)](https://mitmproxy.org)
 - [ ] [Fiddler (`.saz`)](https://docs.telerik.com/fiddler-everywhere/knowledge-base/fiddler-archives)

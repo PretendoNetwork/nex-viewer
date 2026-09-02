@@ -2,6 +2,7 @@ import { HTTPRequest, HTTPResponse } from '@/http-message';
 import type { HTTPFormField } from '@/http-message';
 import type { CharlesHTTPTransaction } from '@/charles-parser';
 import type { HTTPFlow } from '@/flows-parser';
+import type { HARHTTPTransaction } from '@/har-parser';
 import type { SerializedMessage, SerializedField } from '@/types/serialized-message';
 
 // * Rebuild the original HTTP message to reuse the existing HTTP message parser regardless
@@ -83,7 +84,7 @@ export default class HTTPTransaction {
 
 	public uri!: string;
 	public clientAddress!: string;
-	public clientPort!: number;
+	public clientPort?: number; // * Not every dump format has this
 	public elapsedTime = 0;
 	public request!: HTTPRequest;
 	public response?: HTTPResponse;
@@ -148,6 +149,30 @@ export default class HTTPTransaction {
 		return transaction;
 	}
 
+	public static fromHARTransaction(harTransaction: HARHTTPTransaction): HTTPTransaction {
+		const transaction = new HTTPTransaction();
+
+		transaction.uri = harTransaction.url.toString();
+
+		// * HAR dumps don't seem to store the client info
+		transaction.clientAddress = 'CLIENT';
+		transaction.request = new HTTPRequest(buildMessage(
+			harTransaction.request.startLine,
+			harTransaction.request.headers,
+			harTransaction.request.body
+		));
+
+		// * The HAR spec doesn't seem to define a way to say "this request failed and/or has no reply"?
+		// TODO - Figure this out
+		transaction.response = new HTTPResponse(buildMessage(
+			harTransaction.response.startLine,
+			harTransaction.response.headers,
+			harTransaction.response.body
+		));
+
+		return transaction;
+	}
+
 	public toJSON(): SerializedMessage {
 		const url = new URL(this.uri);
 		const requestMime = mimeType(this.request);
@@ -157,7 +182,7 @@ export default class HTTPTransaction {
 			id: this.id,
 			elapsed_time: this.elapsedTime,
 			transport: 'HTTP',
-			source: `${this.clientAddress}:${this.clientPort}`,
+			source: this.clientPort === undefined ? this.clientAddress : `${this.clientAddress}:${this.clientPort}`,
 			destination: `${url.protocol}//${url.hostname}`,
 			destination_path: url.pathname,
 			method: this.request.method,
