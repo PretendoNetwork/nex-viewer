@@ -55,7 +55,10 @@ const tabs = computed(() => {
 });
 
 watch(() => props.packet, () => {
-	activeTab.value = 'overview';
+	// * Automatically open the same tab in the new packet if it exists in the previous one
+	if (!tabs.value.some(tab => tab.id === activeTab.value)) {
+		activeTab.value = 'overview';
+	}
 });
 </script>
 
