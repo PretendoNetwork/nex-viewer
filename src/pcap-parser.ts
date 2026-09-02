@@ -10,6 +10,7 @@ export type PCAPFrame = {
 	data: Buffer;
 };
 
+const LINKTYPE_NULL = 0x0000;
 const LINKTYPE_ETHERNET = 0x0001;
 const LINKTYPE_RAW = 0x0065;
 
@@ -85,6 +86,9 @@ export default class PCAPParser {
 
 	private checkLinkLayerSize(): number {
 		switch (this.linkLayerType) {
+			case LINKTYPE_NULL:
+				return 4;
+
 			case LINKTYPE_ETHERNET:
 				return 14;
 
