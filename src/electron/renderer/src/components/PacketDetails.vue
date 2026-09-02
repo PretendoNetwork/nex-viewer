@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue';
 import SerializedField from '@renderer/components/SerializedField.vue';
 import MonacoViewer from '@renderer/components/MonacoViewer.vue';
+import ImageViewer from '@renderer/components/ImageViewer.vue';
 import { useClipboard } from '@renderer/composables/useClipboard';
 import { toHexString } from '@renderer/assets/js/util';
 import type { SerializedMessage } from '@/types/serialized-message';
@@ -118,12 +119,13 @@ watch(() => props.packet, () => {
 					</div>
 					<div class="space-y-1">
 						<template v-for="field in tab.fields" :key="field.name">
-							<div v-if="field.language" class="mt-6 mb-2">
+							<div v-if="field.language || field.image" class="mt-6 mb-2">
 								<div class="flex items-center gap-2 mb-2">
 									<div class="text-sm font-medium text-[#F9FAFC]">{{ field.name }}</div>
 									<button v-if="field.bytes?.length" class="text-xs text-[#9a9fa9] hover:text-[#F9FAFC] transition-colors cursor-pointer" @click="saveBytes(tab.title, field)">Save to disk</button>
 								</div>
-								<MonacoViewer :value="String(field.data.__value)" :language="field.language" />
+								<ImageViewer v-if="field.image" :bytes="field.bytes ?? []" :type="field.image" />
+								<MonacoViewer v-else :value="String(field.data.__value)" :language="field.language ?? 'plaintext'" />
 							</div>
 							<SerializedField v-else :field-key="field.name" :field="field.data" :depth="0" />
 						</template>

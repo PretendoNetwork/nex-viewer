@@ -43,6 +43,7 @@ export type SerializedMessage = {
 			data: SerializedField;
 			language?: string; // * Triggers the UI to render the data in MonacoViewer rather than the normal collapsible system
 			bytes?: number[];
+			image?: string; // * Triggers the UI to render `bytes` as an image of this content type, rather than as text
 		}[];
 	}[];
 	stack_trace?: string;
