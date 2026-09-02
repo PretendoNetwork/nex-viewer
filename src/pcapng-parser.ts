@@ -44,7 +44,7 @@ export type CustomBlock = object; // * Unused
 export type NullInterface = {
 	type: typeof LINKTYPE_NULL;
 	data: {
-		protocolFamily: number;
+		protocolType: number;
 	};
 };
 
@@ -434,7 +434,7 @@ export default class PCAPNGParser {
 		return {
 			type: LINKTYPE_NULL,
 			data: {
-				protocolFamily: this.readUInt32()
+				protocolType: this.readUInt32()
 			}
 		};
 	}
