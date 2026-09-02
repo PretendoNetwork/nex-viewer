@@ -1,6 +1,7 @@
 import { HTTPRequest, HTTPResponse } from '@/http-message';
+import type { HTTPFormField } from '@/http-message';
 import type { CharlesHTTPTransaction } from '@/charles-parser';
-import type { SerializedMessage } from '@/types/serialized-message';
+import type { SerializedMessage, SerializedField } from '@/types/serialized-message';
 
 // * Rebuild the original HTTP message to reuse the existing HTTP message parser regardless
 // * of how the transaction data was extracted from whatever dump format is being used.
@@ -33,6 +34,47 @@ function bodyLanguage(mime: string): string {
 	}
 
 	return 'plaintext';
+}
+
+function formField(field: HTTPFormField): SerializedField {
+	if (field.contentType === undefined) {
+		return {
+			__displayTypeName: 'String',
+			__saveable: true,
+			__bytes: [...field.value.values()],
+			__filename: field.filename ?? field.name,
+			__value: field.value.toString()
+		};
+	}
+
+	return {
+		__displayTypeName: 'File',
+		__fields: {
+			...(field.filename !== undefined
+				? {
+						filename: {
+							__displayTypeName: 'String',
+							__value: field.filename
+						}
+					}
+				: {}),
+			content_type: {
+				__displayTypeName: 'String',
+				__value: field.contentType
+			},
+			size: {
+				__displayTypeName: 'Int32',
+				__value: field.value.length
+			},
+			data: {
+				__displayTypeName: 'Buffer',
+				__typeName: 'Buffer',
+				__saveable: true,
+				__filename: field.filename ?? field.name,
+				__value: [...field.value.values()]
+			}
+		}
+	};
 }
 
 export default class HTTPTransaction {
@@ -140,6 +182,15 @@ export default class HTTPTransaction {
 								)
 							}
 						},
+						...(this.request.form.length !== 0
+							? [{
+									name: 'Form',
+									data: {
+										__displayTypeName: 'Form Data',
+										__fields: Object.fromEntries(this.request.form.map(field => [field.name, formField(field)]))
+									}
+								}]
+							: []),
 						...(this.request.body.length !== 0
 							? [{
 									name: 'Body',
@@ -173,6 +224,15 @@ export default class HTTPTransaction {
 										)
 									}
 								},
+								...(this.response.form.length !== 0
+									? [{
+											name: 'Form',
+											data: {
+												__displayTypeName: 'Form Data',
+												__fields: Object.fromEntries(this.response.form.map(field => [field.name, formField(field)]))
+											}
+										}]
+									: []),
 								...(this.response.body.length !== 0
 									? [{
 											name: 'Body',

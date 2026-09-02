@@ -6,6 +6,14 @@ export enum HTTPMessageDirection {
 }
 
 type HTTPMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH' | 'QUERY';
+
+// * `FormData` holds its values as Blobs, which use an async-based API. We do everything sync
+export interface HTTPFormField {
+	name: string;
+	value: Buffer;
+	filename?: string; // * Only set when the part is a file
+	contentType?: string; // * The parts own content type, when it declared one
+}
 type ContentEncoding = 'gzip' | 'x-gzip' | 'compress' | 'x-compress' | 'deflate' | 'br' | 'zstd' | 'dcb' | 'dcz';
 
 // TODO - Add more convenience methods to the classes
@@ -15,7 +23,7 @@ abstract class HTTPMessageBase {
 	public readonly headers: string[][];
 	public readonly body: Buffer = Buffer.alloc(0);
 	public readonly bodyRaw: Buffer = Buffer.alloc(0);
-	public readonly form: FormData = new FormData();
+	public readonly form: HTTPFormField[] = [];
 
 	protected readonly startLine: string;
 
@@ -80,10 +88,11 @@ abstract class HTTPMessageBase {
 			const contentType = this.header('content-type');
 
 			if (contentType === 'application/x-www-form-urlencoded') {
-				const searchParams = new URLSearchParams(this.text());
-
-				for (const [key, value] of Object.entries(Object.fromEntries(searchParams))) {
-					this.form.append(key, value);
+				for (const [name, value] of new URLSearchParams(this.text())) {
+					this.form.push({
+						name: name,
+						value: Buffer.from(value)
+					});
 				}
 			}
 
@@ -147,25 +156,18 @@ abstract class HTTPMessageBase {
 						dispositionValues.set(name.toLowerCase(), value);
 					}
 
-					const body = chunk.subarray(metadata.bodyStart);
-					const blob = new Blob([new Uint8Array(body)]);
 					const name = dispositionValues.get('name');
-					const filename = dispositionValues.get('filename');
 
 					if (name === undefined) {
 						continue;
 					}
 
-					if (filename) {
-						const type = headers.get('content-type') ?? 'text/plain';
-						const file = new File([blob], filename, {
-							type: type
-						});
-
-						this.form.append(name, file);
-					} else {
-						this.form.append(name, blob);
-					}
+					this.form.push({
+						name: name,
+						value: chunk.subarray(metadata.bodyStart),
+						filename: dispositionValues.get('filename'),
+						contentType: headers.get('content-type')
+					});
 				}
 			}
 		}

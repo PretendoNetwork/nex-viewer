@@ -2,6 +2,9 @@ export interface BasicSerializedField {
 	__displayTypeName?: string;
 	__typeName?: string;
 	__value?: any;
+	__saveable?: boolean; // * Lets the UI offer to save the field to disk
+	__bytes?: number[]; // * The fields raw bytes, for when `__value` holds a display form of them instead
+	__filename?: string; // * The name to suggest when saving
 }
 
 export interface ExpandableSerializedField extends BasicSerializedField {
