@@ -171,6 +171,8 @@ export default class Session extends EventEmitter {
 		let elapsedTime = 0;
 
 		for (const transaction of parser.transactions()) {
+			this.addSerializedMessage(HTTPTransaction.fromCharlesTransaction(transaction).toJSON());
+
 			for (const message of transaction.websocketMessages) {
 				const timestampSeconds = new Date(message.startTime).getTime() / 1000;
 
