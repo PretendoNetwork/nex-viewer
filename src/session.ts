@@ -212,7 +212,13 @@ export default class Session extends EventEmitter {
 		const parser = new FlowsParser(captureData);
 
 		for (const flow of parser.flows()) {
-			if (flow.type === 'http' && flow.websocket && flow.server_conn.address && flow.server_conn.sni) {
+			if (flow.type !== 'http') {
+				continue;
+			}
+
+			this.addSerializedMessage(HTTPTransaction.fromMitmproxyFlow(flow).toJSON());
+
+			if (flow.websocket && flow.server_conn.address && flow.server_conn.sni) {
 				for (const message of flow.websocket.messages) {
 					const stream = new ByteStream(message.content);
 					const packet = new PRUDPPacketLite(stream);

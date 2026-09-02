@@ -1,6 +1,7 @@
 import { HTTPRequest, HTTPResponse } from '@/http-message';
 import type { HTTPFormField } from '@/http-message';
 import type { CharlesHTTPTransaction } from '@/charles-parser';
+import type { HTTPFlow } from '@/flows-parser';
 import type { SerializedMessage, SerializedField } from '@/types/serialized-message';
 
 // * Rebuild the original HTTP message to reuse the existing HTTP message parser regardless
@@ -105,6 +106,42 @@ export default class HTTPTransaction {
 				charlesTransaction.response.startLine,
 				charlesTransaction.response.headers,
 				charlesTransaction.response.body
+			));
+		}
+
+		return transaction;
+	}
+
+	public static fromMitmproxyFlow(flow: HTTPFlow): HTTPTransaction {
+		const transaction = new HTTPTransaction();
+		const request = flow.request;
+		const headers = request.headers.map(([key, value]) => ({ key, value }));
+		const httpVersion = request.http_version.toString();
+		const method = request.method.toString();
+		const authority = request.authority.toString();
+
+		// * This info is scattered between several places depending on different contexts
+		const hostHeader = headers.find(header => header.key.toLowerCase() === 'host')?.value;
+		const host = (httpVersion === 'HTTP/2.0' || httpVersion === 'HTTP/3' ? authority || hostHeader : hostHeader) || request.host;
+		const isConnect = method === 'CONNECT';
+		const target = isConnect ? authority || `${request.host}:${request.port}` : request.path.toString();
+
+		transaction.uri = `${request.scheme.toString()}://${host}${isConnect || target === '*' ? '' : target}`;
+		transaction.clientAddress = flow.client_conn.peername.ip;
+		transaction.clientPort = flow.client_conn.peername.port;
+
+		transaction.request = new HTTPRequest(buildMessage(
+			`${method} ${target} ${httpVersion}`,
+			headers,
+			request.content ?? undefined
+		));
+
+		if (flow.response) {
+			transaction.response = new HTTPResponse(buildMessage(
+				// * mitmproxy specifically uses ISO-8859-1 here, so copying that just to be safe
+				`${flow.response.http_version.toString()} ${flow.response.status_code} ${flow.response.reason.toString('latin1')}`.trim(),
+				flow.response.headers.map(([key, value]) => ({ key, value })),
+				flow.response.content ?? undefined
 			));
 		}
 

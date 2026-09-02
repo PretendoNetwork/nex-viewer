@@ -11,7 +11,7 @@ type Address = {
 type Cert = Buffer;
 type FlowMessageData = {
 	http_version: Buffer;
-	headers: Record<string, string>; // * Not accurate, this is encoded as a tuple of `(key, value)`
+	headers: string[][]; // * Encoded as a tuple of `(key, value)`
 	content: Buffer | null;
 	trailers: Record<string, string> | null; // * Not accurate, this is encoded as a tuple of `(key, value)`
 	timestamp_start: number;
@@ -130,7 +130,7 @@ type _Flow = {
 	backup: _Flow | null;
 };
 
-interface HTTPFlow extends _Flow {
+export interface HTTPFlow extends _Flow {
 	type: 'http';
 	request: FlowRequest;
 	response: FlowResponse | null;
@@ -226,14 +226,14 @@ export default class FlowsParser {
 		}
 
 		if (flow.type === 'http') {
-			flow.request.headers = Object.fromEntries(flowData.request.headers.map(([key, value]: any[]) => [key.toString(), value.toString()]));
+			flow.request.headers = flowData.request.headers.map(([key, value]: any[]) => [key.toString(), value.toString()]);
 
 			if (flowData.request.trailers) {
 				flow.request.trailers = Object.fromEntries(flowData.request.trailers.map(([key, value]: any[]) => [key.toString(), value.toString()]));
 			}
 
 			if (flowData.response) {
-				flow.response!.headers = Object.fromEntries(flowData.response.headers.map(([key, value]: any[]) => [key.toString(), value.toString()]));
+				flow.response!.headers = flowData.response.headers.map(([key, value]: any[]) => [key.toString(), value.toString()]);
 
 				if (flowData.response.trailers) {
 					flow.response!.trailers = Object.fromEntries(flowData.response.trailers.map(([key, value]: any[]) => [key.toString(), value.toString()]));
