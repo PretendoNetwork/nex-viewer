@@ -88,4 +88,4 @@ export default class UserMessage extends Data {
 	}
 }
 
-AnyDataHolder.Classes['UserMessage'] = UserMessage;
+AnyDataHolder.Classes[className] = UserMessage;

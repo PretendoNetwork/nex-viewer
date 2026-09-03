@@ -46,4 +46,4 @@ export default class NintendoNotificationEventProfile extends Data {
 	}
 }
 
-AnyDataHolder.Classes['NintendoNotificationEventProfile'] = NintendoNotificationEventProfile;
+AnyDataHolder.Classes[className] = NintendoNotificationEventProfile;

@@ -35,4 +35,4 @@ export default class NintendoLoginData extends Data {
 	}
 }
 
-AnyDataHolder.Classes['NintendoLoginData'] = NintendoLoginData;
+AnyDataHolder.Classes[className] = NintendoLoginData;

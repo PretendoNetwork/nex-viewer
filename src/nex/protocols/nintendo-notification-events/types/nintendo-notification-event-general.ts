@@ -45,4 +45,4 @@ export default class NintendoNotificationEventGeneral extends Data {
 	}
 }
 
-AnyDataHolder.Classes['NintendoNotificationEventGeneral'] = NintendoNotificationEventGeneral;
+AnyDataHolder.Classes[className] = NintendoNotificationEventGeneral;

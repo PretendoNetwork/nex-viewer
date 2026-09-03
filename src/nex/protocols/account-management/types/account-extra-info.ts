@@ -42,4 +42,4 @@ export default class AccountExtraInfo extends DDLClass {
 	}
 }
 
-AnyDataHolder.Classes['AccountExtraInfo'] = AccountExtraInfo;
+AnyDataHolder.Classes[className] = AccountExtraInfo;

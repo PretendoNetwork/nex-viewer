@@ -4,6 +4,7 @@ import AnyDataHolder from '@/nex/types/any-data-holder';
 import AuthenticationInfo from '@/nex/protocols/ticket-granting/types/authentication-info';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
 
+// TODO - Why is this defined here? I've forgotten
 AnyDataHolder.Classes['AuthenticationInfo'] = AuthenticationInfo;
 
 export default class TicketGrantingProtocol {

@@ -32,4 +32,4 @@ export default class NullData extends Data {
 	}
 }
 
-AnyDataHolder.Classes['NullData'] = NullData;
+AnyDataHolder.Classes[className] = NullData;
