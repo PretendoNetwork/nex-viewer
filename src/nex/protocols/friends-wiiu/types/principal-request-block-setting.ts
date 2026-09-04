@@ -1,6 +1,7 @@
 import Data from '@/nex/types/data';
 import UInt32 from '@/nex/types/uint32';
 import Bool from '@/nex/types/bool';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'PrincipalRequestBlockSetting';
@@ -14,6 +15,8 @@ export default class PrincipalRequestBlockSetting extends Data {
 	private unknown2 = new Bool();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.unknown1.extractFrom(stream);
@@ -37,3 +40,5 @@ export default class PrincipalRequestBlockSetting extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = PrincipalRequestBlockSetting;

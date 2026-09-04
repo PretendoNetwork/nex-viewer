@@ -2,6 +2,7 @@ import Data from '@/nex/types/data';
 import UInt64 from '@/nex/types/uint64';
 import UInt32 from '@/nex/types/uint32';
 import RVString from '@/nex/types/string';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'PersistentNotification';
@@ -18,6 +19,8 @@ export default class PersistentNotification extends Data {
 	private unknown5 = new RVString();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.unknown1.extractFrom(stream);
@@ -47,3 +50,5 @@ export default class PersistentNotification extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = PersistentNotification;

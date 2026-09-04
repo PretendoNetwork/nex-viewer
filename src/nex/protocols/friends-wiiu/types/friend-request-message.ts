@@ -4,6 +4,7 @@ import UInt8 from '@/nex/types/uint8';
 import RVString from '@/nex/types/string';
 import GameKey from '@/nex/protocols/friends-wiiu/types/game-key';
 import DateTime from '@/nex/types/datetime';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendRequestMessage';
@@ -24,6 +25,8 @@ export default class FriendRequestMessage extends Data {
 	private expires = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.friendRequestID.extractFrom(stream);
@@ -61,3 +64,5 @@ export default class FriendRequestMessage extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = FriendRequestMessage;

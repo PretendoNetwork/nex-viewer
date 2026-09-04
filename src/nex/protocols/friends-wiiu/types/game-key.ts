@@ -1,6 +1,7 @@
 import Data from '@/nex/types/data';
 import UInt64 from '@/nex/types/uint64';
 import UInt16 from '@/nex/types/uint16';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'GameKey';
@@ -14,6 +15,8 @@ export default class GameKey extends Data {
 	private titleVersion = new UInt16();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.titleID.extractFrom(stream);
@@ -37,3 +40,5 @@ export default class GameKey extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = GameKey;

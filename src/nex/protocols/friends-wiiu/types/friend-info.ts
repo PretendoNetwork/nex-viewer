@@ -4,6 +4,7 @@ import NintendoPresenceV2 from '@/nex/protocols/friends-wiiu/types/nintendo-pres
 import Comment from '@/nex/protocols/friends-wiiu/types/comment';
 import DateTime from '@/nex/types/datetime';
 import UInt64 from '@/nex/types/uint64';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendInfo';
@@ -21,6 +22,8 @@ export default class FriendInfo extends Data {
 	private unknown = new UInt64();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.NNAInfo.extractFrom(stream);
@@ -52,3 +55,5 @@ export default class FriendInfo extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = FriendInfo;

@@ -6,6 +6,7 @@ import UInt8 from '@/nex/types/uint8';
 import RVString from '@/nex/types/string';
 import PID from '@/nex/types/pid';
 import RVBuffer from '@/nex/types/buffer';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'NintendoPresenceV2';
@@ -32,6 +33,8 @@ export default class NintendoPresenceV2 extends Data {
 	private unknown7 = new UInt8();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.changedFlags.extractFrom(stream);
@@ -81,3 +84,5 @@ export default class NintendoPresenceV2 extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = NintendoPresenceV2;

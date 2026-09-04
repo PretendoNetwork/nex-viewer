@@ -1,5 +1,6 @@
 import Data from '@/nex/types/data';
 import Bool from '@/nex/types/bool';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'PrincipalPreference';
@@ -14,6 +15,8 @@ export default class PrincipalPreference extends Data {
 	private blockFriendRequests = new Bool();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.showOnlinePresence.extractFrom(stream);
@@ -39,3 +42,5 @@ export default class PrincipalPreference extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = PrincipalPreference;
