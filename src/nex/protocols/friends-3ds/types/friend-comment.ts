@@ -2,6 +2,7 @@ import Data from '@/nex/types/data';
 import PID from '@/nex/types/pid';
 import RVString from '@/nex/types/string';
 import DateTime from '@/nex/types/datetime';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendComment';
@@ -16,6 +17,8 @@ export default class FriendComment extends Data {
 	private modified = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.pid.extractFrom(stream);
@@ -41,3 +44,5 @@ export default class FriendComment extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = FriendComment;
