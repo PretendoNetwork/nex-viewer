@@ -41,8 +41,15 @@ export type NameResolutionBlock = object; // * Unused
 export type InterfaceStatisticsBlock = object; // * Unused
 export type CustomBlock = object; // * Unused
 
+export type NullInterface = {
+	type: typeof LINKTYPE_NULL;
+	data: {
+		protocolType: number;
+	};
+};
+
 export type EthernetInterface = {
-	type: 1;
+	type: typeof LINKTYPE_ETHERNET;
 	data: {
 		destinationMAC: string;
 		sourceMAC: string;
@@ -50,7 +57,7 @@ export type EthernetInterface = {
 	};
 };
 
-export type NetworkInterface = EthernetInterface;
+export type NetworkInterface = NullInterface | EthernetInterface;
 
 const BOM_BE = 0x4D3C2B1A;
 const BOM_LE = 0x1A2B3C4D;
@@ -64,6 +71,7 @@ const BLOCK_TYPE_INTERFACE_STATISTICS = 0x00000005;
 const BLOCK_TYPE_CUSTOM_1 = 0x00000BAD;
 const BLOCK_TYPE_CUSTOM_2 = 0x40000BAD;
 
+const LINKTYPE_NULL = 0x0000;
 const LINKTYPE_ETHERNET = 0x0001;
 
 export default class PCAPNGParser {
@@ -229,6 +237,11 @@ export default class PCAPNGParser {
 		let networkInterface;
 
 		switch (interfaceDescription.linkLayerType) {
+			case LINKTYPE_NULL:
+				networkInterface = this.parseInterfaceNull();
+				interfaceDataLength = 4;
+				break;
+
 			case LINKTYPE_ETHERNET:
 				networkInterface = this.parseInterfaceEthernet();
 				interfaceDataLength = 14;
@@ -311,6 +324,11 @@ export default class PCAPNGParser {
 		let networkInterface;
 
 		switch (interfaceDescription.linkLayerType) {
+			case LINKTYPE_NULL:
+				networkInterface = this.parseInterfaceNull();
+				interfaceDataLength = 4;
+				break;
+
 			case LINKTYPE_ETHERNET:
 				networkInterface = this.parseInterfaceEthernet();
 				interfaceDataLength = 14;
@@ -411,6 +429,15 @@ export default class PCAPNGParser {
 	}
 
 	// * INTERFACE PARSERS
+
+	private parseInterfaceNull(): NullInterface {
+		return {
+			type: LINKTYPE_NULL,
+			data: {
+				protocolType: this.readUInt32()
+			}
+		};
+	}
 
 	private parseInterfaceEthernet(): EthernetInterface {
 		return {
