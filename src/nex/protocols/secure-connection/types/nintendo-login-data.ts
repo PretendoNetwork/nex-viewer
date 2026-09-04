@@ -13,6 +13,8 @@ export default class NintendoLoginData extends Data {
 	private token = new String();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.token.extractFrom(stream);

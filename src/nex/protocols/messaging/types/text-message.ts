@@ -12,6 +12,8 @@ export default class TextMessage extends UserMessage {
 	private m_strTextBody = new RVString();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.m_strTextBody.extractFrom(stream);
@@ -23,6 +25,7 @@ export default class TextMessage extends UserMessage {
 
 	public toJSON(): Record<string, any> {
 		return {
+			__parent: super.toJSON(),
 			__version: this.revision,
 			__displayTypeName: className,
 			__typeName: className,

@@ -18,6 +18,8 @@ export default class NintendoNotificationEventGeneral extends Data {
 	private m_strParam = new RVString();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.m_u32Param.extractFrom(stream);
@@ -32,6 +34,7 @@ export default class NintendoNotificationEventGeneral extends Data {
 
 	public toJSON(): Record<string, any> {
 		return {
+			__parent: super.toJSON(),
 			__version: this.revision,
 			__displayTypeName: className,
 			__typeName: className,

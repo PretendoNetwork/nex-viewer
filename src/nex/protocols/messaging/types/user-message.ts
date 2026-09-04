@@ -29,6 +29,8 @@ export default class UserMessage extends Data {
 	private m_messageRecipient = new MessageRecipient();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.libraryVersion = stream.title.libraryVersions.messaging;
 		this.extractHeaderFrom(stream);
 

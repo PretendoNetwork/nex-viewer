@@ -17,6 +17,8 @@ export default class NintendoNotificationEventProfile extends Data {
 	private m_platform = new UInt8();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.m_region.extractFrom(stream);
@@ -32,6 +34,7 @@ export default class NintendoNotificationEventProfile extends Data {
 
 	public toJSON(): Record<string, any> {
 		return {
+			__parent: super.toJSON(),
 			__version: this.revision,
 			__displayTypeName: className,
 			__typeName: className,

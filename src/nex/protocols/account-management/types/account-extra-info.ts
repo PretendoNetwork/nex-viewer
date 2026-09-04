@@ -1,4 +1,4 @@
-import DDLClass from '@/nex/types/ddl-class';
+import Data from '@/nex/types/data';
 import UInt64 from '@/nex/types/uint64';
 import UInt32 from '@/nex/types/uint32';
 import RVString from '@/nex/types/string';
@@ -7,7 +7,7 @@ import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'AccountExtraInfo';
 
-export default class AccountExtraInfo extends DDLClass {
+export default class AccountExtraInfo extends Data {
 	public get typeName(): string {
 		return className;
 	}
@@ -17,6 +17,8 @@ export default class AccountExtraInfo extends DDLClass {
 	private token = new RVString();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.localFriendCode.extractFrom(stream);
@@ -30,6 +32,7 @@ export default class AccountExtraInfo extends DDLClass {
 
 	public toJSON(): any {
 		return {
+			__parent: super.toJSON(),
 			__version: this.revision,
 			__displayTypeName: className,
 			__typeName: className,
