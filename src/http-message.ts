@@ -6,6 +6,14 @@ export enum HTTPMessageDirection {
 }
 
 type HTTPMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH' | 'QUERY';
+
+// * `FormData` holds its values as Blobs, which use an async-based API. We do everything sync
+export interface HTTPFormField {
+	name: string;
+	value: Buffer;
+	filename?: string; // * Only set when the part is a file
+	contentType?: string; // * The parts own content type, when it declared one
+}
 type ContentEncoding = 'gzip' | 'x-gzip' | 'compress' | 'x-compress' | 'deflate' | 'br' | 'zstd' | 'dcb' | 'dcz';
 
 // TODO - Add more convenience methods to the classes
@@ -15,7 +23,7 @@ abstract class HTTPMessageBase {
 	public readonly headers: string[][];
 	public readonly body: Buffer = Buffer.alloc(0);
 	public readonly bodyRaw: Buffer = Buffer.alloc(0);
-	public readonly form: FormData = new FormData();
+	public readonly form: HTTPFormField[] = [];
 
 	protected readonly startLine: string;
 
@@ -36,48 +44,55 @@ abstract class HTTPMessageBase {
 				const encodings = contentEncodingsHeaders.split(',').map(encoding => encoding.trim().toLowerCase()).filter(encoding => encoding).reverse() as ContentEncoding[];
 				let decompressed = this.body;
 
-				for (const encoding of encodings) {
-					switch (encoding) {
-						case 'gzip':
-						case 'x-gzip': // * Legacy name
-							decompressed = zlib.gunzipSync(decompressed);
-							break;
-						case 'compress':
-						case 'x-compress': // * Legacy name
-							// TODO - I couldn't find a web server that gave a sample of this to verify if it worked
-							console.warn('HTTP message using the compress/x-compress content encoding. This encoding format is not yet supported');
-							break;
-						case 'deflate':
-							// TODO - I couldn't find a web server that gave a sample of this to verify if it worked
-							console.warn('HTTP message using the deflate content encoding. This encoding format is not yet supported');
-							break;
-						case 'br':
-							decompressed = zlib.brotliDecompressSync(decompressed);
-							break;
-						case 'zstd':
-							decompressed = zlib.zstdDecompressSync(decompressed);
-							break;
-						case 'dcb':
-							// TODO - This requires knowledge of an external dictionary, and this class is stateless so it doesn't have access to that. Maybe add this later
-							console.warn('HTTP message using the dcb content encoding. This encoding format is not yet supported');
-							break;
-						case 'dcz':
-							// TODO - This requires knowledge of an external dictionary, and this class is stateless so it doesn't have access to that. Maybe add this later
-							console.warn('HTTP message using the dcz content encoding. This encoding format is not yet supported');
-							break;
+				try {
+					for (const encoding of encodings) {
+						switch (encoding) {
+							case 'gzip':
+							case 'x-gzip': // * Legacy name
+								decompressed = zlib.gunzipSync(decompressed);
+								break;
+							case 'compress':
+							case 'x-compress': // * Legacy name
+								// TODO - I couldn't find a web server that gave a sample of this to verify if it worked
+								console.warn('HTTP message using the compress/x-compress content encoding. This encoding format is not yet supported');
+								break;
+							case 'deflate':
+								// TODO - I couldn't find a web server that gave a sample of this to verify if it worked
+								console.warn('HTTP message using the deflate content encoding. This encoding format is not yet supported');
+								break;
+							case 'br':
+								decompressed = zlib.brotliDecompressSync(decompressed);
+								break;
+							case 'zstd':
+								decompressed = zlib.zstdDecompressSync(decompressed);
+								break;
+							case 'dcb':
+								// TODO - This requires knowledge of an external dictionary, and this class is stateless so it doesn't have access to that. Maybe add this later
+								console.warn('HTTP message using the dcb content encoding. This encoding format is not yet supported');
+								break;
+							case 'dcz':
+								// TODO - This requires knowledge of an external dictionary, and this class is stateless so it doesn't have access to that. Maybe add this later
+								console.warn('HTTP message using the dcz content encoding. This encoding format is not yet supported');
+								break;
+						}
 					}
-				}
 
-				this.body = decompressed;
+					this.body = decompressed;
+				} catch {
+					// * Sanity check. Some dump formats like Fiddler modify the request/response bodies
+					// * so fallback to the raw bytes if anything goes wrong
+					this.body = this.bodyRaw;
+				}
 			}
 
 			const contentType = this.header('content-type');
 
 			if (contentType === 'application/x-www-form-urlencoded') {
-				const searchParams = new URLSearchParams(this.text());
-
-				for (const [key, value] of Object.entries(Object.fromEntries(searchParams))) {
-					this.form.append(key, value);
+				for (const [name, value] of new URLSearchParams(this.text())) {
+					this.form.push({
+						name: name,
+						value: Buffer.from(value)
+					});
 				}
 			}
 
@@ -141,25 +156,18 @@ abstract class HTTPMessageBase {
 						dispositionValues.set(name.toLowerCase(), value);
 					}
 
-					const body = chunk.subarray(metadata.bodyStart);
-					const blob = new Blob([new Uint8Array(body)]);
 					const name = dispositionValues.get('name');
-					const filename = dispositionValues.get('filename');
 
 					if (name === undefined) {
 						continue;
 					}
 
-					if (filename) {
-						const type = headers.get('content-type') ?? 'text/plain';
-						const file = new File([blob], filename, {
-							type: type
-						});
-
-						this.form.append(name, file);
-					} else {
-						this.form.append(name, blob);
-					}
+					this.form.push({
+						name: name,
+						value: chunk.subarray(metadata.bodyStart),
+						filename: dispositionValues.get('filename'),
+						contentType: headers.get('content-type')
+					});
 				}
 			}
 		}
@@ -213,14 +221,11 @@ export class HTTPRequest extends HTTPMessageBase {
 		this.protocol = protocol;
 		this.hostname = this.header('host');
 
-		if (this.requestTarget.includes('?')) {
-			const [path, query] = this.requestTarget.split('?');
+		// * Only the first "?" separates the path from the query, any others are part of the query itself
+		const [path, ...query] = this.requestTarget.split('?');
 
-			this.path = path;
-			this.query = new URLSearchParams(query);
-		} else {
-			this.path = this.requestTarget;
-		}
+		this.path = path;
+		this.query = new URLSearchParams(query.join('?'));
 	}
 }
 
@@ -233,11 +238,12 @@ export class HTTPResponse extends HTTPMessageBase {
 	constructor(data: Buffer) {
 		super(data);
 
-		const [protocol, statusCode, reasonPhrase] = this.startLine.split(' ');
+		// * The reason phrase is optional and may contain spaces, so just assume it's everything after the status code
+		const [protocol, statusCode, ...reasonPhrase] = this.startLine.split(' ');
 
 		this.protocol = protocol;
 		this.statusCode = Number(statusCode);
-		this.reasonPhrase = reasonPhrase;
+		this.reasonPhrase = reasonPhrase.join(' ');
 	}
 }
 

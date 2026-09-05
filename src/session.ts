@@ -17,6 +17,8 @@ import PRUDPPacketLite from '@/nex/prudp-packetLite';
 import RawRMCPacket from '@/nex/raw-rmc-packet';
 import NPLNTransaction from '@/npln/npln-transaction';
 import PNSJSession from '@/pnsj-session';
+import HARParser from '@/har-parser';
+import HTTPTransaction from '@/http-transaction';
 import parseHTTPMessage, { HTTPMessageDirection } from '@/http-message';
 import type { PCAPFrame } from '@/pcap-parser';
 import type { SimplePacketBlock, EnhancedPacketBlock } from '@/pcapng-parser';
@@ -73,6 +75,9 @@ export default class Session extends EventEmitter {
 			case '.bin': // TODO - Replace this with a `parseBin` function that supports other .bin formats
 				this.parseProxideConnection(captureData); // TODO - Always assumes gRPC connections. Make this more generic?
 				break;
+			case '.har':
+				this.parseHAR(captureData);
+				break;
 			case '.pnsj':
 				this.parsePNSJSession(captureData);
 				break;
@@ -128,6 +133,8 @@ export default class Session extends EventEmitter {
 		let elapsedTime = 0;
 
 		for (const transaction of parser.transactions()) {
+			this.addSerializedMessage(HTTPTransaction.fromCharlesTransaction(transaction).toJSON());
+
 			for (const message of transaction.websocketMessages) {
 				const timestampSeconds = Number(message.startTime) / 1000;
 
@@ -168,6 +175,8 @@ export default class Session extends EventEmitter {
 		let elapsedTime = 0;
 
 		for (const transaction of parser.transactions()) {
+			this.addSerializedMessage(HTTPTransaction.fromCharlesTransaction(transaction).toJSON());
+
 			for (const message of transaction.websocketMessages) {
 				const timestampSeconds = new Date(message.startTime).getTime() / 1000;
 
@@ -207,7 +216,13 @@ export default class Session extends EventEmitter {
 		const parser = new FlowsParser(captureData);
 
 		for (const flow of parser.flows()) {
-			if (flow.type === 'http' && flow.websocket && flow.server_conn.address && flow.server_conn.sni) {
+			if (flow.type !== 'http') {
+				continue;
+			}
+
+			this.addSerializedMessage(HTTPTransaction.fromMitmproxyFlow(flow).toJSON());
+
+			if (flow.websocket && flow.server_conn.address && flow.server_conn.sni) {
 				for (const message of flow.websocket.messages) {
 					const stream = new ByteStream(message.content);
 					const packet = new PRUDPPacketLite(stream);
@@ -321,6 +336,28 @@ export default class Session extends EventEmitter {
 			if (contentType.startsWith('application/grpc')) {
 				this.addSerializedMessage(NPLNTransaction.parseFromProxideTransaction(transaction).toJSON());
 			}
+		}
+
+		this.emitSerializedMessageList();
+	}
+
+	private parseHAR(captureData: Buffer): void {
+		const parser = new HARParser(captureData);
+		let elapsedTime = 0;
+
+		for (const transaction of parser.transactions()) {
+			const httpTransaction = HTTPTransaction.fromHARTransaction(transaction);
+			const timestampSeconds = transaction.startTime;
+
+			if (this.lastPacketTime !== 0) {
+				this.elapsedTime += timestampSeconds - this.lastPacketTime;
+				elapsedTime = this.elapsedTime;
+			}
+
+			this.lastPacketTime = timestampSeconds;
+			httpTransaction.elapsedTime = elapsedTime;
+
+			this.addSerializedMessage(httpTransaction.toJSON());
 		}
 
 		this.emitSerializedMessageList();

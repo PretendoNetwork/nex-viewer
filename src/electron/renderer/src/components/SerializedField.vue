@@ -102,6 +102,17 @@ function getDisplayValue(field: SerializedField): string {
 	return `${field.__value}`;
 }
 
+// * Only currently used to save HTTP form file uploads
+function saveValue(field: SerializedField): void {
+	const bytes = field.__bytes ?? (Array.isArray(field.__value) ? field.__value : undefined);
+
+	if (!bytes) {
+		return;
+	}
+
+	window.api.saveBytes(field.__filename ?? props.fieldKey, new Uint8Array(bytes));
+}
+
 function copyValue(e: MouseEvent, field: SerializedField): void {
 	if (field.__typeName === 'Buffer' || field.__typeName === 'QBuffer') {
 		copyToClipboard(e, toHexString(field.__value));
@@ -252,6 +263,7 @@ const variantIsComplex = variantInner && ('__fields' in variantInner || (typeof 
 		<div class="ml-2 flex-1 truncate">
 			<span class="text-sm cursor-pointer hover:underline" @click="copyValue($event, field)">{{ getDisplayValue(field) }}</span>
 		</div>
+		<button v-if="field.__saveable" class="ml-2 flex-shrink-0 text-xs text-[#9a9fa9] hover:text-[#F9FAFC] transition-colors cursor-pointer" @click="saveValue(field)">Save to disk</button>
 	</div>
 
 	<AccordionRoot v-else class="w-full" type="single" :collapsible="true">
