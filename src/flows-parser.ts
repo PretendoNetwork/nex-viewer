@@ -64,6 +64,7 @@ type FlowConnection = {
 	timestamp_tls_setup: number | null;
 };
 interface FlowClientConnection extends FlowConnection {
+	address: Address | null;
 	peername: Address;
 	sockname: Address;
 	mitmcert: Cert | null;
@@ -172,6 +173,7 @@ export default class FlowsParser {
 			throw new Error('Expected dictionary node');
 		}
 
+		// TODO - Transparent mode (when the proxy doesn't intercept HTTPS data) will include 'tcp' nodes
 		if (tnetstring.type !== 'http') {
 			throw new Error('Expected http flow');
 		}
@@ -184,6 +186,13 @@ export default class FlowsParser {
 			flow.client_conn.peername = {
 				ip: flowData.client_conn.peername[0],
 				port: flowData.client_conn.peername[1]
+			};
+		}
+
+		if (flowData.client_conn.address) {
+			flow.client_conn.peername = {
+				ip: flowData.client_conn.address[0],
+				port: flowData.client_conn.address[1]
 			};
 		}
 
