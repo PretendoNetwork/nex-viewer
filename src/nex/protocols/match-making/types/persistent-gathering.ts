@@ -63,3 +63,4 @@ export default class PersistentGathering extends Gathering {
 }
 
 AnyDataHolder.Classes[className] = PersistentGathering;
+AnyDataHolder.Classes['Community'] = PersistentGathering; // * Legacy name, Nintendo originally named this class "Community" before switching to "PersistentGathering" later
