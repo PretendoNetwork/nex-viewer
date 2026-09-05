@@ -155,4 +155,4 @@ export default class MatchmakeSession extends Gathering {
 	}
 }
 
-AnyDataHolder.Classes['MatchmakeSession'] = MatchmakeSession;
+AnyDataHolder.Classes[className] = MatchmakeSession;

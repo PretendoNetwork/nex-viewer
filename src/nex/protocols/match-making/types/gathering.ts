@@ -64,4 +64,4 @@ export default class Gathering extends DDLClass {
 	}
 }
 
-AnyDataHolder.Classes['Gathering'] = Gathering;
+AnyDataHolder.Classes[className] = Gathering;

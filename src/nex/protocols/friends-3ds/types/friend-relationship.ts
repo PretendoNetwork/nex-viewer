@@ -2,6 +2,7 @@ import Data from '@/nex/types/data';
 import PID from '@/nex/types/pid';
 import UInt64 from '@/nex/types/uint64';
 import UInt8 from '@/nex/types/uint8';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendRelationship';
@@ -16,6 +17,8 @@ export default class FriendRelationship extends Data {
 	private relationshipType = new UInt8();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.pid.extractFrom(stream);
@@ -41,3 +44,5 @@ export default class FriendRelationship extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = FriendRelationship;

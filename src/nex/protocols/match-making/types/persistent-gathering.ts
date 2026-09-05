@@ -62,4 +62,4 @@ export default class PersistentGathering extends Gathering {
 	}
 }
 
-AnyDataHolder.Classes['PersistentGathering'] = PersistentGathering;
+AnyDataHolder.Classes[className] = PersistentGathering;

@@ -3,6 +3,7 @@ import RVString from '@/nex/types/string';
 import UInt8 from '@/nex/types/uint8';
 import RVBuffer from '@/nex/types/buffer';
 import DateTime from '@/nex/types/datetime';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'MiiV2';
@@ -19,6 +20,8 @@ export default class MiiV2 extends Data {
 	private unknown3 = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.name.extractFrom(stream);
@@ -48,3 +51,5 @@ export default class MiiV2 extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = MiiV2;

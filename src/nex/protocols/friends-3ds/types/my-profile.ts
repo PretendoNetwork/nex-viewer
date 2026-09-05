@@ -2,6 +2,7 @@ import Data from '@/nex/types/data';
 import UInt8 from '@/nex/types/uint8';
 import UInt64 from '@/nex/types/uint64';
 import RVString from '@/nex/types/string';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'MyProfile';
@@ -21,6 +22,8 @@ export default class MyProfile extends Data {
 	private consoleSerialNumber = new RVString();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.region.extractFrom(stream);
@@ -56,3 +59,5 @@ export default class MyProfile extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = MyProfile;

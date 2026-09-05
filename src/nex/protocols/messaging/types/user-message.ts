@@ -5,6 +5,7 @@ import PID from '@/nex/types/pid';
 import DateTime from '@/nex/types/datetime';
 import RVString from '@/nex/types/string';
 import MessageRecipient from '@/nex/protocols/messaging/types/message-recipient';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'UserMessage';
@@ -28,6 +29,8 @@ export default class UserMessage extends Data {
 	private m_messageRecipient = new MessageRecipient();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.libraryVersion = stream.title.libraryVersions.messaging;
 		this.extractHeaderFrom(stream);
 
@@ -86,3 +89,5 @@ export default class UserMessage extends Data {
 		return json;
 	}
 }
+
+AnyDataHolder.Classes[className] = UserMessage;

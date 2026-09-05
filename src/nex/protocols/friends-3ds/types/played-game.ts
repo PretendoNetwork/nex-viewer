@@ -1,6 +1,7 @@
 import Data from '@/nex/types/data';
 import GameKey from '@/nex/protocols/friends-3ds/types/game-key';
 import DateTime from '@/nex/types/datetime';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'PlayedGame';
@@ -14,6 +15,8 @@ export default class PlayedGame extends Data {
 	private unknown = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.gamekey.extractFrom(stream);
@@ -37,3 +40,5 @@ export default class PlayedGame extends Data {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = PlayedGame;

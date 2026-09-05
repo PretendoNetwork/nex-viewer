@@ -1,11 +1,12 @@
-import DDLClass from '@/nex/types/ddl-class';
+import Data from '@/nex/types/data';
 import PID from '@/nex/types/pid';
 import DateTime from '@/nex/types/datetime';
+import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendInfo';
 
-export default class FriendInfo extends DDLClass {
+export default class FriendInfo extends Data {
 	public get typeName(): string {
 		return className;
 	}
@@ -14,6 +15,8 @@ export default class FriendInfo extends DDLClass {
 	private Unknown = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.Principalid.extractFrom(stream);
@@ -26,6 +29,7 @@ export default class FriendInfo extends DDLClass {
 
 	public toJSON(): any {
 		return {
+			__parent: super.toJSON(),
 			__version: this.revision,
 			__displayTypeName: className,
 			__typeName: className,
@@ -36,3 +40,5 @@ export default class FriendInfo extends DDLClass {
 		};
 	}
 }
+
+AnyDataHolder.Classes[className] = FriendInfo;
