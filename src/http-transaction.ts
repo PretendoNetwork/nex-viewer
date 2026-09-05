@@ -39,7 +39,8 @@ function bodyLanguage(mime: string): string {
 }
 
 function formField(field: HTTPFormField): SerializedField {
-	if (field.contentType === undefined) {
+	// * 3DS and Wii U file uploads only have the "file" field name as reference
+	if (field.contentType === undefined && field.name !== 'file') {
 		return {
 			__displayTypeName: 'String',
 			__saveable: true,
@@ -275,6 +276,7 @@ export default class HTTPTransaction {
 									name: 'Headers',
 									data: {
 										__displayTypeName: 'HTTP Headers',
+										// TODO - This doesn't support multiple headers with the same name
 										__fields: Object.fromEntries(
 											this.response.headers.map(([name, value]) => [
 												name,
