@@ -16,6 +16,8 @@ export default class FriendMiiList extends Data {
 	private unknown2 = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.unknown1.extractFrom(stream);

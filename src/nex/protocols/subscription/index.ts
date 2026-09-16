@@ -1,6 +1,12 @@
 import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/subscription/methods';
+import AnyDataHolder from '@/nex/types/any-data-holder';
+import SubscriptionData from '@/nex/protocols/subscription/types/subscription-data';
+import ActivePlayerSubscriptionData from '@/nex/protocols/subscription/types/active-player-subscription-data';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
+
+AnyDataHolder.Classes['SubscriptionData'] = SubscriptionData;
+AnyDataHolder.Classes['ActivePlayerSubscriptionData'] = ActivePlayerSubscriptionData;
 
 export default class SubscriptionProtocol {
 	static ID = 0x75;
@@ -15,11 +21,11 @@ export default class SubscriptionProtocol {
 		ClearTarget: 0x6,
 		GetFriendSubscriptionData: 0x7,
 		GetTargetSubscriptionData: 0x8,
-        GetActivePlayerSubscriptionData: 0x9,
-        GetSubscriptionData: 0xA,
-        ReplaceTargetAndGetSubscriptionData: 0xB,
-        SetPrivacyLevel: 0xC,
-        GetPrivacyLevel: 0xD
+		GetActivePlayerSubscriptionData: 0x9,
+		GetSubscriptionData: 0xA,
+		ReplaceTargetAndGetSubscriptionData: 0xB,
+		SetPrivacyLevel: 0xC,
+		GetPrivacyLevel: 0xD
 	};
 
 	private static handlers: Record<number, (message: RMCMessage) => any> = {
@@ -31,11 +37,11 @@ export default class SubscriptionProtocol {
 		0x6: SubscriptionProtocol.ClearTarget,
 		0x7: SubscriptionProtocol.GetFriendSubscriptionData,
 		0x8: SubscriptionProtocol.GetTargetSubscriptionData,
-        0x9: SubscriptionProtocol.GetActivePlayerSubscriptionData,
-        0xA: SubscriptionProtocol.GetSubscriptionData,
-        0xB: SubscriptionProtocol.ReplaceTargetAndGetSubscriptionData,
-        0xC: SubscriptionProtocol.SetPrivacyLevel,
-        0xD: SubscriptionProtocol.GetPrivacyLevel
+		0x9: SubscriptionProtocol.GetActivePlayerSubscriptionData,
+		0xA: SubscriptionProtocol.GetSubscriptionData,
+		0xB: SubscriptionProtocol.ReplaceTargetAndGetSubscriptionData,
+		0xC: SubscriptionProtocol.SetPrivacyLevel,
+		0xD: SubscriptionProtocol.GetPrivacyLevel
 	};
 
 	static handlePacket(packet: PRUDPPacket): void {

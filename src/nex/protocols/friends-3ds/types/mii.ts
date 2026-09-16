@@ -18,6 +18,8 @@ export default class Mii extends Data {
 	private data = new RVBuffer();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.name.extractFrom(stream);

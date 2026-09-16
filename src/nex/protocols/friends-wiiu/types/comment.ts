@@ -16,6 +16,8 @@ export default class Comment extends Data {
 	private lastChanged = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.unknown.extractFrom(stream);

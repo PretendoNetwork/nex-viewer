@@ -16,6 +16,8 @@ export default class FriendRelationship extends Data {
 	private relationshipType = new UInt8();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.pid.extractFrom(stream);

@@ -1,6 +1,14 @@
 import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/messaging/methods';
+import AnyDataHolder from '@/nex/types/any-data-holder';
+import UserMessage from '@/nex/protocols/messaging/types/user-message';
+import TextMessage from '@/nex/protocols/messaging/types/text-message';
+import BinaryMessage from '@/nex/protocols/messaging/types/binary-message';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
+
+AnyDataHolder.Classes['UserMessage'] = UserMessage;
+AnyDataHolder.Classes['TextMessage'] = TextMessage;
+AnyDataHolder.Classes['BinaryMessage'] = BinaryMessage;
 
 export default class MessagingProtocol {
 	static ID = 0x17;

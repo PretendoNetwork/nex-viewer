@@ -14,6 +14,8 @@ export default class PlayedGame extends Data {
 	private unknown = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.gamekey.extractFrom(stream);

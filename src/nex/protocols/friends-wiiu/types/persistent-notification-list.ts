@@ -13,6 +13,8 @@ export default class PersistentNotificationList extends Data {
 	private notifications = new List(new PersistentNotification());
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.notifications.extractFrom(stream);

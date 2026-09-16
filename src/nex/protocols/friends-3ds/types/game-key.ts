@@ -14,6 +14,8 @@ export default class GameKey extends Data {
 	private m_gameVersion = new UInt16();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.m_gameCode.extractFrom(stream);

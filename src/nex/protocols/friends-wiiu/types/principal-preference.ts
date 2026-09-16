@@ -14,6 +14,8 @@ export default class PrincipalPreference extends Data {
 	private blockFriendRequests = new Bool();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.showOnlinePresence.extractFrom(stream);

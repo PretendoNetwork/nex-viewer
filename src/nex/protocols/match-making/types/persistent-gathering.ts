@@ -3,7 +3,6 @@ import RVString from '@/nex/types/string';
 import List from '@/nex/types/list';
 import RVBuffer from '@/nex/types/buffer';
 import DateTime from '@/nex/types/datetime';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import Gathering from '@/nex/protocols/match-making/types/gathering';
 import type NEXByteStream from '@/nex/byte-stream';
 
@@ -61,5 +60,3 @@ export default class PersistentGathering extends Gathering {
 		};
 	}
 }
-
-AnyDataHolder.Classes['PersistentGathering'] = PersistentGathering;

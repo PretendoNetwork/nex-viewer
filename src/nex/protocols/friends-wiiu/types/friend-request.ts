@@ -16,6 +16,8 @@ export default class FriendRequest extends Data {
 	private sentOn = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.principalBasicInfo.extractFrom(stream);

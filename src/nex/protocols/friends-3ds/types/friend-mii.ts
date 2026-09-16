@@ -16,6 +16,8 @@ export default class FriendMii extends Data {
 	private modified = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.pid.extractFrom(stream);

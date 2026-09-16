@@ -14,6 +14,8 @@ export default class FriendPresence extends Data {
 	private nintendoPresence = new NintendoPresence();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.pid.extractFrom(stream);

@@ -24,6 +24,8 @@ export default class FriendRequestMessage extends Data {
 	private expires = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.friendRequestID.extractFrom(stream);

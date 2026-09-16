@@ -16,6 +16,8 @@ export default class BlacklistedPrincipal extends Data {
 	private blacklistedSince = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.principalBasicInfo.extractFrom(stream);

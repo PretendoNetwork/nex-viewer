@@ -6,7 +6,6 @@ import RVBuffer from '@/nex/types/buffer';
 import UInt8 from '@/nex/types/uint8';
 import DateTime from '@/nex/types/datetime';
 import RVString from '@/nex/types/string';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import Gathering from '@/nex/protocols/match-making/types/gathering';
 import MatchmakeParam from '@/nex/protocols/match-making/types/matchmake-param';
 import type NEXByteStream from '@/nex/byte-stream';
@@ -154,5 +153,3 @@ export default class MatchmakeSession extends Gathering {
 		return json;
 	}
 }
-
-AnyDataHolder.Classes['MatchmakeSession'] = MatchmakeSession;

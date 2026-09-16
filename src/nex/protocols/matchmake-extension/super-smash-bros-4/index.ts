@@ -1,7 +1,11 @@
 import RMCMessage from '@/nex/rmc-message';
 import MatchmakeExtensionProtocol from '@/nex/protocols/matchmake-extension';
 import * as Methods from '@/nex/protocols/matchmake-extension/super-smash-bros-4/methods';
+import AnyDataHolder from '@/nex/types/any-data-holder';
+import CommunityCompetition from '@/nex/protocols/matchmake-extension/super-smash-bros-4/types/community-competition';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
+
+AnyDataHolder.Classes['CommunityCompetition'] = CommunityCompetition;
 
 export default class MatchmakeExtensionProtocolSuperSmashBros4 {
 	static ID = 0x6D;

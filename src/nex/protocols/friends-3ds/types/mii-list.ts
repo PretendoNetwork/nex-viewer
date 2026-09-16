@@ -19,6 +19,8 @@ export default class MiiList extends Data {
 	private miiDataList = new List(new RVBuffer());
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.unknown1.extractFrom(stream);

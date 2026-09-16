@@ -21,6 +21,8 @@ export default class MyProfile extends Data {
 	private consoleSerialNumber = new RVString();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.region.extractFrom(stream);

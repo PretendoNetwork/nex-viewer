@@ -19,6 +19,8 @@ export default class MiiV2 extends Data {
 	private unknown3 = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.name.extractFrom(stream);

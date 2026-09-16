@@ -1,6 +1,5 @@
 import Data from '@/nex/types/data';
 import String from '@/nex/types/string';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'NintendoLoginData';
@@ -13,6 +12,8 @@ export default class NintendoLoginData extends Data {
 	private token = new String();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.token.extractFrom(stream);
@@ -34,5 +35,3 @@ export default class NintendoLoginData extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes['NintendoLoginData'] = NintendoLoginData;

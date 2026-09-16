@@ -26,6 +26,8 @@ export default class FriendPersistentInfo extends Data {
 	private lastOnline = new DateTime();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.pid.extractFrom(stream);

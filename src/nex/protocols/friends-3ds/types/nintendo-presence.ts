@@ -26,6 +26,8 @@ export default class NintendoPresence extends Data {
 	private m_applicationArg = new RVBuffer();
 
 	public extractFrom(stream: NEXByteStream): void {
+		super.extractFrom(stream);
+
 		this.extractHeaderFrom(stream);
 
 		this.m_changedBitFlag.extractFrom(stream);

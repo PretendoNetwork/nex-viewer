@@ -1,5 +1,5 @@
-import PID from '@/nex/types/pid';
 import Data from '@/nex/types/data';
+import PID from '@/nex/types/pid';
 import QBuffer from '@/nex/types/qbuffer';
 import type NEXByteStream from '@/nex/byte-stream';
 

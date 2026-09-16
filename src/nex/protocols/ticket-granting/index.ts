@@ -2,8 +2,10 @@ import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/ticket-granting/methods';
 import AnyDataHolder from '@/nex/types/any-data-holder';
 import AuthenticationInfo from '@/nex/protocols/ticket-granting/types/authentication-info';
+import NullData from '@/nex/protocols/ticket-granting/types/null-data';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
 
+AnyDataHolder.Classes['NullData'] = NullData;
 AnyDataHolder.Classes['AuthenticationInfo'] = AuthenticationInfo;
 
 export default class TicketGrantingProtocol {

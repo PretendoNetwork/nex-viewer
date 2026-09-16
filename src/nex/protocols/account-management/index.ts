@@ -1,6 +1,10 @@
 import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/account-management/methods';
+import AnyDataHolder from '@/nex/types/any-data-holder';
+import AccountExtraInfo from '@/nex/protocols/account-management/types/account-extra-info';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
+
+AnyDataHolder.Classes['AccountExtraInfo'] = AccountExtraInfo;
 
 export default class AccountManagementProtocol {
 	static ID = 0x19;
