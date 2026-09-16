@@ -4,7 +4,6 @@ import UInt8 from '@/nex/types/uint8';
 import GameKey from '@/nex/protocols/friends-3ds/types/game-key';
 import RVString from '@/nex/types/string';
 import DateTime from '@/nex/types/datetime';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendPersistentInfo';
@@ -70,5 +69,3 @@ export default class FriendPersistentInfo extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = FriendPersistentInfo;

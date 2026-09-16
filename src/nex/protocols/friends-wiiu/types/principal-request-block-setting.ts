@@ -1,7 +1,6 @@
 import Data from '@/nex/types/data';
 import UInt32 from '@/nex/types/uint32';
 import Bool from '@/nex/types/bool';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'PrincipalRequestBlockSetting';
@@ -40,5 +39,3 @@ export default class PrincipalRequestBlockSetting extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = PrincipalRequestBlockSetting;

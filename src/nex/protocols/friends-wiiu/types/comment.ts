@@ -2,7 +2,6 @@ import Data from '@/nex/types/data';
 import UInt8 from '@/nex/types/uint8';
 import RVString from '@/nex/types/string';
 import DateTime from '@/nex/types/datetime';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'Comment';
@@ -44,5 +43,3 @@ export default class Comment extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = Comment;

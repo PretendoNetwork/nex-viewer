@@ -1,6 +1,36 @@
 import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/friends-wiiu/methods';
+import AnyDataHolder from '@/nex/types/any-data-holder';
+import BlacklistedPrincipal from '@/nex/protocols/friends-wiiu/types/blacklisted-principal';
+import Comment from '@/nex/protocols/friends-wiiu/types/comment';
+import FriendInfo from '@/nex/protocols/friends-wiiu/types/friend-info';
+import FriendRequestMessage from '@/nex/protocols/friends-wiiu/types/friend-request-message';
+import FriendRequest from '@/nex/protocols/friends-wiiu/types/friend-request';
+import GameKey from '@/nex/protocols/friends-wiiu/types/game-key';
+import MiiV2 from '@/nex/protocols/friends-wiiu/types/mii-v2';
+import NintendoPresenceV2 from '@/nex/protocols/friends-wiiu/types/nintendo-presence-v2';
+import NNAInfo from '@/nex/protocols/friends-wiiu/types/nna-info';
+import PersistentNotificationList from '@/nex/protocols/friends-wiiu/types/persistent-notification-list';
+import PersistentNotification from '@/nex/protocols/friends-wiiu/types/persistent-notification';
+import PrincipalBasicInfo from '@/nex/protocols/friends-wiiu/types/principal-basic-info';
+import PrincipalPreference from '@/nex/protocols/friends-wiiu/types/principal-preference';
+import PrincipalRequestBlockSetting from '@/nex/protocols/friends-wiiu/types/principal-request-block-setting';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
+
+AnyDataHolder.Classes['BlacklistedPrincipal'] = BlacklistedPrincipal;
+AnyDataHolder.Classes['Comment'] = Comment;
+AnyDataHolder.Classes['FriendInfo'] = FriendInfo;
+AnyDataHolder.Classes['FriendRequestMessage'] = FriendRequestMessage;
+AnyDataHolder.Classes['FriendRequest'] = FriendRequest;
+AnyDataHolder.Classes['GameKey'] = GameKey;
+AnyDataHolder.Classes['MiiV2'] = MiiV2;
+AnyDataHolder.Classes['NintendoPresenceV2'] = NintendoPresenceV2;
+AnyDataHolder.Classes['NNAInfo'] = NNAInfo;
+AnyDataHolder.Classes['PersistentNotificationList'] = PersistentNotificationList;
+AnyDataHolder.Classes['PersistentNotification'] = PersistentNotification;
+AnyDataHolder.Classes['PrincipalBasicInfo'] = PrincipalBasicInfo;
+AnyDataHolder.Classes['PrincipalPreference'] = PrincipalPreference;
+AnyDataHolder.Classes['PrincipalRequestBlockSetting'] = PrincipalRequestBlockSetting;
 
 export default class FriendsWiiUProtocol {
 	static ID = 0x66;

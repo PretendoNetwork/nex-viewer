@@ -1,6 +1,5 @@
 import Data from '@/nex/types/data';
 import UInt8 from '@/nex/types/uint8';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'NintendoNotificationEventProfile';
@@ -48,5 +47,3 @@ export default class NintendoNotificationEventProfile extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = NintendoNotificationEventProfile;

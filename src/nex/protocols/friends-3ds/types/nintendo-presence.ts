@@ -5,7 +5,6 @@ import RVString from '@/nex/types/string';
 import UInt8 from '@/nex/types/uint8';
 import PID from '@/nex/types/pid';
 import RVBuffer from '@/nex/types/buffer';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'NintendoPresence';
@@ -68,5 +67,3 @@ export default class NintendoPresence extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = NintendoPresence;

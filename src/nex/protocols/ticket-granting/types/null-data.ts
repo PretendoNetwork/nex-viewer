@@ -1,5 +1,4 @@
 import Data from '@/nex/types/data';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 // TODO - Is this used in places outside of TicketGranting? If so, we need to move it
@@ -31,5 +30,3 @@ export default class NullData extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = NullData;

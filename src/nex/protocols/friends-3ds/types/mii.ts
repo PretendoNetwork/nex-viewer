@@ -3,7 +3,6 @@ import RVString from '@/nex/types/string';
 import Bool from '@/nex/types/bool';
 import UInt8 from '@/nex/types/uint8';
 import RVBuffer from '@/nex/types/buffer';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'Mii';
@@ -48,5 +47,3 @@ export default class Mii extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = Mii;

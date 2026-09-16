@@ -1,6 +1,12 @@
 import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/nintendo-notification-events/methods';
+import AnyDataHolder from '@/nex/types/any-data-holder';
+import NintendoNotificationEventGeneral from '@/nex/protocols/nintendo-notification-events/types/nintendo-notification-event-general';
+import NintendoNotificationEventProfile from '@/nex/protocols/nintendo-notification-events/types/nintendo-notification-event-profile';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
+
+AnyDataHolder.Classes['NintendoNotificationEventGeneral'] = NintendoNotificationEventGeneral;
+AnyDataHolder.Classes['NintendoNotificationEventProfile'] = NintendoNotificationEventProfile;
 
 export default class NintendoNotificationEventsProtocol {
 	static ID = 0x64;

@@ -2,7 +2,6 @@ import Data from '@/nex/types/data';
 import UInt32 from '@/nex/types/uint32';
 import UInt64 from '@/nex/types/uint64';
 import RVString from '@/nex/types/string';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'NintendoNotificationEventGeneral';
@@ -47,5 +46,3 @@ export default class NintendoNotificationEventGeneral extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = NintendoNotificationEventGeneral;

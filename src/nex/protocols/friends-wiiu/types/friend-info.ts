@@ -4,7 +4,6 @@ import NintendoPresenceV2 from '@/nex/protocols/friends-wiiu/types/nintendo-pres
 import Comment from '@/nex/protocols/friends-wiiu/types/comment';
 import DateTime from '@/nex/types/datetime';
 import UInt64 from '@/nex/types/uint64';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendInfo';
@@ -55,5 +54,3 @@ export default class FriendInfo extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = FriendInfo;

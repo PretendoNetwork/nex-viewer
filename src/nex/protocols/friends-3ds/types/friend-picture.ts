@@ -2,7 +2,6 @@ import Data from '@/nex/types/data';
 import UInt32 from '@/nex/types/uint32';
 import RVBuffer from '@/nex/types/buffer';
 import DateTime from '@/nex/types/datetime';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendPicture';
@@ -44,5 +43,3 @@ export default class FriendPicture extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = FriendPicture;

@@ -1,7 +1,6 @@
 import Data from '@/nex/types/data';
 import PID from '@/nex/types/pid';
 import DateTime from '@/nex/types/datetime';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendInfo';
@@ -40,5 +39,3 @@ export default class FriendInfo extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = FriendInfo;

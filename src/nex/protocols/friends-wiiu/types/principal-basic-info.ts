@@ -3,7 +3,6 @@ import PID from '@/nex/types/pid';
 import RVString from '@/nex/types/string';
 import MiiV2 from '@/nex/protocols/friends-wiiu/types/mii-v2';
 import UInt8 from '@/nex/types/uint8';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'PrincipalBasicInfo';
@@ -48,5 +47,3 @@ export default class PrincipalBasicInfo extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = PrincipalBasicInfo;

@@ -1,6 +1,36 @@
 import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/friends-3ds/methods';
+import AnyDataHolder from '@/nex/types/any-data-holder';
+import FriendComment from '@/nex/protocols/friends-3ds/types/friend-comment';
+import FriendInfo from '@/nex/protocols/friends-3ds/types/friend-info';
+import FriendMiiList from '@/nex/protocols/friends-3ds/types/friend-mii-list';
+import FriendMii from '@/nex/protocols/friends-3ds/types/friend-mii';
+import FriendPersistentInfo from '@/nex/protocols/friends-3ds/types/friend-persistent-info';
+import FriendPicture from '@/nex/protocols/friends-3ds/types/friend-picture';
+import FriendPresence from '@/nex/protocols/friends-3ds/types/friend-presence';
+import FriendRelationship from '@/nex/protocols/friends-3ds/types/friend-relationship';
+import GameKey from '@/nex/protocols/friends-3ds/types/game-key';
+import MiiList from '@/nex/protocols/friends-3ds/types/mii-list';
+import Mii from '@/nex/protocols/friends-3ds/types/mii';
+import MyProfile from '@/nex/protocols/friends-3ds/types/my-profile';
+import NintendoPresence from '@/nex/protocols/friends-3ds/types/nintendo-presence';
+import PlayedGame from '@/nex/protocols/friends-3ds/types/played-game';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
+
+AnyDataHolder.Classes['FriendComment'] = FriendComment;
+AnyDataHolder.Classes['FriendInfo'] = FriendInfo;
+AnyDataHolder.Classes['FriendMiiList'] = FriendMiiList;
+AnyDataHolder.Classes['FriendMii'] = FriendMii;
+AnyDataHolder.Classes['FriendPersistentInfo'] = FriendPersistentInfo;
+AnyDataHolder.Classes['FriendPicture'] = FriendPicture;
+AnyDataHolder.Classes['FriendPresence'] = FriendPresence;
+AnyDataHolder.Classes['FriendRelationship'] = FriendRelationship;
+AnyDataHolder.Classes['GameKey'] = GameKey;
+AnyDataHolder.Classes['MiiList'] = MiiList;
+AnyDataHolder.Classes['Mii'] = Mii;
+AnyDataHolder.Classes['MyProfile'] = MyProfile;
+AnyDataHolder.Classes['NintendoPresence'] = NintendoPresence;
+AnyDataHolder.Classes['PlayedGame'] = PlayedGame;
 
 export default class Friends3DSProtocol {
 	static ID = 0x65;

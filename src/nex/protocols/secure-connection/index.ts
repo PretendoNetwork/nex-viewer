@@ -1,6 +1,10 @@
 import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/secure-connection/methods';
+import AnyDataHolder from '@/nex/types/any-data-holder';
+import NintendoLoginData from '@/nex/protocols/secure-connection/types/nintendo-login-data';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
+
+AnyDataHolder.Classes['NintendoLoginData'] = NintendoLoginData;
 
 export default class SecureConnectionProtocol {
 	static ID = 0xB;

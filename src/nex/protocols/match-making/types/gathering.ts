@@ -3,7 +3,6 @@ import UInt32 from '@/nex/types/uint32';
 import PID from '@/nex/types/pid';
 import UInt16 from '@/nex/types/uint16';
 import RVString from '@/nex/types/string';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'Gathering';
@@ -63,5 +62,3 @@ export default class Gathering extends DDLClass {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = Gathering;

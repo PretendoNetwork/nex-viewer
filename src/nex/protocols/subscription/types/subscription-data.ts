@@ -1,7 +1,6 @@
 import Data from '@/nex/types/data';
 import PID from '@/nex/types/pid';
 import QBuffer from '@/nex/types/qbuffer';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'SubscriptionData';
@@ -40,5 +39,3 @@ export default class SubscriptionData extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = SubscriptionData;

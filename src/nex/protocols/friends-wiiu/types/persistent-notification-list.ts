@@ -1,7 +1,6 @@
 import Data from '@/nex/types/data';
 import List from '@/nex/types/list';
 import PersistentNotification from '@/nex/protocols/friends-wiiu/types/persistent-notification';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'PersistentNotificationList';
@@ -37,5 +36,3 @@ export default class PersistentNotificationList extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = PersistentNotificationList;

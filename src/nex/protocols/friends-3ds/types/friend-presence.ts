@@ -1,7 +1,6 @@
 import Data from '@/nex/types/data';
 import PID from '@/nex/types/pid';
 import NintendoPresence from '@/nex/protocols/friends-3ds/types/nintendo-presence';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendPresence';
@@ -40,5 +39,3 @@ export default class FriendPresence extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = FriendPresence;

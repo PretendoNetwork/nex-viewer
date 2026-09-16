@@ -2,7 +2,6 @@ import Data from '@/nex/types/data';
 import PID from '@/nex/types/pid';
 import Mii from '@/nex/protocols/friends-3ds/types/mii';
 import DateTime from '@/nex/types/datetime';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'FriendMii';
@@ -44,5 +43,3 @@ export default class FriendMii extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = FriendMii;

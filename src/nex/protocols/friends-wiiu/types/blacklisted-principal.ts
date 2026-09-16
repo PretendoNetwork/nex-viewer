@@ -2,7 +2,6 @@ import Data from '@/nex/types/data';
 import PrincipalBasicInfo from '@/nex/protocols/friends-wiiu/types/principal-basic-info';
 import GameKey from '@/nex/protocols/friends-wiiu/types/game-key';
 import DateTime from '@/nex/types/datetime';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'BlacklistedPrincipal';
@@ -44,5 +43,3 @@ export default class BlacklistedPrincipal extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = BlacklistedPrincipal;

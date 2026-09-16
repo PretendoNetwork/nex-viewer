@@ -1,7 +1,6 @@
 import Data from '@/nex/types/data';
 import PrincipalBasicInfo from '@/nex/protocols/friends-wiiu/types/principal-basic-info';
 import UInt8 from '@/nex/types/uint8';
-import AnyDataHolder from '@/nex/types/any-data-holder';
 import type NEXByteStream from '@/nex/byte-stream';
 
 const className = 'NNAInfo';
@@ -43,5 +42,3 @@ export default class NNAInfo extends Data {
 		};
 	}
 }
-
-AnyDataHolder.Classes[className] = NNAInfo;

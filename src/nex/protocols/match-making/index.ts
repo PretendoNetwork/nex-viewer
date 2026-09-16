@@ -1,6 +1,15 @@
 import RMCMessage from '@/nex/rmc-message';
 import * as Methods from '@/nex/protocols/match-making/methods';
+import AnyDataHolder from '@/nex/types/any-data-holder';
+import Gathering from '@/nex/protocols/match-making/types/gathering';
+import MatchmakeSession from '@/nex/protocols/match-making/types/matchmake-session';
+import PersistentGathering from '@/nex/protocols/match-making/types/persistent-gathering';
 import type PRUDPPacket from '@/types/nex/prudp-packet';
+
+AnyDataHolder.Classes['Gathering'] = Gathering;
+AnyDataHolder.Classes['MatchmakeSession'] = MatchmakeSession;
+AnyDataHolder.Classes['PersistentGathering'] = PersistentGathering;
+AnyDataHolder.Classes['Community'] = PersistentGathering; // * Legacy name, Nintendo originally named this class "Community" before switching to "PersistentGathering" later
 
 export default class MatchMakingProtocol {
 	static ID = 0x15;
