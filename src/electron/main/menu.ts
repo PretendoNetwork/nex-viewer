@@ -51,6 +51,7 @@ export async function selectSessionFile(browserWindow: BrowserWindow, state: Sta
 					'chls', 'chlz',
 					'flows', 'flow',
 					'bin',
+					'har',
 					'pnsj'
 				]
 			}

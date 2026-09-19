@@ -2,6 +2,9 @@ export interface BasicSerializedField {
 	__displayTypeName?: string;
 	__typeName?: string;
 	__value?: any;
+	__saveable?: boolean; // * Lets the UI offer to save the field to disk
+	__bytes?: number[]; // * The fields raw bytes, for when `__value` holds a display form of them instead
+	__filename?: string; // * The name to suggest when saving
 }
 
 export interface ExpandableSerializedField extends BasicSerializedField {
@@ -22,7 +25,7 @@ export type SerializedMessage = {
 	service?: string;
 	method?: string;
 	direction?: string;
-	status?: string;
+	status?: string | number; // * HTTP transactions use the numeric status code
 	overview_sections: {
 		title: string;
 		columns: number;
@@ -41,6 +44,9 @@ export type SerializedMessage = {
 		fields: {
 			name: string;
 			data: SerializedField;
+			language?: string; // * Triggers the UI to render the data in MonacoViewer rather than the normal collapsible system
+			bytes?: number[];
+			image?: string; // * Triggers the UI to render `bytes` as an image of this content type, rather than as text
 		}[];
 	}[];
 	stack_trace?: string;

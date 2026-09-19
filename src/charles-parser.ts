@@ -6,6 +6,11 @@ import type {
 	JavaClassDesc
 } from '@pretendonetwork/java.io';
 
+// TODO - This is duplicated from `@/session`. Move it somewhere shared?
+function int2ip(int: number): string {
+	return `${int >>> 24}.${int >> 16 & 255}.${int >> 8 & 255}.${int & 255}`;
+}
+
 export default class CharlesParser {
 	private buffer: Buffer;
 	private stream: ByteStream;
@@ -164,11 +169,16 @@ export class CharlesWebSocketMessage {
 }
 
 export class CharlesHTTPRequest {
+	private _startLine!: string;
 	private _method!: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE';
 	private _headers: { key: string; value: string }[] = [];
 	private _body?: Buffer;
 
 	// * Public getters
+	public get startLine(): string {
+		return this._startLine;
+	}
+
 	public get method(): 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' {
 		return this._method;
 	}
@@ -186,6 +196,7 @@ export class CharlesHTTPRequest {
 			return; // * This will never happen in this case.
 		}
 
+		this._startLine = transactionJSON.description.classData.values.requestHeader.description.classData.annotation[1].value;
 		this._method = transactionJSON.description.classData.values.scheme.value;
 
 		for (let i = 1; i < transactionJSON.description.classData.values.requestHeader.description.classData.values.firstLine.description.classData.annotation.length; i++) {
@@ -202,11 +213,16 @@ export class CharlesHTTPRequest {
 }
 
 export class CharlesHTTPResponse {
+	private _startLine!: string;
 	private _status!: number;
 	private _headers: { key: string; value: string }[] = [];
 	private _body?: Buffer;
 
 	// * Public getters
+	public get startLine(): string {
+		return this._startLine;
+	}
+
 	public get status(): number {
 		return this._status;
 	}
@@ -224,7 +240,8 @@ export class CharlesHTTPResponse {
 			return; // * This will never happen in this case.
 		}
 
-		this._status = Number(transactionJSON.description.classData.values.responseHeader.description.classData.annotation[1].value.split(' ')[1]);
+		this._startLine = transactionJSON.description.classData.values.responseHeader.description.classData.annotation[1].value;
+		this._status = Number(this._startLine.split(' ')[1]);
 
 		for (let i = 1; i < transactionJSON.description.classData.values.responseHeader.description.classData.values.firstLine.description.classData.annotation.length; i++) {
 			const key = transactionJSON.description.classData.values.responseHeader.description.classData.values.firstLine.description.classData.annotation[i].value;
@@ -241,6 +258,8 @@ export class CharlesHTTPResponse {
 
 export class CharlesHTTPTransaction {
 	private _url!: URL;
+	private _protocolVersion = 'HTTP/1.1';
+	private _clientAddress = 'unknown';
 	private _clientLocalPort!: number;
 	private _clientProxyPort!: number;
 	private _serverLocalPort!: number;
@@ -252,6 +271,14 @@ export class CharlesHTTPTransaction {
 	// * Public getters
 	public get url(): URL {
 		return this._url;
+	}
+
+	public get protocolVersion(): string {
+		return this._protocolVersion;
+	}
+
+	public get clientAddress(): string {
+		return this._clientAddress;
 	}
 
 	public get clientLocalPort(): number {
@@ -296,6 +323,15 @@ export class CharlesHTTPTransaction {
 		if (transactionJSON.description.classData.values.file) {
 			// * `file` contains the query string too
 			path = transactionJSON.description.classData.values.file.value;
+		}
+
+		if (transactionJSON.description.classData.values.protocolVersion) {
+			this._protocolVersion = transactionJSON.description.classData.values.protocolVersion.value;
+		}
+
+		// TODO - Probably breaks on IPv6 but I can't be arsed
+		if (transactionJSON.description.classData.values.clientAddress) {
+			this._clientAddress = int2ip(transactionJSON.description.classData.values.clientAddress.description.classData.values.address);
 		}
 
 		this._url = new URL(`${protocol}://${host}${path}`);
