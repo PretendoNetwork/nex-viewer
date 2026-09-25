@@ -26,6 +26,7 @@ import LOSTREAVERS from '@/nex/titles/lost-reavers';
 import MarioSonicatRioOlympics3DS from '@/nex/titles/mario-and-sonic-at-rio-olympics-3ds';
 import MarioSonicattheRio2016OlympicGamesWiiU from '@/nex/titles/mario-and-sonic-at-the-rio-2016-olympic-games-wii-u';
 import MarioSonicattheSochi2014OlympicWinterGames from '@/nex/titles/mario-and-sonic-at-the-sochi-2014-olympic-winter-games';
+import MarioGolfWorldTour from '@/nex/titles/mario-golf-world-tour';
 import MARIOKART7 from '@/nex/titles/mario-kart-7';
 import MARIOKART8 from '@/nex/titles/mario-kart-8';
 import MarioKart8Deluxe from '@/nex/titles/mario-kart-8-deluxe';
@@ -112,6 +113,7 @@ export default [
 	MarioSonicatRioOlympics3DS,
 	MarioSonicattheRio2016OlympicGamesWiiU,
 	MarioSonicattheSochi2014OlympicWinterGames,
+	MarioGolfWorldTour,
 	MARIOKART7,
 	MARIOKART8,
 	MarioKart8Deluxe,
