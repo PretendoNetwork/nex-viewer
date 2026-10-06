@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { ChevronDown, FileText, Hash, Check, X, Package, AlertCircle, CalendarDays, MapPin, Brackets, Braces, CircleQuestionMark } from 'lucide-vue-next';
 import { AccordionRoot, AccordionItem, AccordionTrigger, AccordionContent } from 'reka-ui';
 import { useClipboard } from '@renderer/composables/useClipboard';
@@ -110,18 +111,21 @@ function copyValue(e: MouseEvent, field: SerializedField): void {
 	}
 }
 
-const isList = props.field && props.field.__typeName === 'List' && props.field.__value !== null && props.field.__value !== undefined && Array.isArray(props.field.__value);
-const isMap = props.field && props.field.__typeName === 'Map' && props.field.__value !== null && props.field.__value !== undefined && Array.isArray(props.field.__value);
-const hasExpandableContent = props.field && (
+// * These all have to be computed. The list of fields is keyed by name, so Vue reuses these
+// * components when a different packet is selected, and anything read once at setup would
+// * still be describing the packet that was on screen before
+const isList = computed(() => props.field && props.field.__typeName === 'List' && props.field.__value !== null && props.field.__value !== undefined && Array.isArray(props.field.__value));
+const isMap = computed(() => props.field && props.field.__typeName === 'Map' && props.field.__value !== null && props.field.__value !== undefined && Array.isArray(props.field.__value));
+const hasExpandableContent = computed(() => props.field && (
 	'__fields' in props.field ||
 	(props.field.__value !== null && props.field.__value !== undefined && typeof props.field.__value === 'object' && !Array.isArray(props.field.__value)) ||
 	(typeof props.field === 'object' && !props.field.__typeName && props.field.__value === undefined)
-);
-const typeIcon = getTypeIcon(props.field);
-const typeName = props.field.__displayTypeName || props.field.__typeName || typeof props.field;
-const isVariant = props.field.__typeName === 'Variant';
-const variantInner = isVariant ? props.field.__value as SerializedField : null;
-const variantIsComplex = variantInner && ('__fields' in variantInner || (typeof variantInner.__value === 'object' && variantInner.__value !== null && !Array.isArray(variantInner.__value)));
+));
+const typeIcon = computed(() => getTypeIcon(props.field));
+const typeName = computed(() => props.field.__displayTypeName || props.field.__typeName || typeof props.field);
+const isVariant = computed(() => props.field.__typeName === 'Variant');
+const variantInner = computed(() => isVariant.value ? props.field.__value as SerializedField : null);
+const variantIsComplex = computed(() => variantInner.value && ('__fields' in variantInner.value || (typeof variantInner.value.__value === 'object' && variantInner.value.__value !== null && !Array.isArray(variantInner.value.__value))));
 </script>
 
 <template>
