@@ -3,7 +3,7 @@ import List from '@/nex/types/list';
 import UInt64 from '@/nex/types/uint64';
 import Bool from '@/nex/types/bool';
 import QResult from '@/nex/types/qresult';
-import DataStorePreparePostParam from '@/nex/protocols/datastore/types/datastore-prepare-get-param';
+import DataStorePreparePostParam from '@/nex/protocols/datastore/types/datastore-prepare-post-param';
 import type RMCMessage from '@/nex/rmc-message';
 
 // TODO - Add strict types for toJSON methods
