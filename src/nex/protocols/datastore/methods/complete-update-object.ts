@@ -1,5 +1,5 @@
 import NEXByteStream from '@/nex/byte-stream';
-import DataStoreCompleteUpdateParam from '@/nex/protocols/datastore/types/datastore-prepare-update-param';
+import DataStoreCompleteUpdateParam from '@/nex/protocols/datastore/types/datastore-complete-update-param';
 import type RMCMessage from '@/nex/rmc-message';
 
 // TODO - Add strict types for toJSON methods
