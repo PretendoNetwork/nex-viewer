@@ -10,10 +10,11 @@ import type RMCMessage from '@/nex/rmc-message';
 // TODO - Add strict types for toJSON methods
 
 export class Request {
-	public static Name = 'RateObject';
+	public static Name = 'RateObjects';
 
 	private targets = new List(new DataStoreRatingTarget());
 	private params = new List(new DataStoreRateObjectParam());
+	private transactional = new Bool();
 	private fetchRatings = new Bool();
 
 	constructor(message: RMCMessage) {
@@ -21,6 +22,7 @@ export class Request {
 
 		this.targets.extractFrom(stream);
 		this.params.extractFrom(stream);
+		this.transactional.extractFrom(stream);
 		this.fetchRatings.extractFrom(stream);
 	}
 
@@ -28,13 +30,14 @@ export class Request {
 		return {
 			targets: this.targets,
 			params: this.params,
+			transactional: this.transactional,
 			fetchRatings: this.fetchRatings
 		};
 	}
 }
 
 export class Response {
-	public static Name = 'RateObject';
+	public static Name = 'RateObjects';
 
 	private pRatings = new List(new DataStoreRatingInfo());
 	private pResults = new List(new QResult());
