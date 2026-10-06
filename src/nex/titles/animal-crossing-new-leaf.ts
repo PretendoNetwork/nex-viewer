@@ -1,4 +1,9 @@
 import Title from '@/nex/titles/title';
+import NATTraversalProtocol from '@/nex/protocols/nat-traversal';
+import MatchmakingProtocol from '@/nex/protocols/match-making';
+import MatchmakingExtProtocol from '@/nex/protocols/match-making-ext';
+import MatchmakeExtensionProtocol from '@/nex/protocols/matchmake-extension';
+import DataStoreProtocol from '@/nex/protocols/datastore';
 
 export default class AnimalCrossingNewLeaf extends Title {
 	public static displayName = 'Animal Crossing: New Leaf';
@@ -32,5 +37,11 @@ export default class AnimalCrossingNewLeaf extends Title {
 		'0004000000199000'
 	];
 
-	public static protocols = []; // * Populate with the protocols this title uses
+	public static protocols = [
+		NATTraversalProtocol,
+		MatchmakingProtocol,
+		MatchmakingExtProtocol,
+		MatchmakeExtensionProtocol,
+		DataStoreProtocol
+	]; // * Populate with the protocols this title uses
 }
