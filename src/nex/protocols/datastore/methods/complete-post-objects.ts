@@ -8,17 +8,17 @@ import type RMCMessage from '@/nex/rmc-message';
 export class Request {
 	public static Name = 'CompletePostObjects';
 
-	private param = new List(new UInt64());
+	private dataIds = new List(new UInt64());
 
 	constructor(message: RMCMessage) {
 		const stream = new NEXByteStream(message.parametersData!, message.connection!.title!);
 
-		this.param.extractFrom(stream);
+		this.dataIds.extractFrom(stream);
 	}
 
 	public toJSON(): any {
 		return {
-			param: this.param
+			dataIds: this.dataIds
 		};
 	}
 }
