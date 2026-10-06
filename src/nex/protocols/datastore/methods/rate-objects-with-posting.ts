@@ -13,26 +13,27 @@ import type RMCMessage from '@/nex/rmc-message';
 export class Request {
 	public static Name = 'RateObjectsWithPosting';
 
-	private target = new List(new DataStoreRatingTarget());
-	private rateParam = new List(new DataStoreRateObjectParam());
-	private postParam = new List(new DataStorePreparePostParam());
+	private targets = new List(new DataStoreRatingTarget());
+	private rateParams = new List(new DataStoreRateObjectParam());
+	private postParams = new List(new DataStorePreparePostParam());
 	private transactional = new Bool();
 	private fetchRatings = new Bool();
 
 	constructor(message: RMCMessage) {
 		const stream = new NEXByteStream(message.parametersData!, message.connection!.title!);
 
-		this.target.extractFrom(stream);
-		this.rateParam.extractFrom(stream);
-		this.postParam.extractFrom(stream);
+		this.targets.extractFrom(stream);
+		this.rateParams.extractFrom(stream);
+		this.postParams.extractFrom(stream);
+		this.transactional.extractFrom(stream);
 		this.fetchRatings.extractFrom(stream);
 	}
 
 	public toJSON(): any {
 		return {
-			targets: this.target,
-			rateParams: this.rateParam,
-			postParams: this.postParam,
+			targets: this.targets,
+			rateParams: this.rateParams,
+			postParams: this.postParams,
 			transactional: this.transactional,
 			fetchRatings: this.fetchRatings
 		};
