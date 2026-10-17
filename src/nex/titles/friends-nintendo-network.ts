@@ -2,6 +2,7 @@ import Title from '@/nex/titles/title';
 import AccountManagementProtocol from '@/nex/protocols/account-management';
 import Friends3DSProtocol from '@/nex/protocols/friends-3ds';
 import FriendsWiiUProtocol from '@/nex/protocols/friends-wiiu';
+import NintendoNotificationEventsProtocol from '@/nex/protocols/nintendo-notification-events';
 
 export default class FriendsNintendoNetwork extends Title {
 	public static displayName = 'Friends (Nintendo Network)';
@@ -37,6 +38,7 @@ export default class FriendsNintendoNetwork extends Title {
 	public static protocols = [
 		AccountManagementProtocol,
 		Friends3DSProtocol,
-		FriendsWiiUProtocol
+		FriendsWiiUProtocol,
+		NintendoNotificationEventsProtocol
 	];
 }
