@@ -44,6 +44,7 @@ import NINJAGAIDEN3RazorsEdge from '@/nex/titles/ninja-gaiden-3-razors-edge';
 import NintendoBadgeArcade from '@/nex/titles/nintendo-badge-arcade';
 import Nova111 from '@/nex/titles/nova-111';
 import OlliOlli from '@/nex/titles/olliolli';
+import PacManAndGalagaDimensions from '@/nex/titles/pac-man-and-galaga-dimensions';
 import PIKMIN3 from '@/nex/titles/pikmin-3';
 import PokemonBank from '@/nex/titles/pokemon-bank';
 import PokemonRumbleWorld from '@/nex/titles/pokemon-rumble-world';
@@ -131,6 +132,7 @@ export default [
 	NintendoBadgeArcade,
 	Nova111,
 	OlliOlli,
+	PacManAndGalagaDimensions,
 	PIKMIN3,
 	PokemonBank,
 	PokemonRumbleWorld,
