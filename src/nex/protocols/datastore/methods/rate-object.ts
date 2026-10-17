@@ -1,3 +1,4 @@
+import * as semver from 'compare-versions';
 import NEXByteStream from '@/nex/byte-stream';
 import Bool from '@/nex/types/bool';
 import DataStoreRatingTarget from '@/nex/protocols/datastore/types/datastore-rating-target';
@@ -12,22 +13,31 @@ export class Request {
 
 	private target = new DataStoreRatingTarget();
 	private param = new DataStoreRateObjectParam();
-	private fetchRatings = new Bool();
+	private fetchRatings?: Bool; // * NEX 3.5+
 
 	constructor(message: RMCMessage) {
 		const stream = new NEXByteStream(message.parametersData!, message.connection!.title!);
 
 		this.target.extractFrom(stream);
 		this.param.extractFrom(stream);
-		this.fetchRatings.extractFrom(stream);
+
+		if (semver.satisfies(stream.title.libraryVersions.datastore, '>=3.5.0')) {
+			this.fetchRatings = new Bool();
+			this.fetchRatings.extractFrom(stream);
+		}
 	}
 
 	public toJSON(): any {
-		return {
+		const json: Record<string, any> = {
 			target: this.target,
-			param: this.param,
-			fetchRatings: this.fetchRatings
+			param: this.param
 		};
+
+		if (this.fetchRatings !== undefined) {
+			json.fetchRatings = this.fetchRatings;
+		}
+
+		return json;
 	}
 }
 
