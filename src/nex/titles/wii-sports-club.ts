@@ -1,5 +1,11 @@
 import Title from '@/nex/titles/title';
 import ServiceItemProtocolWiiSportsClub from '@/nex/protocols/service-item/wii-sports-club';
+import UtilityProtocol from '@/nex/protocols/utility';
+import DataStoreProtocol from '@/nex/protocols/datastore';
+import MatchmakeExtensionProtocol from '@/nex/protocols/matchmake-extension';
+import NATTraversalProtocol from '@/nex/protocols/nat-traversal';
+import MatchMakingProtocol from '@/nex/protocols/match-making';
+import NotificationEventsProtocol from '@/nex/protocols/notification-events';
 
 export default class WiiSportsClub extends Title {
 	public static displayName = 'Wii Sports Club';
@@ -33,6 +39,12 @@ export default class WiiSportsClub extends Title {
 	];
 
 	public static protocols = [
-		ServiceItemProtocolWiiSportsClub
+		ServiceItemProtocolWiiSportsClub,
+		UtilityProtocol,
+		DataStoreProtocol,
+		MatchmakeExtensionProtocol,
+		NATTraversalProtocol,
+		MatchMakingProtocol,
+		NotificationEventsProtocol
 	];
 }
