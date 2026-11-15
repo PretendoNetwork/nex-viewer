@@ -2,7 +2,7 @@ import Title from '@/nex/titles/title';
 
 export default class MinecraftWiiUEdition extends Title {
 	public static displayName = 'Minecraft: Wii U Edition';
-	public static gameServerID = '';
+	public static gameServerID = '101D9D00';
 	public static accessKey = 'f1b61c8e';
 	public static libraryVersions = {
 		main: '3.10.0',

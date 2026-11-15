@@ -3,7 +3,7 @@ import Title from '@/nex/titles/title';
 export default class RESIDENTEVILREVELATIONS extends Title {
 	public static displayName = 'RESIDENT EVIL REVELATIONS';
 	public static gameServerID = '';
-	public static accessKey = '';
+	public static accessKey = '59d539a9';
 	public static libraryVersions = {
 		main: '3.2.1',
 		ranking: '3.2.1',
