@@ -101,11 +101,16 @@ export class CharlesWebSocketMessage {
 
 // TODO - Make this more generic so it can be shared with CharlesParser?
 export class CharlesHTTPRequest {
+	private _startLine!: string;
 	private _method!: 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE';
 	private _headers: { key: string; value: string }[] = [];
 	private _body?: Buffer;
 
 	// * Public getters
+	public get startLine(): string {
+		return this._startLine;
+	}
+
 	public get method(): 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' {
 		return this._method;
 	}
@@ -119,9 +124,10 @@ export class CharlesHTTPRequest {
 	}
 
 	constructor(group: any) {
+		this._startLine = group.metadata.request.header.firstLine;
 		this._method = group.metadata.method;
 
-		for (const header of group.metadata.response.header.headers) {
+		for (const header of group.metadata.request.header.headers) {
 			this._headers.push({
 				key: header.name,
 				value: header.value
@@ -136,11 +142,16 @@ export class CharlesHTTPRequest {
 
 // TODO - Make this more generic so it can be shared with CharlesParser?
 export class CharlesHTTPResponse {
+	private _startLine!: string;
 	private _status!: number;
 	private _headers: { key: string; value: string }[] = [];
 	private _body?: Buffer;
 
 	// * Public getters
+	public get startLine(): string {
+		return this._startLine;
+	}
+
 	public get status(): number {
 		return this._status;
 	}
@@ -154,6 +165,7 @@ export class CharlesHTTPResponse {
 	}
 
 	constructor(group: any) {
+		this._startLine = group.metadata.response.header.firstLine;
 		this._status = Number(group.metadata.response.status);
 
 		for (const header of group.metadata.response.header.headers) {
@@ -171,6 +183,8 @@ export class CharlesHTTPResponse {
 
 export class CharlesHTTPTransaction {
 	private _url!: URL;
+	private _protocolVersion = 'HTTP/1.1';
+	private _clientAddress = 'unknown';
 	private _clientLocalPort!: number;
 	private _clientProxyPort!: number;
 	private _serverLocalPort!: number;
@@ -182,6 +196,14 @@ export class CharlesHTTPTransaction {
 	// * Public getters
 	public get url(): URL {
 		return this._url;
+	}
+
+	public get protocolVersion(): string {
+		return this._protocolVersion;
+	}
+
+	public get clientAddress(): string {
+		return this._clientAddress;
 	}
 
 	public get clientLocalPort(): number {
@@ -213,7 +235,12 @@ export class CharlesHTTPTransaction {
 	}
 
 	constructor(group: any) {
-		this._url = new URL(`${group.metadata.scheme}://${group.metadata.host}${group.metadata.path}`);
+		this._protocolVersion = group.metadata.protocolVersion;
+		this._clientAddress = group.metadata.clientAddress.split('/').pop() || 'unknown';
+
+		const query = group.metadata.query ? `?${group.metadata.query}` : '';
+
+		this._url = new URL(`${group.metadata.scheme}://${group.metadata.host}${group.metadata.path}${query}`);
 		this._clientLocalPort = group.metadata.clientPort;
 		this._clientProxyPort = group.metadata.clientLocalPort;
 		this._serverLocalPort = group.metadata.remoteLocalPort;

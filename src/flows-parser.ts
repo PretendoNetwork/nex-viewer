@@ -11,7 +11,7 @@ type Address = {
 type Cert = Buffer;
 type FlowMessageData = {
 	http_version: Buffer;
-	headers: Record<string, string>; // * Not accurate, this is encoded as a tuple of `(key, value)`
+	headers: string[][]; // * Encoded as a tuple of `(key, value)`
 	content: Buffer | null;
 	trailers: Record<string, string> | null; // * Not accurate, this is encoded as a tuple of `(key, value)`
 	timestamp_start: number;
@@ -64,6 +64,7 @@ type FlowConnection = {
 	timestamp_tls_setup: number | null;
 };
 interface FlowClientConnection extends FlowConnection {
+	address: Address | null;
 	peername: Address;
 	sockname: Address;
 	mitmcert: Cert | null;
@@ -130,7 +131,7 @@ type _Flow = {
 	backup: _Flow | null;
 };
 
-interface HTTPFlow extends _Flow {
+export interface HTTPFlow extends _Flow {
 	type: 'http';
 	request: FlowRequest;
 	response: FlowResponse | null;
@@ -172,6 +173,7 @@ export default class FlowsParser {
 			throw new Error('Expected dictionary node');
 		}
 
+		// TODO - Transparent mode (when the proxy doesn't intercept HTTPS data) will include 'tcp' nodes
 		if (tnetstring.type !== 'http') {
 			throw new Error('Expected http flow');
 		}
@@ -184,6 +186,13 @@ export default class FlowsParser {
 			flow.client_conn.peername = {
 				ip: flowData.client_conn.peername[0],
 				port: flowData.client_conn.peername[1]
+			};
+		}
+
+		if (flowData.client_conn.address) {
+			flow.client_conn.peername = {
+				ip: flowData.client_conn.address[0],
+				port: flowData.client_conn.address[1]
 			};
 		}
 
@@ -226,14 +235,14 @@ export default class FlowsParser {
 		}
 
 		if (flow.type === 'http') {
-			flow.request.headers = Object.fromEntries(flowData.request.headers.map(([key, value]: any[]) => [key.toString(), value.toString()]));
+			flow.request.headers = flowData.request.headers.map(([key, value]: any[]) => [key.toString(), value.toString()]);
 
 			if (flowData.request.trailers) {
 				flow.request.trailers = Object.fromEntries(flowData.request.trailers.map(([key, value]: any[]) => [key.toString(), value.toString()]));
 			}
 
 			if (flowData.response) {
-				flow.response!.headers = Object.fromEntries(flowData.response.headers.map(([key, value]: any[]) => [key.toString(), value.toString()]));
+				flow.response!.headers = flowData.response.headers.map(([key, value]: any[]) => [key.toString(), value.toString()]);
 
 				if (flowData.response.trailers) {
 					flow.response!.trailers = Object.fromEntries(flowData.response.trailers.map(([key, value]: any[]) => [key.toString(), value.toString()]));

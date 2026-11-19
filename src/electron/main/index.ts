@@ -90,6 +90,18 @@ function createWindow(): void {
 		}
 	});
 
+	ipcMain.on('saveBytes', async (_, name: string, bytes: Uint8Array) => {
+		const savePath = await dialog.showSaveDialog(window, {
+			title: 'Save Body',
+			defaultPath: name,
+			properties: ['createDirectory', 'showOverwriteConfirmation']
+		});
+
+		if (!savePath.canceled && savePath.filePath) {
+			writeFileSync(savePath.filePath, Buffer.from(bytes));
+		}
+	});
+
 	window.webContents.on('will-navigate', (event) => {
 		event.preventDefault();
 	});

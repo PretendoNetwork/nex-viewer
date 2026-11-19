@@ -19,6 +19,7 @@ const api = {
 	openSelectSession: (): void => ipcRenderer.send('openSelectSession'),
 	openSession: (path: string): void => ipcRenderer.send('openSession', path),
 	exportSession: (packets: SerializedMessage[]): void => ipcRenderer.send('exportSession', packets),
+	saveBytes: (name: string, bytes: Uint8Array): void => ipcRenderer.send('saveBytes', name, bytes),
 	getPathForFile: (file: File): string => webUtils.getPathForFile(file)
 };
 
