@@ -2,7 +2,7 @@ import Title from '@/nex/titles/title';
 
 export default class TEKKENTAGTOURNAMENT2WiiUEDITION extends Title {
 	public static displayName = 'TEKKEN TAG TOURNAMENT 2 Wii U EDITION';
-	public static gameServerID = '';
+	public static gameServerID = '10100600';
 	public static accessKey = '0f037f64';
 	public static libraryVersions = {
 		main: '3.0.1',
