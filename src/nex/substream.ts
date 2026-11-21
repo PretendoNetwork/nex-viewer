@@ -80,19 +80,15 @@ export default class Substream {
 
 		seenPackets.push(packet);
 
-		// TODO - This is ugly
+		let newBuffer = payload;
 		if (packet.fragmentID === 0) {
-			if (packet.fromClientToServer) {
-				this.clientToServerFragmentedPayload = Buffer.alloc(0);
-			} else {
-				this.servertoClientFragmentedPayload = Buffer.alloc(0);
-			}
+			newBuffer = Buffer.alloc(0);
+		}
+
+		if (packet.fromClientToServer) {
+			this.clientToServerFragmentedPayload = newBuffer;
 		} else {
-			if (packet.fromClientToServer) {
-				this.clientToServerFragmentedPayload = payload;
-			} else {
-				this.servertoClientFragmentedPayload = payload;
-			}
+			this.servertoClientFragmentedPayload = newBuffer;
 		}
 
 		return payload;
